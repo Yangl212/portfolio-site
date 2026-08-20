@@ -9,7 +9,7 @@
   align-items: stretch;
   justify-content: space-between;
   gap: 20px;
-  min-height: 98px;
+  min-height: 78px;
   padding: 0 0 0 24px;
 }
 
@@ -36,8 +36,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 18px;
+  padding: 0 16px;
   font-size: 20px;
+  font-weight: 500;
   line-height: 1.4;
   transition: opacity 180ms ease;
 }
@@ -52,17 +53,22 @@
   justify-content: center;
   align-self: stretch;
   min-width: 144px;
-  padding: 0 28px;
-  margin-left: 14px;
+  padding: 0 24px;
+  margin-left: 10px;
   background: #222222;
   color: var(--inverse);
   font-weight: 700;
   border-radius: 0;
-  transition: opacity 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease, opacity 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.cta:hover {
-  opacity: 0.85;
+.cta:hover,
+.cta:focus-visible {
+  background: #f3c443;
+  color: #222222;
+  opacity: 1;
+  box-shadow: inset 1px 0 0 var(--border), inset -1px 0 0 var(--border);
 }
 
 .menuButton {
