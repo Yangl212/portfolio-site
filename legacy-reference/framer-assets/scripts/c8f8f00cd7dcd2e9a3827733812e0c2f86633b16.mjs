@@ -1,0 +1,2 @@
+import{t as e}from"./rolldown-runtime.Dh6celcD.mjs";function t(e,t){return{description:`Agency website template`,robots:`max-image-preview:large`,title:`LeleYangPortfolio`}}var n=e((()=>{}));export{t as n,n as t};
+//# sourceMappingURL=shared-lib.dSdB_YyF.mjs.map

@@ -1,0 +1,104 @@
+:root {
+  color-scheme: light;
+  --page-bg: #222222;
+  --panel-bg: #e4e2e2;
+  --footer-bg: #000000;
+  --text: #222222;
+  --muted: #5f5f5f;
+  --border: #222222;
+  --inverse: #ffffff;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/ec93c8d59961c8db083701ab03c103c3a4b2ad26.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/760771d7a949429ea6b46be336103f45e0aae840.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/5cc1acc907efa8b32b17f0c880e30e8f961ac219.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/d39a083a596122ae6f1911524ff6b46010fd39fb.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/3db12b7fae83f384b72fd4df51aaa71e212bd9cf.woff2") format("woff2");
+  font-display: swap;
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/framer-assets/fonts/cd033896d94b89842997d46530a2cb475b51bc96.woff2") format("woff2");
+  font-display: swap;
+  font-style: italic;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Satoshi Variable";
+  src: url("/framer-assets/fonts/8c7e2efa91aa55cb2588c06c2b6315d840ac7837.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Satoshi Medium";
+  src: url("/framer-assets/fonts/3b873bc7034e08955bb9fc48c8181e616432552f.woff") format("woff");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Satoshi Regular";
+  src: url("/framer-assets/fonts/f3260e7de4d49f5194e875e6c5e9b84f56b2dfaf.woff") format("woff");
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: "Satoshi", "Satoshi Variable", "Inter", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

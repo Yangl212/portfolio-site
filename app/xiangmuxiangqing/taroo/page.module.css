@@ -1,0 +1,310 @@
+.page {
+  min-height: 100vh;
+  background: var(--panel-bg);
+}
+
+.frame {
+  width: 100%;
+  margin: 0 auto;
+  background: var(--panel-bg);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  padding: 120px 24px 56px;
+}
+
+.backLink {
+  width: fit-content;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+  text-decoration: underline;
+  color: var(--text);
+}
+
+.title {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 149px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.heroImage {
+  overflow: hidden;
+  border-radius: 14px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.heroImage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.intro {
+  margin: 0;
+  max-width: 900px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 50px 0;
+  border-top: 1px solid var(--border);
+}
+
+.rowLabel {
+  flex: 1 0 0;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.rowBody {
+  flex: 2 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.subheading {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.bodyCopy {
+  margin: 0;
+  max-width: 780px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.keywordImage {
+  aspect-ratio: 3.115;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.keywordImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.traitList {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.competitorCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.competitorCard:last-child {
+  padding-bottom: 0;
+}
+
+.competitorCard + .competitorCard {
+  border-top: 1px solid rgba(34, 34, 34, 0.14);
+  padding-top: 40px;
+}
+
+.competitorImage {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+  max-height: 480px;
+}
+
+.competitorImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.keywords {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.keywordsLabel {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.wideImage {
+  aspect-ratio: 6.48;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.wideImage img,
+.typeImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.typeImage {
+  aspect-ratio: 1.334;
+  width: 100%;
+  max-width: 620px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.finalImage {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.finalImage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+}
+
+.delay1 {
+  animation-delay: 120ms;
+}
+
+.delay2 {
+  animation-delay: 220ms;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1199px) {
+  .title {
+    font-size: 72px;
+  }
+
+  .intro,
+  .bodyCopy,
+  .backLink,
+  .traitList {
+    font-size: 18px;
+  }
+
+  .subheading {
+    font-size: 45px;
+  }
+
+  .row {
+    gap: 24px;
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .content {
+    padding-top: 104px;
+  }
+}
+
+@media (max-width: 809px) {
+  .content {
+    gap: 40px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .subheading {
+    font-size: 36px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px 0;
+  }
+
+  .rowLabel,
+  .rowBody {
+    flex: none;
+    width: 100%;
+  }
+
+  .rowBody {
+    gap: 32px;
+  }
+
+  .intro,
+  .bodyCopy,
+  .backLink,
+  .traitList {
+    font-size: 16px;
+  }
+
+  .competitorImage {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

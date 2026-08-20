@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -A \"Mozilla/5.0\" https://leleyangportfolio.framer.website/ -o /tmp/home.html -w \"HTTP %{http_code}, size %{size_download} bytes\\\\n\")",
+      "Bash(awk '/<body/,/<\\\\/body>/' /tmp/home.html | head -100)",
+      "Read(//tmp/**)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

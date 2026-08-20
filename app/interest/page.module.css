@@ -1,0 +1,269 @@
+.page {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.frame {
+  width: 100%;
+  margin: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+  padding: 120px 24px 56px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.heroTitle {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 149px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.introRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.introDivider {
+  flex: 1 0 0;
+  height: 1px;
+  background: var(--border);
+  opacity: 0.4;
+}
+
+.introText {
+  margin: 0;
+  max-width: 560px;
+  font-weight: 400;
+  font-size: clamp(21px, 2.4vw, 36px);
+  line-height: 1.2;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.banner {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border);
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.cardDesc {
+  margin: 0;
+  max-width: 720px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.mediaRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.mediaCaption {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.mediaImages {
+  display: flex;
+  gap: 16px;
+}
+
+.mediaImage {
+  flex: 1 0 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.mediaImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.travelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.travelCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.travelImage {
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border-radius: 14px;
+  background: #d3d1d1;
+  border: 1px solid rgba(34, 34, 34, 0.14);
+}
+
+.travelImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.travelMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.travelPlace,
+.travelDate {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.travelPlace {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.travelDate {
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+}
+
+.delay1 {
+  animation-delay: 120ms;
+}
+
+.delay2 {
+  animation-delay: 220ms;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1199px) {
+  .heroTitle {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .travelGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .content {
+    padding-top: 104px;
+    gap: 72px;
+  }
+
+  .mediaRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 809px) {
+  .heroTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 56px;
+  }
+
+  .introRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .introDivider {
+    display: none;
+  }
+
+  .mediaImages {
+    flex-direction: column;
+  }
+
+  .travelGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

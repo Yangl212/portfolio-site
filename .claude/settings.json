@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(perl -pe 's/></>\\\\n</g' orig_contact.html)",
+      "Bash(cp /tmp/orig_contact.html contact/index.html)",
+      "Bash(sed -i -E 's@href=\"\\\\.\\\\./@href=\"/@g; s@href=\"\\\\./@href=\"/@g' contact/index.html)",
+      "Bash(sed -i 's@https://leleyangportfolio\\\\.framer\\\\.website@https://example.com@g' contact/index.html)",
+      "Bash(curl -s -A \"Mozilla/5.0\" https://leleyangportfolio.framer.website/xiangmuxiangqing/uxcasestudy -o /tmp/live_ux.html)",
+      "Bash(sed -e 's@href=\"\\\\.\\\\./@href=\"/@g' -e 's@href=\"\\\\./@href=\"/@g' -e 's@https://leleyangportfolio\\\\.framer\\\\.website@https://example.com@g' /tmp/live_ux.html)",
+      "Bash(python3 -c \"\")",
+      "Bash(perl -pe 's/></>\\\\n</g' xiangmuxiangqing/uxcasestudy/index.html)",
+      "Bash(grep -oE '\\\\.framer-kH7bv[^{,]*\\\\{[^}]*\\\\}|,\\\\.framer-kH7bv[^{,]*\\\\{[^}]*\\\\}|\\\\.framer-kH7bv,[^{]*\\\\{[^}]*\\\\}' xiangmuxiangqing/uxcasestudy/index.html)",
+      "Bash(grep -oE '<div id=\"main\"[^>]*>.{0,50}' project/index.html)",
+      "Bash(grep -oE 'html,body,#main\\\\{[^}]*\\\\}' project/index.html)",
+      "Bash(awk 'NR==325{print length\\($0\\)}' index.html)",
+      "Bash(awk 'NR==326{print length\\($0\\)}' project/index.html)"
+    ]
+  }
+}

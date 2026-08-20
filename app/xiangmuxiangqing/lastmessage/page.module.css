@@ -1,0 +1,303 @@
+.page {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.frame {
+  width: 100%;
+  margin: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.headerMask {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 16px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.topContent {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.bodyContent {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heroHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroTitle {
+  margin: 0;
+  max-width: 100%;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 8vw, 4.75rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.meta {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.cta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--inverse);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 180ms ease;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  opacity: 0.8;
+}
+
+.lead {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1300px;
+  text-align: left;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.lead em,
+.body em {
+  font-style: italic;
+}
+
+.lead strong,
+.body strong {
+  font-weight: 700;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kicker {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.heading {
+  margin: 0;
+  max-width: 100%;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.heading:not(:first-child) {
+  margin-top: 12px;
+}
+
+.body {
+  margin: 0;
+  max-width: 46rem;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.imageFull {
+  width: 100%;
+  overflow: hidden;
+}
+
+.imageFull img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.videoCard {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.videoCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 810px) {
+  .content {
+    padding: 24px 24px 72px;
+    gap: 88px;
+  }
+
+  .topContent {
+    gap: 40px;
+  }
+
+  .bodyContent {
+    gap: 88px;
+  }
+
+  .heroHeader {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+  }
+
+  .section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: 40px;
+    row-gap: 24px;
+    align-items: start;
+  }
+
+  .section > .kicker {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 24px;
+  }
+
+  .section > :not(.kicker) {
+    grid-column: 2;
+  }
+
+  .body {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content {
+    padding: 28px 32px 80px;
+    gap: 104px;
+  }
+
+  .topContent {
+    gap: 48px;
+  }
+
+  .bodyContent {
+    gap: 104px;
+  }
+
+  .heroTitle {
+    font-size: clamp(5.5rem, 9vw, 8.5rem);
+  }
+
+  .meta {
+    font-size: 1rem;
+  }
+
+  .cta {
+    min-height: 48px;
+    padding: 14px 22px;
+    font-size: 0.9375rem;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+  }
+
+  .section {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: 64px;
+    row-gap: 28px;
+  }
+
+  .heading {
+    font-size: clamp(3rem, 4.8vw, 4.25rem);
+  }
+
+  .body {
+    font-size: 1.0625rem;
+    max-width: 52rem;
+  }
+}

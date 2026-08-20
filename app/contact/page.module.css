@@ -1,0 +1,162 @@
+.page {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.frame {
+  width: 100%;
+  margin: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 168px 24px 100px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.title {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 149px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.subtitleRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(23px, 2.6vw, 36px);
+  line-height: 1.2;
+  max-width: 640px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.spacer {
+  display: block;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--text);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+}
+
+.delay1 {
+  animation-delay: 120ms;
+}
+
+.delay2 {
+  animation-delay: 240ms;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1199px) {
+  .title {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 980px) {
+  .content {
+    padding: 128px 24px 84px;
+    gap: 48px;
+  }
+
+  .details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .spacer {
+    display: none;
+  }
+}
+
+@media (max-width: 809px) {
+  .title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .subtitleRow {
+    grid-template-columns: 1fr;
+  }
+
+  .details {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
