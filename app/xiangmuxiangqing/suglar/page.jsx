@@ -308,18 +308,18 @@ function Block({ block }) {
   }
   if (block.type === "text") {
     return (
-      <p className={styles.body}>
+      <>
         {block.lines.map((line, index) => (
-          <span key={index} className={styles.bodyLine}>
+          <p key={index} className={styles.body}>
             {line}
-          </span>
+          </p>
         ))}
-      </p>
+      </>
     )
   }
   if (block.type === "image") {
     return (
-      <div className={styles.image}>
+      <div className={styles.imageFull}>
         <img src={block.src} alt="" />
       </div>
     )
@@ -342,47 +342,47 @@ export default function SuglarPage() {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/project" />
+        <div className={styles.headerMask}>
+          <SiteHeader active="/project" />
+        </div>
 
         <section className={styles.content}>
-          <ProjectBackLink className={styles.reveal} />
+          <div className={styles.topContent}>
+            <ProjectBackLink className={styles.reveal} />
 
-          <h1 className={`${styles.title} ${styles.reveal}`}>Suglar</h1>
+            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+              <div className={styles.heroHeader}>
+                <div className={styles.heroCopy}>
+                  <h1 className={styles.heroTitle}>Suglar</h1>
+                </div>
+              </div>
+            </header>
 
-          <div className={`${styles.hero} ${styles.reveal}`}>
-            <img
-              src={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")}
-              alt="Suglar candy-inspired board game"
-              className={styles.heroImage}
-            />
+            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+              <img
+                src={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")}
+                alt="Suglar candy-inspired board game"
+              />
+            </div>
+
+            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+              Suglar is a multi-sensory board game inspired by the colors, textures, and emotions of candy. It
+              transforms sweetness into strategy — combining visual delight with tactile play. Through color,
+              material, and interaction, the game explores how beauty and playability can coexist in a joyful,
+              immersive experience.
+            </p>
           </div>
 
-          <p className={`${styles.intro} ${styles.reveal}`}>
-            Suglar is a multi-sensory board game inspired by the colors, textures, and emotions of candy. It
-            transforms sweetness into strategy — combining visual delight with tactile play. Through color,
-            material, and interaction, the game explores how beauty and playability can coexist in a joyful,
-            immersive experience.
-          </p>
-
-          <div className={styles.meta}>
-            <p className={styles.metaItem}>UI&amp;UX Design</p>
-            <p className={styles.metaItem}>2023</p>
-          </div>
-
-          {sections.map((sec, index) => (
-            <div
-              key={sec.label}
-              className={`${styles.section} ${styles.reveal}`}
-              style={{ animationDelay: `${Math.min(index, 6) * 60}ms` }}
-            >
-              <p className={styles.label}>{sec.label}</p>
-              <div className={styles.sectionBody}>
+          <div className={styles.bodyContent}>
+            {sections.map((sec) => (
+              <section key={sec.label} className={styles.section}>
+                <h3 className={styles.kicker}>{sec.label}</h3>
                 {sec.blocks.map((block, blockIndex) => (
                   <Block key={blockIndex} block={block} />
                 ))}
-              </div>
-            </div>
-          ))}
+              </section>
+            ))}
+          </div>
         </section>
 
         <SiteFooter className={styles.reveal} />

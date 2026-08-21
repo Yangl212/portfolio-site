@@ -1,3 +1,5 @@
+import { Fragment } from "react"
+
 import { ProjectBackLink } from "../../../components/ProjectBackLink"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -44,32 +46,42 @@ export default function TarooPage() {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/project" />
+        <div className={styles.headerMask}>
+          <SiteHeader active="/project" />
+        </div>
 
         <section className={styles.content}>
-          <ProjectBackLink className={styles.reveal} />
+          <div className={styles.topContent}>
+            <ProjectBackLink className={styles.reveal} />
 
-          <h1 className={`${styles.title} ${styles.reveal} ${styles.delay1}`}>Taroo</h1>
+            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+              <div className={styles.heroHeader}>
+                <div className={styles.heroCopy}>
+                  <h1 className={styles.heroTitle}>Taroo</h1>
+                </div>
+              </div>
+            </header>
 
-          <div className={`${styles.heroImage} ${styles.reveal} ${styles.delay1}`}>
-            <img
-              src="/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png"
-              alt="Taroo project cover"
-            />
+            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+              <img
+                src="/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png"
+                alt="Taroo project cover"
+              />
+            </div>
+
+            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+              We want to reach people who might not consider themselves &ldquo;spiritual,&rdquo;
+              but who love meaningful design, visual tools, and personal insight. This includes
+              students, artists, designers, journalers, and anyone who just wants a pretty and
+              useful deck on their desk or shelf.
+            </p>
           </div>
 
-          <p className={`${styles.intro} ${styles.reveal} ${styles.delay2}`}>
-            We want to reach people who might not consider themselves &ldquo;spiritual,&rdquo;
-            but who love meaningful design, visual tools, and personal insight. This includes
-            students, artists, designers, journalers, and anyone who just wants a pretty and
-            useful deck on their desk or shelf.
-          </p>
-
-          <div className={`${styles.row} ${styles.reveal}`}>
-            <h3 className={styles.rowLabel}>Brand Overview</h3>
-            <div className={styles.rowBody}>
+          <div className={styles.bodyContent}>
+            <section className={styles.section}>
+              <h3 className={styles.kicker}>Brand Overview</h3>
               <h2 className={styles.subheading}>Key words</h2>
-              <div className={styles.keywordImage}>
+              <div className={styles.imageFull}>
                 <img
                   src="/framer-assets/images/613a87350cf8ea4863473ee18000054c7c15bd90.png"
                   alt="Taroo key words board"
@@ -77,7 +89,7 @@ export default function TarooPage() {
               </div>
 
               <h2 className={styles.subheading}>Audience</h2>
-              <p className={styles.bodyCopy}>
+              <p className={styles.body}>
                 We want to reach people who might not consider themselves &ldquo;spiritual,&rdquo;
                 but who love meaningful design, visual tools, and personal insight. This includes
                 students, artists, designers, journalers, and anyone who just wants a pretty and
@@ -85,38 +97,34 @@ export default function TarooPage() {
               </p>
 
               <h2 className={styles.subheading}>Personality traits</h2>
-              <ol className={styles.traitList}>
+              <ol className={styles.list}>
                 {personalityTraits.map((trait) => (
                   <li key={trait}>{trait}</li>
                 ))}
               </ol>
-            </div>
-          </div>
+            </section>
 
-          <div className={`${styles.row} ${styles.reveal}`}>
-            <h3 className={styles.rowLabel}>Competitor</h3>
-            <div className={styles.rowBody}>
+            <section className={styles.section}>
+              <h3 className={styles.kicker}>Competitor</h3>
               {competitors.map((competitor) => (
-                <article key={competitor.name} className={styles.competitorCard}>
+                <Fragment key={competitor.name}>
                   <h2 className={styles.subheading}>{competitor.name}</h2>
-                  <div className={styles.competitorImage}>
+                  <div className={styles.imageFull}>
                     <img src={competitor.image} alt={competitor.name} />
                   </div>
-                  <p className={styles.bodyCopy}>{competitor.description}</p>
-                  <p className={styles.keywords}>
-                    <span className={styles.keywordsLabel}>Keywords: </span>
+                  <p className={styles.body}>{competitor.description}</p>
+                  <p className={styles.body}>
+                    <strong>Keywords: </strong>
                     {competitor.keywords}
                   </p>
-                </article>
+                </Fragment>
               ))}
-            </div>
-          </div>
+            </section>
 
-          <div className={`${styles.row} ${styles.reveal}`}>
-            <h3 className={styles.rowLabel}>Mood Board</h3>
-            <div className={styles.rowBody}>
+            <section className={styles.section}>
+              <h3 className={styles.kicker}>Mood Board</h3>
               <h2 className={styles.subheading}>Color</h2>
-              <div className={styles.wideImage}>
+              <div className={styles.imageFull}>
                 <img
                   src="/framer-assets/images/e977fd7ff13555ab29179463ed5df8bc332fb12b.png"
                   alt="Taroo color mood board"
@@ -124,24 +132,24 @@ export default function TarooPage() {
               </div>
 
               <h2 className={styles.subheading}>Typography</h2>
-              <div className={styles.typeImage}>
+              <div className={styles.imageFull}>
                 <img
                   src="/framer-assets/images/7c81948064546ffd40e4f625440c6f034ab9d4cf.png"
                   alt="Taroo typography mood board"
                 />
               </div>
-            </div>
-          </div>
+            </section>
 
-          <div className={`${styles.row} ${styles.reveal}`}>
-            <h3 className={styles.rowLabel}>Final Product</h3>
-            <div className={styles.rowBody}>
-              {finalProductImages.map((src, index) => (
-                <div key={src} className={styles.finalImage}>
-                  <img src={src} alt={`Taroo final product ${index + 1}`} />
-                </div>
-              ))}
-            </div>
+            <section className={styles.section}>
+              <h3 className={styles.kicker}>Final Product</h3>
+              <div className={styles.imageRow}>
+                {finalProductImages.map((src, index) => (
+                  <div key={src} className={styles.imageRowItem}>
+                    <img src={src} alt={`Taroo final product ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </section>
 

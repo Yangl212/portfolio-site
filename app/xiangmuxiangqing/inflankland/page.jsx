@@ -173,49 +173,42 @@ const blocks = [
   { kind: "image", src: "/framer-assets/images/4a773ec1337589c431df4f478d69efc153dc2afa.png", alt: "Motion monitor device" }
 ]
 
-function Block({ block, index }) {
-  const delay = `${100 + (index % 6) * 60}ms`
+// The cover image and intro paragraph precede the first kicker and render as
+// the hero banner image + lead paragraph. Everything from the first kicker
+// onward is grouped into sections, one per kicker, each containing every
+// block up to (but not including) the next kicker.
+const [coverBlock, leadBlock, ...rest] = blocks
 
-  switch (block.kind) {
-    case "kicker":
-      return (
-        <div className={`${styles.row} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          <p className={styles.kicker}>{block.text}</p>
-          <div />
-        </div>
-      )
+const sections = rest.reduce((acc, block) => {
+  if (block.kind === "kicker") {
+    acc.push({ kicker: block.text, items: [] })
+  } else {
+    acc[acc.length - 1].items.push(block)
+  }
+  return acc
+}, [])
+
+function SectionItem({ item }) {
+  switch (item.kind) {
     case "h2":
-      return (
-        <div className={`${styles.row} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          <div />
-          <h2 className={styles.heading}>{block.text}</h2>
-        </div>
-      )
+      return <h2 className={styles.heading}>{item.text}</h2>
     case "h4":
-      return (
-        <div className={`${styles.row} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          <div />
-          <h3 className={styles.subheading}>{block.text}</h3>
-        </div>
-      )
+      return <h3 className={styles.subheading}>{item.text}</h3>
     case "p":
-      return (
-        <div className={`${styles.row} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          <div />
-          <p className={styles.body}>{block.text}</p>
-        </div>
-      )
+      return <p className={styles.body}>{item.text}</p>
     case "image":
       return (
-        <div className={`${styles.imageBlock} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          <img src={block.src} alt={block.alt} className={styles.image} />
+        <div className={styles.imageFull}>
+          <img src={item.src} alt={item.alt} />
         </div>
       )
     case "imageRow":
       return (
-        <div className={`${styles.imageRow} ${styles.reveal}`} style={{ animationDelay: delay }}>
-          {block.images.map((image) => (
-            <img key={image.src} src={image.src} alt={image.alt} className={styles.image} />
+        <div className={styles.imageRow}>
+          {item.images.map((image) => (
+            <div key={image.src} className={styles.imageRowItem}>
+              <img src={image.src} alt={image.alt} />
+            </div>
           ))}
         </div>
       )
@@ -228,16 +221,39 @@ export default function InflanklandPage() {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/project" />
+        <div className={styles.headerMask}>
+          <SiteHeader active="/project" />
+        </div>
 
         <section className={styles.content}>
-          <ProjectBackLink className={styles.reveal} />
+          <div className={styles.topContent}>
+            <ProjectBackLink className={styles.reveal} />
 
-          <h1 className={`${styles.title} ${styles.reveal}`}>INFLANKLAND</h1>
+            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+              <div className={styles.heroHeader}>
+                <div className={styles.heroCopy}>
+                  <h1 className={styles.heroTitle}>Inflankland</h1>
+                </div>
+              </div>
+            </header>
 
-          <div className={styles.blocks}>
-            {blocks.map((block, index) => (
-              <Block key={index} block={block} index={index} />
+            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+              <img src={coverBlock.src} alt={coverBlock.alt} />
+            </div>
+
+            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+              {leadBlock.text}
+            </p>
+          </div>
+
+          <div className={styles.bodyContent}>
+            {sections.map((section) => (
+              <section key={section.kicker} className={styles.section}>
+                <h3 className={styles.kicker}>{section.kicker}</h3>
+                {section.items.map((item, index) => (
+                  <SectionItem key={index} item={item} />
+                ))}
+              </section>
             ))}
           </div>
         </section>

@@ -134,115 +134,100 @@ function imgSrc(hash) {
   return `/framer-assets/images/${hash}`
 }
 
-function delayFor(index) {
-  return `${150 + Math.min(index, 12) * 55}ms`
+// The intro paragraph (before the first eyebrow) is rendered as the hero lead.
+const leadBlock = blocks[0]
+
+// Group the remaining flat blocks into sections keyed by their eyebrow marker.
+const sections = blocks.slice(1).reduce((acc, block) => {
+  if (block.type === "eyebrow") {
+    acc.push({ kicker: block.text, items: [] })
+    return acc
+  }
+
+  acc[acc.length - 1].items.push(block)
+  return acc
+}, [])
+
+function SectionItem({ item }) {
+  switch (item.type) {
+    case "heading":
+      return <h2 className={styles.heading}>{item.text}</h2>
+    case "text":
+      if (item.lines) {
+        return (
+          <p className={styles.body}>
+            {item.lines.map((line, i) => (
+              <span key={i}>
+                {line}
+                {i < item.lines.length - 1 && <br />}
+              </span>
+            ))}
+          </p>
+        )
+      }
+      return <p className={styles.body}>{item.text}</p>
+    case "image":
+      return (
+        <div className={styles.imageFull}>
+          <img src={imgSrc(item.src)} alt="" />
+        </div>
+      )
+    case "imagePair":
+      return (
+        <div className={styles.imageRow}>
+          {item.images.map((src) => (
+            <div key={src} className={styles.imageRowItem}>
+              <img src={imgSrc(src)} alt="" />
+            </div>
+          ))}
+        </div>
+      )
+    default:
+      return null
+  }
 }
 
 export default function TotnurtureProjectPage() {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/project" />
+        <div className={styles.headerMask}>
+          <SiteHeader active="/project" />
+        </div>
 
         <section className={styles.content}>
-          <ProjectBackLink className={styles.reveal} />
+          <div className={styles.topContent}>
+            <ProjectBackLink className={styles.reveal} />
 
-          <h1 className={`${styles.title} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-            Totnurture
-          </h1>
+            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+              <div className={styles.heroHeader}>
+                <div className={styles.heroCopy}>
+                  <h1 className={styles.heroTitle}>Totnurture</h1>
+                </div>
+              </div>
+            </header>
 
-          <img
-            src={imgSrc("182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg")}
-            alt="Totnurture"
-            className={`${styles.heroImage} ${styles.reveal}`}
-            style={{ animationDelay: "120ms" }}
-          />
+            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+              <img
+                src={imgSrc("182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg")}
+                alt="Totnurture"
+              />
+            </div>
 
-          <div className={styles.body}>
-            {blocks.map((block, index) => {
-              const delay = delayFor(index)
+            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+              {leadBlock.text}
+            </p>
+          </div>
 
-              if (block.type === "eyebrow") {
-                return (
-                  <p
-                    key={index}
-                    className={`${styles.eyebrow} ${styles.reveal}`}
-                    style={{ animationDelay: delay }}
-                  >
-                    {block.text}
-                  </p>
-                )
-              }
-
-              if (block.type === "heading") {
-                return (
-                  <h2
-                    key={index}
-                    className={`${styles.heading} ${styles.reveal}`}
-                    style={{ animationDelay: delay }}
-                  >
-                    {block.text}
-                  </h2>
-                )
-              }
-
-              if (block.type === "text") {
-                if (block.lines) {
-                  return (
-                    <p
-                      key={index}
-                      className={`${styles.text} ${styles.reveal}`}
-                      style={{ animationDelay: delay }}
-                    >
-                      {block.lines.map((line, lineIndex) => (
-                        <span key={lineIndex}>
-                          {line}
-                          {lineIndex < block.lines.length - 1 && <br />}
-                        </span>
-                      ))}
-                    </p>
-                  )
-                }
-
-                return (
-                  <p
-                    key={index}
-                    className={`${styles.text} ${styles.reveal}`}
-                    style={{ animationDelay: delay }}
-                  >
-                    {block.text}
-                  </p>
-                )
-              }
-
-              if (block.type === "image") {
-                return (
-                  <img
-                    key={index}
-                    src={imgSrc(block.src)}
-                    alt=""
-                    className={`${styles.image} ${styles.reveal}`}
-                    style={{ animationDelay: delay }}
-                  />
-                )
-              }
-
-              if (block.type === "imagePair") {
-                return (
-                  <div
-                    key={index}
-                    className={`${styles.imagePair} ${styles.reveal}`}
-                    style={{ animationDelay: delay }}
-                  >
-                    {block.images.map((src) => (
-                      <img key={src} src={imgSrc(src)} alt="" className={styles.pairImage} />
-                    ))}
-                  </div>
-                )
-              }
-
-              return null
-            })}
+          <div className={styles.bodyContent}>
+            {sections.map((section, index) => (
+              <section key={index} className={styles.section}>
+                <h3 className={styles.kicker}>{section.kicker}</h3>
+                {section.items.map((item, itemIndex) => (
+                  <SectionItem key={itemIndex} item={item} />
+                ))}
+              </section>
+            ))}
           </div>
         </section>
 
