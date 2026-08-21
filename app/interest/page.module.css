@@ -17,136 +17,198 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 88px;
-  padding: 68px 10px 72px;
+  gap: 0;
+  padding: 200px 24px 0;
 }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-  column-gap: 56px;
-  align-items: start;
-  min-height: 300px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+  padding-bottom: 200px;
 }
 
 .heroTitle {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-weight: 400;
-  font-size: clamp(72px, 10vw, 112px);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
+  font-size: 149px;
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: var(--text);
+}
+
+.heroSpacer {
+  min-height: 1px;
 }
 
 .heroCopy {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  max-width: 560px;
-  padding-top: 102px;
+  max-width: 880px;
 }
 
 .introText {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-weight: 400;
-  font-size: clamp(22px, 2.35vw, 26px);
-  line-height: 1.24;
+  font-size: 36px;
+  line-height: 1.2;
   color: var(--text);
 }
 
-.zineSection {
+.sectionBlock {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 24px;
+  padding-bottom: 24px;
 }
 
 .banner {
   width: 100%;
   overflow: hidden;
-  background: #d9d2cf;
+  background: #d3d1d1;
 }
 
-.banner img {
+.banner img,
+.squareMedia img,
+.materialWide img,
+.materialNarrow img,
+.travelImage img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 
-.zineGrid {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.95fr) minmax(0, 1fr) minmax(0, 0.92fr);
-  column-gap: 24px;
-  row-gap: 22px;
-  align-items: start;
-  padding-top: 10px;
-  border-top: 1px dotted rgba(34, 34, 34, 0.9);
-}
-
-.zineLabelBlock {
+.sectionCard {
   display: flex;
   flex-direction: column;
-  gap: 52px;
-  min-height: 100%;
+  gap: 4px;
+  padding: 16px 0;
+  border-top: 1px dashed var(--border);
 }
 
-.sectionLabel {
+.sectionTitle {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-weight: 500;
-  font-size: 27px;
-  line-height: 1.1;
-  text-transform: uppercase;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.sectionDescription {
+  margin: 0;
+  max-width: 820px;
+  font-size: 20px;
+  line-height: 1.4;
   color: var(--text);
 }
 
-.sideNote {
-  margin: 0;
-  max-width: 220px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--muted);
+.mediaRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+  align-items: start;
 }
 
-.zineDescBlock {
-  grid-column: 2 / 4;
-}
-
-.zineDesc {
+.mediaCopy {
   margin: 0;
-  max-width: 760px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 1.55;
+  max-width: 600px;
+  font-size: 20px;
+  line-height: 1.4;
   color: var(--text);
 }
 
-.imageBlock {
-  overflow: hidden;
-  background: #d9d2cf;
-}
-
-.imageBlock img {
-  display: block;
+.mediaPair,
+.materialPair {
+  display: flex;
+  gap: 24px;
   width: 100%;
-  height: auto;
-  object-fit: cover;
+}
+
+.squareMedia,
+.materialWide,
+.materialNarrow {
+  overflow: hidden;
+  background: #d3d1d1;
+}
+
+.squareMedia {
+  flex: 1 0 0;
+  aspect-ratio: 1;
+}
+
+.materialWide {
+  flex: 1.91692 0 0;
+  aspect-ratio: 1.91692;
+}
+
+.materialNarrow {
+  flex: 2.11186 0 0;
+  aspect-ratio: 2.11186;
+}
+
+.travelSection {
+  padding: 32px 0 200px;
+}
+
+.travelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.travelCard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.travelImage {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  background: #d3d1d1;
+}
+
+.travelMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+.travelPlace,
+.travelDate {
+  margin: 0;
+}
+
+.travelPlace {
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.travelDate {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.4;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
-  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+  transform: translateY(50px);
+  animation: rise 1500ms cubic-bezier(0.05, 0.53, 0.4, 1) forwards;
 }
 
 .delay1 {
-  animation-delay: 120ms;
+  animation-delay: 300ms;
+}
+
+.delay2 {
+  animation-delay: 450ms;
 }
 
 @keyframes rise {
@@ -156,56 +218,83 @@
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1439px) {
+  .heroTitle {
+    font-size: 72px;
+  }
+
+  .introText {
+    font-size: 29px;
+  }
+
   .content {
-    gap: 72px;
-    padding-top: 56px;
+    padding-top: 160px;
   }
 
   .hero {
-    grid-template-columns: 1fr;
-    row-gap: 28px;
-    min-height: 0;
+    padding-bottom: 160px;
   }
 
-  .heroCopy {
-    padding-top: 0;
-    gap: 28px;
-    max-width: 720px;
+  .travelSection {
+    padding-bottom: 160px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .travelGrid {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
   }
 }
 
 @media (max-width: 809px) {
   .content {
-    gap: 56px;
-    padding: 40px 16px 56px;
+    padding: 120px 24px 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 120px;
+  }
+
+  .heroSpacer {
+    display: none;
   }
 
   .heroTitle {
-    font-size: 52px;
+    font-size: 36px;
   }
 
   .introText {
-    font-size: 18px;
-    line-height: 1.32;
+    font-size: 23px;
   }
 
-  .zineGrid {
+  .mediaRow {
     grid-template-columns: 1fr;
-    row-gap: 18px;
   }
 
-  .zineLabelBlock,
-  .zineDescBlock {
-    grid-column: auto;
+  .mediaPair,
+  .materialPair {
+    flex-direction: column;
   }
 
-  .zineLabelBlock {
-    gap: 16px;
+  .travelGrid {
+    grid-template-columns: 1fr;
   }
 
-  .sideNote,
-  .zineDesc {
-    max-width: none;
+  .travelImage {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .travelSection {
+    padding-bottom: 120px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
