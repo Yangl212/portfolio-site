@@ -93,14 +93,17 @@ const sections = [
         text: "Originally developed by Joseph Wolpe in the 1950s, is a behavioral treatment method based on classical conditioning principles. It proposes that gradually and repeatedly facing feared stimuli in controlled environments can desensitize individuals and reduce anxiety. This technique became foundational in treating phobias, including social anxiety, which is marked by intense fear of social judgment or embarrassment."
       },
       {
-        type: "image",
-        src: "/framer-assets/images/7675f81965c187f9c6fc79b71ac105ebc2451527.png",
-        alt: "User persona research"
-      },
-      {
-        type: "image",
-        src: "/framer-assets/images/58ef9d601df9a603aa776d99d93b0d2b7465b240.png",
-        alt: "User persona detail"
+        type: "imageRow",
+        images: [
+          {
+            src: "/framer-assets/images/7675f81965c187f9c6fc79b71ac105ebc2451527.png",
+            alt: "User persona research"
+          },
+          {
+            src: "/framer-assets/images/58ef9d601df9a603aa776d99d93b0d2b7465b240.png",
+            alt: "User persona detail"
+          }
+        ]
       }
     ]
   },
@@ -135,24 +138,30 @@ const sections = [
         text: "Originally developed by Joseph Wolpe in the 1950s, is a behavioral treatment method based on classical conditioning principles. It proposes that gradually and repeatedly facing feared stimuli in controlled environments can desensitize individuals and reduce anxiety. This technique became foundational in treating phobias, including social anxiety, which is marked by intense fear of social judgment or embarrassment."
       },
       {
-        type: "image",
-        src: "/framer-assets/images/46821f8b9f877c569dd97ca7338af323973ab140.png",
-        alt: "Lo-fi wireframe, screen 1"
+        type: "imageRow",
+        images: [
+          {
+            src: "/framer-assets/images/46821f8b9f877c569dd97ca7338af323973ab140.png",
+            alt: "Lo-fi wireframe, screen 1"
+          },
+          {
+            src: "/framer-assets/images/ca5dcfb4ff7f9eda5862eb9127118244684dbddc.png",
+            alt: "Lo-fi wireframe, screen 2"
+          }
+        ]
       },
       {
-        type: "image",
-        src: "/framer-assets/images/ca5dcfb4ff7f9eda5862eb9127118244684dbddc.png",
-        alt: "Lo-fi wireframe, screen 2"
-      },
-      {
-        type: "image",
-        src: "/framer-assets/images/cce5db55b31542f83437e42ab2a3ffd4418e69f5.png",
-        alt: "Lo-fi wireframe, screen 3"
-      },
-      {
-        type: "image",
-        src: "/framer-assets/images/5aba2ceb4368815dccaf4c7a4c67711879fcdda9.png",
-        alt: "Lo-fi wireframe, screen 4"
+        type: "imageRow",
+        images: [
+          {
+            src: "/framer-assets/images/cce5db55b31542f83437e42ab2a3ffd4418e69f5.png",
+            alt: "Lo-fi wireframe, screen 3"
+          },
+          {
+            src: "/framer-assets/images/5aba2ceb4368815dccaf4c7a4c67711879fcdda9.png",
+            alt: "Lo-fi wireframe, screen 4"
+          }
+        ]
       },
       { type: "heading", text: "Feedback" },
       {
@@ -266,6 +275,16 @@ function SectionItem({ item }) {
       return (
         <div className={styles.imageFull}>
           <img src={item.src} alt={item.alt} />
+        </div>
+      )
+    case "imageRow":
+      return (
+        <div className={styles.imageRow}>
+          {item.images.map((image) => (
+            <div key={image.src} className={styles.imageRowItem}>
+              <img src={image.src} alt={image.alt} />
+            </div>
+          ))}
         </div>
       )
     default:
