@@ -52,24 +52,28 @@ export default function GraveyardPage() {
 
           <div className={styles.bodyContent}>
             <section className={styles.section}>
-              <h3 className={styles.kicker}>Current problem</h3>
-              <h2 className={styles.heading}>Censored Language in the Digital Age</h2>
-              <p className={styles.body}>
-                In today&rsquo;s digital world, language is no longer completely free. Many words
-                have been banned or restricted on the internet, especially on social media
-                platforms. To continue expressing ideas and emotions, people have started to
-                create new ways of communication—using alternative spellings, homophones,
-                symbols, or visual metaphors to replace the censored words. This constant
-                adaptation shows how language evolves under control and how users resist silence
-                through creativity. &ldquo;Graveyard&rdquo; explores this phenomenon by collecting
-                and visualizing these &ldquo;dead&rdquo; or hidden words, revealing how censorship
-                shapes online expression and cultural memory.
-              </p>
-              <div className={styles.figurePortrait}>
-                <img
-                  src="/framer-assets/images/230be045efbfe0922d1a7719dc1c67095f348b31.png"
-                  alt="Censored language reference archive"
-                />
+              <div className={styles.kickerColumn}>
+                <h3 className={styles.kicker}>Current problem</h3>
+                <div className={styles.figurePortrait}>
+                  <img
+                    src="/framer-assets/images/230be045efbfe0922d1a7719dc1c67095f348b31.png"
+                    alt="Censored language reference archive"
+                  />
+                </div>
+              </div>
+              <div className={styles.sectionMain}>
+                <h2 className={styles.heading}>Censored Language in the Digital Age</h2>
+                <p className={styles.body}>
+                  In today&rsquo;s digital world, language is no longer completely free. Many
+                  words have been banned or restricted on the internet, especially on social
+                  media platforms. To continue expressing ideas and emotions, people have started
+                  to create new ways of communication—using alternative spellings, homophones,
+                  symbols, or visual metaphors to replace the censored words. This constant
+                  adaptation shows how language evolves under control and how users resist
+                  silence through creativity. &ldquo;Graveyard&rdquo; explores this phenomenon by
+                  collecting and visualizing these &ldquo;dead&rdquo; or hidden words, revealing
+                  how censorship shapes online expression and cultural memory.
+                </p>
               </div>
             </section>
 
