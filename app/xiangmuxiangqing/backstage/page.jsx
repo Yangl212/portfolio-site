@@ -231,6 +231,11 @@ const sections = [
         alt: "Typography style guide"
       },
       { type: "subheading", text: "Color Palette" },
+      {
+        type: "image",
+        src: "/pic/color.gif",
+        alt: "Color palette animation"
+      },
       { type: "subheading", text: "Component Library" },
       {
         type: "image",
