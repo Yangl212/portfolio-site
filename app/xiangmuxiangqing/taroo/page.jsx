@@ -142,7 +142,7 @@ export default function TarooPage() {
 
             <section className={styles.section}>
               <h3 className={styles.kicker}>Final Product</h3>
-              <div className={styles.imageRow}>
+              <div className={styles.imageRow3}>
                 {finalProductImages.map((src, index) => (
                   <div key={src} className={styles.imageRowItem}>
                     <img src={src} alt={`Taroo final product ${index + 1}`} />
