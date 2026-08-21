@@ -76,12 +76,6 @@ const projects = [
 
 export default function ProjectPage() {
   const [selectedFilter, setSelectedFilter] = useState("All")
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-
-  const selectFilter = (filter) => {
-    setSelectedFilter(filter)
-    setIsFilterOpen(false)
-  }
 
   return (
     <main className={styles.page}>
@@ -92,35 +86,24 @@ export default function ProjectPage() {
           <div className={styles.header}>
             <h1 className={`${styles.title} ${styles.reveal}`}>Project</h1>
 
-            <div className={`${styles.filter} ${styles.reveal}`}>
-              <button
-                type="button"
-                className={styles.filterButton}
-                aria-expanded={isFilterOpen}
-                aria-haspopup="menu"
-                onClick={() => setIsFilterOpen((open) => !open)}
-              >
-                <span>{selectedFilter}</span>
-                <span className={styles.filterChevron} aria-hidden="true" />
-              </button>
-
-              {isFilterOpen && (
-                <div className={styles.filterMenu} role="menu" aria-label="Project category">
-                  {["All", "UI/UX", "Visual"].map((filter) => (
-                    <button
-                      key={filter}
-                      type="button"
-                      role="menuitemradio"
-                      aria-checked={selectedFilter === filter}
-                      className={styles.filterOption}
-                      data-selected={selectedFilter === filter}
-                      onClick={() => selectFilter(filter)}
-                    >
-                      {filter}
-                    </button>
-                  ))}
-                </div>
-              )}
+            <div
+              className={`${styles.filter} ${styles.reveal}`}
+              role="radiogroup"
+              aria-label="Project category"
+            >
+              {["All", "UI/UX", "Visual"].map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  role="radio"
+                  aria-checked={selectedFilter === filter}
+                  className={styles.filterOption}
+                  data-selected={selectedFilter === filter}
+                  onClick={() => setSelectedFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
             </div>
           </div>
 
