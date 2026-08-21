@@ -232,7 +232,7 @@ const sections = [
       },
       { type: "subheading", text: "Color Palette" },
       {
-        type: "image",
+        type: "imageBlend",
         src: "/pic/color.gif",
         alt: "Color palette animation"
       },
@@ -279,6 +279,12 @@ function SectionItem({ item }) {
     case "image":
       return (
         <div className={styles.imageFull}>
+          <img src={item.src} alt={item.alt} />
+        </div>
+      )
+    case "imageBlend":
+      return (
+        <div className={styles.imageBlend}>
           <img src={item.src} alt={item.alt} />
         </div>
       )
