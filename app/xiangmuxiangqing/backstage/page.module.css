@@ -219,10 +219,6 @@
   display: block;
 }
 
-.closingCta {
-  align-self: flex-start;
-}
-
 .reveal {
   opacity: 0;
   transform: translateY(36px);

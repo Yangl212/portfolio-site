@@ -241,7 +241,8 @@ const sections = [
         type: "image",
         src: "/framer-assets/images/c7b5b198ecbcc9e0361162f40233915523116c0c.png",
         alt: "High-fidelity screens"
-      }
+      },
+      { type: "cta", text: "Click here to try", href: prototypeUrl }
     ]
   }
 ]
@@ -285,6 +286,17 @@ function SectionItem({ item }) {
             </div>
           ))}
         </div>
+      )
+    case "cta":
+      return (
+        <a
+          className={styles.cta}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {item.text} <span aria-hidden="true">&#8594;</span>
+        </a>
       )
     default:
       return null
@@ -344,15 +356,6 @@ export default function BackstagePage() {
               </section>
             ))}
           </div>
-
-          <a
-            className={`${styles.cta} ${styles.closingCta} ${styles.reveal}`}
-            href={prototypeUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Click here to try <span aria-hidden="true">&#8594;</span>
-          </a>
         </section>
 
         <SiteFooter className={styles.reveal} />
