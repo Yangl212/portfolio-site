@@ -169,19 +169,17 @@ export default function AlcohalProjectPage() {
                   />
                 </div>
               </div>
-              <div className={styles.imageRow}>
-                <div className={styles.imageRowItem}>
-                  <img
-                    src="/framer-assets/images/c6bb85e5adf83cf08f8c9093a3e096d4fe83dcbc.jpg"
-                    alt="Final book presentation"
-                  />
-                </div>
-                <div className={styles.imageRowItem}>
-                  <img
-                    src="/framer-assets/images/1a49a56a595edf30f54b00a5547d495e074389b7.jpg"
-                    alt="Final book presentation"
-                  />
-                </div>
+              <div className={styles.imageFull}>
+                <img
+                  src="/framer-assets/images/c6bb85e5adf83cf08f8c9093a3e096d4fe83dcbc.jpg"
+                  alt="Final book presentation"
+                />
+              </div>
+              <div className={styles.imageFull}>
+                <img
+                  src="/framer-assets/images/1a49a56a595edf30f54b00a5547d495e074389b7.jpg"
+                  alt="Final book presentation"
+                />
               </div>
             </section>
           </div>

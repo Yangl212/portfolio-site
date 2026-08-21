@@ -275,26 +275,16 @@ const sections = [
   {
     label: "Final Product",
     blocks: [
-      {
-        type: "imageRow",
-        srcs: [
-          img("3481cabd3205746d092e3c5502bb5c105650078a"),
-          img("00bb1b7ff07ca26c4e9c8c0cdf78fa973d6a4fde")
-        ]
-      }
+      { type: "image", src: img("3481cabd3205746d092e3c5502bb5c105650078a") },
+      { type: "image", src: img("00bb1b7ff07ca26c4e9c8c0cdf78fa973d6a4fde") }
     ]
   },
   {
     label: "User Feedback",
     blocks: [
-      {
-        type: "imageRow",
-        srcs: [
-          img("8a20674441c2b898970a4715a754956babc1861e"),
-          img("be9017fde875eccd706cd08fd62ab5ece4ea6fb7"),
-          img("de15468bc22d5c9ef56cbe03a29c9ab1dd1b643d")
-        ]
-      }
+      { type: "image", src: img("8a20674441c2b898970a4715a754956babc1861e") },
+      { type: "image", src: img("be9017fde875eccd706cd08fd62ab5ece4ea6fb7") },
+      { type: "image", src: img("de15468bc22d5c9ef56cbe03a29c9ab1dd1b643d") }
     ]
   }
 ]
