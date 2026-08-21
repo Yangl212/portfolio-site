@@ -202,18 +202,6 @@
   display: block;
 }
 
-.imageBlend {
-  width: 100%;
-  overflow: hidden;
-}
-
-.imageBlend img {
-  width: 100%;
-  height: auto;
-  display: block;
-  mix-blend-mode: multiply;
-}
-
 .imageRow {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -230,12 +230,6 @@ const sections = [
         src: "/framer-assets/images/30810656e28623dcffdd5669b3d6603ae130054d.png",
         alt: "Typography style guide"
       },
-      { type: "subheading", text: "Color Palette" },
-      {
-        type: "imageBlend",
-        src: "/pic/color.gif",
-        alt: "Color palette animation"
-      },
       { type: "subheading", text: "Component Library" },
       {
         type: "image",
@@ -279,12 +273,6 @@ function SectionItem({ item }) {
     case "image":
       return (
         <div className={styles.imageFull}>
-          <img src={item.src} alt={item.alt} />
-        </div>
-      )
-    case "imageBlend":
-      return (
-        <div className={styles.imageBlend}>
           <img src={item.src} alt={item.alt} />
         </div>
       )
