@@ -20,7 +20,6 @@ export default function LastMessagePage() {
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Last message</h1>
-                  <p className={styles.meta}>AI + Web Design - 2025</p>
                 </div>
                 <a
                   className={styles.cta}
@@ -28,7 +27,7 @@ export default function LastMessagePage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Click here to try
+                  Click here to try <span aria-hidden="true">&#8594;</span>
                 </a>
               </div>
             </header>

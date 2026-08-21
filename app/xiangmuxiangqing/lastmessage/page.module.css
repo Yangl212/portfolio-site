@@ -72,23 +72,16 @@
   text-transform: uppercase;
 }
 
-.meta {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
 .cta {
   display: inline-flex;
   align-self: flex-start;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 44px;
   padding: 12px 18px;
-  border-radius: 999px;
+  border: 1px solid var(--border);
+  border-radius: 0;
   background: var(--text);
   color: var(--inverse);
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
@@ -96,12 +89,13 @@
   font-size: 0.875rem;
   line-height: 1;
   text-decoration: none;
-  transition: opacity 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 .cta:hover,
 .cta:focus-visible {
-  opacity: 0.8;
+  background: #f3c443;
+  color: #222222;
 }
 
 .lead {
@@ -221,7 +215,7 @@
 
   .heroHeader {
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 24px;
   }
@@ -270,10 +264,6 @@
 
   .heroTitle {
     font-size: clamp(5.5rem, 9vw, 8.5rem);
-  }
-
-  .meta {
-    font-size: 1rem;
   }
 
   .cta {
