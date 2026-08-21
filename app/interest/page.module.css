@@ -22,9 +22,9 @@
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr);
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
   padding-bottom: 200px;
 }
 
@@ -38,11 +38,14 @@
   text-transform: uppercase;
 }
 
-.heroSpacer {
-  min-height: 1px;
+.heroCopyRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
 }
 
 .heroCopy {
+  grid-column: 2;
   max-width: 880px;
 }
 
@@ -252,13 +255,16 @@
   }
 
   .hero {
-    grid-template-columns: 1fr;
     gap: 32px;
     padding-bottom: 120px;
   }
 
-  .heroSpacer {
-    display: none;
+  .heroCopyRow {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy {
+    grid-column: 1;
   }
 
   .heroTitle {

@@ -46,17 +46,17 @@ export default function InterestPage() {
           <div className={`${styles.hero} ${styles.reveal}`}>
             <h1 className={styles.heroTitle}>Interest</h1>
 
-            <div className={styles.heroSpacer} aria-hidden="true" />
-
-            <div className={styles.heroCopy}>
-              <p className={styles.introText}>
-                I like visual and graphic design, making zines, posters, and layouts just for
-                fun. I&apos;m also into anime-inspired fashion and sometimes design outfits
-                myself.
-                <br />
-                <br />
-                Outside of design, I really enjoy cooking and trying new recipes.
-              </p>
+            <div className={styles.heroCopyRow}>
+              <div className={styles.heroCopy}>
+                <p className={styles.introText}>
+                  I like visual and graphic design, making zines, posters, and layouts just for
+                  fun. I&apos;m also into anime-inspired fashion and sometimes design outfits
+                  myself.
+                  <br />
+                  <br />
+                  Outside of design, I really enjoy cooking and trying new recipes.
+                </p>
+              </div>
             </div>
           </div>
 
