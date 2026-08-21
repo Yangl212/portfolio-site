@@ -189,16 +189,16 @@ export default function GraveyardPage() {
                 allowFullScreen
               />
             </div>
-          </div>
 
-          <a
-            className={`${styles.cta} ${styles.reveal}`}
-            href={prototypeUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Click here to try <span aria-hidden="true">&#8594;</span>
-          </a>
+            <a
+              className={`${styles.cta} ${styles.reveal}`}
+              href={prototypeUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Click here to try <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
         </section>
 
         <SiteFooter className={styles.reveal} />
