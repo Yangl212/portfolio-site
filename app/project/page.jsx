@@ -124,7 +124,7 @@ export default function ProjectPage() {
           <div className={styles.grid}>
             {visibleProjects.map((project, index) => (
               <article
-                key={project.href}
+                key={`${selectedFilter}-${project.href}`}
                 className={`${styles.card} ${styles.reveal}`}
                 style={{ animationDelay: `${150 + index * 80}ms` }}
               >
