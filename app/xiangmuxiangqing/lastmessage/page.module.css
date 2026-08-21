@@ -215,7 +215,7 @@
 
   .heroHeader {
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 24px;
   }
