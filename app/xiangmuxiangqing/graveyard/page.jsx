@@ -4,6 +4,8 @@ import { SiteHeader } from "../../../components/SiteHeader"
 
 import styles from "./page.module.css"
 
+const prototypeUrl = "https://graveyard.framer.website/?editSite"
+
 export default function GraveyardPage() {
   return (
     <main className={styles.page}>
@@ -21,6 +23,14 @@ export default function GraveyardPage() {
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Graveyard</h1>
                 </div>
+                <a
+                  className={styles.cta}
+                  href={prototypeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Click here to try <span aria-hidden="true">&#8594;</span>
+                </a>
               </div>
             </header>
 
@@ -166,6 +176,15 @@ export default function GraveyardPage() {
               </div>
             </section>
           </div>
+
+          <a
+            className={`${styles.cta} ${styles.reveal}`}
+            href={prototypeUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Click here to try <span aria-hidden="true">&#8594;</span>
+          </a>
         </section>
 
         <SiteFooter className={styles.reveal} />
