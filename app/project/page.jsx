@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { useState } from "react"
 
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
@@ -72,6 +75,14 @@ const projects = [
 ]
 
 export default function ProjectPage() {
+  const [selectedFilter, setSelectedFilter] = useState("All")
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+  const selectFilter = (filter) => {
+    setSelectedFilter(filter)
+    setIsFilterOpen(false)
+  }
+
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
@@ -80,6 +91,37 @@ export default function ProjectPage() {
         <section className={styles.content}>
           <div className={styles.header}>
             <h1 className={`${styles.title} ${styles.reveal}`}>Project</h1>
+
+            <div className={`${styles.filter} ${styles.reveal}`}>
+              <button
+                type="button"
+                className={styles.filterButton}
+                aria-expanded={isFilterOpen}
+                aria-haspopup="menu"
+                onClick={() => setIsFilterOpen((open) => !open)}
+              >
+                <span>{selectedFilter}</span>
+                <span className={styles.filterChevron} aria-hidden="true" />
+              </button>
+
+              {isFilterOpen && (
+                <div className={styles.filterMenu} role="menu" aria-label="Project category">
+                  {["All", "UI/UX", "Visual"].map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      role="menuitemradio"
+                      aria-checked={selectedFilter === filter}
+                      className={styles.filterOption}
+                      data-selected={selectedFilter === filter}
+                      onClick={() => selectFilter(filter)}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className={styles.grid}>
