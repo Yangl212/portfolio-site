@@ -181,18 +181,14 @@ export default function GraveyardPage() {
               </div>
             </section>
 
-            <a
-              className={`${styles.videoCard} ${styles.reveal}`}
-              href="https://www.youtube.com/watch?v=QIUnXm6PrHs&t=32s"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Watch Graveyard walkthrough video on YouTube"
-            >
-              <img
-                src="https://i.ytimg.com/vi_webp/QIUnXm6PrHs/sddefault.webp"
-                alt="Graveyard walkthrough video thumbnail"
+            <div className={`${styles.videoCard} ${styles.reveal}`}>
+              <iframe
+                src="https://www.youtube.com/embed/QIUnXm6PrHs?start=32"
+                title="Graveyard walkthrough video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
               />
-            </a>
+            </div>
           </div>
 
           <a
