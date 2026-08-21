@@ -119,24 +119,25 @@ export default function GraveyardPage() {
                 emojis, symbols, and codes. These &ldquo;buried&rdquo; words form a linguistic
                 graveyard where meaning survives through disguise.
               </p>
-            </section>
 
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Design Principle</h3>
-              <p className={styles.body}>
-                The website is designed as a digital archive rather than a traditional database.
-                Inspired by the structure of filing cabinets, information is organized into
-                drawers that group censored words by different themes, regions, or platforms.
-              </p>
-              <p className={styles.body}>
-                The interaction is intentionally simple and intuitive. Each drawer acts as an
-                entry point into a collection of archived words. Opening a drawer reveals original
-                terms, alternative expressions, contextual information, and related references.
-              </p>
-              <p className={styles.body}>
-                By navigating between drawers, users can compare how similar ideas evolve across
-                different cultures and digital environments.
-              </p>
+              <div className={styles.subsection}>
+                <p className={styles.body}>
+                  The website is designed as a digital archive rather than a traditional
+                  database. Inspired by the structure of filing cabinets, information is
+                  organized into drawers that group censored words by different themes, regions,
+                  or platforms.
+                </p>
+                <p className={styles.body}>
+                  The interaction is intentionally simple and intuitive. Each drawer acts as an
+                  entry point into a collection of archived words. Opening a drawer reveals
+                  original terms, alternative expressions, contextual information, and related
+                  references.
+                </p>
+                <p className={styles.body}>
+                  By navigating between drawers, users can compare how similar ideas evolve
+                  across different cultures and digital environments.
+                </p>
+              </div>
             </section>
 
             <section className={styles.section}>
@@ -179,6 +180,19 @@ export default function GraveyardPage() {
                 />
               </div>
             </section>
+
+            <a
+              className={`${styles.videoCard} ${styles.reveal}`}
+              href="https://www.youtube.com/watch?v=QIUnXm6PrHs&t=32s"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Watch Graveyard walkthrough video on YouTube"
+            >
+              <img
+                src="https://i.ytimg.com/vi_webp/QIUnXm6PrHs/sddefault.webp"
+                alt="Graveyard walkthrough video thumbnail"
+              />
+            </a>
           </div>
 
           <a
