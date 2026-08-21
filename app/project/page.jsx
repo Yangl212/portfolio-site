@@ -50,8 +50,8 @@ const projects = [
     filter: "Visual"
   },
   {
-    title: "ALCOHAL DIRECTORY",
-    category: "Visual Design",
+    title: "ALCOHOL DIRECTORY",
+    category: "Zine",
     year: "2024",
     href: "/xiangmuxiangqing/alcohal",
     image: "/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png",
@@ -59,7 +59,7 @@ const projects = [
   },
   {
     title: "Suglar",
-    category: "UI&UX Design",
+    category: "Visual & Game",
     year: "2023",
     href: "/xiangmuxiangqing/suglar",
     image: "/framer-assets/images/a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad.png",
