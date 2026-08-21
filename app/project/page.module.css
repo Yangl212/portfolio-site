@@ -23,7 +23,7 @@
 
 .header {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   min-height: 149px;
 }
@@ -40,24 +40,32 @@
 
 .filter {
   position: relative;
-  margin-top: 13px;
+  margin-bottom: 8px;
 }
 
 .filterButton {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 32px;
   min-width: 170px;
-  padding: 0;
-  border: 0;
-  background: transparent;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-bg);
   color: var(--text);
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-size: 20px;
   line-height: 1.4;
   text-align: left;
   cursor: pointer;
+  transition: background 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.filterButton:hover,
+.filterButton[aria-expanded="true"] {
+  background: rgba(34, 34, 34, 0.05);
+  border-color: rgba(34, 34, 34, 0.3);
 }
 
 .filterChevron {
@@ -66,7 +74,7 @@
   border-top: 7px solid var(--text);
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-  transition: transform 180ms ease;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .filterButton[aria-expanded="true"] .filterChevron {
@@ -83,15 +91,28 @@
   width: 170px;
   padding: 8px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 14px;
   background: var(--panel-bg);
-  box-shadow: 0 12px 24px rgba(34, 34, 34, 0.1);
+  box-shadow: 0 16px 32px rgba(34, 34, 34, 0.08);
+  transform-origin: top right;
+  animation: filterMenuIn 320ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes filterMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .filterOption {
-  padding: 8px;
+  padding: 8px 10px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text);
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
@@ -99,6 +120,7 @@
   line-height: 1.4;
   text-align: left;
   cursor: pointer;
+  transition: background 220ms ease;
 }
 
 .filterOption:hover,
@@ -192,8 +214,8 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(44px);
-  animation: rise 1000ms cubic-bezier(0.05, 0.53, 0.4, 1) forwards;
+  transform: translateY(28px);
+  animation: rise 1200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes rise {
@@ -239,12 +261,13 @@
   }
 
   .filter {
-    margin-top: 4px;
+    margin-bottom: 2px;
   }
 
   .filterButton {
     min-width: 124px;
     gap: 24px;
+    padding: 8px 14px;
     font-size: 16px;
   }
 
