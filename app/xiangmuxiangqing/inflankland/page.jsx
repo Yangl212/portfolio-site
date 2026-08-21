@@ -154,13 +154,8 @@ const blocks = [
 
   { kind: "kicker", text: "Product Design" },
   { kind: "h2", text: "Sound transmission" },
-  {
-    kind: "imageRow",
-    images: [
-      { src: "/framer-assets/images/dcfbaba0862b4f158e4a55825cdfb2063a7acfa7.png", alt: "Sound transmission device 1" },
-      { src: "/framer-assets/images/b8cb4dbe8814bc312673ab9d10b9b8a34951985c.png", alt: "Sound transmission device 2" }
-    ]
-  },
+  { kind: "image", src: "/framer-assets/images/dcfbaba0862b4f158e4a55825cdfb2063a7acfa7.png", alt: "Sound transmission device 1" },
+  { kind: "image", src: "/framer-assets/images/b8cb4dbe8814bc312673ab9d10b9b8a34951985c.png", alt: "Sound transmission device 2" },
 
   { kind: "h2", text: "Smell transmission" },
   { kind: "image", src: "/framer-assets/images/811e67819eef08ef12d4294b608c75071028b143.png", alt: "Smell transmission device" },
