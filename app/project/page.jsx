@@ -5,10 +5,19 @@ import { useState } from "react"
 
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
+import clearedCover from "../../pic/Cover.png"
 
 import styles from "./page.module.css"
 
 const projects = [
+  {
+    title: "Cleared",
+    category: "Product Design · AI-assisted",
+    year: "2026",
+    href: "/project/interface-design",
+    image: clearedCover.src,
+    filter: "UI/UX"
+  },
   {
     title: "UX Case Study",
     category: "UI&UX Design · AI",
@@ -20,7 +29,7 @@ const projects = [
   {
     title: "Last Message",
     category: "AI · Web Design",
-    year: "2025",
+    year: "2026",
     href: "/project/lastmessage",
     image: "/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png",
     filter: "UI/UX"
