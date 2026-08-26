@@ -6,16 +6,6 @@ import { CaseStudyResponsiveLayout } from "../../../components/CaseStudyResponsi
 import { ProjectBackLink } from "../../../components/ProjectBackLink"
 import { SiteHeader } from "../../../components/SiteHeader"
 import coverImage from "../../../pic/Cover.png"
-import flowImage from "../../../pic/flow.png"
-import flowCard1 from "../../../pic/Background+Border.png"
-import flowCard2 from "../../../pic/Background+Border-1.png"
-import flowCard3 from "../../../pic/Background+Border-2.png"
-import flowCard4 from "../../../pic/Background+Border-3.png"
-import flowCard5 from "../../../pic/Background+Border-4.png"
-import flowCard6 from "../../../pic/Background+Border-5.png"
-import flowCard7 from "../../../pic/Background+Border-6.png"
-import flowCard8 from "../../../pic/Background+Border-7.png"
-import flowCard9 from "../../../pic/Background+Border-8.png"
 
 import styles from "./intro.module.css"
 
@@ -48,7 +38,7 @@ source = source
   .replaceAll("Then repeat the same process for the next item.", "Ten more items needing the same five screens.")
   .replace(
     '<div class="framer-chx5vp" data-framer-name="Frame 6">',
-    `<div class="framer-chx5vp" data-framer-name="Frame 6"><img class="replacement-flow" src="${flowImage.src}" alt="Primary end-to-end flow">`
+    '<div class="framer-chx5vp" data-framer-name="Frame 6"><img class="replacement-flow" src="/cleared/flow.png" alt="Primary end-to-end flow">'
   )
 
 const flowCardClasses = [
@@ -62,12 +52,22 @@ const flowCardClasses = [
   "framer-k630k5",
   "framer-165lce1"
 ]
-const flowCards = [flowCard1, flowCard2, flowCard3, flowCard4, flowCard5, flowCard6, flowCard7, flowCard8, flowCard9]
+const flowCards = [
+  "/cleared/Background+Border.png",
+  "/cleared/Background+Border-1.png",
+  "/cleared/Background+Border-2.png",
+  "/cleared/Background+Border-3.png",
+  "/cleared/Background+Border-4.png",
+  "/cleared/Background+Border-5.png",
+  "/cleared/Background+Border-6.png",
+  "/cleared/Background+Border-7.png",
+  "/cleared/Background+Border-8.png"
+]
 
 for (const [index, className] of flowCardClasses.entries()) {
   source = source.replace(
     `<div class="${className}" data-border="true" data-framer-name="Background+Border">`,
-    `<div class="${className}" data-border="true" data-framer-name="Background+Border"><img class="replacement-flow-card" src="${flowCards[index].src}" alt="">`
+    `<div class="${className}" data-border="true" data-framer-name="Background+Border"><img class="replacement-flow-card" src="${flowCards[index]}" alt="">`
   )
 }
 
