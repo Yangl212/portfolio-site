@@ -52,12 +52,6 @@ const projects = [
     tags: ["UI/UX"]
   },
   {
-    title: "Totnurture",
-    href: "/project/totnurture",
-    image: "/framer-assets/images/182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg",
-    tags: ["UI/UX", "Interactive"]
-  },
-  {
     title: "TAROO",
     category: "Brand Design",
     year: "2025",
