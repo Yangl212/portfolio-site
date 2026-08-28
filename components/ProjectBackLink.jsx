@@ -6,7 +6,7 @@ import leftIcon from "../pic/Left.png"
 
 import styles from "./project-back-link.module.css"
 
-export function ProjectBackLink({ href = "/project", className = "" }) {
+export function ProjectBackLink({ href = "/", className = "" }) {
   return (
     <div className={className}>
       <Link href={href} className={styles.backLink}>

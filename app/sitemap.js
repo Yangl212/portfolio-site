@@ -7,6 +7,6 @@ export default function sitemap() {
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: route === "/" ? "weekly" : "monthly",
-    priority: route === "/" ? 1 : route === "/project" ? 0.9 : 0.8
+    priority: route === "/" ? 1 : 0.8
   }))
 }

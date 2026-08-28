@@ -11,7 +11,7 @@ export default function GraveyardPage() {
     <main className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.headerMask}>
-          <SiteHeader active="/project" />
+          <SiteHeader active="/" />
         </div>
 
         <section className={styles.content}>

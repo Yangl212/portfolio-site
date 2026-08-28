@@ -1,9 +1,97 @@
+"use client"
+
+import Link from "next/link"
+import { useState } from "react"
+
 import { SiteFooter } from "../components/SiteFooter"
 import { SiteHeader } from "../components/SiteHeader"
+import clearedCover from "../pic/Cover.png"
 
 import styles from "./page.module.css"
 
+const projects = [
+  {
+    title: "BOA: Budgeting Redesign",
+    category: "UI&UX Design · AI",
+    year: "2026",
+    href: "/project/uxcasestudy",
+    image: "/framer-assets/images/6a904de1906d34f3cf29f4186873a42e74d89b22.png",
+    filter: "UI/UX"
+  },
+  {
+    title: "Cleared",
+    category: "Product Design · AI-assisted",
+    year: "2026",
+    href: "/project/cleared",
+    image: clearedCover.src,
+    filter: "UI/UX"
+  },
+  {
+    title: "Last Message",
+    category: "AI · Web Design",
+    year: "2026",
+    href: "/project/lastmessage",
+    image: "/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png",
+    filter: "UI/UX"
+  },
+  {
+    title: "Graveyard",
+    category: "Web Design",
+    year: "2025",
+    href: "/project/graveyard",
+    image: "/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png",
+    filter: "UI/UX"
+  },
+  {
+    title: "Backstage",
+    category: "Web Design",
+    year: "2025",
+    href: "/project/backstage",
+    image: "/framer-assets/images/3fe62a4c484c9d96ced4a9fead0c31ab65c741b5.png",
+    filter: "UI/UX"
+  },
+  {
+    title: "TAROO",
+    category: "Brand Design",
+    year: "2025",
+    href: "/project/taroo",
+    image: "/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png",
+    filter: "Visual"
+  },
+  {
+    title: "ALCOHOL DIRECTORY",
+    category: "Zine",
+    year: "2024",
+    href: "/project/alcohal",
+    image: "/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png",
+    filter: "Visual"
+  },
+  {
+    title: "Suglar",
+    category: "Visual & Game",
+    year: "2023",
+    href: "/project/suglar",
+    image: "/framer-assets/images/a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad.png",
+    filter: "Visual"
+  },
+  {
+    title: "Inflankland",
+    category: "UI&UX Design",
+    year: "2023",
+    href: "/project/inflankland",
+    image: "/framer-assets/images/734124733fc1c29039d94f4e1379cc8624fbca0b.jpg",
+    filter: "UI/UX"
+  },
+]
+
 export default function HomePage() {
+  const [selectedFilter, setSelectedFilter] = useState("All")
+
+  const visibleProjects =
+    selectedFilter === "All"
+      ? projects
+      : projects.filter((project) => project.filter === selectedFilter)
+
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
@@ -20,42 +108,60 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className={styles.cards}>
-            <article className={`${styles.card} ${styles.cardLeft} ${styles.reveal} ${styles.delay1}`}>
-              <div className={styles.cardImage}>
-                <img
-                  src="/framer-assets/images/3ff1df5774d70f0c8a13dabffd6f9b6d038e2c5e.png"
-                  alt="Lele Yang portrait"
-                />
-              </div>
-              <h2 className={styles.cardTitle}>About Me</h2>
-            </article>
+          <div className={`${styles.header} ${styles.reveal}`}>
+            <div className={styles.sectionLabel}>
+              <span className={styles.sectionTitle}>Selected Work</span>
+              <span className={styles.sectionCount}>{projects.length} projects</span>
+            </div>
 
-            <article className={`${styles.card} ${styles.cardRight} ${styles.reveal} ${styles.delay2}`}>
-              <div className={styles.cardImage}>
-                <img
-                  src="/framer-assets/images/518ff9e8866d99472ed20ef757d33c57d3e4f46f.png"
-                  alt="Selected creative work"
-                />
-              </div>
-              <div className={styles.aboutBody}>
-                <p>
-                  I&apos;m a hands-on designer who moves between research, systems thinking,
-                  and interface craft, grounded in UI/UX and product design. AI shows up
-                  throughout my work: I use it to prototype faster and pressure-test ideas,
-                  and I&apos;m especially drawn to designing AI-driven products where trust,
-                  control, and clarity matter as much as intelligence.
-                </p>
-                <p>
-                  Outside of screens, I make things with my hands: ceramics, woodworking,
-                  zines.
-                </p>
-              </div>
-            </article>
+            <div
+              className={styles.filter}
+              role="radiogroup"
+              aria-label="Project category"
+            >
+              {["All", "UI/UX", "Visual"].map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  role="radio"
+                  aria-checked={selectedFilter === filter}
+                  className={styles.filterOption}
+                  data-selected={selectedFilter === filter}
+                  onClick={() => setSelectedFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.grid}>
+            {visibleProjects.map((project, index) => (
+              <article
+                key={`${selectedFilter}-${project.href}`}
+                className={`${styles.card} ${styles.reveal}`}
+                style={{ animationDelay: `${150 + index * 80}ms` }}
+              >
+                {(project.category || project.year) && (
+                  <div className={styles.meta}>
+                    <p className={styles.category}>{project.category}</p>
+                    <p className={styles.year}>{project.year}</p>
+                  </div>
+                )}
+
+                <Link href={project.href} className={styles.imageLink}>
+                  <img src={project.image} alt={project.title} className={styles.image} />
+                </Link>
+
+                <Link href={project.href} className={styles.titleLink}>
+                  <h2 className={styles.cardTitle}>{project.title}</h2>
+                </Link>
+              </article>
+            ))}
           </div>
         </section>
 
-        <SiteFooter className={`${styles.reveal} ${styles.delay3}`} />
+        <SiteFooter className={styles.reveal} />
       </div>
     </main>
   )
