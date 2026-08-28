@@ -11,9 +11,7 @@ export default function HomePage() {
 
         <section className={styles.content}>
           <div className={styles.hero}>
-            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>
-              Hi, I&apos;m Lele &mdash; a product designer focused on UX, AI, and interactive experiences.
-            </h1>
+            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
             <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
               <p className={styles.heroCopy}>
                 I like turning complex systems into products that feel clear and easy to use. My
