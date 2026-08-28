@@ -17,7 +17,7 @@ const projects = [
     year: "2026",
     href: "/project/uxcasestudy",
     image: boaCover.src,
-    filter: "UI/UX"
+    tags: ["UI/UX"]
   },
   {
     title: "Cleared",
@@ -25,7 +25,7 @@ const projects = [
     year: "2026",
     href: "/project/cleared",
     image: clearedCover.src,
-    filter: "UI/UX"
+    tags: ["UI/UX", "AI + Prototyping"]
   },
   {
     title: "Last Message",
@@ -33,7 +33,7 @@ const projects = [
     year: "2026",
     href: "/project/lastmessage",
     image: "/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png",
-    filter: "UI/UX"
+    tags: ["AI + Prototyping", "Interactive"]
   },
   {
     title: "Graveyard",
@@ -41,7 +41,7 @@ const projects = [
     year: "2025",
     href: "/project/graveyard",
     image: "/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png",
-    filter: "UI/UX"
+    tags: ["Interactive", "Visual"]
   },
   {
     title: "Backstage",
@@ -49,7 +49,13 @@ const projects = [
     year: "2025",
     href: "/project/backstage",
     image: "/framer-assets/images/3fe62a4c484c9d96ced4a9fead0c31ab65c741b5.png",
-    filter: "UI/UX"
+    tags: ["UI/UX"]
+  },
+  {
+    title: "Totnurture",
+    href: "/project/totnurture",
+    image: "/framer-assets/images/182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg",
+    tags: ["UI/UX", "Interactive"]
   },
   {
     title: "TAROO",
@@ -57,7 +63,7 @@ const projects = [
     year: "2025",
     href: "/project/taroo",
     image: "/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png",
-    filter: "Visual"
+    tags: ["Visual"]
   },
   {
     title: "ALCOHOL DIRECTORY",
@@ -65,7 +71,7 @@ const projects = [
     year: "2024",
     href: "/project/alcohal",
     image: "/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png",
-    filter: "Visual"
+    tags: ["Interactive", "Visual"]
   },
   {
     title: "Suglar",
@@ -73,7 +79,7 @@ const projects = [
     year: "2023",
     href: "/project/suglar",
     image: "/framer-assets/images/a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad.png",
-    filter: "Visual"
+    tags: ["Interactive", "Visual"]
   },
   {
     title: "Inflankland",
@@ -81,7 +87,7 @@ const projects = [
     year: "2023",
     href: "/project/inflankland",
     image: "/framer-assets/images/734124733fc1c29039d94f4e1379cc8624fbca0b.jpg",
-    filter: "UI/UX"
+    tags: ["Interactive", "Visual"]
   },
 ]
 
@@ -91,7 +97,7 @@ export default function HomePage() {
   const visibleProjects =
     selectedFilter === "All"
       ? projects
-      : projects.filter((project) => project.filter === selectedFilter)
+      : projects.filter((project) => project.tags.includes(selectedFilter))
 
   return (
     <main className={styles.page}>
@@ -103,8 +109,8 @@ export default function HomePage() {
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
             <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
               <p className={styles.heroCopy}>
-                A product designer focused on UX, AI, and interactive experiences &mdash; based
-                in New York, graduated from Parsons School of Design.
+                A product designer working across UX, AI, and interactive experiences. Based
+                in New York, with an MFA in Design &amp; Technology from Parsons.
               </p>
             </div>
           </div>
@@ -142,9 +148,9 @@ export default function HomePage() {
                 className={`${styles.card} ${styles.reveal}`}
                 style={{ animationDelay: `${150 + index * 80}ms` }}
               >
-                {(project.category || project.year) && (
+                {(project.tags.length > 0 || project.year) && (
                   <div className={styles.meta}>
-                    <p className={styles.category}>{project.category}</p>
+                    <p className={styles.category}>{project.tags.join(" · ")}</p>
                     <p className={styles.year}>{project.year}</p>
                   </div>
                 )}

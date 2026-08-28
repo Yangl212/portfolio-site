@@ -6,7 +6,7 @@ import { useState } from "react"
 import styles from "./site-shell.module.css"
 
 export const resumeUrl =
-  "https://drive.google.com/file/d/1JIz9VXiV1uDP5mMBTB01crdDZLiVhh8C/view?usp=sharing"
+  "/resume.pdf"
 
 const navItems = [
   { href: "/", label: "Work" },
