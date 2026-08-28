@@ -9,8 +9,7 @@ export const resumeUrl =
   "https://drive.google.com/file/d/1JIz9VXiV1uDP5mMBTB01crdDZLiVhh8C/view?usp=sharing"
 
 const navItems = [
-  { href: "/about", label: "About" },
-  { href: "/project", label: "Project" },
+  { href: "/project", label: "Work" },
   { href: "/interest", label: "Interest" }
 ]
 

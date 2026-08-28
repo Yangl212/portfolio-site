@@ -98,11 +98,24 @@ export default function ProjectPage() {
         <SiteHeader active="/project" />
 
         <section className={styles.content}>
-          <div className={styles.header}>
-            <h1 className={`${styles.title} ${styles.reveal}`}>Project</h1>
+          <div className={styles.hero}>
+            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
+            <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
+              <p className={styles.heroCopy}>
+                A product designer focused on UX, AI, and interactive experiences &mdash; based
+                in New York, graduated from Parsons School of Design.
+              </p>
+            </div>
+          </div>
+
+          <div className={`${styles.header} ${styles.reveal}`}>
+            <div className={styles.sectionLabel}>
+              <span className={styles.sectionTitle}>Selected Work</span>
+              <span className={styles.sectionCount}>{projects.length} projects</span>
+            </div>
 
             <div
-              className={`${styles.filter} ${styles.reveal}`}
+              className={styles.filter}
               role="radiogroup"
               aria-label="Project category"
             >

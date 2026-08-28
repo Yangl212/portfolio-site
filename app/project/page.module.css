@@ -17,18 +17,17 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 64px;
   padding: 120px 56px 56px;
 }
 
-.header {
+.hero {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  min-height: 149px;
+  flex-direction: column;
+  gap: 56px;
 }
 
-.title {
+.heroTitle {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-weight: 400;
@@ -36,6 +35,56 @@
   line-height: 1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
+}
+
+.heroCopyRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+}
+
+.heroCopy {
+  grid-column: 2;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.delay1 {
+  animation-delay: 150ms;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(34, 34, 34, 0.15);
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.sectionTitle {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.sectionCount {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: rgba(34, 34, 34, 0.5);
 }
 
 .filter {
@@ -169,12 +218,12 @@
 }
 
 @media (max-width: 1199px) {
-  .title {
+  .heroTitle {
     font-size: 72px;
   }
 
-  .header {
-    min-height: 72px;
+  .heroCopy {
+    font-size: 29px;
   }
 
   .grid {
@@ -192,15 +241,33 @@
 
 @media (max-width: 809px) {
   .content {
-    gap: 28px;
+    gap: 40px;
+  }
+
+  .hero {
+    gap: 32px;
   }
 
   .header {
-    min-height: auto;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 24px;
   }
 
-  .title {
+  .heroTitle {
     font-size: 36px;
+  }
+
+  .heroCopy {
+    font-size: 23px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+  }
+
+  .sectionCount {
+    font-size: 15px;
   }
 
   .filter {

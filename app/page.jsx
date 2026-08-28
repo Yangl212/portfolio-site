@@ -14,10 +14,8 @@ export default function HomePage() {
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
             <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
               <p className={styles.heroCopy}>
-                A product designer focused on UX, AI, and interactive experiences. I like turning
-                complex systems into products that feel clear and easy to use. My work spans user
-                research, interaction design, visual design, and prototyping, and I often work with
-                code and AI tools to bring ideas beyond Figma into working experiences.
+                A product designer focused on UX, AI, and interactive experiences &mdash; based
+                in New York, graduated from Parsons School of Design.
               </p>
             </div>
           </div>
