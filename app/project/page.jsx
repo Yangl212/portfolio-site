@@ -14,7 +14,7 @@ const projects = [
     title: "Cleared",
     category: "Product Design · AI-assisted",
     year: "2026",
-    href: "/project/interface-design",
+    href: "/project/cleared",
     image: clearedCover.src,
     filter: "UI/UX"
   },

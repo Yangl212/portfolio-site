@@ -75,7 +75,7 @@ const sourceStyles = [...source.matchAll(/<style[^>]*>[\s\S]*?<\/style>/g)].map(
 const body = source.match(/<body[^>]*>([\s\S]*)<\/body>/i)?.[1] ?? ""
 const content = body.replace(/<script[\s\S]*?<\/script>/gi, "")
 
-export default function InterfaceDesignDraftPage() {
+export default function ClearedPage() {
   return (
     <>
       <main className={styles.page}>
@@ -88,7 +88,7 @@ export default function InterfaceDesignDraftPage() {
             <div className={styles.topContent}>
               <ProjectBackLink className={styles.reveal} />
               <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-                <h1 className={styles.heroTitle}>Assistant App</h1>
+                <h1 className={styles.heroTitle}>Cleared</h1>
               </header>
               <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
                 <Image src={coverImage} alt="Cleared mobile planning app" priority />
