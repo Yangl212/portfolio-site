@@ -11,19 +11,19 @@ import styles from "./page.module.css"
 
 const projects = [
   {
-    title: "Cleared",
-    category: "Product Design · AI-assisted",
-    year: "2026",
-    href: "/project/cleared",
-    image: clearedCover.src,
-    filter: "UI/UX"
-  },
-  {
     title: "BOA: Budgeting Redesign",
     category: "UI&UX Design · AI",
     year: "2026",
     href: "/project/uxcasestudy",
     image: "/framer-assets/images/6a904de1906d34f3cf29f4186873a42e74d89b22.png",
+    filter: "UI/UX"
+  },
+  {
+    title: "Cleared",
+    category: "Product Design · AI-assisted",
+    year: "2026",
+    href: "/project/cleared",
+    image: clearedCover.src,
     filter: "UI/UX"
   },
   {
