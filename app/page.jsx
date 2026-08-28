@@ -11,13 +11,15 @@ export default function HomePage() {
 
         <section className={styles.content}>
           <div className={styles.hero}>
-            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hey, I&apos;m Lele</h1>
+            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>
+              Hi, I&apos;m Lele &mdash; a product designer focused on UX, AI, and interactive experiences.
+            </h1>
             <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
               <p className={styles.heroCopy}>
-                I&apos;m a UI/UX designer based in New York, finishing my MFA at Parsons School
-                of Design. I design digital products that turn scattered decisions into one
-                clear next step, often working with AI, both as a tool in my process and as
-                the material I design with.
+                I like turning complex systems into products that feel clear and easy to use. My
+                work spans user research, interaction design, visual design, and prototyping, and
+                I often work with code and AI tools to bring ideas beyond Figma into working
+                experiences.
               </p>
             </div>
           </div>
