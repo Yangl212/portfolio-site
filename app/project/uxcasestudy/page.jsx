@@ -1,6 +1,7 @@
 import { ProjectBackLink } from "../../../components/ProjectBackLink"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
+import boaCover from "../../../pic/Cover1.png"
 
 import styles from "./page.module.css"
 
@@ -194,7 +195,7 @@ export default function UxCaseStudyPage() {
             </header>
 
             <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-              <img src={img("6a904de1906d34f3cf29f4186873a42e74d89b22.png")} alt="BOA spending and budgeting redesign cover" />
+              <img src={boaCover.src} alt="BOA spending and budgeting redesign cover" />
             </div>
 
             <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>

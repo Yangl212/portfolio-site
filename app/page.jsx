@@ -5,6 +5,7 @@ import { useState } from "react"
 
 import { SiteFooter } from "../components/SiteFooter"
 import { SiteHeader } from "../components/SiteHeader"
+import boaCover from "../pic/Cover1.png"
 import clearedCover from "../pic/Cover.png"
 
 import styles from "./page.module.css"
@@ -15,7 +16,7 @@ const projects = [
     category: "UI&UX Design · AI",
     year: "2026",
     href: "/project/uxcasestudy",
-    image: "/framer-assets/images/6a904de1906d34f3cf29f4186873a42e74d89b22.png",
+    image: boaCover.src,
     filter: "UI/UX"
   },
   {
