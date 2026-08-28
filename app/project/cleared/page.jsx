@@ -259,12 +259,7 @@ export default function ClearedPage() {
         }
 
         @media (min-width: 810px) and (max-width: 1439px) {
-          #case-study-root {
-            --case-study-scale: 0.5625 !important;
-          }
-
           #case-study-root .case-study-canvas {
-            margin-left: calc((100% - 810px) / 2);
             width: 1440px;
           }
         }

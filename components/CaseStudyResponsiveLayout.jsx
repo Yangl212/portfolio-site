@@ -17,13 +17,7 @@ export function CaseStudyResponsiveLayout() {
 
     const updateLayout = () => {
       const availableWidth = Math.min(container.clientWidth, window.innerWidth)
-      const compactScale = 810 / desktopWidth
-      const scale =
-        availableWidth < 810
-          ? availableWidth / desktopWidth
-          : availableWidth < desktopWidth
-            ? compactScale
-            : 1
+      const scale = Math.min(availableWidth / desktopWidth, 1)
       const trailingHeight = trailingContent?.scrollHeight ?? 0
       // transform: scale() shrinks #main visually but not its layout box, so trailing
       // siblings sit below its untransformed height — pull them up to close that gap.
