@@ -82,14 +82,6 @@ const projects = [
     image: "/framer-assets/images/734124733fc1c29039d94f4e1379cc8624fbca0b.jpg",
     filter: "UI/UX"
   },
-  {
-    title: "Totnurture",
-    category: "UI&UX Design",
-    year: "2023",
-    href: "/project/totnurture",
-    image: "/framer-assets/images/182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg",
-    filter: "UI/UX"
-  }
 ]
 
 export default function ProjectPage() {
