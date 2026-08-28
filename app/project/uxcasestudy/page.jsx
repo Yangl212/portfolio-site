@@ -190,7 +190,7 @@ export default function UxCaseStudyPage() {
             <ProjectBackLink className={styles.reveal} />
 
             <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-              <h1 className={styles.heroTitle}>UX Case Study</h1>
+              <h1 className={styles.heroTitle}>BOA: Budgeting Redesign</h1>
             </header>
 
             <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>

@@ -19,7 +19,7 @@ const projects = [
     filter: "UI/UX"
   },
   {
-    title: "UX Case Study",
+    title: "BOA: Budgeting Redesign",
     category: "UI&UX Design · AI",
     year: "2026",
     href: "/project/uxcasestudy",

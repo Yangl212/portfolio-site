@@ -11,12 +11,13 @@ export default function HomePage() {
 
         <section className={styles.content}>
           <div className={styles.hero}>
-            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hey, it&apos;s Lele</h1>
+            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hey, I&apos;m Lele</h1>
             <div className={`${styles.heroCopyRow} ${styles.reveal} ${styles.delay1}`}>
               <p className={styles.heroCopy}>
-                A Interactive Designer based in New York. I&apos;m currently a graduate student
-                at Parsons School of Design. My work covers UI/UX design, interactive media,
-                and narrative games.
+                I&apos;m a UI/UX designer based in New York, finishing my MFA at Parsons School
+                of Design. I design digital products that turn scattered decisions into one
+                clear next step, often working with AI, both as a tool in my process and as
+                the material I design with.
               </p>
             </div>
           </div>
@@ -41,14 +42,15 @@ export default function HomePage() {
               </div>
               <div className={styles.aboutBody}>
                 <p>
-                  I am a hands-on multidisciplinary designer with UI/UX, game design, and
-                  graphic design experience. I also have web development, illustration, and
-                  logo abilities, combining technique with creativity to create interesting
-                  and interactive projects on numerous platforms.
+                  I&apos;m a hands-on designer who moves between research, systems thinking,
+                  and interface craft, grounded in UI/UX and product design. AI shows up
+                  throughout my work: I use it to prototype faster and pressure-test ideas,
+                  and I&apos;m especially drawn to designing AI-driven products where trust,
+                  control, and clarity matter as much as intelligence.
                 </p>
                 <p>
-                  I also have strong hands-on skills, with experience in ceramics,
-                  woodworking, and other craft techniques.
+                  Outside of screens, I make things with my hands: ceramics, woodworking,
+                  zines.
                 </p>
               </div>
             </article>
