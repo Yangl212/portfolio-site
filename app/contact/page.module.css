@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   gap: 64px;
-  padding: 168px 24px 100px;
+  padding: 120px 56px 100px;
 }
 
 .hero {
@@ -43,10 +43,10 @@
 }
 
 .subtitle {
+  grid-column: 2;
   margin: 0;
   font-size: clamp(23px, 2.6vw, 36px);
   line-height: 1.2;
-  max-width: 640px;
 }
 
 .details {
@@ -126,7 +126,7 @@
 
 @media (max-width: 980px) {
   .content {
-    padding: 128px 24px 84px;
+    padding: 104px 56px 84px;
     gap: 48px;
   }
 
@@ -147,12 +147,8 @@
 
 @media (max-width: 640px) {
   .content {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .subtitleRow {
-    grid-template-columns: 1fr;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   .details {
