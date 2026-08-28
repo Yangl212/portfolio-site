@@ -258,14 +258,6 @@
     padding-bottom: 120px;
   }
 
-  .heroCopyRow {
-    grid-template-columns: 1fr;
-  }
-
-  .heroCopy {
-    grid-column: 1;
-  }
-
   .heroTitle {
     font-size: 36px;
   }
