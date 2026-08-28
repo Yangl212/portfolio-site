@@ -111,7 +111,6 @@ export default function HomePage() {
           <div className={`${styles.header} ${styles.reveal}`}>
             <div className={styles.sectionLabel}>
               <span className={styles.sectionTitle}>Selected Work</span>
-              <span className={styles.sectionCount}>{projects.length} projects</span>
             </div>
 
             <div
