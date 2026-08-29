@@ -1,4 +1,3 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import boaCover from "../../../pic/Cover1.png"
@@ -188,21 +187,62 @@ export default function UxCaseStudyPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
-
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-              <h1 className={styles.heroTitle}>BOA: Budgeting Redesign</h1>
-            </header>
-
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-              <img src={boaCover.src} alt="BOA spending and budgeting redesign cover" />
+            <div className={`${styles.heroEyebrow} ${styles.reveal}`}>
+              <span className={styles.heroPill}>Professional Work</span>
+              <span>UI/UX Design · 2026</span>
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-              BOA Spending &amp; Budgeting Redesign - a UX case study exploring how to make Bank of
-              America&rsquo;s spending and budgeting experience simpler, clearer, and more flexible, from
-              research through a redesigned flow and design system.
-            </p>
+            <header className={styles.hero}>
+              <h1 className={`${styles.heroTitle} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+                BOA: Budgeting Redesign
+              </h1>
+
+              <div className={`${styles.heroImage} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+                <img src={boaCover.src} alt="BOA spending and budgeting redesign cover" />
+              </div>
+
+              <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+                Redesigning BOA&rsquo;s spending and budgeting experience to make money management simpler,
+                clearer, and more flexible.
+              </p>
+
+              <div className={`${styles.heroDetails} ${styles.reveal}`} style={{ animationDelay: "200ms" }}>
+                <dl className={styles.heroFacts}>
+                  <div>
+                    <dt>The problem</dt>
+                    <dd>Spending data is buried across screens.</dd>
+                  </div>
+                  <div>
+                    <dt>What I did</dt>
+                    <dd>Research, IA, and a budget flow end to end.</dd>
+                  </div>
+                  <div>
+                    <dt>The outcome</dt>
+                    <dd>A simpler, clearer, and more flexible budgeting flow.</dd>
+                  </div>
+                </dl>
+
+                <dl className={styles.heroMeta}>
+                  <div>
+                    <dt>Role</dt>
+                    <dd>UI/UX Designer</dd>
+                  </div>
+                  <div>
+                    <dt>Scope</dt>
+                    <dd>Research · UX · UI · Prototype</dd>
+                  </div>
+                  <div>
+                    <dt>Platform</dt>
+                    <dd>Mobile + Web</dd>
+                  </div>
+                  <div>
+                    <dt>Timeline</dt>
+                    <dd>8 weeks</dd>
+                  </div>
+                </dl>
+              </div>
+            </header>
+
           </div>
 
           <div className={styles.bodyContent}>
