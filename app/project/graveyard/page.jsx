@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -16,9 +16,9 @@ export default function GraveyardPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="Web Design · 2025" title="Graveyard" image="/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png" imageAlt="Graveyard project cover" summary="An interactive archive that visualizes how censored language adapts, survives, and carries cultural memory." problem="Digital censorship can erase language while leaving its social and political traces unseen." contribution="Research, information architecture, visual design, and web prototyping." outcome="A digital memorial where altered words become evidence of creativity and resistance." role="Interaction Designer" scope="Research · IA · Visual Design · Web Prototype" platform="Web" timeline="8 weeks" action={{ href: prototypeUrl, label: "Try the experience" }} />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Graveyard</h1>
@@ -34,14 +34,14 @@ export default function GraveyardPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src="/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png"
                 alt="Graveyard project cover"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               The project visualizes this evolving relationship between language, censorship, and
               resistance across different cultures. By collecting, categorizing, and reanimating
               these lost or altered words, <em>Graveyard</em> transforms digital silence into a

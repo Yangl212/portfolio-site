@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -52,9 +52,9 @@ export default function TarooPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="Brand Design · 2025" title="Taroo" image="/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png" imageAlt="Taroo project cover" summary="A modern tarot brand for people drawn to meaningful design, visual tools, and personal reflection." problem="Traditional tarot can feel visually inaccessible or overly spiritual for new audiences." contribution="Brand strategy, audience research, visual identity, and card design." outcome="An approachable deck that makes reflection feel contemporary, beautiful, and useful." role="Brand Designer" scope="Research · Brand Design · Product Design" platform="Physical Product" timeline="8 weeks" />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Taroo</h1>
@@ -62,14 +62,14 @@ export default function TarooPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src="/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png"
                 alt="Taroo project cover"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               We want to reach people who might not consider themselves &ldquo;spiritual,&rdquo;
               but who love meaningful design, visual tools, and personal insight. This includes
               students, artists, designers, journalers, and anyone who just wants a pretty and

@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -197,9 +197,9 @@ export default function TotnurtureProjectPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="Product Design · 2024" title="Totnurture" image={imgSrc("182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg")} imageAlt="Totnurture smart-home parenting system" summary="A smart-home care system that supports parents and babies through connected monitoring, guidance, and everyday household tools." problem="New parents need support across caregiving, health monitoring, and emotional well-being, often in separate places." contribution="User research, journey mapping, service design, UX, UI, and product concepts." outcome="A room-based dashboard system that makes family care more visible, coordinated, and manageable." role="Product Designer" scope="Research · Service Design · UX · UI · Product Design" platform="Smart Home + Mobile" timeline="12 weeks" />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Totnurture</h1>
@@ -207,14 +207,14 @@ export default function TotnurtureProjectPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src={imgSrc("182394c0d5cca71d7c4379f80af4d7a45e257d1c.jpg")}
                 alt="Totnurture"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               {leadBlock.text}
             </p>
           </div>

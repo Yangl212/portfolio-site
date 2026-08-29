@@ -1,4 +1,3 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -14,41 +13,73 @@ export default function LastMessagePage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <div className={`${styles.heroEyebrow} ${styles.reveal}`}>
+              <span className={styles.heroPill}>Professional Work</span>
+              <span>UI/UX Design · 2026</span>
+            </div>
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-              <div className={styles.heroHeader}>
-                <div className={styles.heroCopy}>
-                  <h1 className={styles.heroTitle}>Last message</h1>
-                </div>
+            <header className={styles.hero}>
+              <h1 className={`${styles.heroTitle} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+                Last Message
+              </h1>
+
+              <div className={`${styles.heroImage} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+                <img
+                  src="/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png"
+                  alt="Last Message key art"
+                />
+              </div>
+
+              <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+                An AI-powered web mystery that turns chats, clues, and digital traces into a player-led
+                investigation.
+              </p>
+
+              <div className={`${styles.heroDetails} ${styles.reveal}`} style={{ animationDelay: "200ms" }}>
+                <dl className={styles.heroFacts}>
+                  <div>
+                    <dt>The problem</dt>
+                    <dd>Mystery games often lead players through fixed paths.</dd>
+                  </div>
+                  <div>
+                    <dt>What I did</dt>
+                    <dd>Designed the narrative, UX, UI, and AI character system.</dd>
+                  </div>
+                  <div>
+                    <dt>The outcome</dt>
+                    <dd>A playable investigation built from fragmented digital evidence.</dd>
+                  </div>
+                </dl>
+
+                <dl className={styles.heroMeta}>
+                  <div>
+                    <dt>Role</dt>
+                    <dd>Product Designer</dd>
+                  </div>
+                  <div>
+                    <dt>Scope</dt>
+                    <dd>Research · Narrative UX · UI · Prototype</dd>
+                  </div>
+                  <div>
+                    <dt>Platform</dt>
+                    <dd>Web</dd>
+                  </div>
+                  <div>
+                    <dt>Timeline</dt>
+                    <dd>4 months</dd>
+                  </div>
+                </dl>
+
                 <a
                   className={styles.cta}
                   href="https://lastmessage.online/test-intro.html"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Click here to try <span aria-hidden="true">&#8594;</span>
+                  Play the experience <span aria-hidden="true">&#8594;</span>
                 </a>
               </div>
             </header>
-
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-              <img
-                src="/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png"
-                alt="Last Message key art"
-              />
-            </div>
-
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-              <em>Last Message</em> is a web-based ARG detective game developed through an
-              AI-assisted workflow using <strong>Claude Code</strong> and{" "}
-              <strong>ChatGPT-driven characters</strong>. The project explores how digital
-              traces, such as deleted messages, broken links, account activity, and fragmented
-              chat histories, can become the main material of storytelling. Instead of guiding
-              players through a fixed linear plot, the game invites them to investigate a
-              mysterious death by reading scattered digital evidence, interacting with
-              AI-powered NPCs, and reconstructing the story through their own interpretation.
-            </p>
           </div>
 
           <div className={styles.bodyContent}>

@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -338,9 +338,9 @@ export default function SuglarPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="Game & Visual Design · 2023" title="Suglar" image={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")} imageAlt="Suglar candy-inspired board game" summary="A multi-sensory board game that translates the color, texture, and emotion of candy into playful strategy." problem="Many tabletop games prioritize rules over the tactile and emotional qualities of play." contribution="Game concept, visual system, material exploration, and playtesting." outcome="An immersive game experience where sweetness becomes strategy." role="Game & Visual Designer" scope="Concept · Game Mechanics · Visual Design · Prototyping" platform="Physical Game" timeline="8 weeks" />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Suglar</h1>
@@ -348,14 +348,14 @@ export default function SuglarPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")}
                 alt="Suglar candy-inspired board game"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               Suglar is a multi-sensory board game inspired by the colors, textures, and emotions of candy. It
               transforms sweetness into strategy — combining visual delight with tactile play. Through color,
               material, and interaction, the game explores how beauty and playability can coexist in a joyful,

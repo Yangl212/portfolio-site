@@ -3,7 +3,7 @@ import path from "node:path"
 import Image from "next/image"
 
 import { CaseStudyResponsiveLayout } from "../../../components/CaseStudyResponsiveLayout"
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteHeader } from "../../../components/SiteHeader"
 import coverImage from "../../../pic/Cover.png"
 
@@ -86,11 +86,11 @@ export default function ClearedPage() {
 
           <section className={styles.content}>
             <div className={styles.topContent}>
-              <ProjectBackLink className={styles.reveal} />
-              <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+              <ProjectHero label="Personal Work" discipline="Product Design · 2026" title="Cleared" image={coverImage.src} imageAlt="Cleared mobile planning app" summary="A planning concept that turns scattered tasks and free time into a clearer, more manageable schedule." problem="Planning everyday tasks often requires too many disconnected steps and screens." contribution="Product strategy, interaction design, visual design, and prototyping." outcome="A streamlined scheduling flow that makes it easier to see what is free and decide what comes next." role="Product Designer" scope="Product Strategy · UX · UI · Prototype" platform="Mobile" timeline="8 weeks" />
+              <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
                 <h1 className={styles.heroTitle}>Cleared</h1>
               </header>
-              <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+              <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
                 <Image src={coverImage} alt="Cleared mobile planning app" priority />
               </div>
             </div>

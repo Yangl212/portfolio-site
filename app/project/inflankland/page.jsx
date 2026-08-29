@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -222,9 +222,9 @@ export default function InflanklandPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="System Design · 2024" title="Inflankland" image={coverBlock.src} imageAlt={coverBlock.alt} summary="A sustainable tourism system that connects visitors, local culture, government revenue, and wildlife conservation in the Falkland Islands." problem="Tourism development can place pressure on fragile habitats and disconnected local systems." contribution="Ecological research, system design, UX, product design, and service mapping." outcome="A connected ecosystem for responsible travel, wildlife monitoring, and local stewardship." role="System Designer" scope="Research · Systems Thinking · UX · Product Design" platform="Mobile + Web + Device" timeline="14 weeks" />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Inflankland</h1>
@@ -232,11 +232,11 @@ export default function InflanklandPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img src={coverBlock.src} alt={coverBlock.alt} />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               {leadBlock.text}
             </p>
           </div>

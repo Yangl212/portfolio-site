@@ -1,4 +1,10 @@
 .page {
+  --divider: rgba(34, 34, 34, 0.14);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+  --fs-h3: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-lead: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-body: 0.9375rem;
+  --measure: 64ch;
   min-height: 100vh;
   background: var(--page-bg);
 }
@@ -6,824 +12,846 @@
 .frame {
   width: 100%;
   margin: 0;
+  overflow: hidden;
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-bottom: 0;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
 
 .headerMask {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   overflow: hidden;
 }
 
 .content {
   width: 100%;
-  margin: 0 auto;
-  padding: 16px 16px 64px;
+  min-width: 0;
+  padding: 16px 16px 72px;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 72px;
 }
 
-.topContent {
+.topContent,
+.bodyContent {
   width: 100%;
-  max-width: 1440px;
+  min-width: 0;
+  max-width: 1280px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.heroEyebrow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.2;
-  color: var(--muted);
-}
-
-.heroPill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 5px 13px;
-  border-radius: 999px;
-  background: var(--text);
-  color: var(--inverse);
-  font-weight: 700;
-  font-size: 0.8125rem;
-  line-height: 1;
 }
 
 .bodyContent {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 72px;
 }
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
+/* --- Section shell ------------------------------------------------------- */
 
-.heroTitle {
-  margin: 0;
-  max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(2.5rem, 8vw, 4.75rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-.lead {
-  margin: 0;
-  width: 100%;
-  max-width: 1300px;
-  text-align: left;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--text);
-}
-
-.heroImage {
-  width: 100%;
-  overflow: hidden;
-}
-
-.heroImage img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.heroDetails {
+.caseSection {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 28px;
+  padding-top: 44px;
+  border-top: 1px solid var(--divider);
 }
 
-.heroFacts {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 40px;
-  padding: 28px 0;
-  border-top: 1px solid rgba(34, 34, 34, 0.18);
-  border-bottom: 1px solid rgba(34, 34, 34, 0.18);
+.highlightsSection {
+  gap: 36px;
 }
 
-.heroFacts dt,
-.heroMeta dt {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.heroFacts dd,
-.heroMeta dd {
-  margin: 12px 0 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--text);
-}
-
-.heroMeta {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px 28px;
-}
-
-.section {
+.sectionHeader {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 14px;
+  max-width: 720px;
 }
 
-.kicker {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.kickerStatic {
-  position: static !important;
-  top: auto !important;
-}
-
-.heading {
-  margin: 0;
-  max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-  color: var(--text);
-}
-
-.body {
-  margin: 0;
-  max-width: 46rem;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--text);
-}
-
-.microLabel {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.imageFull {
-  width: 100%;
-  overflow: hidden;
-}
-
-.imageFull img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.metaGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.metaItem {
+.sectionHeader > div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 14px;
-  border: 1px solid rgba(34, 34, 34, 0.1);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.tagPill {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.7rem;
-  line-height: 1.1;
-  letter-spacing: 0.06em;
-  color: var(--text);
-}
-
-.tagPill[data-tone="neutral"] {
-  background: rgba(34, 34, 34, 0.04);
-  border: 1px solid rgba(34, 34, 34, 0.14);
-}
-
-.tagPill[data-tone="focus"] {
-  background: rgba(247, 186, 8, 0.18);
-}
-
-.tagPill[data-tone="goal"] {
-  background: rgba(178, 113, 246, 0.15);
-}
-
-.sampleSize {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.8125rem;
-  line-height: 1.3;
-  color: var(--muted);
-}
-
-.statBars {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: end;
-  gap: 10px;
-  min-height: 152px;
-}
-
-.statBar {
-  height: calc(var(--bar-height) * 0.55px);
-  min-height: 104px;
-  display: flex;
-  align-items: flex-end;
-  padding: 10px 8px;
-  border-radius: 10px;
-  background: var(--stat-color);
-}
-
-.statPct {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1;
-  color: var(--text);
-}
-
-.statCaptions {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.statText {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1.45;
-  color: var(--muted);
-}
-
-.trail {
-  margin: 0;
-  max-width: 56rem;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-.mockGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.mockGrid[data-count="6"] {
-  margin-top: 8px;
-}
-
-.mockFrame {
-  overflow: hidden;
-  aspect-ratio: 390 / 801;
-}
-
-.mockFrame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.competitor {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.competitorName {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 1.375rem;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--text);
-}
-
-.competitorList {
-  margin: 0;
-  padding: 0 0 0 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.competitorImages {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.competitorFrame {
-  overflow: hidden;
-}
-
-.competitorFrame img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.takeawayGrid {
-  display: grid;
-  grid-template-columns: 1fr;
   gap: 14px;
 }
 
-.takeawayItem {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.kicker,
+.microLabel,
+.flowPair figcaption,
+.lowFiGrid figcaption,
+.systemGrid figcaption,
+.decisionLabel {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.takeawayTag {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(34, 34, 34, 0.24);
-  background: transparent;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.kicker {
   color: var(--text);
 }
 
-.takeawayTag[data-tone="control"] {
-  border-color: rgba(240, 130, 130, 0.55);
-}
-
-.takeawayTag[data-tone="continuity"] {
-  border-color: rgba(178, 113, 246, 0.5);
-}
-
-.takeawayTag[data-tone="flexibility"] {
-  border-color: transparent;
-  background: rgba(247, 205, 8, 0.85);
-}
-
-.takeawayHeading {
+.sectionTitle {
+  max-width: 30ch;
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1.25;
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.16;
   letter-spacing: -0.02em;
   color: var(--text);
 }
 
-.protoGrid {
+.sectionLead {
+  max-width: var(--measure);
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* --- Shared card headings / body --------------------------------------- */
+
+.problemCard h3,
+.evidenceCard h3,
+.decisionCard h3,
+.flowIntro h3 {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.problemCard > p:not(.problemSignal),
+.highlightCopy > p:not(.microLabel),
+.evidenceCard > div > p:not(.microLabel),
+.flowIntro p,
+.systemIntro > p:not(.microLabel),
+.reflectionGrid article > p:not(.microLabel) {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Problem snapshot -------------------------------------------------- */
+
+.problemGrid {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.problemCard {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+}
+
+.problemSignal {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.problemCard .problemEvidence {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--divider);
+  min-height: calc(14px + 2 * 0.8125rem * 1.55);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* --- Design highlights ----------------------------------------------- */
+
+.highlightList {
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
-.protoItem {
+.highlightCard {
+  position: relative;
+  padding: 28px 0 0;
+  display: grid;
+  gap: 24px;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+}
+
+.highlightCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.highlightCopy h3 {
+  margin: 0;
+  max-width: 22ch;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.375rem, 1.15rem + 1.1vw, 2rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.highlightVisual {
+  overflow: hidden;
+}
+
+.highlightVisual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.highlightNumber {
+  display: none;
+}
+
+/* --- Research method + chart --------------------------------------- */
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.methodGrid article {
+  min-width: 0;
+  padding: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--divider);
+}
+
+.methodGrid span,
+.methodGrid p {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.methodGrid strong {
+  overflow-wrap: anywhere;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.researchChartViewport {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.researchChart {
+  min-width: 520px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.researchChartViewport::-webkit-scrollbar {
+  height: 5px;
+}
+
+.researchChartViewport::-webkit-scrollbar-thumb {
+  background: rgba(34, 34, 34, 0.2);
+}
+
+.researchStat {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.protoItem img {
-  width: 100%;
-  height: auto;
-  display: block;
+.researchBarTrack {
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: rgba(34, 34, 34, 0.05);
 }
 
-.webLoFiGrid {
+.researchBar {
+  width: 100%;
+  height: var(--stat-value);
+  background: rgba(34, 34, 34, 0.22);
+  border-top: 2px solid var(--text);
+}
+
+.researchStat strong {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text);
+}
+
+.researchStat p {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* --- Evidence ----------------------------------------------------- */
+
+.evidenceGrid {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.evidenceCard {
+  overflow: hidden;
+  display: grid;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+}
+
+.evidenceImage {
+  height: 220px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.evidenceImage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.evidenceCardSupporting .evidenceImage img {
+  object-position: top center;
+}
+
+.evidenceCard > div:last-child {
+  padding: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.researchNote,
+.referenceNote {
+  margin: 0;
+  max-width: 60ch;
+  padding-left: 14px;
+  border-left: 2px solid #f3c443;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* --- Key design decisions -------------------------------------- */
+
+.decisionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.decisionCard {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--divider);
+}
+
+.decisionLabel {
+  align-self: flex-start;
+}
+
+.decisionCard h3 {
+  max-width: none;
+}
+
+.decisionCard dl {
+  margin: 0;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
-.webLoFiFrame {
-  overflow: hidden;
+.decisionCard dl > div {
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
 }
 
-.webLoFiFrame img {
+.decisionCard dt {
+  margin: 0 0 6px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.decisionCard dd {
+  margin: 0;
+  min-height: calc(2 * 0.875rem * 1.6);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* --- Flow comparison ----------------------------------------- */
+
+.flowList,
+.iterationList {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.flowCase {
+  padding: 28px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+}
+
+.flowIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 720px;
+}
+
+.flowIntro p {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.flowPair {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.flowPair figure,
+.lowFiGrid figure,
+.webGallery figure,
+.systemGrid figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.flowPair figure {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flowPair figcaption {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--divider);
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.flowPair img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-.usabilityList {
-  margin: 0;
-  padding: 0 0 0 18px;
+/* --- Low-fi + system galleries ----------------------------- */
+
+.lowFiGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.lowFiGrid figure,
+.systemGrid figure {
+  padding: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+}
+
+.lowFiGrid figcaption {
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.lowFiGrid img,
+.systemGrid img,
+.webGallery img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.iterationItem {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+  border-top: 1px solid var(--divider);
+}
+
+.iterationItem > span {
+  grid-row: 1 / span 2;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.iterationItem > div {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+.iterationItem > div > p:not(.microLabel) {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+}
+
 .webGallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.webGallery figure {
+  overflow: hidden;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+  background: #ffffff;
+}
+
+.systemIntro {
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  max-width: 720px;
+  border-top: 1px solid var(--divider);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(36px);
-  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+.systemIntro > p:not(.microLabel) {
+  max-width: var(--measure);
+  color: var(--muted);
 }
 
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.systemGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.systemGrid figcaption {
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+/* --- Reflection ------------------------------------------- */
+
+.reflectionSection {
+  gap: 24px;
+}
+
+.reflectionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.reflectionGrid article {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--divider);
+}
+
+/* --- Project navigation --------------------------------- */
+
+.projectNav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 24px 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--divider);
+}
+
+.projectNavPrev,
+.projectNavNext {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.projectNavNext {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.projectNavLabel {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.projectNavName {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 160ms ease;
+}
+
+.projectNavDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f3c443;
+}
+
+.projectNavPrev:hover .projectNavName,
+.projectNavPrev:focus-visible .projectNavName,
+.projectNavNext:hover .projectNavName,
+.projectNavNext:focus-visible .projectNavName {
+  color: var(--muted);
+}
+
+.projectNavPrev:hover .projectNavLabel,
+.projectNavNext:hover .projectNavLabel {
+  color: var(--text);
+}
+
+.projectNavAll {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 18px;
+  border: 1px solid rgba(34, 34, 34, 0.24);
+  border-radius: 999px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.projectNavAll:hover,
+.projectNavAll:focus-visible {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--inverse);
+}
+
+/* --- Breakpoints --------------------------------------- */
+
+@media (min-width: 640px) {
+  .problemGrid,
+  .reflectionGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .decisionGrid,
+  .evidenceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .webGallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .webPrimary {
+    grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 810px) {
   .content {
-    padding: 24px 24px 72px;
-    gap: 88px;
-  }
-
-  .topContent {
-    gap: 40px;
+    padding: 24px 24px 88px;
+    gap: 96px;
   }
 
   .bodyContent {
-    gap: 88px;
+    gap: 96px;
   }
 
-  .lead {
-    font-size: 1.125rem;
+  .caseSection {
+    gap: 32px;
+    padding-top: 52px;
   }
 
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-    grid-template-areas:
-      "title image"
-      "lead image"
-      "details image";
-    column-gap: 40px;
-    row-gap: 32px;
-    align-items: start;
+  .problemCard {
+    min-height: 232px;
   }
 
-  .heroTitle {
-    grid-area: title;
-  }
-
-  .heroImage {
-    grid-area: image;
-    height: 100%;
-  }
-
-  .heroImage img {
-    height: 100%;
-    object-fit: cover;
-    object-position: right center;
-  }
-
-  .hero .lead {
-    grid-area: lead;
-    align-self: end;
-  }
-
-  .heroDetails {
-    grid-area: details;
-  }
-
-  .section {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  .systemGrid {
+    grid-template-columns: 1fr 1fr;
     column-gap: 40px;
     row-gap: 36px;
     align-items: start;
   }
 
-  .section > .kicker {
+  .systemGrid figure:nth-child(1) {
     grid-column: 1;
     grid-row: 1;
-    position: sticky;
-    top: 24px;
   }
 
-  .section > :not(.kicker) {
+  .systemGrid figure:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .systemGrid figure:nth-child(3) {
     grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
-  .imageFullBleed {
-    grid-column: 1 / -1 !important;
-    margin-top: 20px;
+  .highlightCard {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 40px;
+    padding: 36px 0 0;
   }
 
-  .heading {
-    font-size: clamp(2.125rem, 5vw, 3.125rem);
+  .highlightCard:nth-child(even) .highlightCopy {
+    grid-column: 2;
+    grid-row: 1;
   }
 
-  .body {
-    font-size: 1rem;
+  .highlightCard:nth-child(even) .highlightVisual {
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  .metaGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+  .researchChart {
+    min-width: 0;
   }
 
-  .metaItem {
-    padding: 18px;
+  .researchBarTrack {
+    height: 188px;
   }
 
-  .tagPill {
-    font-size: 0.75rem;
+  .evidenceCard > div:last-child {
+    padding: 22px 0 0;
   }
 
-  .statBars {
-    gap: 14px;
-    min-height: 220px;
+  .iterationItem {
+    grid-template-columns: 44px repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
 
-  .statBar {
-    height: calc(var(--bar-height) * 0.8px);
-    min-height: 148px;
-    padding: 14px 12px;
+  .iterationItem > span {
+    grid-row: auto;
   }
 
-  .statPct {
-    font-size: 1.625rem;
+  .projectNav {
+    gap: 24px;
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 559px) {
+  .projectNav {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
   }
 
-  .statCaptions {
-    gap: 14px;
+  .projectNavAll {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
   }
 
-  .statText {
-    font-size: 0.875rem;
-  }
-
-  .trail {
-    font-size: 0.875rem;
-  }
-
-  .mockGrid {
-    gap: 14px;
-  }
-
-  .mockGrid[data-count="4"] {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .mockGrid[data-count="5"] {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
-  .mockGrid[data-count="6"] {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    margin-top: 12px;
-  }
-
-  .competitorName {
-    font-size: 1.875rem;
-  }
-
-  .competitorImages {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-
-  .takeawayGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-  }
-
-  .takeawayHeading {
-    font-size: 1.25rem;
-  }
-
-  .protoGrid {
-    gap: 28px;
-  }
-
-  .webLoFiGrid,
-  .webGallery {
-    gap: 16px;
+  .projectNavName {
+    font-size: 1.0625rem;
   }
 }
 
 @media (min-width: 1200px) {
   .content {
-    padding: 28px 32px 80px;
-    gap: 104px;
-  }
-
-  .topContent {
-    gap: 48px;
+    padding: 28px 32px 104px;
+    gap: 112px;
   }
 
   .bodyContent {
-    gap: 104px;
+    gap: 112px;
   }
 
-  .heroTitle {
-    font-size: clamp(4.5rem, 6vw, 6rem);
+  .caseSection {
+    gap: 36px;
   }
 
-  .lead {
-    font-size: 1.25rem;
+  .evidenceImage {
+    height: 300px;
   }
 
-  .hero {
-    column-gap: 64px;
-  }
-
-  .heroFacts {
-    gap: 30px 44px;
-    padding: 32px 0;
-  }
-
-  .heroMeta {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  .section {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    column-gap: 64px;
-    row-gap: 48px;
-  }
-
-  .microLabel {
-    font-size: 0.875rem;
-  }
-
-  .heading {
-    font-size: clamp(3rem, 4.8vw, 4.25rem);
-  }
-
-  .body {
-    font-size: 1.0625rem;
-    max-width: 52rem;
-  }
-
-  .metaGrid {
-    gap: 20px;
-  }
-
-  .metaItem {
-    padding: 22px;
-  }
-
-  .tagPill {
-    padding: 7px 12px;
-    font-size: 0.8125rem;
-  }
-
-  .sampleSize,
-  .trail {
-    font-size: 0.9375rem;
-  }
-
-  .statBars {
-    gap: 18px;
-    min-height: 292px;
-  }
-
-  .statBar {
-    height: calc(var(--bar-height) * 1px);
-    min-height: 180px;
-    padding: 16px 14px;
-  }
-
-  .statPct {
-    font-size: 1.875rem;
-  }
-
-  .statCaptions {
-    gap: 18px;
-  }
-
-  .statText {
-    font-size: 0.9375rem;
-  }
-
-  .mockGrid {
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 16px;
-  }
-
-  .competitor {
-    gap: 18px;
-  }
-
-  .competitorName {
-    font-size: 2.25rem;
-  }
-
-  .competitorImages {
-    gap: 16px;
-  }
-
-  .takeawayGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 22px;
-  }
-
-  .takeawayHeading {
-    font-size: 1.375rem;
-  }
-}
-
-@media (max-width: 639px) {
-  .hero .lead {
-    width: calc(100vw - 32px);
-    max-width: calc(100vw - 32px);
-  }
-
-  .heroFacts,
-  .heroMeta {
-    grid-template-columns: 1fr;
-  }
-
-  .statBars {
-    gap: 6px;
-    min-height: 112px;
-  }
-
-  .statBar {
-    min-height: 76px;
-    padding: 6px 5px;
-    border-radius: 8px;
-  }
-
-  .statPct {
-    font-size: 0.8125rem;
-  }
-
-  .statCaptions {
-    gap: 6px;
-  }
-
-  .statText {
-    font-size: 0.625rem;
-    line-height: 1.35;
+  .highlightCard {
+    gap: 56px;
   }
 }

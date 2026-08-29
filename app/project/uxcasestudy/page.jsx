@@ -1,180 +1,150 @@
+import Link from "next/link"
+
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
-import boaCover from "../../../pic/Cover1.png"
+import boaCover from "../../../pic/Frame 2.png"
 
 import styles from "./page.module.css"
 
 const img = (hash) => `/framer-assets/images/${hash}`
 
-const stats = [
+const problemSnapshots = [
   {
-    letter: "A",
-    pct: "63%",
-    text: "Experienced filters or selections resetting",
-    color: "rgba(247, 235, 140, 0.6)",
-    height: 220
+    signal: "70% / 57%",
+    title: "Spending is difficult to find and verify",
+    body: "Users had to move between summaries, categories, and transaction lists to understand where a total came from.",
+    evidence: "70% struggled to find insights; 57% were unsure how totals were calculated."
   },
   {
-    letter: "B",
-    pct: "70%",
-    text: "Struggled to find spending insights",
-    color: "rgba(212, 180, 240, 0.55)",
-    height: 270
+    signal: "67% / 63%",
+    title: "Category correction breaks the flow",
+    body: "Fixing a category required opening transactions one at a time, while filters and selections could reset on return.",
+    evidence: "67% found correction time-consuming; 63% experienced resetting selections."
   },
   {
-    letter: "C",
-    pct: "67%",
-    text: "Found category correction time-consuming",
-    color: "rgba(220, 220, 220, 0.7)",
-    height: 245
-  },
-  {
-    letter: "D",
-    pct: "57%",
-    text: "Were unsure how spending totals were calculated",
-    color: "rgba(190, 215, 247, 0.6)",
-    height: 190
-  },
-  {
-    letter: "E",
-    pct: "73%",
-    text: "Found monthly budget adjustments inflexible",
-    color: "rgba(247, 205, 205, 0.6)",
-    height: 290
+    signal: "73%",
+    title: "Budget changes force a full rebuild",
+    body: "A small monthly adjustment could send users through setup steps that did not match the change they wanted to make.",
+    evidence: "73% found monthly budget adjustments inflexible."
   }
 ]
 
-const findings = [
+const designHighlights = [
   {
-    label: "Finding 1",
-    heading: "Spending insights are hard to find",
-    trail: ["Dashboard / Home", "Spending tile", "Spending & Budgeting", "Spending breakdown / chart"],
-    images: [
-      img("7cc447fec1f9f1da0f4e8091d30c30af48d0d08e.png"),
-      img("d59a8cd44cd61d826da75a5ab426fcf10f0e339c.png"),
-      img("c8dfbe72f1e665534b7f5ed5229aa8f12509d42e.png"),
-      img("59ed31c26d3d085dcaafc250dd0ee18d1f09fdc2.png")
-    ]
+    label: "01 / Earlier entry",
+    title: "Bring monthly spending into the account view",
+    body: "The checking account now shows this month's spending, budget progress, and a direct path into the detailed view. Users can notice a problem before searching for the budgeting tool.",
+    image: img("c0bf9090252ffed50f1a0f6e30faad2cfa1ba75c.png"),
+    alt: "BOA mobile account screens with monthly spending surfaced in the checking account",
+    tone: "entry"
   },
   {
-    label: "Finding 2",
-    heading: "Category management is slow and repetitive",
-    trail: ["Dashboard", "Spending", "Transactions", "Transaction", "Category"],
-    images: [
-      img("7ffd6ce86989488819a352e6689f26fe35c67d8f.png"),
-      img("f89101c55f4503a4337f4b8f7a2c481654b30c14.png"),
-      img("36f6bc5800f68813cbd6b313a5de4fff1d8c9003.png"),
-      img("cd9ffe63e31966b9a20afdfc606268dca6b960d2.png"),
-      img("9beacd49671a0f307ab63532f1d417d94df6118d.png")
-    ]
+    label: "02 / Context + control",
+    title: "Keep filters visible and edit categories in place",
+    body: "Month and category remain visible while users move from the spending overview into transactions. Multiple transactions can be selected and recategorized together instead of reopening each detail screen.",
+    image: img("a96f52fde2f46c05197ef3fa6aed241c516c7ce5.png"),
+    alt: "BOA mobile spending overview, persistent filters, transaction list, and batch recategorization",
+    tone: "spending"
   },
   {
-    label: "Finding 3",
-    heading: "Filters and selections don't persist",
-    trail: ["Spending", "Dining", "Transaction", "Back"],
-    images: [
-      img("c1f7f388e9aeec1f2026c8d3f28a11cb080d4456.png"),
-      img("a3bb5525571e00ec61f95181887af00e210a304a.png"),
-      img("aa1a3d5c5444ce74851cc08b102945bf55a67e21.png"),
-      img("2c3bff046d39113851e69475e1ba404d8ddcab99.png"),
-      img("1c45a93dc700809867df9558a072c86553b979e0.png")
-    ]
-  },
-  {
-    label: "Finding 4",
-    heading: "Spending totals are difficult to verify",
-    trail: ["Dashboard", "Spending", "Spending Summary / Monthly Spending & Account", "Transactions / Activity"],
-    images: [
-      img("b349e130594b3ea5342dfa774917d7cf582cc812.png"),
-      img("c24ac4f06ae8d8c4c5cac63826d0a062c9947051.png"),
-      img("f56eefd7f2af4a27cfce010a20761e1d28ae6400.png"),
-      img("1cb4d0c09115de3c8d446417c07d246b754e9463.png")
-    ]
-  },
-  {
-    label: "Finding 5",
-    heading: "Monthly budgets are difficult to adjust flexibly",
-    trail: [
-      "Spending Overview",
-      "Budget",
-      "Edit Budget",
-      "Confirm Income",
-      "Choose Budget Starting Point",
-      "Set Up Fixed Spending",
-      "Set Up Flexible Spending",
-      "Save Changes"
-    ],
-    images: [
-      img("cbfc946217894fd03b412b05a3796251631012e2.png"),
-      img("de5bc73904db121c089b15140b1f15ee9b2e2059.png"),
-      img("baeb6df966190efb5fc0d732a2630c428b2a2214.png"),
-      img("da89f08732b9354d09acc4d9db52d92a6db2040f.png"),
-      img("13ebd6303ee8c5dc2a7e9592828de8b5c1af75c4.png"),
-      img("2a8c39f97ac3be3075871710b3f3939c61d8df68.png")
-    ]
+    label: "03 / Budget flexibility",
+    title: "Adjust a category without restarting the budget",
+    body: "Users can edit one category or move money between two categories while keeping the monthly total visible. The final step distinguishes a one-month change from an ongoing budget.",
+    image: img("c4e71817e7a3d8acd01dba2645799e98a9d514f3.png"),
+    alt: "BOA mobile budget editing and category reallocation flow",
+    tone: "budget"
   }
 ]
 
-const competitors = [
+const researchStats = [
+  { pct: "63%", label: "Selections reset", color: "rgba(247, 235, 140, 0.78)" },
+  { pct: "70%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
+  { pct: "67%", label: "Correction takes time", color: "rgba(210, 210, 210, 0.82)" },
+  { pct: "57%", label: "Totals feel unclear", color: "rgba(190, 215, 247, 0.78)" },
+  { pct: "73%", label: "Budgets feel inflexible", color: "rgba(247, 205, 205, 0.78)" }
+]
+
+const designDecisions = [
   {
-    name: "Chase",
-    points: [
-      "Flexible time range selection - Users can easily switch between monthly, quarterly, yearly, and custom spending views.",
-      "Simple and flexible budget management - Budgets can be quickly adjusted by category, with real-time visibility into how much has already been spent."
-    ],
-    images: [img("438abe3d779a1f660f49cab1fbb9aece40d8519c.png")]
+    label: "Access",
+    title: "Start from the account users already check",
+    evidence: "The spending tool was buried behind several screens.",
+    decision: "Surface monthly spending and budget progress on the checking account card."
   },
   {
-    name: "Monarch Money",
-    points: [
-      "Flexible budget reallocation - Users can move budget amounts between categories without changing the total monthly budget.",
-      "Clear cash flow visualization - Provides an intuitive view of income, expenses, and spending patterns through clear charts and categories."
-    ],
-    images: [img("45e99e584cc4a14b08c68139c91fd2fdadd0aee2.png"), img("247c59aaebfb325568a13a5be52b0b1e6df850fc.png")]
+    label: "Continuity",
+    title: "Treat month and category as persistent context",
+    evidence: "Selections could reset after opening a transaction and going back.",
+    decision: "Keep the active month and category visible across overview, category, and transaction views."
   },
   {
-    name: "Copilot Money",
-    points: [
-      "Smart transaction categorization - Copilot learns from users' corrections to improve how future transactions are categorized.",
-      "Fast transaction review and editing - Users can quickly review transactions and correct categories without navigating through multiple screens."
-    ],
-    images: [img("3406b8c92ce751377fab91c137d2caa97d0c1c5e.png")]
+    label: "Control",
+    title: "Move category correction into the list",
+    evidence: "Users had to correct transactions one at a time through detail screens.",
+    decision: "Support multi-select and recategorization without leaving the transaction list."
+  },
+  {
+    label: "Flexibility",
+    title: "Separate temporary and ongoing changes",
+    evidence: "A monthly adjustment could force users back through budget setup.",
+    decision: "Allow direct edits or reallocation, then ask whether the change applies once or going forward."
   }
 ]
 
-const takeaways = [
+const flowComparisons = [
   {
-    tag: "ACCESS",
-    tone: "access",
-    heading: "Make spending insights easier to access and verify",
-    body: "Surface key spending information earlier and connect spending totals directly to the transactions behind them."
+    title: "Track spending",
+    summary: "Direct access replaces the hidden entry, filters stay visible, and category changes happen inside the transaction flow.",
+    current: img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png"),
+    redesigned: img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png"),
+    currentAlt: "Current BOA spending flow with hidden entry, lost context, and deep category editing",
+    redesignedAlt: "Redesigned BOA spending flow with direct access, persistent filters, and quicker category editing"
   },
   {
-    tag: "CONTROL",
-    tone: "control",
-    heading: "Give users more control over categories",
-    body: "Make incorrect categories easier to identify and correct, while allowing the system to learn from users' changes over time."
-  },
-  {
-    tag: "CONTINUITY",
-    tone: "continuity",
-    heading: "Preserve users' context throughout the spending flow",
-    body: "Keep selected filters, categories, and time ranges when users move between spending views and transaction details."
-  },
-  {
-    tag: "FLEXIBILITY",
-    tone: "flexibility",
-    heading: "Make budgeting easier to adapt to real-life changes",
-    body: "Allow users to quickly adjust or reallocate category budgets as monthly spending needs change."
+    title: "Adjust a budget",
+    summary: "The redesign starts from the current budget, supports focused edits or reallocation, and avoids restarting the setup process.",
+    current: img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png"),
+    redesigned: img("39c57feb914fc1ec121c56f373082c9159d742e3.png"),
+    currentAlt: "Current BOA budget flow with a long setup process",
+    redesignedAlt: "Redesigned BOA budget flow with direct edits and category reallocation"
   }
 ]
 
-const usabilityPoints = [
-  "Category editing is more efficient",
-  "Spending flow feels clearer and easier to follow",
-  "Budget reallocation is useful, but the interaction should feel more intuitive",
-  "Some screens still need clearer visual hierarchy",
-  "The redesign should stay close to BOA's current layout to reduce the learning curve"
+const testIterations = [
+  {
+    observation: "Reallocation was useful, but choosing where money moved from and to was not immediately clear.",
+    response: "Separated the interaction into Take from and Give to, kept the total visible, and added a change summary before saving."
+  },
+  {
+    observation: "Some low-fi screens gave totals, lists, and controls similar visual weight.",
+    response: "Strengthened the spending total, budget status, and primary actions so the next decision is easier to scan."
+  },
+  {
+    observation: "Users asked for the redesign to stay close to BOA's current structure to reduce the learning curve.",
+    response: "Kept familiar navigation, colors, list patterns, and terminology while changing only the points of friction."
+  }
+]
+
+const webScreens = [
+  {
+    src: img("d4485ee34a100a5f9cebf1cddbaaa8ab03b4d746.png"),
+    alt: "BOA web spending overview with category breakdown and recent transactions"
+  },
+  {
+    src: img("b1dc4b580e7bd01533520ec3dd5ea78546576240.png"),
+    alt: "BOA web category view with transaction selection and budget adjustment"
+  },
+  {
+    src: img("d810dded2e769c21f8db7ba27d76722e94a3c37d.png"),
+    alt: "BOA web budget editing view with category reallocation panel"
+  }
+]
+
+const systemAssets = [
+  { src: img("96d21119e7c4078c307a63377b7d633dbe4d78c8.png"), alt: "BOA core color palette", label: "Core palette" },
+  { src: img("f1f1b3fd3c6f921ab73524efa128d6b7f8c377e9.png"), alt: "BOA spending category color ramp", label: "Category ramp" },
+  { src: img("9b785afb90f4467916a28a2f125a7a41e2d54699.png"), alt: "BOA typography specimen", label: "Typography" }
 ]
 
 export default function UxCaseStudyPage() {
@@ -187,344 +157,312 @@ export default function UxCaseStudyPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <div className={`${styles.heroEyebrow} ${styles.reveal}`}>
-              <span className={styles.heroPill}>Professional Work</span>
-              <span>UI/UX Design · 2026</span>
-            </div>
-
-            <header className={styles.hero}>
-              <h1 className={`${styles.heroTitle} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-                BOA: Budgeting Redesign
-              </h1>
-
-              <div className={`${styles.heroImage} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-                <img src={boaCover.src} alt="BOA spending and budgeting redesign cover" />
-              </div>
-
-              <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-                Redesigning BOA&rsquo;s spending and budgeting experience to make money management simpler,
-                clearer, and more flexible.
-              </p>
-
-              <div className={`${styles.heroDetails} ${styles.reveal}`} style={{ animationDelay: "200ms" }}>
-                <dl className={styles.heroFacts}>
-                  <div>
-                    <dt>The problem</dt>
-                    <dd>Spending data is buried across screens.</dd>
-                  </div>
-                  <div>
-                    <dt>What I did</dt>
-                    <dd>Research, IA, and a budget flow end to end.</dd>
-                  </div>
-                  <div>
-                    <dt>The outcome</dt>
-                    <dd>A simpler, clearer, and more flexible budgeting flow.</dd>
-                  </div>
-                </dl>
-
-                <dl className={styles.heroMeta}>
-                  <div>
-                    <dt>Role</dt>
-                    <dd>UI/UX Designer</dd>
-                  </div>
-                  <div>
-                    <dt>Scope</dt>
-                    <dd>Research · UX · UI · Prototype</dd>
-                  </div>
-                  <div>
-                    <dt>Platform</dt>
-                    <dd>Mobile + Web</dd>
-                  </div>
-                  <div>
-                    <dt>Timeline</dt>
-                    <dd>8 weeks</dd>
-                  </div>
-                </dl>
-              </div>
-            </header>
-
+            <ProjectHero
+              label="Independent Case Study"
+              discipline={"UI/UX Design \u00b7 2026"}
+              title="BOA: Budgeting Redesign"
+              image={boaCover.src}
+              imageAlt="BOA spending and budgeting redesign cover"
+              summary="Redesigning BOA's spending and budgeting experience so users can find spending totals, correct categories, and adjust a monthly budget without rebuilding it."
+              problem="Spending totals, category edits, and budget controls are split across disconnected screens."
+              contribution="Mapped the existing flows, tested low-fi concepts, and designed mobile and web interactions."
+              outcome="A cross-platform concept that keeps spending context visible and makes budget changes more direct."
+              role="UI/UX Designer"
+              scope={"Research \u00b7 UX \u00b7 UI \u00b7 Prototype"}
+              platform="Mobile + Web"
+              timeline="8 weeks"
+            />
           </div>
 
           <div className={styles.bodyContent}>
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Background</h3>
-              <h2 className={styles.heading}>I found many BOA users experiencing similar app issues.</h2>
-              <div className={styles.imageFull}>
-                <img src={img("aa2ba4021ed8c8dfbb35ea59a4cc6dd57175099f.png")} alt="Background research overview" />
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Overview</h3>
-              <h2 className={styles.heading}>Making BOA spending &amp; budgeting simpler to manage</h2>
-              <div className={styles.metaGrid}>
-                <div className={styles.metaItem}>
-                  <p className={styles.tagPill} data-tone="neutral">WHAT</p>
-                  <p className={styles.body}>Redesigning Bank of America&rsquo;s Spending &amp; Budgeting experience.</p>
-                </div>
-                <div className={styles.metaItem}>
-                  <p className={styles.tagPill} data-tone="focus">FOCUS</p>
-                  <p className={styles.body}>Improving spending insights, transaction categories, and budget management.</p>
-                </div>
-                <div className={styles.metaItem}>
-                  <p className={styles.tagPill} data-tone="goal">GOAL</p>
-                  <p className={styles.body}>Make the experience simpler, clearer, and more flexible.</p>
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Research</h3>
-              <h2 className={styles.heading}>Online Survey</h2>
-              <p className={styles.body}>
-                I shared a short online survey on Reddit to gather feedback from BOA app users and identify common
-                issues with spending and budgeting.
-              </p>
-              <p className={styles.sampleSize}>n = 32 BOA users</p>
-              <div className={styles.statBars}>
-                {stats.map((stat) => (
-                  <div
-                    className={styles.statBar}
-                    key={stat.letter}
-                    style={{ "--bar-height": `${stat.height}`, "--stat-color": stat.color }}
-                  >
-                    <p className={styles.statPct}>{stat.pct}</p>
-                  </div>
-                ))}
-              </div>
-              <div className={styles.statCaptions}>
-                {stats.map((stat) => (
-                  <p className={styles.statText} key={stat.letter}>
-                    {stat.text}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Problem Snapshot</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>The tool asks users to hunt for information, then rebuild context.</h2>
+                  <p className={styles.sectionLead}>
+                    The strongest issues clustered around three moments: finding and verifying spending, correcting
+                    categories, and adapting a budget after the month had already started.
                   </p>
+                </div>
+              </div>
+
+              <div className={styles.problemGrid}>
+                {problemSnapshots.map((problem) => (
+                  <article className={styles.problemCard} key={problem.title}>
+                    <p className={styles.problemSignal}>{problem.signal}</p>
+                    <h3>{problem.title}</h3>
+                    <p>{problem.body}</p>
+                    <p className={styles.problemEvidence}>{problem.evidence}</p>
+                  </article>
                 ))}
               </div>
             </section>
 
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Interview</h3>
-              <h2 className={styles.heading}>I interviewed two BOA users and identified several common pain points</h2>
-              <p className={styles.body}>
-                Spending features were hard to find, categories were sometimes inaccurate, editing took too many
-                steps, spending totals were unclear, and budget adjustments felt complicated.
-              </p>
-              <div className={styles.imageFull}>
-                <img src={img("32e5aee7ec9b38447e93967b911aa3777d108cfb.png")} alt="Interview findings summary" />
+            <section className={`${styles.caseSection} ${styles.highlightsSection}`}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Design Highlights</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Three changes carry the redesign.</h2>
+                  <p className={styles.sectionLead}>
+                    The final mobile concept focuses on earlier access, continuous context, and budget controls that
+                    match the size of the change.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.highlightList}>
+                {designHighlights.map((highlight, index) => (
+                  <article className={styles.highlightCard} data-tone={highlight.tone} key={highlight.title}>
+                    <div className={styles.highlightCopy}>
+                      <p className={styles.microLabel}>{highlight.label}</p>
+                      <h3>{highlight.title}</h3>
+                      <p>{highlight.body}</p>
+                    </div>
+                    <div className={styles.highlightVisual}>
+                      <img src={highlight.image} alt={highlight.alt} />
+                    </div>
+                    <span className={styles.highlightNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </article>
+                ))}
               </div>
             </section>
 
-            {findings.map((finding, index) => (
-              <section className={styles.section} key={finding.label}>
-                {index === 0 ? <h3 className={styles.kicker}>Current Experience</h3> : null}
-                <h2 className={styles.heading}>{finding.heading}</h2>
-                <p className={styles.trail}>{finding.trail.join(" - ")}</p>
-                <div className={styles.mockGrid} data-count={finding.images.length}>
-                  {finding.images.map((src) => (
-                    <div className={styles.mockFrame} key={src}>
-                      <img src={src} alt={`${finding.heading} screen`} />
-                    </div>
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Research Evidence</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Three sources pointed to the same breakdowns.</h2>
+                  <p className={styles.sectionLead}>
+                    A directional survey identified recurring patterns. Two interviews explained how those patterns
+                    affected real tasks, while Reddit posts were used only as supporting evidence.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.methodGrid}>
+                <article><span>Survey</span><strong>32</strong><p>BOA users</p></article>
+                <article><span>Interviews</span><strong>2</strong><p>BOA users</p></article>
+                <article><span>Supporting signal</span><strong>Reddit</strong><p>Public complaints</p></article>
+              </div>
+
+              <div className={styles.researchChartViewport}>
+                <div className={styles.researchChart}>
+                  {researchStats.map((stat) => (
+                    <article className={styles.researchStat} key={stat.label}>
+                      <div className={styles.researchBarTrack}>
+                        <div
+                          className={styles.researchBar}
+                          style={{ "--stat-value": stat.pct, "--stat-color": stat.color }}
+                        />
+                      </div>
+                      <strong>{stat.pct}</strong>
+                      <p>{stat.label}</p>
+                    </article>
                   ))}
                 </div>
-              </section>
-            ))}
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Desktop Spending Flow</h3>
-              <div className={styles.imageFull}>
-                <img src={img("5a0510c48028614ffc675d307cd8676b6821918b.png")} alt="Desktop spending flow" />
               </div>
-            </section>
 
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Desktop Budget Flow</h3>
-              <div className={styles.imageFull}>
-                <img src={img("ec4b9ccb965cb7db84dd9d86003fc4b02ad7e85f.png")} alt="Desktop budget flow" />
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Competitive Analysis</h3>
-              <h2 className={styles.heading}>
-                I researched other competing products on the market and compared their strengths to identify useful
-                features and design opportunities.
-              </h2>
-
-              {competitors.map((competitor) => (
-                <div className={styles.competitor} key={competitor.name}>
-                  <p className={styles.competitorName}>{competitor.name}</p>
-                  <ul className={styles.competitorList}>
-                    {competitor.points.map((point) => (
-                      <li className={styles.body} key={point}>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className={styles.competitorImages} data-count={competitor.images.length}>
-                    {competitor.images.map((src) => (
-                      <div className={styles.competitorFrame} key={src}>
-                        <img src={src} alt={`${competitor.name} product screenshot`} />
-                      </div>
-                    ))}
+              <div className={styles.evidenceGrid}>
+                <article className={styles.evidenceCard}>
+                  <div className={styles.evidenceImage}>
+                    <img src={img("32e5aee7ec9b38447e93967b911aa3777d108cfb.png")} alt="Two BOA user interviews" />
                   </div>
+                  <div>
+                    <p className={styles.microLabel}>Interview context</p>
+                    <h3>Users could not explain the spending total.</h3>
+                    <p>They described inaccurate categories, repeated edits, and uncertainty about which transactions were included in a spending total.</p>
+                  </div>
+                </article>
+
+                <article className={`${styles.evidenceCard} ${styles.evidenceCardSupporting}`}>
+                  <div className={styles.evidenceImage}>
+                    <img src={img("aa2ba4021ed8c8dfbb35ea59a4cc6dd57175099f.png")} alt="Public Reddit posts about BOA spending and budgeting issues" />
+                  </div>
+                  <div>
+                    <p className={styles.microLabel}>Supporting evidence</p>
+                    <h3>Similar complaints appeared outside the study.</h3>
+                    <p>Reddit posts reinforced the themes around buried charts, resetting categories, and totals that did not feel explainable.</p>
+                  </div>
+                </article>
+              </div>
+
+              <p className={styles.researchNote}>This was directional research, not a representative sample of all BOA customers.</p>
+            </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Key Design Decisions</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Each decision targets a specific point of friction.</h2>
+                  <p className={styles.sectionLead}>
+                    The redesign avoids replacing the whole product. It changes where information appears, what
+                    context persists, and how much work is required for a correction.
+                  </p>
                 </div>
-              ))}
-            </section>
+              </div>
 
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Key Takeaways</h3>
-              <div className={styles.takeawayGrid}>
-                {takeaways.map((takeaway) => (
-                  <div className={styles.takeawayItem} key={takeaway.tag}>
-                    <p className={styles.takeawayTag} data-tone={takeaway.tone}>{takeaway.tag}</p>
-                    <h4 className={styles.takeawayHeading}>{takeaway.heading}</h4>
-                    <p className={styles.body}>{takeaway.body}</p>
-                  </div>
+              <div className={styles.decisionGrid}>
+                {designDecisions.map((item) => (
+                  <article className={styles.decisionCard} key={item.label}>
+                    <p className={styles.decisionLabel}>{item.label}</p>
+                    <h3>{item.title}</h3>
+                    <dl>
+                      <div><dt>Evidence</dt><dd>{item.evidence}</dd></div>
+                      <div><dt>Decision</dt><dd>{item.decision}</dd></div>
+                    </dl>
+                  </article>
                 ))}
               </div>
-            </section>
 
-            <section className={styles.section}>
-              <h3 className={`${styles.kicker} ${styles.kickerStatic}`}>User Flow</h3>
-              <h2 className={styles.heading}>Current Track Spending Flow</h2>
-              <div className={`${styles.imageFull} ${styles.imageFullBleed}`}>
-                <img src={img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png")} alt="Current track spending flow" />
-              </div>
-              <h2 className={styles.heading}>Current Budget Flow</h2>
-              <div className={`${styles.imageFull} ${styles.imageFullBleed}`}>
-                <img src={img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png")} alt="Current budget flow" />
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={`${styles.kicker} ${styles.kickerStatic}`}>Redesigned User Flow</h3>
-              <h2 className={styles.heading}>Redesigned Track Spending Flow</h2>
-              <div className={`${styles.imageFull} ${styles.imageFullBleed}`}>
-                <img src={img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png")} alt="Redesigned track spending flow" />
-              </div>
-              <h2 className={styles.heading}>Redesigned Budget Flow</h2>
-              <div className={`${styles.imageFull} ${styles.imageFullBleed}`}>
-                <img src={img("39c57feb914fc1ec121c56f373082c9159d742e3.png")} alt="Redesigned budget flow" />
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Current Design System</h3>
-
-              <h2 className={styles.heading}>Core palette</h2>
-              <div className={styles.imageFull}>
-                <img src={img("96d21119e7c4078c307a63377b7d633dbe4d78c8.png")} alt="Core color palette" />
-              </div>
-
-              <h2 className={styles.heading}>Category ramp</h2>
-              <div className={styles.imageFull}>
-                <img src={img("f1f1b3fd3c6f921ab73524efa128d6b7f8c377e9.png")} alt="Category color ramp" />
-              </div>
-
-              <h2 className={styles.heading}>Typography</h2>
-              <div className={styles.imageFull}>
-                <img src={img("9b785afb90f4467916a28a2f125a7a41e2d54699.png")} alt="Typography specimen" />
-              </div>
-
-              <p className={styles.microLabel}>WEIGHTS</p>
-              <div className={styles.imageFull}>
-                <img src={img("eb9b394fbfd2232fa0d631c69d819e743164a901.png")} alt="Typography weights" />
-              </div>
-
-              <p className={styles.microLabel}>NUMERALS</p>
-              <div className={styles.imageFull}>
-                <img src={img("4a77257b6d5a54a844800ad7e4f3b2915b7fddfb.png")} alt="Numeral styles" />
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Prototype</h3>
-              <h2 className={styles.heading}>App low-fidelity</h2>
-              <div className={styles.protoGrid}>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Entry</p>
-                  <img src={img("4c316b96f56fb495ac82508190968b3b10cab06f.png")} alt="App low-fidelity entry screens" />
-                </div>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Track Spending</p>
-                  <img src={img("ef14fa26529a70d0b6532be91a35a0e55856a13b.png")} alt="App low-fidelity track spending screens" />
-                </div>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Budget</p>
-                  <img src={img("1b9110f8e883b603d3c739b4e2e2d171587e7ac6.png")} alt="App low-fidelity budget screens" />
-                </div>
-              </div>
-
-              <h2 className={styles.heading}>Web low-fidelity</h2>
-              <div className={styles.webLoFiGrid}>
-                {[
-                  "50441351fc96dc2fe2bc8edbf508599e70e80bfb.png",
-                  "124628209e616bf68b8177680ec4f6f2122f5094.png",
-                  "49c54da30cac0e41e632264a1fb566d91e9de6d2.png",
-                  "439246a730dfebc3f7384cf9a3ef5af796fbf492.png",
-                  "5c9fd527a037e2c2310eeaa722c6b7160fce587c.png"
-                ].map((hash) => (
-                  <div className={styles.webLoFiFrame} key={hash}>
-                    <img src={img(hash)} alt="Web low-fidelity screen" />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>Usability Testing</h3>
-              <h2 className={styles.heading}>I asked several BOA users to test the low-fi prototype and share feedback</h2>
-              <p className={styles.microLabel}>Key Point:</p>
-              <ul className={styles.usabilityList}>
-                {usabilityPoints.map((point) => (
-                  <li className={styles.body} key={point}>
-                    {point}
-                  </li>
-                ))}
-              </ul>
-              <p className={styles.body}>
-                Based on this feedback, I refined the final high-fidelity design and created a web version for
-                further testing and iteration. The experience was continuously polished to improve clarity,
-                consistency, and usability.
+              <p className={styles.referenceNote}>
+                Chase informed flexible time ranges, Monarch Money reinforced budget reallocation, and Copilot Money
+                provided a reference for faster category correction.
               </p>
             </section>
 
-            <section className={styles.section}>
-              <h3 className={styles.kicker}>High-fidelity</h3>
-              <h2 className={styles.heading}>Mobile</h2>
-              <div className={styles.protoGrid}>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Entry</p>
-                  <img src={img("c0bf9090252ffed50f1a0f6e30faad2cfa1ba75c.png")} alt="High-fidelity mobile entry screens" />
-                </div>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Track Spending</p>
-                  <img src={img("a96f52fde2f46c05197ef3fa6aed241c516c7ce5.png")} alt="High-fidelity mobile track spending screens" />
-                </div>
-                <div className={styles.protoItem}>
-                  <p className={styles.microLabel}>Budget</p>
-                  <img src={img("c4e71817e7a3d8acd01dba2645799e98a9d514f3.png")} alt="High-fidelity mobile budget screens" />
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Flow Improvement</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Reduce detours without hiding the decisions users still need to make.</h2>
+                  <p className={styles.sectionLead}>
+                    The redesigned flows remove hidden entry points, repeated setup, and unnecessary trips into detail
+                    screens while keeping the active month, category, current budget, and save scope visible.
+                  </p>
                 </div>
               </div>
 
-              <h2 className={styles.heading}>Web</h2>
-              <div className={styles.webGallery}>
-                {[
-                  "578bded2b16b649445c5a6cc10148de4b028299a.png",
-                  "d4485ee34a100a5f9cebf1cddbaaa8ab03b4d746.png",
-                  "b1dc4b580e7bd01533520ec3dd5ea78546576240.png",
-                  "89c8c58356c212b9d0f3aa4be030ae4941d47f87.png",
-                  "d810dded2e769c21f8db7ba27d76722e94a3c37d.png"
-                ].map((hash) => (
-                  <div className={styles.imageFull} key={hash}>
-                    <img src={img(hash)} alt="High-fidelity web screen" />
-                  </div>
+              <div className={styles.flowList}>
+                {flowComparisons.map((flow) => (
+                  <article className={styles.flowCase} key={flow.title}>
+                    <div className={styles.flowIntro}>
+                      <h3>{flow.title}</h3>
+                      <p>{flow.summary}</p>
+                    </div>
+                    <div className={styles.flowPair}>
+                      <figure>
+                        <figcaption>Current</figcaption>
+                        <img src={flow.current} alt={flow.currentAlt} />
+                      </figure>
+                      <figure>
+                        <figcaption>Redesigned</figcaption>
+                        <img src={flow.redesigned} alt={flow.redesignedAlt} />
+                      </figure>
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Testing &amp; Iteration</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>The low-fi test changed the interaction, not just the polish.</h2>
+                  <p className={styles.sectionLead}>
+                    Several BOA users tested the early prototype. Their feedback confirmed the direction for spending
+                    and category editing, while exposing ambiguity in budget reallocation and hierarchy.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.lowFiGrid}>
+                <figure>
+                  <figcaption>Track spending low-fi</figcaption>
+                  <img src={img("ef14fa26529a70d0b6532be91a35a0e55856a13b.png")} alt="Low-fidelity mobile spending flow" />
+                </figure>
+                <figure>
+                  <figcaption>Budget low-fi</figcaption>
+                  <img src={img("1b9110f8e883b603d3c739b4e2e2d171587e7ac6.png")} alt="Low-fidelity mobile budget flow" />
+                </figure>
+              </div>
+
+              <div className={styles.iterationList}>
+                {testIterations.map((item, index) => (
+                  <article className={styles.iterationItem} key={item.observation}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div><p className={styles.microLabel}>Observed</p><p>{item.observation}</p></div>
+                    <div><p className={styles.microLabel}>Changed</p><p>{item.response}</p></div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Web Adaptation + Design System</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>The same decisions scale into a denser desktop workspace.</h2>
+                  <p className={styles.sectionLead}>
+                    Desktop uses the extra width for persistent summaries, transaction tables, and side-panel edits.
+                    The behavior stays consistent with mobile instead of becoming a separate product.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.webGallery}>
+                {webScreens.map((screen, index) => (
+                  <figure className={index === 0 ? styles.webPrimary : ""} key={screen.src}>
+                    <img src={screen.src} alt={screen.alt} />
+                  </figure>
+                ))}
+              </div>
+
+              <div className={styles.systemIntro}>
+                <p className={styles.microLabel}>Working within a familiar system</p>
+                <p>
+                  BOA's navy, category colors, typography, navigation, and list patterns remain recognizable. The
+                  visual system supports the new interactions without asking existing users to relearn the product.
+                </p>
+              </div>
+
+              <div className={styles.systemGrid}>
+                {systemAssets.map((asset) => (
+                  <figure key={asset.src}>
+                    <figcaption>{asset.label}</figcaption>
+                    <img src={asset.src} alt={asset.alt} />
+                  </figure>
+                ))}
+              </div>
+            </section>
+
+            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Brief Reflection</p>
+                <h2 className={styles.sectionTitle}>Change the friction, preserve the familiarity.</h2>
+              </div>
+
+              <div className={styles.reflectionGrid}>
+                <article><p className={styles.microLabel}>Limitation</p><p>This independent concept used a small directional sample and was not tested against production data or engineering constraints.</p></article>
+                <article><p className={styles.microLabel}>Key tradeoff</p><p>I kept BOA's familiar structure and focused the redesign on access, context, correction, and budget flexibility.</p></article>
+                <article><p className={styles.microLabel}>Next validation</p><p>I would run task-based testing on reallocation and the one-month versus ongoing save choice, then measure comprehension and completion.</p></article>
+              </div>
+            </section>
+
+            <nav className={styles.projectNav} aria-label="Project navigation">
+              <Link className={styles.projectNavPrev} href="/project/backstage">
+                <span className={styles.projectNavLabel}>&#8592; Previous Project</span>
+                <span className={styles.projectNavName}>
+                  <span className={styles.projectNavDot} aria-hidden="true" />
+                  Backstage
+                </span>
+              </Link>
+              <Link className={styles.projectNavAll} href="/">All Projects</Link>
+              <Link className={styles.projectNavNext} href="/project/lastmessage">
+                <span className={styles.projectNavLabel}>Next Project &#8594;</span>
+                <span className={styles.projectNavName}>
+                  Last Message
+                  <span className={styles.projectNavDot} aria-hidden="true" />
+                </span>
+              </Link>
+            </nav>
           </div>
         </section>
 
-        <SiteFooter className={styles.reveal} />
+        <SiteFooter />
       </div>
     </main>
   )

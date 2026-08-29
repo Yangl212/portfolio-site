@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -313,9 +313,9 @@ export default function BackstagePage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Student Work" discipline="UI/UX Design · 2025" title="Backstage" image="/framer-assets/images/3fe62a4c484c9d96ced4a9fead0c31ab65c741b5.png" imageAlt="Backstage app banner" summary="A social support app that helps people turn shared interests and free time into low-pressure, real-world plans." problem="Social anxiety and online isolation make real-world connection feel difficult to begin." contribution="User research, service design, UX, UI, and interactive prototyping." outcome="A guided social experience designed to build confidence one interaction at a time." role="Product Designer" scope="Research · UX · UI" platform="Mobile + Web" timeline="12 weeks" action={{ href: prototypeUrl, label: "Try the prototype" }} />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>Backstage</h1>
@@ -331,14 +331,14 @@ export default function BackstagePage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src="/framer-assets/images/3fe62a4c484c9d96ced4a9fead0c31ab65c741b5.png"
                 alt="Backstage app banner"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               <em>Backstage</em> is an offline social support app designed for people with social
               anxiety. It aims to help users gradually build confidence in face-to-face social
               interaction through social guidance, low-pressure activity and emotional feedback

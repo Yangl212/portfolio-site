@@ -1,4 +1,4 @@
-import { ProjectBackLink } from "../../../components/ProjectBackLink"
+import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -14,9 +14,9 @@ export default function AlcohalProjectPage() {
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectBackLink className={styles.reveal} />
+            <ProjectHero label="Personal Work" discipline="Editorial Design · 2024" title="Alcohol Directory" image="/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png" imageAlt="Alcohol Directory cover" summary="A risograph-inspired cocktail zine that documents New York bar culture through drinks, color, and memory." problem="Nightlife stories are often reduced to places, not the sensory moments that define them." contribution="Art direction, editorial design, photography, and print production." outcome="A tactile visual archive of cocktails and city nightlife." role="Visual Designer" scope="Research · Art Direction · Editorial Design · Riso" platform="Print" timeline="6 weeks" />
 
-            <header className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
+            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
               <div className={styles.heroHeader}>
                 <div className={styles.heroCopy}>
                   <h1 className={styles.heroTitle}>aLCOHOL DIRECTORY</h1>
@@ -24,14 +24,14 @@ export default function AlcohalProjectPage() {
               </div>
             </header>
 
-            <div className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
+            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
               <img
                 src="/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png"
                 alt="Alcohol Directory cover"
               />
             </div>
 
-            <p className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
               In New York, I was drawn to bars that are both visually captivating and thoughtfully
               crafted, along with their effortless atmosphere—combined with my interest in
               Risograph printing, this led me to create this Alcohol Directory zine.
