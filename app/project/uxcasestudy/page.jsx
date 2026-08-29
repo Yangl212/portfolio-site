@@ -313,9 +313,9 @@ export default function UxCaseStudyPage() {
               </div>
             </section>
 
-            {findings.map((finding) => (
+            {findings.map((finding, index) => (
               <section className={styles.section} key={finding.label}>
-                <h3 className={styles.kicker}>Current Experience</h3>
+                {index === 0 ? <h3 className={styles.kicker}>Current Experience</h3> : null}
                 <h2 className={styles.heading}>{finding.heading}</h2>
                 <p className={styles.trail}>{finding.trail.join(" - ")}</p>
                 <div className={styles.mockGrid} data-count={finding.images.length}>
