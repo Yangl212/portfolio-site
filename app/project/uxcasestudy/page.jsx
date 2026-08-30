@@ -1,6 +1,8 @@
 import Link from "next/link"
 
+import { AutoplayVideo } from "../../../components/AutoplayVideo"
 import { ProjectHero } from "../../../components/ProjectHero"
+import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import boaCover from "../../../pic/Frame 2.png"
@@ -35,24 +37,24 @@ const designHighlights = [
     label: "01 / Earlier entry",
     title: "Bring monthly spending into the account view",
     body: "The checking account now shows this month's spending, budget progress, and a direct path into the detailed view. Users can notice a problem before searching for the budgeting tool.",
-    image: img("c0bf9090252ffed50f1a0f6e30faad2cfa1ba75c.png"),
-    alt: "BOA mobile account screens with monthly spending surfaced in the checking account",
+    video: "/boa/01.mp4",
+    alt: "Screen recording of the BOA checking account surfacing this month’s spending and budget progress",
     tone: "entry"
   },
   {
     label: "02 / Context + control",
     title: "Keep filters visible and edit categories in place",
     body: "Month and category remain visible while users move from the spending overview into transactions. Multiple transactions can be selected and recategorized together instead of reopening each detail screen.",
-    image: img("a96f52fde2f46c05197ef3fa6aed241c516c7ce5.png"),
-    alt: "BOA mobile spending overview, persistent filters, transaction list, and batch recategorization",
+    video: "/boa/02.mp4",
+    alt: "Screen recording of persistent month and category filters with batch recategorization inside the transaction list",
     tone: "spending"
   },
   {
     label: "03 / Budget flexibility",
     title: "Adjust a category without restarting the budget",
     body: "Users can edit one category or move money between two categories while keeping the monthly total visible. The final step distinguishes a one-month change from an ongoing budget.",
-    image: img("c4e71817e7a3d8acd01dba2645799e98a9d514f3.png"),
-    alt: "BOA mobile budget editing and category reallocation flow",
+    video: "/boa/03.mp4",
+    alt: "Screen recording of editing one budget category and moving money between two categories",
     tone: "budget"
   }
 ]
@@ -199,7 +201,7 @@ export default function UxCaseStudyPage() {
               </div>
             </section>
 
-            <section className={`${styles.caseSection} ${styles.highlightsSection}`}>
+            <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Design Highlights</p>
                 <div>
@@ -220,7 +222,13 @@ export default function UxCaseStudyPage() {
                       <p>{highlight.body}</p>
                     </div>
                     <div className={styles.highlightVisual}>
-                      <img src={highlight.image} alt={highlight.alt} />
+                      <AutoplayVideo
+                        className={styles.highlightVideo}
+                        src={highlight.video}
+                        width="2304"
+                        height="1440"
+                        ariaLabel={highlight.alt}
+                      />
                     </div>
                     <span className={styles.highlightNumber} aria-hidden="true">
                       {String(index + 1).padStart(2, "0")}
@@ -461,6 +469,11 @@ export default function UxCaseStudyPage() {
             </nav>
           </div>
         </section>
+
+        <Reveal
+          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiGrid} figure, .${styles.webGallery} figure, .${styles.systemGrid} figure`}
+          barsUp={`.${styles.researchBar}`}
+        />
 
         <SiteFooter />
       </div>

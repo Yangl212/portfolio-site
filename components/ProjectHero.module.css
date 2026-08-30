@@ -11,8 +11,13 @@
 .facts dt, .meta dt { margin: 0; color: var(--muted); font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: .75rem; font-weight: 500; line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; }
 .facts dd, .meta dd { margin: 10px 0 0; color: var(--text); font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: .9375rem; font-weight: 400; line-height: 1.55; }
 .meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; margin: 0; }
-.action { display: inline-flex; align-self: flex-start; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px 18px; background: var(--text); color: var(--inverse); font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: .875rem; font-weight: 500; line-height: 1; text-decoration: none; transition: background-color 180ms ease, color 180ms ease; }
+.actions { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; }
+/* Both buttons carry a border so the solid and ghost variants match in height. */
+.action, .actionGhost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px 18px; border: 1px solid transparent; font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: .875rem; font-weight: 500; line-height: 1; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease; }
+.action { align-self: flex-start; background: var(--text); border-color: var(--text); color: var(--inverse); }
 .action:hover, .action:focus-visible { background: #f3c443; color: #222; }
+.actionGhost { border-color: rgba(34, 34, 34, .24); color: var(--text); }
+.actionGhost:hover, .actionGhost:focus-visible { border-color: var(--text); background: var(--text); color: var(--inverse); }
 @media (min-width: 810px) { .wrap { gap: 40px; } .summary { font-size: 1.125rem; } .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-areas: "title image" "summary image" "details image"; column-gap: 48px; row-gap: 28px; align-items: start; } .title { grid-area: title; } .image { grid-area: image; height: 100%; } .image img { height: 100%; object-fit: cover; object-position: right center; } .summary { grid-area: summary; align-self: end; } .details { grid-area: details; } }
 @media (min-width: 1200px) { .wrap { gap: 48px; } .title { font-size: clamp(3rem, 2rem + 2.6vw, 4rem); } .summary { font-size: 1.125rem; } .hero { column-gap: 64px; } .facts { gap: 28px 44px; padding: 30px 0; } .meta { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } .action { min-height: 48px; padding: 14px 22px; font-size: .9375rem; } }
 @media (max-width: 639px) { .summary { width: 100%; max-width: 100%; } .facts, .meta { grid-template-columns: 1fr; } }

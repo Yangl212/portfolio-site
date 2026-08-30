@@ -23,7 +23,12 @@ export function SiteHeader({ active = "/" }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        <Link href="/" className={styles.brand} onClick={closeMenu}>
+        {/* prefetch is off on both routes the header points at. Next.js
+           prefetches a static route in full, and React preloads the images
+           in it, so leaving it on pulls several MB of home-page covers into
+           every case study at hydration - starving the demo videos of
+           bandwidth before the reader has scrolled anywhere near them. */}
+        <Link href="/" className={styles.brand} onClick={closeMenu} prefetch={false}>
           {"Lele Yang\u00AE"}
         </Link>
 
@@ -53,6 +58,7 @@ export function SiteHeader({ active = "/" }) {
               data-active={active === item.href}
               href={item.href}
               onClick={closeMenu}
+              prefetch={false}
             >
               {item.label}
             </Link>

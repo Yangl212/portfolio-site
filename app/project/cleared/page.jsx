@@ -1,281 +1,333 @@
-import fs from "node:fs"
-import path from "node:path"
-import Image from "next/image"
+import Link from "next/link"
 
-import { CaseStudyResponsiveLayout } from "../../../components/CaseStudyResponsiveLayout"
 import { ProjectHero } from "../../../components/ProjectHero"
+import { ScaledFigures } from "../../../components/ScaledFigures"
+import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import coverImage from "../../../pic/Cover.png"
 
-import styles from "./intro.module.css"
+import { clearedBlocks, clearedStyles } from "./caseStudy"
+import styles from "./page.module.css"
 
-const fontAssets = [
-  ["1K3W8DizY3v4emK8Mb08YHxTbs", "font-1"],
-  ["4RAEQdEOrcnDkhHiiCbJOw92Lk", "font-2"],
-  ["DpPBYI0sL4fYLgAkX8KXOPVt7c", "font-3"],
-  ["GIryZETIX4IFypco5pYZONKhJIo", "font-4"],
-  ["syRNPWzAMIrcJ3wIlPIP43KjQs", "font-5"],
-  ["tUSCtfYVM1I1IchuyCwz9gDdQ", "font-6"],
-  ["VgYFWiwsAC5OYxAycRXXvhze58", "font-7"]
-]
+const FRAMER_FIGURE_WIDTH = 1269
+const INTERFACE_FIGURE_WIDTH = 1272
+const SCREEN_WIDTH = 393
 
-let source = fs.readFileSync(path.join(process.cwd(), "app/project/draft/interface-design/source.html"), "utf8")
-
-for (const [remoteName, localName] of fontAssets) {
-  source = source.replaceAll(
-    `https://framerusercontent.com/assets/${remoteName}.woff2`,
-    `/case-study-fonts/${localName}.woff2`
+function Figure({ block, width = FRAMER_FIGURE_WIDTH, caption }) {
+  return (
+    <figure className={styles.figureWrap}>
+      <div className={styles.figure} data-cleared-figure data-figure-width={width}>
+        <div
+          className="framer-RHJLV"
+          style={{ width, transformOrigin: "top left" }}
+          dangerouslySetInnerHTML={{ __html: block }}
+        />
+      </div>
+      {caption ? <figcaption>{caption}</figcaption> : null}
+    </figure>
   )
 }
 
-source = source.replaceAll("#F0F0F2", "#BCBCBC")
-source = source
-  .replaceAll("Find a free time", "Check what is free")
-  .replaceAll("Switch to Calendar and look for an open slot.", "Switch to Calendar and find a time yourself.")
-  .replaceAll("Set the time", "Place and size it")
-  .replaceAll("Choose a slot, decide how long it needs, and save it.", "Pick slot, set duration, guess the estimate, save.")
-  .replaceAll("Move to the next one", "Return to the pile")
-  .replaceAll("Then repeat the same process for the next item.", "Ten more items needing the same five screens.")
-  .replace(
-    '<div class="framer-chx5vp" data-framer-name="Frame 6">',
-    '<div class="framer-chx5vp" data-framer-name="Frame 6"><img class="replacement-flow" src="/cleared/flow.png" alt="Primary end-to-end flow">'
-  )
-
-const flowCardClasses = [
-  "framer-1eny8xn",
-  "framer-1ujyg8t",
-  "framer-1hcy903",
-  "framer-69apnt",
-  "framer-ke8ocz",
-  "framer-mz5dql",
-  "framer-17v2lrl",
-  "framer-k630k5",
-  "framer-165lce1"
-]
-const flowCards = [
-  "/cleared/Background+Border.png",
-  "/cleared/Background+Border-1.png",
-  "/cleared/Background+Border-2.png",
-  "/cleared/Background+Border-3.png",
-  "/cleared/Background+Border-4.png",
-  "/cleared/Background+Border-5.png",
-  "/cleared/Background+Border-6.png",
-  "/cleared/Background+Border-7.png",
-  "/cleared/Background+Border-8.png"
+const designHighlights = [
+  {
+    label: "01 / One queue",
+    title: "Every pending decision arrives in the same place",
+    body: "Mail, calendar, reminders and tasks feed one shared queue instead of four apps that each hold part of the picture. The day view and the cards read from that same queue, so handling something once handles it everywhere.",
+    screen: "queueScreen",
+    alt: "Day overview listing what is scheduled, waiting, and still needs an answer"
+  },
+  {
+    label: "02 / One decision",
+    title: "The card carries everything the decision needs",
+    body: "The commitment, its deadline, an estimated duration and a proposed slot sit on one card, with a one-line reason for the time. Nothing has to be opened, compared, or remembered before answering.",
+    screen: "cardScreen",
+    alt: "Suggestion card proposing a two-hour slot for a quote task"
+  },
+  {
+    label: "03 / Nothing without a yes",
+    title: "The AI prepares the change, the user confirms it",
+    body: "When a meeting moves and creates a conflict, the app works out a new time for the affected task and shows what it would cost. The calendar only changes after the user says so, and the change stays undoable.",
+    screen: "confirmScreen",
+    alt: "Schedule conflict screen proposing a new time with move and leave options"
+  }
 ]
 
-for (const [index, className] of flowCardClasses.entries()) {
-  source = source.replace(
-    `<div class="${className}" data-border="true" data-framer-name="Background+Border">`,
-    `<div class="${className}" data-border="true" data-framer-name="Background+Border"><img class="replacement-flow-card" src="${flowCards[index]}" alt="">`
-  )
-}
-
-const sourceStyles = [...source.matchAll(/<style[^>]*>[\s\S]*?<\/style>/g)].map(([style]) => style).join("")
-const body = source.match(/<body[^>]*>([\s\S]*)<\/body>/i)?.[1] ?? ""
-const content = body.replace(/<script[\s\S]*?<\/script>/gi, "")
+const reflections = [
+  {
+    label: "Limitation",
+    body: "This is an independent concept built on desk research and public product documentation. It has not been tested with users, and the duration estimates it depends on were never validated against real task data."
+  },
+  {
+    label: "Key tradeoff",
+    body: "Every change waits for a confirmation, which is slower than the tools that rearrange a calendar on their own. Trust matters more than speed here: a wrong automatic move costs more than a slower correct one."
+  },
+  {
+    label: "Next validation",
+    body: "Two rounds of testing on the card itself. Whether a swipe feels like a decision people can stand behind, and whether the estimated duration is trusted enough to accept without opening the source."
+  }
+]
 
 export default function ClearedPage() {
   return (
-    <>
-      <main className={styles.page}>
-        <div className={styles.frame}>
-          <div className={styles.headerMask}>
-            <SiteHeader active="/" />
+    <main className={styles.page}>
+      <style dangerouslySetInnerHTML={{ __html: clearedStyles }} />
+
+      <div className={styles.frame}>
+        <div className={styles.headerMask}>
+          <SiteHeader active="/" />
+        </div>
+
+        <section className={styles.content}>
+          <div className={styles.topContent}>
+            <ProjectHero
+              label="Independent Concept"
+              discipline={"Product Design · 2026"}
+              title="Cleared"
+              image={coverImage.src}
+              imageAlt="Cleared planning cards and day view on mobile"
+              summary="A planning layer for Gmail and Google Calendar. Gemini already turns an email into an event; Cleared picks up where that stops, collecting every pending decision into one queue and proposing a time for each."
+              problem="Gemini adds the event, but finding the time, sizing the task, and repeating that for ten more items still takes five screens across two apps."
+              contribution={
+                "Mapped the current Gemini flow, defined the shared suggestion queue and its architecture, then designed the card interaction, six mobile screens, and the design system."
+              }
+              outcome="One screen and four gestures replace five screens across two apps, with every calendar change still confirmed by the user."
+              role="Product Designer"
+              scope={"Product Strategy · UX · UI · Design System"}
+              platform="Mobile"
+              timeline="8 weeks"
+            />
           </div>
 
-          <section className={styles.content}>
-            <div className={styles.topContent}>
-              <ProjectHero label="Personal Work" discipline="Product Design · 2026" title="Cleared" image={coverImage.src} imageAlt="Cleared mobile planning app" summary="A planning concept that turns scattered tasks and free time into a clearer, more manageable schedule." problem="Planning everyday tasks often requires too many disconnected steps and screens." contribution="Product strategy, interaction design, visual design, and prototyping." outcome="A streamlined scheduling flow that makes it easier to see what is free and decide what comes next." role="Product Designer" scope="Product Strategy · UX · UI · Prototype" platform="Mobile" timeline="8 weeks" />
-              <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-                <h1 className={styles.heroTitle}>Cleared</h1>
-              </header>
-              <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-                <Image src={coverImage} alt="Cleared mobile planning app" priority />
+          <div className={styles.bodyContent}>
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>The Problem</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Four apps each hold part of the decision, so the decision waits.</h2>
+                  <p className={styles.sectionLead}>
+                    An email carries the deadline, the calendar holds the free time, reminders and tasks add more.
+                    Nothing can be decided until someone assembles the pieces by hand, so it all gets pushed into one
+                    sitting at the end of the day.
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
-        </div>
-      </main>
 
-      <section id="case-study-root" className={styles.reveal} style={{ animationDelay: "180ms" }}>
-        <div className="case-study-canvas" dangerouslySetInnerHTML={{ __html: `${sourceStyles}${content}` }} />
-        <style>{`
-        #case-study-root {
-          --case-study-scale: 1;
-          background: #e4e2e2;
-          min-height: 100vh;
-          overflow: hidden;
-          position: relative;
-          width: 100%;
-        }
+              <Figure block={clearedBlocks.scatteredInputs} />
+              <Figure block={clearedBlocks.onePlanningSession} />
+            </section>
 
-        #case-study-root #main,
-        #case-study-root #appended-interface-design-section > div {
-          background: #e4e2e2 !important;
-          min-width: 1440px;
-          transform: scale(var(--case-study-scale)) !important;
-          transform-origin: left top !important;
-          width: 1440px;
-        }
+            <section className={`${styles.caseSection} ${styles.highlightsSection}`}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Design Highlights</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Three moves carry the concept.</h2>
+                  <p className={styles.sectionLead}>
+                    One queue instead of four apps, one card that holds the whole decision, and a confirmation in front
+                    of every calendar change.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-RHJLV.framer-72rtr7,
-        #case-study-root .framer-RHJLV .framer-flw5j3,
-        #case-study-root .framer-RHJLV .framer-m8u2lr {
-          background-color: #e4e2e2 !important;
-        }
+              <div className={styles.highlightList}>
+                {designHighlights.map((highlight) => (
+                  <article className={styles.highlightCard} key={highlight.label}>
+                    <div className={styles.highlightCopy}>
+                      <p className={styles.microLabel}>{highlight.label}</p>
+                      <h3>{highlight.title}</h3>
+                      <p>{highlight.body}</p>
+                    </div>
+                    <div className={styles.highlightVisual}>
+                      <div
+                        className={styles.screen}
+                        data-cleared-figure
+                        data-figure-width={SCREEN_WIDTH}
+                        role="img"
+                        aria-label={highlight.alt}
+                      >
+                        <div
+                          style={{ width: SCREEN_WIDTH, transformOrigin: "top left" }}
+                          dangerouslySetInnerHTML={{ __html: clearedBlocks[highlight.screen] }}
+                        />
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
 
-        /* Framer's runtime normally draws these flow connectors. */
-        #case-study-root .framer-q1y7ah,
-        #case-study-root .framer-co5e9z,
-        #case-study-root .framer-156nqid,
-        #case-study-root .framer-rofpe9 {
-          background: #c7c7cc !important;
-          height: 1px !important;
-          position: relative;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Research Evidence</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>
+                    The day is full of short gaps, and a planning decision does not fit inside one.
+                  </h2>
+                  <p className={styles.sectionLead}>
+                    Published research on how knowledge workers spend the day, read against five products that already
+                    try to close this gap. The pattern is consistent: the interruption is not the problem, the split
+                    information is.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-q1y7ah::after,
-        #case-study-root .framer-co5e9z::after,
-        #case-study-root .framer-156nqid::after,
-        #case-study-root .framer-rofpe9::after {
-          border-right: 1px solid #8e8e96;
-          border-top: 1px solid #8e8e96;
-          content: "";
-          height: 7px;
-          position: absolute;
-          right: 0;
-          top: -3px;
-          transform: rotate(45deg);
-          width: 7px;
-        }
+              <Figure block={clearedBlocks.researchStats} />
+              <Figure block={clearedBlocks.researchTakeaway} />
+              <Figure block={clearedBlocks.competitorTable} />
 
-        #case-study-root .framer-1u5hmsb,
-        #case-study-root .framer-1j7scr4,
-        #case-study-root .framer-wyztb0,
-        #case-study-root .framer-pgwzea,
-        #case-study-root .framer-1adsw37,
-        #case-study-root .framer-1vijtxv,
-        #case-study-root .framer-wai3zg,
-        #case-study-root .framer-lx39mu {
-          display: none !important;
-        }
+              <p className={styles.researchNote}>
+                Desk research only. Sources: Microsoft WorkLab Work Trend Index 2025, Asana Anatomy of Work Index,
+                Litmus State of Email Engagement, McKinsey Global Institute, and product documentation for Morgen,
+                Reclaim, Motion, Sunsama and Google Workspace.
+              </p>
+            </section>
 
-        #case-study-root .framer-1xqmebp,
-        #case-study-root .framer-1edftdr,
-        #case-study-root .framer-1eo6173 {
-          --border-color: #a6a6ad !important;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Where Gemini Stops</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>
+                    Gemini turns an email into an event. Everything after that is still manual.
+                  </h2>
+                  <p className={styles.sectionLead}>
+                    Gmail already recognises the commitment and offers an Add to calendar action, reviewed before
+                    anything is saved. But the suggestion only exists inside that one thread, and placing it in the day
+                    is still the user&rsquo;s job, once per item.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root [data-border="true"] {
-          --border-color: #a6a6ad !important;
-        }
+              <Figure block={clearedBlocks.geminiGap} />
+              <Figure block={clearedBlocks.currentFlow} />
+            </section>
 
-        #case-study-root .framer-ifiwex > [data-border="true"],
-        #case-study-root .framer-1p21enu > [data-border="true"] {
-          --border-color: #a6a6ad !important;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Product Direction</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>One queue for every source, and nothing moves without a yes.</h2>
+                  <p className={styles.sectionLead}>
+                    Mail, calendar, reminders and tasks feed a single suggestion queue. The AI does the work around the
+                    decision, reading the thread, estimating the duration and checking the calendar, so what reaches the
+                    user is one confirmable choice rather than another planning task.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-jieyom,
-        #case-study-root .framer-wsgggg,
-        #case-study-root .framer-wsgggg [data-framer-name="HorizontalBorder"] {
-          --border-color: #a6a6ad !important;
-        }
+              <Figure block={clearedBlocks.solutionModel} />
+              <Figure block={clearedBlocks.informationArchitecture} />
+              <Figure block={clearedBlocks.explainRules} />
+            </section>
 
-        #case-study-root .framer-2rlox9 > [data-border="true"] {
-          --border-color: #a6a6ad !important;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Interaction Model</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>One screen and four gestures replace five screens across two apps.</h2>
+                  <p className={styles.sectionLead}>
+                    Everything needed for the decision sits on the card, so accepting, moving, deferring and dismissing
+                    are each a single gesture. Deferring is a real answer rather than a failure state, and the queue has
+                    an end.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-jndqau,
-        #case-study-root .framer-1oxpdo6 {
-          --border-color: #a6a6ad !important;
-        }
+              <Figure block={clearedBlocks.cardAnatomy} />
+              <Figure block={clearedBlocks.redesignedFlow} />
+              <Figure block={clearedBlocks.flowPrinciples} />
+            </section>
 
-        #case-study-root .framer-1cad1ew [data-border="true"] {
-          --border-color: #a6a6ad !important;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Final Experience</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Six screens covering one day, from the subway to the evening review.</h2>
+                  <p className={styles.sectionLead}>
+                    The decisions spread across moments that already exist: a commute, a gap between meetings, a queue
+                    for coffee. The screens cover reading the source, accepting a suggestion, answering when the app
+                    needs more, learning from a correction, absorbing a schedule change, and closing the day.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-1eytybq,
-        #case-study-root .framer-bkfbbk,
-        #case-study-root .framer-uh37tr,
-        #case-study-root .framer-1ac87dx {
-          background: #c7c7cc !important;
-          height: 1px !important;
-          position: relative;
-        }
+              <Figure block={clearedBlocks.dayJourney} />
+              <Figure block={clearedBlocks.sixScreens} width={INTERFACE_FIGURE_WIDTH} />
+            </section>
 
-        #case-study-root .framer-1eytybq::after,
-        #case-study-root .framer-bkfbbk::after,
-        #case-study-root .framer-uh37tr::after,
-        #case-study-root .framer-1ac87dx::after {
-          border-right: 1px solid #8e8e96;
-          border-top: 1px solid #8e8e96;
-          content: "";
-          height: 7px;
-          position: absolute;
-          right: 0;
-          top: -3px;
-          transform: rotate(45deg);
-          width: 7px;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Design System</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>
+                    Six type styles, four accent colors, and one rule: an estimate never looks like a fact.
+                  </h2>
+                  <p className={styles.sectionLead}>
+                    Color carries meaning rather than decoration. Suggestions stay neutral, accents are reserved for
+                    source and status, and a dashed border marks anything the user has not confirmed yet.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root .framer-chx5vp > :not(.replacement-flow) {
-          display: none !important;
-        }
+              <Figure block={clearedBlocks.designSystem} width={INTERFACE_FIGURE_WIDTH} />
+            </section>
 
-        #case-study-root .replacement-flow {
-          display: block;
-          height: 100%;
-          object-fit: contain;
-          width: 100%;
-        }
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Decisions &amp; Risks</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Every decision here costs something.</h2>
+                  <p className={styles.sectionLead}>
+                    The four choices that shaped the product, and the four ways this model can still fail once it is
+                    inside someone&rsquo;s day.
+                  </p>
+                </div>
+              </div>
 
-        #case-study-root [data-framer-name="Background+Border"] {
-          overflow: hidden !important;
-        }
+              <Figure block={clearedBlocks.tradeOffs} />
+              <Figure block={clearedBlocks.risks} />
+            </section>
 
-        #case-study-root [data-framer-name="Background+Border"] > :not(.replacement-flow-card) {
-          display: none !important;
-        }
+            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Brief Reflection</p>
+                <h2 className={styles.sectionTitle}>Extend what Google already does well, rather than rebuild it.</h2>
+              </div>
 
-        #case-study-root .replacement-flow-card {
-          display: block;
-          height: 100%;
-          object-fit: fill;
-          width: 100%;
-        }
+              <div className={styles.reflectionGrid}>
+                {reflections.map((item) => (
+                  <article key={item.label}>
+                    <p className={styles.microLabel}>{item.label}</p>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
 
-        @media (min-width: 1440px) {
-          #case-study-root {
-            align-items: flex-start;
-            display: flex;
-            justify-content: center;
-          }
+            <nav className={styles.projectNav} aria-label="Project navigation">
+              <Link className={styles.projectNavPrev} href="/project/uxcasestudy">
+                <span className={styles.projectNavLabel}>&#8592; Previous Project</span>
+                <span className={styles.projectNavName}>
+                  <span className={styles.projectNavDot} aria-hidden="true" />
+                  BOA: Budgeting Redesign
+                </span>
+              </Link>
+              <Link className={styles.projectNavAll} href="/">
+                All Projects
+              </Link>
+              <Link className={styles.projectNavNext} href="/project/lastmessage">
+                <span className={styles.projectNavLabel}>Next Project &#8594;</span>
+                <span className={styles.projectNavName}>
+                  Last Message
+                  <span className={styles.projectNavDot} aria-hidden="true" />
+                </span>
+              </Link>
+            </nav>
+          </div>
+        </section>
 
-          #case-study-root .case-study-canvas {
-            flex: 0 0 1440px;
-            width: 1440px;
-          }
-        }
+        <ScaledFigures />
 
-        @media (min-width: 810px) and (max-width: 1439px) {
-          #case-study-root .case-study-canvas {
-            width: 1440px;
-          }
-        }
-
-        @media (max-width: 809px) {
-          #case-study-root {
-            min-width: 0;
-          }
-
-          #case-study-root .case-study-canvas {
-            width: 1440px;
-          }
-        }
-      `}</style>
-      <CaseStudyResponsiveLayout />
-      </section>
-    </>
+        <SiteFooter />
+      </div>
+    </main>
   )
 }

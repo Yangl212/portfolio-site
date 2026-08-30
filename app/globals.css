@@ -105,3 +105,40 @@ img {
 [hidden] {
   display: none !important;
 }
+
+/* Scroll reveal. The start states below only ever apply to elements that
+   components/Reveal.jsx has tagged at runtime, so with no JS - or with reduced
+   motion requested - every section renders finished and nothing is hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 640ms ease, transform 640ms cubic-bezier(0.16, 0.84, 0.28, 1);
+  }
+
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Horizontal bars wipe out from the baseline; clipping instead of scaling
+     keeps the rounded data-end from distorting on the way. */
+  [data-reveal-bar] {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 820ms cubic-bezier(0.16, 0.84, 0.28, 1);
+  }
+
+  [data-reveal-bar="in"] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Columns sit on the floor of their track, so these grow upward. */
+  [data-reveal-bar-up] {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 820ms cubic-bezier(0.16, 0.84, 0.28, 1);
+  }
+
+  [data-reveal-bar-up="in"] {
+    clip-path: inset(0 0 0 0);
+  }
+}

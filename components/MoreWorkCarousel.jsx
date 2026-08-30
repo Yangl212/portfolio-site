@@ -46,7 +46,11 @@ export function MoreWorkCarousel({ className = "", projects }) {
               {page.map((project) => (
                 <article className={styles.card} key={project.href}>
                   <Link href={project.href} className={styles.imageLink} tabIndex={activePage === pageIndex ? 0 : -1}>
-                    <img src={project.image} alt={project.title} />
+                    {/* The carousel sits below every case study, and these covers
+                       are large. Loading them eagerly fills the connection pool
+                       while the reader is still partway up the page, which starves
+                       the demo videos of bandwidth. */}
+                    <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
                   </Link>
                   <div className={styles.meta}>
                     <p>{project.category}</p>

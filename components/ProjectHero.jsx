@@ -14,7 +14,8 @@ export function ProjectHero({
   scope,
   platform,
   timeline,
-  action
+  action,
+  secondaryAction
 }) {
   return (
     <section className={styles.wrap}>
@@ -39,7 +40,21 @@ export function ProjectHero({
             <div><dt>Platform</dt><dd>{platform}</dd></div>
             <div><dt>Timeline</dt><dd>{timeline}</dd></div>
           </dl>
-          {action && <a className={styles.action} href={action.href} target="_blank" rel="noreferrer">{action.label} <span aria-hidden="true">&#8594;</span></a>}
+          {(action || secondaryAction) && (
+            <div className={styles.actions}>
+              {action && (
+                <a className={styles.action} href={action.href} target="_blank" rel="noreferrer">
+                  {action.label}
+                  {action.arrow === false ? null : <span aria-hidden="true"> &#8594;</span>}
+                </a>
+              )}
+              {secondaryAction && (
+                <a className={styles.actionGhost} href={secondaryAction.href} target="_blank" rel="noreferrer">
+                  {secondaryAction.label}
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </header>
     </section>

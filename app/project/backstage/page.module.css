@@ -1,4 +1,13 @@
+/* Shares the case-study language established on the BOA page:
+   same tokens, section shell, type scale, gutters, and breakpoints. */
+
 .page {
+  --divider: rgba(34, 34, 34, 0.14);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+  --fs-h3: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-lead: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-body: 0.9375rem;
+  --measure: 64ch;
   min-height: 100vh;
   background: var(--page-bg);
 }
@@ -6,327 +15,1038 @@
 .frame {
   width: 100%;
   margin: 0;
+  overflow: hidden;
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-bottom: 0;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
 
 .headerMask {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   overflow: hidden;
 }
 
 .content {
   width: 100%;
-  margin: 0 auto;
-  padding: 16px 16px 64px;
+  min-width: 0;
+  padding: 16px 16px 72px;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 72px;
 }
 
-.topContent {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.topContent,
+.bodyContent {
+  width: 100%;
+  min-width: 0;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .bodyContent {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 72px;
 }
 
-.hero {
+/* --- Section shell ------------------------------------------------------- */
+
+.caseSection {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 28px;
+  padding-top: 44px;
+  border-top: 1px solid var(--divider);
 }
 
-.heroHeader {
+.finalSection {
+  gap: 36px;
+}
+
+.sectionHeader {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+.sectionHeader > div {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kicker,
+.microLabel,
+.flowPair figcaption,
+.systemLead figcaption,
+.systemGrid figcaption {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.kicker {
+  color: var(--text);
+}
+
+.sectionTitle {
+  max-width: 30ch;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.sectionLead {
+  max-width: var(--measure);
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* --- Shared card headings / body ---------------------------------------- */
+
+.insightCard h3 {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.insightCard > p:not(.microLabel):not(.insightEvidence),
+.directionGrid p:not(.microLabel),
+.fcrRow p:not(.microLabel),
+.iterationItem > div > p:not(.microLabel),
+.highlightCopy > p:not(.microLabel),
+.reflectionGrid p:not(.microLabel) {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.note {
+  margin: 0;
+  max-width: 60ch;
+  padding-left: 14px;
+  border-left: 2px solid #f3c443;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* --- Problem: survey chart ---------------------------------------------- */
+
+.survey {
+  margin: 0;
+  max-width: 860px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border-top: 1px solid var(--divider);
+}
+
+.surveyHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+
+.surveyQuestion {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.surveyMeta {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* 100% stacked bar. 2px surface gaps do the separating - no strokes. */
+.surveyBar {
+  display: flex;
+  gap: 2px;
+  height: 16px;
+}
+
+.surveySegment {
+  flex: var(--share) 1 0;
+  min-width: 3px;
+  background: var(--tone);
+}
+
+.surveySegment:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.surveySegment:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.surveyKey {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.surveyKey > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.surveyKey dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.surveySwatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--tone);
+}
+
+.surveyKey dd {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.surveyTakeaway {
+  margin: 0;
+  max-width: 56ch;
+  padding-top: 4px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Ranked bars - both questions read as a share of the same 28 respondents,
+   so both sit on one 0-100 scale. */
+.rankPair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.rankChart {
+  min-width: 0;
+  margin: 0;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border-top: 1px solid var(--divider);
+}
+
+.rankChart dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rankChart dt {
+  margin: 0 0 6px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.rankChart dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rankTrack {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 10px;
+  background: rgba(34, 34, 34, 0.08);
+}
+
+.rankFill {
+  display: block;
+  width: calc(var(--share) * 1%);
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: var(--text);
+}
+
+.rankChart strong {
+  flex: none;
+  min-width: 3.5em;
+  text-align: right;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Research insights --------------------------------------------------- */
+
+.insightGrid {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
-.heroCopy {
+.insightCard {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--divider);
+}
+
+.insightEvidence {
+  margin: auto 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--divider);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.personaGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.personaCard {
+  min-width: 0;
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--divider);
+}
+
+.personaHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.personaCard h3 {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.personaMeta {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.personaPull {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--text);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.personaPoints {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personaPoints li {
+  position: relative;
+  padding-left: 16px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.personaPoints li::before {
+  content: "";
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 6px;
+  height: 1px;
+  background: var(--muted);
+}
+
+/* --- Product direction --------------------------------------------------- */
+
+.directionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.directionGrid article {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--divider);
+}
+
+/* Ordered scale - ink density carries the amount of contact each mode asks for. */
+.modeScale {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--divider);
+}
+
+.modeScale ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.modeScale li {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modeBar {
+  height: 10px;
+  border-radius: 2px;
+  background: var(--tone);
+}
+
+.modeLabel {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.modeAxis {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.compareTable {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--divider);
+}
+
+.compareTable dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.compareTable dl > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.compareTable dt,
+.compareTable dd {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+}
+
+.compareTable dt {
+  color: var(--muted);
+}
+
+.compareTable dd {
+  color: var(--text);
+}
+
+.compareTable dl > div[data-ours] {
+  border-bottom-color: var(--text);
+}
+
+.compareTable dl > div[data-ours] dt,
+.compareTable dl > div[data-ours] dd {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* --- Figures ------------------------------------------------------------- */
+
+/* No rule above a figure: a caption already carries its own underline, and an
+   uncaptioned image needs no separator at all. */
+.wideFigure {
+  min-width: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.heroTitle {
-  margin: 0;
-  max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(2.5rem, 8vw, 4.75rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-.cta {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 12px 18px;
-  border: 1px solid var(--border);
-  border-radius: 0;
-  background: var(--text);
-  color: var(--inverse);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1;
-  text-decoration: none;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-
-.cta:hover,
-.cta:focus-visible {
-  background: #f3c443;
-  color: #222222;
-}
-
-.lead {
-  margin: 0 auto;
+.wideFigure img,
+.flowPair img,
+.systemGrid img {
+  display: block;
   width: 100%;
-  max-width: 1300px;
-  text-align: left;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--text);
+  height: auto;
 }
 
-.lead em,
-.body em {
-  font-style: italic;
+/* A figure whose row is nothing but the image gets centred rather than
+   left-hung, so it never leaves a void on one side. */
+.brandFigure img {
+  margin-inline: auto;
 }
 
-.lead strong,
-.body strong {
-  font-weight: 700;
+/* Source file is 1196px wide - cap it so it never upscales. */
+.brandFigure img {
+  max-width: 960px;
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
+/* --- Iteration 01 -------------------------------------------------------- */
+
+.fcrRow {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
-.kicker {
+.fcrRow article {
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--divider);
+}
+
+.flowPair {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.flowPair figure {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flowPair .flowImageCompact {
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.flowPair figcaption,
+.systemLead figcaption,
+.systemGrid figcaption {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--divider);
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+/* --- Iteration 02 -------------------------------------------------------- */
+
+.iterationList {
+  display: flex;
+  flex-direction: column;
+}
+
+.iterationItem {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 16px;
+  border-top: 1px solid var(--divider);
+}
+
+.iterationNumber {
+  grid-row: 1 / span 3;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.iterationItem > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Final experience ---------------------------------------------------- */
+
+/* No gap on the list: each card carries equal padding top and bottom instead,
+   so the rule above a card and the rule below it sit the same distance from
+   the media. The gap between cards is therefore twice the padding, split
+   exactly in half by the divider. */
+.highlightList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.highlightCard {
+  padding: 32px 0;
+  display: grid;
+  gap: 24px;
+  border-top: 1px solid var(--divider);
+}
+
+.highlightCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.highlightCopy h3 {
+  margin: 0;
+  max-width: 22ch;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.375rem, 1.15rem + 1.1vw, 2rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.media {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Video demos get a soft card treatment - rounded and lifted off the page -
+   so a moving frame reads as a device screen rather than a hole in the layout.
+   overflow stays visible here or the wrapper would clip its own shadow. */
+/* Two layers: a tight contact shadow that anchors the frame to the page, and a
+   wide ambient one that lifts it. One blur alone reads as a smudge. */
+.mediaFramed {
+  overflow: visible;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 6px rgba(34, 34, 34, 0.14),
+    0 18px 44px rgba(34, 34, 34, 0.28);
+}
+
+.mediaFramed video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 750;
+  border-radius: 12px;
+  background: #0f0f0f;
+}
+
+/* Placeholder shown until a GIF or still is dropped into the slot. */
+.mediaEmpty {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  border: 1px dashed rgba(34, 34, 34, 0.3);
+  background: rgba(34, 34, 34, 0.03);
+}
+
+.mediaLabel {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.heading {
-  margin: 0;
-  max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-  color: var(--text);
-}
-
-.heading:not(:first-child) {
-  margin-top: 12px;
-}
-
-.subheading {
+.mediaHint {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 500;
-  font-size: 1.125rem;
+  font-size: 0.75rem;
   line-height: 1.4;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--text);
+  color: var(--muted);
 }
 
-.body {
+/* --- Design system ------------------------------------------------------- */
+
+.systemLead {
   margin: 0;
-  max-width: 46rem;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.list {
+.systemLeadStage {
+  display: flex;
+  justify-content: center;
+}
+
+/* Source is 1813px wide, so it never upscales inside the stage. */
+.systemLeadStage img {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.systemGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.systemGrid figure {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Reflection ---------------------------------------------------------- */
+
+.reflectionSection {
+  gap: 24px;
+}
+
+.reflectionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.reflectionGrid article {
+  padding: 20px 0 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 46rem;
-  margin: 0;
-  padding-left: 22px;
-  list-style: disc;
+  border-top: 1px solid var(--divider);
 }
 
-.list li {
+/* --- Project navigation -------------------------------------------------- */
+
+.projectNav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 24px 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--divider);
+}
+
+.projectNavPrev,
+.projectNavNext {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.projectNavNext {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.projectNavLabel {
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.projectNavName {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 160ms ease;
+}
+
+.projectNavDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f3c443;
+}
+
+.projectNavPrev:hover .projectNavName,
+.projectNavPrev:focus-visible .projectNavName,
+.projectNavNext:hover .projectNavName,
+.projectNavNext:focus-visible .projectNavName {
+  color: var(--muted);
+}
+
+.projectNavPrev:hover .projectNavLabel,
+.projectNavNext:hover .projectNavLabel {
   color: var(--text);
 }
 
-.imageFull {
-  width: 100%;
-  overflow: hidden;
+.projectNavAll {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 18px;
+  border: 1px solid rgba(34, 34, 34, 0.24);
+  border-radius: 999px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
-.imageFull img {
-  width: 100%;
-  height: auto;
-  display: block;
+.projectNavAll:hover,
+.projectNavAll:focus-visible {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--inverse);
 }
 
-.imageRow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
+/* --- Breakpoints --------------------------------------------------------- */
 
-.imageRowItem {
-  width: 100%;
-  overflow: hidden;
-}
+@media (min-width: 640px) {
+  .insightGrid,
+  .reflectionGrid,
+  .surveyKey {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 
-.imageRowItem img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+  .directionGrid,
+  .fcrRow,
+  .personaGrid,
+  .rankPair,
+  .systemGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(36px);
-  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
-}
+  .modeScale ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
 
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .compareTable dl > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 20px;
+    align-items: baseline;
   }
 }
 
 @media (min-width: 810px) {
   .content {
-    padding: 24px 24px 72px;
-    gap: 88px;
-  }
-
-  .topContent {
-    gap: 40px;
+    padding: 24px 24px 88px;
+    gap: 96px;
   }
 
   .bodyContent {
-    gap: 88px;
+    gap: 96px;
   }
 
-  .heroHeader {
-    flex-direction: row;
+  .caseSection {
+    gap: 32px;
+    padding-top: 52px;
+  }
+
+  .insightCard {
+    min-height: 260px;
+  }
+
+  /* Five answers, one row. */
+  .surveyKey {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .directionGrid article,
+  .fcrRow article,
+  .reflectionGrid article {
+    min-height: 148px;
+  }
+
+  .directionGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fcrRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Cards alternate sides. The media track is the narrower one, and the even
+     rule flips both the placement AND the track widths - otherwise the media
+     would be 0.8fr on one card and 1fr on the next. */
+  .highlightCard {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
     align-items: center;
-    justify-content: space-between;
+    gap: 40px;
+    padding: 48px 0;
+  }
+
+  .highlightCard:nth-child(even) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  }
+
+  .highlightCard:nth-child(even) .highlightCopy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .highlightCard:nth-child(even) .highlightVisual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .iterationItem {
+    grid-template-columns: 44px repeat(3, minmax(0, 1fr));
     gap: 24px;
   }
 
-  .lead {
-    font-size: 1.125rem;
+  .iterationNumber {
+    grid-row: auto;
   }
 
-  .section {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    column-gap: 40px;
-    row-gap: 24px;
-    align-items: start;
+  .projectNav {
+    gap: 24px;
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 559px) {
+  .projectNav {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
   }
 
-  .section > .kicker {
-    grid-column: 1;
+  .projectNavAll {
+    grid-column: 1 / -1;
     grid-row: 1;
-    position: sticky;
-    top: 24px;
+    justify-self: center;
   }
 
-  .section > :not(.kicker) {
-    grid-column: 2;
-  }
-
-  .body,
-  .list li {
-    font-size: 1rem;
+  .projectNavName {
+    font-size: 1.0625rem;
   }
 }
 
 @media (min-width: 1200px) {
   .content {
-    padding: 28px 32px 80px;
-    gap: 104px;
-  }
-
-  .topContent {
-    gap: 48px;
+    padding: 28px 32px 104px;
+    gap: 112px;
   }
 
   .bodyContent {
-    gap: 104px;
+    gap: 112px;
   }
 
-  .heroTitle {
-    font-size: clamp(5.5rem, 9vw, 8.5rem);
+  .caseSection {
+    gap: 36px;
   }
 
-  .cta {
-    min-height: 48px;
-    padding: 14px 22px;
-    font-size: 0.9375rem;
-  }
-
-  .lead {
-    font-size: 1.25rem;
-  }
-
-  .section {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    column-gap: 64px;
-    row-gap: 28px;
-  }
-
-  .heading {
-    font-size: clamp(3rem, 4.8vw, 4.25rem);
-  }
-
-  .body,
-  .list li {
-    font-size: 1.0625rem;
-    max-width: 52rem;
-  }
-
-  .list {
-    max-width: 52rem;
+  .highlightCard {
+    gap: 56px;
+    padding: 56px 0;
   }
 }

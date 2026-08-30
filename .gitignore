@@ -4,3 +4,11 @@ out/
 .env
 .env.local
 .env.production.local
+
+# Headless-Chrome user-data dirs left behind by layout/playback verification runs
+.chrome-*/
+.*-chrome*/
+
+# Throwaway verification screenshots. Real images live in pic/ or public/,
+# never at the repo root.
+/*.png

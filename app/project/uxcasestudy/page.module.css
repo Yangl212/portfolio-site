@@ -57,10 +57,6 @@
   border-top: 1px solid var(--divider);
 }
 
-.highlightsSection {
-  gap: 36px;
-}
-
 .sectionHeader {
   display: flex;
   flex-direction: column;
@@ -184,12 +180,12 @@
 .highlightList {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
 }
 
 .highlightCard {
   position: relative;
-  padding: 28px 0 0;
+  padding: 32px 0;
   display: grid;
   gap: 24px;
   border-top: 1px solid var(--divider);
@@ -215,13 +211,30 @@
 }
 
 .highlightVisual {
-  overflow: hidden;
+  min-width: 0;
+  overflow: visible;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 6px rgba(34, 34, 34, 0.14),
+    0 18px 44px rgba(34, 34, 34, 0.28);
 }
 
-.highlightVisual img {
+.highlightVisual img,
+.highlightVideo {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* The highlight recordings are 2304x1440, so the frame is reserved before
+   the file loads and the cards never reflow mid-scroll. The fill matches the
+   clips own #f6f6f6 field, so a frame that has not decoded yet reads as an
+   empty screen rather than a dark hole. */
+.highlightVideo {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f6f6f6;
 }
 
 .highlightNumber {
@@ -773,10 +786,10 @@
   }
 
   .highlightCard {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
     align-items: center;
     gap: 40px;
-    padding: 36px 0 0;
+    padding: 48px 0;
   }
 
   .highlightCard:nth-child(even) .highlightCopy {
@@ -787,6 +800,13 @@
   .highlightCard:nth-child(even) .highlightVisual {
     grid-column: 1;
     grid-row: 1;
+  }
+
+  /* Swapping sides has to swap the track widths too, or the visual would be
+     0.8fr on one card and 1fr on the next. Every video stays the same width;
+     the copy column stays the wider one throughout. */
+  .highlightCard:nth-child(even) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   }
 
   .researchChart {
@@ -853,5 +873,6 @@
 
   .highlightCard {
     gap: 56px;
+    padding: 56px 0;
   }
 }
