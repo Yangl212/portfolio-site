@@ -34,28 +34,28 @@ const problemSnapshots = [
 
 const designHighlights = [
   {
-    label: "01 / Earlier entry",
-    title: "Bring monthly spending into the account view",
-    body: "The checking account now shows this month's spending, budget progress, and a direct path into the detailed view. Users can notice a problem before searching for the budgeting tool.",
+    label: "01 / Richer spending chart",
+    title: "Redesign the spending chart to show more at a glance",
+    body: "The new chart surfaces more information in one view. Users can quickly spot overspending by category and swipe to see more detailed spending insights.",
     video: "/boa/01.mp4",
-    alt: "Screen recording of the BOA checking account surfacing this month’s spending and budget progress",
-    tone: "entry"
-  },
-  {
-    label: "02 / Context + control",
-    title: "Keep filters visible and edit categories in place",
-    body: "Month and category remain visible while users move from the spending overview into transactions. Multiple transactions can be selected and recategorized together instead of reopening each detail screen.",
-    video: "/boa/02.mp4",
-    alt: "Screen recording of persistent month and category filters with batch recategorization inside the transaction list",
+    alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights",
     tone: "spending"
   },
   {
-    label: "03 / Budget flexibility",
-    title: "Adjust a category without restarting the budget",
-    body: "Users can edit one category or move money between two categories while keeping the monthly total visible. The final step distinguishes a one-month change from an ongoing budget.",
-    video: "/boa/03.mp4",
-    alt: "Screen recording of editing one budget category and moving money between two categories",
+    label: "02 / Clearer budget view",
+    title: "Make budget status easier to understand",
+    body: "The budget page provides more useful information than the current version, helping users notice overspending more quickly.",
+    video: "/boa/02.mp4",
+    alt: "Screen recording of the redesigned BOA budget page making overspending easier to notice",
     tone: "budget"
+  },
+  {
+    label: "03 / Quick reallocation",
+    title: "Let users move budget directly",
+    body: "Users can directly move money from one category to another, making budget adjustments faster and easier.",
+    video: "/boa/03.mp4",
+    alt: "Screen recording of moving money directly from one BOA budget category to another",
+    tone: "reallocation"
   }
 ]
 
@@ -207,8 +207,8 @@ export default function UxCaseStudyPage() {
                 <div>
                   <h2 className={styles.sectionTitle}>Three changes carry the redesign.</h2>
                   <p className={styles.sectionLead}>
-                    The final mobile concept focuses on earlier access, continuous context, and budget controls that
-                    match the size of the change.
+                    The final mobile concept focuses on a spending chart that shows more at a glance, a budget view
+                    that makes overspending obvious, and reallocation users can do in one move.
                   </p>
                 </div>
               </div>
