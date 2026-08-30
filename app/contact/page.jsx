@@ -62,9 +62,6 @@ export default function ContactPage() {
                 <a href="mailto:Lelework1211@gmail.com" className={styles.value}>
                   Lelework1211@gmail.com
                 </a>
-                <a href="tel:+19177672493" className={styles.value}>
-                  (+1)917-767-2493
-                </a>
               </div>
             </div>
 
