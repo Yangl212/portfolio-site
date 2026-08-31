@@ -36,7 +36,7 @@ const moreProjects = [
   { title: "Cleared", category: "Product Design", year: "2026", href: "/project/cleared", image: clearedCover.src },
   { title: "Graveyard", category: "Web Design", year: "2025", href: "/project/graveyard", image: "/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png" },
   { title: "TAROO", category: "Brand Design", year: "2025", href: "/project/taroo", image: "/framer-assets/images/0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png" },
-  { title: "Alcohol Directory", category: "Zine", year: "2024", href: "/project/alcohal", image: "/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png" },
+  { title: "Alcohol Directory", category: "Zine", year: "2025", href: "/project/alcohal", image: "/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png" },
   { title: "Suglar", category: "Visual & Game", year: "2023", href: "/project/suglar", image: "/framer-assets/images/a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad.png" }
 ]
 

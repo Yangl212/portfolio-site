@@ -129,7 +129,7 @@ export default function AlcohalProjectPage() {
           <div className={styles.topContent}>
             <ProjectHero
               label="Personal Work"
-              discipline={"Editorial Design · 2024"}
+              discipline={"Zine · 2025"}
               title="Alcohol Directory"
               image={img("de2adde594c13411e1b6edfae73dc2b71177dad0.png")}
               imageAlt="Alcohol Directory cover next to an open spread"
