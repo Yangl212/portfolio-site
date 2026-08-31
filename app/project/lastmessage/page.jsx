@@ -235,8 +235,8 @@ export default function LastMessagePage() {
               label="Professional Work"
               discipline={"Product Design · AI Interaction · 2026"}
               title="Last Message"
-              image={img("0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png")}
-              imageAlt="Last Message title screen with chat messages from the AI character Midnight"
+              image="/lastmessage/cover.png"
+              imageAlt="Last Message title screen on a laptop, its glitched terminal art reading Detctive ARG"
               summary="An AI-driven interactive web experience built around conversation, fragmented information, and non-linear exploration."
               problem="Fragmented information usually forces people down one fixed path."
               contribution="UX, UI, AI interaction rules, and the functional website."
