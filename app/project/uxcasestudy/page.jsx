@@ -400,6 +400,7 @@ export default function UxCaseStudyPage() {
                     width={510}
                     height={1000}
                     maxDisplayWidth={440}
+                    transparent
                   />
                   <figcaption>Live prototype &#183; iPhone 390 &#215; 844</figcaption>
                 </figure>
