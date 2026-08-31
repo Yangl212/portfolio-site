@@ -73,8 +73,8 @@
 .kicker,
 .microLabel,
 .flowPair figcaption,
-.lowFiGrid figcaption,
 .systemGrid figcaption,
+.prototypeStage figcaption,
 .decisionLabel {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
@@ -239,6 +239,149 @@
 
 .highlightNumber {
   display: none;
+}
+
+/* --- Interactive prototype -------------------------------------------- */
+
+.prototypeLayout {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Holds the whole written half of the section -- the section header moved in
+   here so the phone can start at the top of the section instead of below a
+   full-width header. */
+.prototypeGuide {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  max-width: 34rem;
+}
+
+/* Extra air after the header so the numbered steps read as their own block
+   rather than a fourth paragraph of the intro. */
+.prototypeGuide .sectionHeader {
+  margin-bottom: 16px;
+}
+
+.prototypeSteps {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.prototypeSteps li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--divider);
+}
+
+.prototypeSteps li:last-child {
+  border-bottom: 1px solid var(--divider);
+}
+
+.prototypeSteps li > span {
+  padding-top: 0.2em;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.prototypeSteps li > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prototypeSteps h3 {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.prototypeSteps p {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Matches the square open-link button used elsewhere on the site -- see
+   .cta in the graveyard case study and .action in ProjectHero. */
+.prototypeLink {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--text);
+  color: var(--inverse);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.prototypeLink:hover,
+.prototypeLink:focus-visible {
+  background: #f3c443;
+  color: #222222;
+}
+
+.prototypeStage {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* The prototype ships its own titanium device shell and drop shadow, and its
+   <body> background was set to transparent in the bundle, so the device sits
+   straight on the page with no panel behind it. Nothing here may paint a
+   background -- that is the whole point. The canvas keeps ~49px of empty space
+   around the device, which is now just page showing through. */
+.prototypeViewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.prototypeFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 510px;
+  height: 1000px;
+  border: 0;
+  transform-origin: top left;
 }
 
 /* --- Research method + chart --------------------------------------- */
@@ -482,7 +625,6 @@
 }
 
 .flowPair figure,
-.lowFiGrid figure,
 .webGallery figure,
 .systemGrid figure {
   min-width: 0;
@@ -508,15 +650,98 @@
   display: block;
 }
 
-/* --- Low-fi + system galleries ----------------------------- */
+/* --- Low-fi flows ------------------------------------------- */
 
-.lowFiGrid {
+.lowFiFlows {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 44px;
 }
 
-.lowFiGrid figure,
+.lowFiArc {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding-top: 30px;
+  border-top: 1px solid var(--divider);
+}
+
+/* Label, title, body stacked at every width -- same rhythm as .sectionHeader
+   further up the page. */
+.lowFiArcHeader {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Wide enough that all three titles hold one line down to ~640px; balance
+   keeps the break even on the narrow widths where they do have to wrap. */
+.lowFiArcHeader h3 {
+  max-width: 48ch;
+  text-wrap: balance;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.lowFiArcHeader > p:not(.microLabel) {
+  max-width: 62ch;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.lowFiScreens {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 16px;
+}
+
+.lowFiScreens figure {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* The wireframes are 484x884 and already carry their own keyline, so they need
+   no frame here -- only a reserved box so a lazy image cannot reflow the grid. */
+.lowFiScreens img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 484 / 884;
+}
+
+.lowFiScreens figcaption {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lowFiScreens figcaption span {
+  flex: none;
+  color: var(--text);
+}
+
 .systemGrid figure {
   padding: 14px 0 0;
   display: flex;
@@ -526,12 +751,6 @@
   background: transparent;
 }
 
-.lowFiGrid figcaption {
-  font-size: 0.8125rem;
-  color: var(--text);
-}
-
-.lowFiGrid img,
 .systemGrid img,
 .webGallery img {
   width: 100%;
@@ -739,6 +958,11 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .lowFiScreens {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 20px;
+  }
+
   .webPrimary {
     grid-column: 1 / -1;
   }
@@ -809,6 +1033,23 @@
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   }
 
+  /* Text left, phone right, both starting at the top edge of the section. */
+  .prototypeLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 36%, 440px);
+    align-items: start;
+    gap: 48px;
+  }
+
+  /* Pinned to the right edge of the grid. The figure keeps its own width so
+     the caption stays centred under the device; the ~40px of transparent
+     canvas beside the phone is as far right as it goes without cropping. */
+  .prototypeStage {
+    justify-self: end;
+    width: 100%;
+    max-width: 440px;
+  }
+
   .researchChart {
     min-width: 0;
   }
@@ -871,8 +1112,19 @@
     height: 300px;
   }
 
+  /* Only the column gap widens here. The vertical rhythm around the videos
+     stays at 48px so the cards read the same from 810px up. */
   .highlightCard {
     gap: 56px;
-    padding: 56px 0;
+    padding: 48px 0;
+  }
+
+  .lowFiFlows {
+    gap: 52px;
+  }
+
+  .lowFiScreens {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 36px 24px;
   }
 }

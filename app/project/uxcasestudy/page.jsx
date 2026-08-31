@@ -3,6 +3,7 @@ import Link from "next/link"
 import { AutoplayVideo } from "../../../components/AutoplayVideo"
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
+import { ScaledIframe } from "../../../components/ScaledIframe"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import boaCover from "../../../pic/Frame 2.png"
@@ -59,6 +60,21 @@ const designHighlights = [
   }
 ]
 
+const prototypeSteps = [
+  {
+    title: "Scan the month",
+    body: "Open spending from the checking account card. The chart carries category totals and overspending in one view instead of a single ring."
+  },
+  {
+    title: "Follow a category",
+    body: "Step into a category and back out again. The active month and filters stay in place, and transactions can be recategorized from the list."
+  },
+  {
+    title: "Move the budget",
+    body: "Take from one category and give to another, then decide whether the change applies to this month only or from now on."
+  }
+]
+
 const researchStats = [
   { pct: "63%", label: "Selections reset", color: "rgba(247, 235, 140, 0.78)" },
   { pct: "70%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
@@ -112,6 +128,107 @@ const flowComparisons = [
     redesignedAlt: "Redesigned BOA budget flow with direct edits and category reallocation"
   }
 ]
+
+const lowFiArcs = [
+  {
+    label: "Entry",
+    title: "Spending starts on a screen users already open",
+    body: "In BOA today the spending tool sits several screens below the account it describes. Here the month's total is already on the accounts list and on the checking card, and a transaction row is a way back into the same spending context rather than a dead end.",
+    screens: [
+      {
+        src: "/boa/low01.png",
+        caption: "Accounts · spending in the list",
+        alt: "Low-fidelity accounts screen with a spending summary sitting under the account list"
+      },
+      {
+        src: "/boa/low02.png",
+        caption: "Checking · one entry point",
+        alt: "Low-fidelity checking account screen with this month's spending and a link into tracking"
+      },
+      {
+        src: "/boa/low03.png",
+        caption: "Transaction · category editable here",
+        alt: "Low-fidelity transaction detail with an editable category row and a link to all spending in that category"
+      }
+    ]
+  },
+  {
+    label: "Track spending",
+    title: "Month and category survive the trip into detail",
+    body: "The two pickers stay pinned above the overview, the category breakdown, and the transaction list, so stepping into a merchant and back does not clear them. Correcting a miscategorised charge happens in the list itself — select several, move them once — instead of one transaction detail at a time.",
+    screens: [
+      {
+        src: "/boa/low04.png",
+        caption: "Overview · filters pinned",
+        alt: "Low-fidelity spending overview with month and category filters pinned above a category breakdown"
+      },
+      {
+        src: "/boa/low05.png",
+        caption: "Time range · month to year",
+        alt: "Low-fidelity time range sheet offering month, quarter, and year"
+      },
+      {
+        src: "/boa/low06.png",
+        caption: "Category filter · all 16",
+        alt: "Low-fidelity category filter sheet listing every category with spend against budget"
+      },
+      {
+        src: "/boa/low07.png",
+        caption: "Category · by merchant",
+        alt: "Low-fidelity groceries detail broken down by merchant against the budget line"
+      },
+      {
+        src: "/boa/low08.png",
+        caption: "Same category · by month",
+        alt: "Low-fidelity groceries detail broken down by month against the budget line"
+      },
+      {
+        src: "/boa/low09.png",
+        caption: "Transactions · filters intact",
+        alt: "Low-fidelity groceries transaction list with the month and category filters still applied"
+      },
+      {
+        src: "/boa/low10.png",
+        caption: "Select · fix several at once",
+        alt: "Low-fidelity transaction list in selection mode with two transactions checked and a recategorize action"
+      },
+      {
+        src: "/boa/low11.png",
+        caption: "Move to another category",
+        alt: "Low-fidelity sheet moving the two selected transactions to Restaurants and Dining"
+      }
+    ]
+  },
+  {
+    label: "Budget",
+    title: "Changing one number does not restart setup",
+    body: "A monthly adjustment stays inside the budget. Categories are edited in place or moved against each other while the total is held steady, and saving is where the flow finally asks whether this is a one-month change or the new normal — a question the current setup never puts to the user.",
+    screens: [
+      {
+        src: "/boa/low13.png",
+        caption: "Budget · edit in place",
+        alt: "Low-fidelity budget screen with plus and minus steppers on each category"
+      },
+      {
+        src: "/boa/low14.png",
+        caption: "Reallocate · take from, give to",
+        alt: "Low-fidelity reallocation sheet moving twenty dollars between two categories with both new limits previewed"
+      },
+      {
+        src: "/boa/low15.png",
+        caption: "Save once, or from now on",
+        alt: "Low-fidelity save sheet offering to save for August only or as an ongoing budget"
+      },
+      {
+        src: "/boa/low16.png",
+        caption: "Category · line moved, bars kept",
+        alt: "Low-fidelity Restaurants and Dining detail showing the moved budget line and an undo action"
+      }
+    ]
+  }
+]
+
+const screenNumber = (src) => src.replace(/\D+/g, "")
 
 const testIterations = [
   {
@@ -235,6 +352,57 @@ export default function UxCaseStudyPage() {
                     </span>
                   </article>
                 ))}
+              </div>
+            </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.prototypeLayout}>
+                <div className={styles.prototypeGuide}>
+                  <div className={styles.sectionHeader}>
+                    <p className={styles.kicker}>Interactive Prototype</p>
+                    <div>
+                      <h2 className={styles.sectionTitle}>Try the high-fidelity spending experience.</h2>
+                      <p className={styles.sectionLead}>
+                        The clips above introduce the key ideas one at a time. This working prototype connects them
+                        into a single journey, running live in the page.
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className={styles.microLabel}>Three things to try</p>
+                  <ol className={styles.prototypeSteps}>
+                    {prototypeSteps.map((step, index) => (
+                      <li key={step.title}>
+                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h3>{step.title}</h3>
+                          <p>{step.body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                  <a
+                    className={styles.prototypeLink}
+                    href="/boa/Spending%20Prototype%20(embeddable).html"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open at full size <span aria-hidden="true">&#8594;</span>
+                  </a>
+                </div>
+
+                <figure className={styles.prototypeStage}>
+                  <ScaledIframe
+                    className={styles.prototypeViewport}
+                    frameClassName={styles.prototypeFrame}
+                    src="/boa/Spending%20Prototype%20(embeddable).html"
+                    title="Interactive high-fidelity BOA spending and budgeting prototype"
+                    width={510}
+                    height={1000}
+                    maxDisplayWidth={440}
+                  />
+                  <figcaption>Live prototype &#183; iPhone 390 &#215; 844</figcaption>
+                </figure>
               </div>
             </section>
 
@@ -367,6 +535,43 @@ export default function UxCaseStudyPage() {
 
             <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Low-fi Flows</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Fifteen wireframes, each answering something BOA does differently today.</h2>
+                  <p className={styles.sectionLead}>
+                    The structure was tested before any visual design: where spending is entered from, what survives a
+                    step into detail, and how much of a budget has to be rebuilt to change one number.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.lowFiFlows}>
+                {lowFiArcs.map((arc) => (
+                  <div className={styles.lowFiArc} key={arc.label}>
+                    <div className={styles.lowFiArcHeader}>
+                      <p className={styles.microLabel}>{arc.label}</p>
+                      <h3>{arc.title}</h3>
+                      <p>{arc.body}</p>
+                    </div>
+
+                    <div className={styles.lowFiScreens}>
+                      {arc.screens.map((screen) => (
+                        <figure key={screen.src}>
+                          <img src={screen.src} alt={screen.alt} width="484" height="884" loading="lazy" />
+                          <figcaption>
+                            <span aria-hidden="true">{screenNumber(screen.src)}</span>
+                            {screen.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Testing &amp; Iteration</p>
                 <div>
                   <h2 className={styles.sectionTitle}>The low-fi test changed the interaction, not just the polish.</h2>
@@ -375,17 +580,6 @@ export default function UxCaseStudyPage() {
                     and category editing, while exposing ambiguity in budget reallocation and hierarchy.
                   </p>
                 </div>
-              </div>
-
-              <div className={styles.lowFiGrid}>
-                <figure>
-                  <figcaption>Track spending low-fi</figcaption>
-                  <img src={img("ef14fa26529a70d0b6532be91a35a0e55856a13b.png")} alt="Low-fidelity mobile spending flow" />
-                </figure>
-                <figure>
-                  <figcaption>Budget low-fi</figcaption>
-                  <img src={img("1b9110f8e883b603d3c739b4e2e2d171587e7ac6.png")} alt="Low-fidelity mobile budget flow" />
-                </figure>
               </div>
 
               <div className={styles.iterationList}>
@@ -471,7 +665,7 @@ export default function UxCaseStudyPage() {
         </section>
 
         <Reveal
-          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiGrid} figure, .${styles.webGallery} figure, .${styles.systemGrid} figure`}
+          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiScreens} figure, .${styles.webGallery} figure, .${styles.systemGrid} figure`}
           barsUp={`.${styles.researchBar}`}
         />
 
