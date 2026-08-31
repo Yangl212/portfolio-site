@@ -76,7 +76,7 @@ const formatSpecs = [
   { term: "Size", value: "10 × 20 cm" },
   { term: "Orientation", value: "Portrait" },
   { term: "Print", value: "Risograph" },
-  { term: "Extent", value: "25 spreads" },
+  { term: "Extent", value: "24 spreads" },
   { term: "Binding", value: "Hand-sewn" }
 ]
 
@@ -136,7 +136,7 @@ export default function AlcohalProjectPage() {
               summary="A riso zine of the cocktails I drank in New York. One spread per drink: what it was, where I had it, and what it tasted like."
               problem="Bar photos record where you were. They do not record what the drink tasted like or how the room felt."
               contribution="Illustration, riso separations, editorial layout, photography, printing, and binding."
-              outcome="25 spreads sorted by taste, with a map at the back so the route can be walked again."
+              outcome="24 spreads sorted by taste, with a map at the back so the route can be walked again."
               role="Designer, illustrator, photographer"
               scope={"Illustration · Editorial · Riso"}
               platform={"Print · 10 × 20 cm zine"}
@@ -156,7 +156,7 @@ export default function AlcohalProjectPage() {
                   <div className={styles.bookHeaderCopy}>
                     <h2 className={styles.sectionTitle}>The whole zine, cover to back.</h2>
                     <p className={styles.sectionLead}>
-                      All 25 spreads. Click either half of the book to turn a page, or use the arrow keys. Open it at
+                      All 24 spreads. Click either half of the book to turn a page, or use the arrow keys. Open it at
                       full size to read the tasting notes.
                     </p>
                   </div>
