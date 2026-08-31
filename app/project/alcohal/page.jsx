@@ -11,6 +11,21 @@ const img = (hash) => `/framer-assets/images/${hash}`
 
 const BOOK_SRC = "/alcohol/embed/flipbook.html"
 
+const sourcePhotos = [
+  {
+    src: img("e45a0f4cd30eefe8fc27441ba9175797a52d1c57.png"),
+    alt: "Original phone photo of a margarita on a bar counter in low light",
+    w: "341",
+    h: "460"
+  },
+  {
+    src: img("d9fd9af0b3253543691532f63d2889cb8e858225.png"),
+    alt: "Original phone photo of a dark bar table with drinks and playing cards",
+    w: "345",
+    h: "460"
+  }
+]
+
 const idea = [
   {
     label: "What it is",
@@ -62,7 +77,7 @@ const formatSpecs = [
   { term: "Orientation", value: "Portrait" },
   { term: "Print", value: "Risograph" },
   { term: "Extent", value: "25 spreads" },
-  { term: "Binding", value: "Undecided" }
+  { term: "Binding", value: "Hand-sewn" }
 ]
 
 const posters = [
@@ -79,20 +94,18 @@ const posters = [
 const bookGrids = [
   {
     src: img("c6bb85e5adf83cf08f8c9093a3e096d4fe83dcbc.jpg"),
-    alt: "Fifteen Alcohol Directory spreads laid out in a grid on black",
-    caption: "Spreads 1–15"
+    alt: "Fifteen Alcohol Directory spreads laid out in a grid on black"
   },
   {
     src: img("1a49a56a595edf30f54b00a5547d495e074389b7.jpg"),
-    alt: "Ten more Alcohol Directory spreads laid out in a grid on black, including the taste chapter dividers",
-    caption: "Spreads 16–25, with the taste dividers"
+    alt: "Ten more Alcohol Directory spreads laid out in a grid on black, including the taste chapter dividers"
   }
 ]
 
 const reflection = [
   {
     label: "Limitation",
-    body: "It is not printed yet. Everything here is a mockup, so I have not seen how the halftones sit on uncoated stock or how far the registration actually drifts."
+    body: "Hand-sewing caps it at a handful of copies. Anything past that needs a binding I have not worked out yet, and most of the cheap ones cut into the left-hand page."
   },
   {
     label: "Tradeoff",
@@ -100,7 +113,7 @@ const reflection = [
   },
   {
     label: "Next",
-    body: "Print a short run on a real riso, then settle the binding. Coil lies flat, which matters when the left page is a full-bleed illustration."
+    body: "The map at the back wants to be a fold-out insert rather than a page, so it can come out of the book and go in a pocket on the way to the first bar."
   }
 ]
 
@@ -122,7 +135,7 @@ export default function AlcohalProjectPage() {
               imageAlt="Alcohol Directory cover next to an open spread"
               summary="A riso zine of the cocktails I drank in New York. One spread per drink: what it was, where I had it, and what it tasted like."
               problem="Bar photos record where you were. They do not record what the drink tasted like or how the room felt."
-              contribution="Illustration, riso separations, editorial layout, photography, and print prep."
+              contribution="Illustration, riso separations, editorial layout, photography, printing, and binding."
               outcome="25 spreads sorted by taste, with a map at the back so the route can be walked again."
               role="Designer, illustrator, photographer"
               scope={"Illustration · Editorial · Riso"}
@@ -202,7 +215,6 @@ export default function AlcohalProjectPage() {
                   height="2160"
                   loading="lazy"
                 />
-                <figcaption>Moodboard</figcaption>
               </figure>
 
               <div className={styles.directionGrid}>
@@ -215,43 +227,64 @@ export default function AlcohalProjectPage() {
               </div>
             </section>
 
+            {/* Highlights rather than decisions: the things that are true of the
+                object itself, in the order they matter to someone holding it. */}
             <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Key Decisions</p>
+                <p className={styles.kicker}>Highlights</p>
                 <div>
-                  <h2 className={styles.sectionTitle}>Three decisions the rest of the book follows from.</h2>
+                  <h2 className={styles.sectionTitle}>What makes it worth holding.</h2>
                 </div>
               </div>
 
-              <article className={styles.decision}>
-                <div className={styles.decisionCopy}>
-                  <p className={styles.microLabel}>01 / Spread template</p>
-                  <h3>Left page for the drink, right page for the facts.</h3>
+              <article className={styles.highlight}>
+                <div className={styles.highlightCopy}>
+                  <p className={styles.microLabel}>01 / Made by hand</p>
+                  <h3>Risograph printed and sewn by hand.</h3>
                   <p>
-                    Every spread splits the same way. Left is a full-bleed color page with the cocktail drawn on it and
-                    the name hand-lettered. Right is white: bar name, address, and a short tasting note, all set in
-                    mono, with one or two riso photos.
-                  </p>
-                  <p>
-                    Fixing the split early meant I could lay out a spread in an evening instead of redesigning the page
-                    each time, and a reader always knows which side the address is on.
+                    The whole book is printed on a risograph and bound by hand. The halftones are ink on paper rather
+                    than a filter, the registration drifts a little on some spreads, and the drink name on every
+                    left-hand page is hand-lettered &mdash; no two are drawn the same way.
                   </p>
                 </div>
-                <figure className={styles.decisionVisual}>
+                <figure className={styles.highlightVisual}>
+                  <img
+                    src="/alcohol/making.webp"
+                    alt="A printed copy of the zine open on a cutting mat, clipped at the spine, with an awl, bone folder, waxed thread and a steel ruler laid out beside it"
+                    width="1800"
+                    height="1350"
+                    loading="lazy"
+                  />
+                </figure>
+              </article>
+
+              <article className={styles.highlight} data-layout="reverse">
+                <div className={styles.highlightCopy}>
+                  <p className={styles.microLabel}>02 / All of it first-hand</p>
+                  <h3>Every drink in here is one I actually drank.</h3>
+                  <p>
+                    Nothing is researched. Each spread is a bar I went to and a cocktail I ordered, and the tasting
+                    note is what I thought of it rather than what the menu said.
+                  </p>
+                  <p>
+                    The bar names and addresses are real, so the book works as a route as much as a record. The map at
+                    the back lets you walk the whole thing.
+                  </p>
+                </div>
+                <figure className={styles.highlightVisual}>
                   <img
                     src={img("b888c714deb12399e0ae32a3e4af79963c30fa7d.png")}
-                    alt="Pina Colada Pickleback spread showing the fixed layout: illustration left, bar name, photo, note and address right"
+                    alt="Pina Colada Pickleback spread: illustration left, bar name, riso photo, tasting note and address right"
                     width="6000"
                     height="4500"
                     loading="lazy"
                   />
-                  <figcaption>Pina Colada Pickleback · Schmuck</figcaption>
                 </figure>
               </article>
 
-              <article className={styles.decision}>
-                <div className={styles.decisionCopy}>
-                  <p className={styles.microLabel}>02 / Photo treatment</p>
+              <article className={styles.highlight}>
+                <div className={styles.highlightCopy}>
+                  <p className={styles.microLabel}>03 / My own photos</p>
                   <h3>Every photo goes through a riso separation first.</h3>
                   <p>
                     The source photos are phone shots taken at the bar, usually in bad light. Separating them into two
@@ -263,52 +296,31 @@ export default function AlcohalProjectPage() {
                     being printed straight.
                   </p>
                 </div>
-                <div className={styles.decisionVisual}>
+                <figure className={styles.highlightVisual}>
                   <div className={styles.photoPair}>
-                    {[
-                      {
-                        src: img("e45a0f4cd30eefe8fc27441ba9175797a52d1c57.png"),
-                        alt: "Original phone photo of a margarita on a bar counter in low light",
-                        w: "341",
-                        h: "460"
-                      },
-                      {
-                        src: img("d9fd9af0b3253543691532f63d2889cb8e858225.png"),
-                        alt: "Original phone photo of a dark bar table with drinks and playing cards",
-                        w: "345",
-                        h: "460"
-                      }
-                    ].map((photo) => (
-                      <figure key={photo.src}>
-                        <img src={photo.src} alt={photo.alt} width={photo.w} height={photo.h} loading="lazy" />
-                      </figure>
+                    {sourcePhotos.map((photo) => (
+                      <img
+                        key={photo.src}
+                        src={photo.src}
+                        alt={photo.alt}
+                        width={photo.w}
+                        height={photo.h}
+                        loading="lazy"
+                      />
                     ))}
                   </div>
-                  <figure className={styles.treated}>
-                    <img
-                      src={img("b8f79aee563443b27c8e952c33c4f8fe79c47ce8.png")}
-                      alt="Key Lime Martini spread with a photo split into three stacked riso color passes"
-                      width="6000"
-                      height="4500"
-                      loading="lazy"
-                    />
-                    <figcaption>Source photos, and a separation printed in three passes</figcaption>
-                  </figure>
-                </div>
+                </figure>
               </article>
 
-              <article className={styles.decision}>
-                <div className={styles.decisionCopy}>
-                  <p className={styles.microLabel}>03 / Order</p>
+              <article className={styles.highlight} data-layout="wide">
+                <div className={styles.highlightCopy}>
+                  <p className={styles.microLabel}>04 / Ordered by taste</p>
                   <h3>Sorted by taste, not by bar or by date.</h3>
                   <p>
                     The book follows the taste profiles of the drinks rather than where or when I had them. It opens on
                     the refreshing ones and moves toward the concentrated and strong, which is roughly the shape of an
-                    evening out.
-                  </p>
-                  <p>
-                    Sorting by neighbourhood or by date would have been easier to build and would have told a reader
-                    nothing.
+                    evening out. Sorting by neighbourhood or by date would have been easier to build and would have
+                    told a reader nothing.
                   </p>
                 </div>
 
@@ -337,7 +349,7 @@ export default function AlcohalProjectPage() {
                   <h2 className={styles.sectionTitle}>Small enough to carry, tall enough for one drink a page.</h2>
                   <p className={styles.sectionLead}>
                     10 × 20 cm is close to a bar menu, and the tall portrait page suits a glass better than a square
-                    would. Binding is the one thing still open.
+                    would. It is sewn rather than coiled, so the left-hand page can run full bleed.
                   </p>
                 </div>
               </div>
@@ -360,10 +372,6 @@ export default function AlcohalProjectPage() {
                     height="492"
                     loading="lazy"
                   />
-                  <figcaption>
-                    Binding references. Coil lies flat but shows on the cover; traditional binding is cleaner and
-                    fights the full-bleed left page.
-                  </figcaption>
                 </figure>
               </div>
             </section>
@@ -405,7 +413,6 @@ export default function AlcohalProjectPage() {
                 {bookGrids.map((grid) => (
                   <figure key={grid.src}>
                     <img src={grid.src} alt={grid.alt} width="2000" height="1125" loading="lazy" />
-                    <figcaption>{grid.caption}</figcaption>
                   </figure>
                 ))}
               </div>
@@ -414,7 +421,7 @@ export default function AlcohalProjectPage() {
             <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Reflection</p>
-                <h2 className={styles.sectionTitle}>Still on screen, not on paper.</h2>
+                <h2 className={styles.sectionTitle}>It exists, but it does not scale.</h2>
               </div>
 
               <div className={styles.reflectionGrid}>
@@ -448,7 +455,7 @@ export default function AlcohalProjectPage() {
         </section>
 
         <Reveal
-          fade={`.${styles.moodboard}, .${styles.decisionVisual}, .${styles.references}, .${styles.posterPair} figure, .${styles.bookGrids} figure`}
+          fade={`.${styles.moodboard}, .${styles.highlightVisual}, .${styles.references}, .${styles.posterPair} figure, .${styles.bookGrids} figure`}
         />
 
         <SiteFooter />

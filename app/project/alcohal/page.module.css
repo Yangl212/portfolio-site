@@ -73,11 +73,7 @@
 }
 
 .kicker,
-.microLabel,
-.moodboard figcaption,
-.decisionVisual figcaption,
-.references figcaption,
-.bookGrids figcaption {
+.microLabel {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-size: 0.75rem;
@@ -90,17 +86,6 @@
 
 .kicker {
   color: var(--text);
-}
-
-/* The binding note is a full sentence, so it drops the caption's uppercase
-   treatment and reads as body copy instead. */
-.references figcaption {
-  max-width: 46ch;
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  line-height: 1.55;
 }
 
 .sectionTitle {
@@ -125,7 +110,7 @@
 
 .ideaGrid p:not(.microLabel),
 .directionGrid p,
-.decisionCopy > p,
+.highlightCopy > p,
 .chapter > p,
 .reflectionGrid article > p:not(.microLabel) {
   margin: 0;
@@ -136,7 +121,7 @@
 }
 
 .directionGrid h3,
-.decisionCopy h3 {
+.highlightCopy h3 {
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-size: var(--fs-h3);
@@ -216,7 +201,7 @@
 .references,
 .bookGrids figure,
 .posterPair figure,
-.decisionVisual {
+.highlightVisual {
   min-width: 0;
   margin: 0;
   display: flex;
@@ -228,18 +213,10 @@
 .references img,
 .bookGrids img,
 .posterPair img,
-.decisionVisual img {
+.highlightVisual img {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.moodboard figcaption,
-.bookGrids figcaption,
-.decisionVisual > figcaption,
-.treated figcaption {
-  padding-top: 10px;
-  border-top: 1px solid var(--divider);
 }
 
 /* --- The idea ----------------------------------------------------------- */
@@ -268,9 +245,9 @@
   width: 100%;
 }
 
-/* --- Key decisions ------------------------------------------------------ */
+/* --- Highlights --------------------------------------------------------- */
 
-.decision {
+.highlight {
   min-width: 0;
   padding-top: 34px;
   display: grid;
@@ -278,44 +255,24 @@
   border-top: 1px solid var(--divider);
 }
 
-.decisionCopy {
+.highlightCopy {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.decisionCopy > p {
+.highlightCopy > p {
   max-width: 52ch;
 }
 
-/* Source photos above the printed result, so the pair reads in the order the
-   sentence describes. */
 .photoPair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-.photoPair figure {
-  min-width: 0;
-  margin: 0;
-}
-
 .photoPair img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.treated {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.treated img {
   width: 100%;
   height: auto;
   display: block;
@@ -548,30 +505,34 @@
     padding-top: 52px;
   }
 
-  /* Copy left, artwork right, reversed on the middle decision so the three do
-     not read as a stack of identical rows. */
-  .decision {
+  /* Copy left, artwork right by default; data-layout="reverse" flips one so
+     the run does not read as a stack of identical rows. */
+  .highlight {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 48px;
     align-items: center;
     padding-top: 44px;
   }
 
-  .decision:nth-of-type(2) .decisionCopy {
+  .highlight[data-layout="reverse"] .highlightCopy {
     grid-column: 2;
     grid-row: 1;
   }
 
-  .decision:nth-of-type(2) .decisionVisual {
+  .highlight[data-layout="reverse"] .highlightVisual {
     grid-column: 1;
     grid-row: 1;
   }
 
-  /* The chapter list is text, so it sits full width under its own argument
-     rather than squeezing into half the grid. */
-  .decision:nth-of-type(3) {
+  /* For the ones with no artwork, or whose artwork is text: one column, so the
+     copy is not stranded in half a grid beside nothing. */
+  .highlight[data-layout="wide"] {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 28px;
+  }
+
+  .highlight[data-layout="wide"] .highlightCopy > p {
+    max-width: 68ch;
   }
 
   .formatLayout {
@@ -633,7 +594,7 @@
     gap: 36px;
   }
 
-  .decision {
+  .highlight {
     column-gap: 64px;
   }
 
