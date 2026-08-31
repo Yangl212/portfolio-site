@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Alcohol Directory</title>
 <style>
-  html,body{margin:0;padding:0;background:#e4e2e2;height:100%;overflow:hidden;}
+  /* No ground of its own. The iframe is transparent so the book sits directly
+     on whatever the host page is painted, with no panel edge around it. */
+  html,body{margin:0;padding:0;background:transparent;height:100%;overflow:hidden;}
   *{box-sizing:border-box;}
   #fb-root{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:4px 16px 28px;font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;color:#1C1A17;}
   #fb-stage{position:relative;width:100%;display:flex;justify-content:center;align-items:center;}
@@ -37,7 +39,7 @@
 
 <script>
 /* ---------- 配置：换成你自己的图就改这里 ---------- */
-var SPREAD_COUNT = 25;                       // 跨页数量
+var SPREAD_COUNT = 24;                       // 跨页数量
 var SPREADS = [];
 for (var i = 1; i <= SPREAD_COUNT; i++) SPREADS.push('pages/' + String(i).padStart(2,'0') + '.webp');
 var COVER = 'pages/cover.webp';               // 封面（单页图），不要就设为 null
