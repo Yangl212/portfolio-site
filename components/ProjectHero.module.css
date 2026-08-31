@@ -18,6 +18,20 @@
 .action:hover, .action:focus-visible { background: #f3c443; color: #222; }
 .actionGhost { border-color: rgba(34, 34, 34, .24); color: var(--text); }
 .actionGhost:hover, .actionGhost:focus-visible { border-color: var(--text); background: var(--text); color: var(--inverse); }
+/* Entrance fade, using the same curve and distance as the home page's .reveal,
+   so opening a project reads as a continuation of the work list rather than a
+   hard cut. Every project page renders this hero, so one definition covers all
+   of them. Guarded rather than unconditional: under reduced motion the hero
+   just renders in place instead of starting at opacity 0. */
+@keyframes rise { to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .eyebrow, .title, .image, .summary, .details { opacity: 0; transform: translateY(28px); animation: rise 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .title { animation-delay: 60ms; }
+  .image { animation-delay: 120ms; }
+  .summary { animation-delay: 160ms; }
+  .details { animation-delay: 200ms; }
+}
+
 @media (min-width: 810px) { .wrap { gap: 40px; } .summary { font-size: 1.125rem; } .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-areas: "title image" "summary image" "details image"; column-gap: 48px; row-gap: 28px; align-items: start; } .title { grid-area: title; } .image { grid-area: image; height: 100%; } .image img { height: 100%; object-fit: cover; object-position: right center; } .summary { grid-area: summary; align-self: end; } .details { grid-area: details; } }
 @media (min-width: 1200px) { .wrap { gap: 48px; } .title { font-size: clamp(3rem, 2rem + 2.6vw, 4rem); } .summary { font-size: 1.125rem; } .hero { column-gap: 64px; } .facts { gap: 28px 44px; padding: 30px 0; } .meta { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } .action { min-height: 48px; padding: 14px 22px; font-size: .9375rem; } }
 @media (max-width: 639px) { .summary { width: 100%; max-width: 100%; } .facts, .meta { grid-template-columns: 1fr; } }
