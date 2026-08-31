@@ -1,4 +1,13 @@
+/* Same case-study shell as the BOA and Taroo pages -- shared tokens, section
+   rhythm, and divider keylines. The spread mockups carry their own grey ground
+   and drop shadow, so nothing here frames an image. */
 .page {
+  --divider: rgba(34, 34, 34, 0.14);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
+  --fs-h3: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-lead: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-body: 0.9375rem;
+  --measure: 64ch;
   min-height: 100vh;
   background: var(--page-bg);
 }
@@ -6,6 +15,7 @@
 .frame {
   width: 100%;
   margin: 0;
+  overflow: hidden;
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-bottom: 0;
@@ -17,245 +27,617 @@
 
 .content {
   width: 100%;
-  margin: 0 auto;
-  padding: 16px 16px 64px;
+  min-width: 0;
+  padding: 16px 16px 72px;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 72px;
 }
 
-.topContent {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.topContent,
+.bodyContent {
+  width: 100%;
+  min-width: 0;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .bodyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* --- Section shell ------------------------------------------------------ */
+
+.caseSection {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 44px;
+  border-top: 1px solid var(--divider);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+.sectionHeader > div {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kicker,
+.microLabel,
+.moodboard figcaption,
+.decisionVisual figcaption,
+.references figcaption,
+.bookGrids figcaption {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.kicker {
+  color: var(--text);
+}
+
+/* The binding note is a full sentence, so it drops the caption's uppercase
+   treatment and reads as body copy instead. */
+.references figcaption {
+  max-width: 46ch;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.sectionTitle {
+  max-width: 30ch;
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.sectionLead {
+  max-width: var(--measure);
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.ideaGrid p:not(.microLabel),
+.directionGrid p,
+.decisionCopy > p,
+.chapter > p,
+.reflectionGrid article > p:not(.microLabel) {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.directionGrid h3,
+.decisionCopy h3 {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+/* --- Readable book ------------------------------------------------------ */
+
+/* The flipbook sizes itself to whatever box it is given, so the frame only has
+   to pick a height. It has no controls of its own, so a square spread takes
+   almost the whole box: roughly (height - 56) on a side, the remainder being
+   padding plus the ~28px the drop shadow hangs below the book. */
+.bookFrame {
   width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 64px;
+  height: clamp(520px, 78vh, 940px);
 }
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.bookViewport {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.heroHeader {
+/* Same stack as .sectionHeader, but split so the button can sit level with the
+   heading instead of with the kicker above it. Stacks below 810px. */
+.bookHeader {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+
+.bookHeaderRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 20px;
 }
 
-.heroCopy {
+.bookHeaderCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+/* Same square open-link button as the BOA prototype and ProjectHero. */
+.bookLink {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  background: var(--text);
+  color: var(--inverse);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.bookLink:hover,
+.bookLink:focus-visible {
+  background: #f3c443;
+  color: #222222;
+}
+
+.moodboard,
+.references,
+.bookGrids figure,
+.posterPair figure,
+.decisionVisual {
+  min-width: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.heroTitle {
-  margin: 0;
-  max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(2.5rem, 8vw, 4.75rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
+.moodboard img,
+.references img,
+.bookGrids img,
+.posterPair img,
+.decisionVisual img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.lead {
-  margin: 0 auto;
+.moodboard figcaption,
+.bookGrids figcaption,
+.decisionVisual > figcaption,
+.treated figcaption {
+  padding-top: 10px;
+  border-top: 1px solid var(--divider);
+}
+
+/* --- The idea ----------------------------------------------------------- */
+
+.ideaGrid,
+.directionGrid,
+.reflectionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+.ideaGrid article,
+.directionGrid article,
+.reflectionGrid article {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--divider);
+}
+
+/* --- Direction ---------------------------------------------------------- */
+
+.moodboard {
   width: 100%;
-  max-width: 1300px;
-  text-align: left;
+}
+
+/* --- Key decisions ------------------------------------------------------ */
+
+.decision {
+  min-width: 0;
+  padding-top: 34px;
+  display: grid;
+  gap: 28px;
+  border-top: 1px solid var(--divider);
+}
+
+.decisionCopy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.decisionCopy > p {
+  max-width: 52ch;
+}
+
+/* Source photos above the printed result, so the pair reads in the order the
+   sentence describes. */
+.photoPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.photoPair figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.photoPair img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.treated {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.treated img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --- Chapter structure -------------------------------------------------- */
+
+.chapters {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--divider);
+}
+
+.chapter:last-child {
+  border-bottom: 1px solid var(--divider);
+}
+
+.tastes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tastes li {
+  padding: 6px 12px;
+  border: 1px solid rgba(34, 34, 34, 0.24);
+  border-radius: 999px;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: 0.8125rem;
+  line-height: 1.2;
   color: var(--text);
 }
 
-.lead em,
-.body em {
-  font-style: italic;
+/* --- Format ------------------------------------------------------------- */
+
+.formatLayout {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
 }
 
-.lead strong,
-.body strong {
-  font-weight: 700;
-}
-
-.section {
+.specs {
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.kicker {
-  margin: 0;
+.specs > div {
+  padding: 14px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: baseline;
+  border-top: 1px solid var(--divider);
+}
+
+.specs > div:last-child {
+  border-bottom: 1px solid var(--divider);
+}
+
+.specs dt {
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
   font-weight: 500;
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.heading {
+.specs dd {
   margin: 0;
-  max-width: 100%;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
+  font-size: var(--fs-body);
+  line-height: 1.4;
   color: var(--text);
 }
 
-.heading:not(:first-child) {
-  margin-top: 12px;
-}
+/* --- Posters ------------------------------------------------------------ */
 
-.body {
-  margin: 0;
-  max-width: 46rem;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--text);
-}
-
-.imageFull {
-  width: 100%;
-  overflow: hidden;
-}
-
-.imageFull img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.imageRow {
+.posterPair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
-.imageRowItem {
-  width: 100%;
-  overflow: hidden;
+/* --- Every spread ------------------------------------------------------- */
+
+.bookGrids {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.imageRowItem img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* --- Reflection --------------------------------------------------------- */
+
+.reflectionSection {
+  gap: 24px;
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(36px);
-  animation: rise 860ms cubic-bezier(0.12, 0.74, 0.2, 1) forwards;
+/* --- Project navigation ------------------------------------------------- */
+
+.projectNav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 24px 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--divider);
 }
 
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.projectNavPrev,
+.projectNavNext {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.projectNavNext {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.projectNavLabel {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.projectNavName {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 160ms ease;
+}
+
+.projectNavDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f3c443;
+}
+
+.projectNavPrev:hover .projectNavName,
+.projectNavPrev:focus-visible .projectNavName,
+.projectNavNext:hover .projectNavName,
+.projectNavNext:focus-visible .projectNavName {
+  color: var(--muted);
+}
+
+.projectNavPrev:hover .projectNavLabel,
+.projectNavNext:hover .projectNavLabel {
+  color: var(--text);
+}
+
+.projectNavAll {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 18px;
+  border: 1px solid rgba(34, 34, 34, 0.24);
+  border-radius: 999px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.projectNavAll:hover,
+.projectNavAll:focus-visible {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--inverse);
+}
+
+/* --- Breakpoints -------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  .ideaGrid,
+  .directionGrid,
+  .reflectionGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
 }
 
 @media (min-width: 810px) {
   .content {
-    padding: 24px 24px 72px;
-    gap: 88px;
-  }
-
-  .topContent {
-    gap: 40px;
+    padding: 24px 24px 88px;
+    gap: 96px;
   }
 
   .bodyContent {
-    gap: 88px;
+    gap: 96px;
   }
 
-  .heroHeader {
-    flex-direction: row;
+  .caseSection {
+    gap: 32px;
+    padding-top: 52px;
+  }
+
+  /* Copy left, artwork right, reversed on the middle decision so the three do
+     not read as a stack of identical rows. */
+  .decision {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 48px;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    padding-top: 44px;
   }
 
-  .lead {
-    font-size: 1.125rem;
+  .decision:nth-of-type(2) .decisionCopy {
+    grid-column: 2;
+    grid-row: 1;
   }
 
-  .section {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    column-gap: 40px;
-    row-gap: 24px;
+  .decision:nth-of-type(2) .decisionVisual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* The chapter list is text, so it sits full width under its own argument
+     rather than squeezing into half the grid. */
+  .decision:nth-of-type(3) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+
+  .formatLayout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 48px;
     align-items: start;
   }
 
-  .section > .kicker {
-    grid-column: 1;
+  .posterPair {
+    gap: 32px;
+  }
+
+  .bookHeaderRow {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  /* Holds the button on one line against the header block beside it. */
+  .bookLink {
+    flex: none;
+  }
+
+  .projectNav {
+    gap: 24px;
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 559px) {
+  .projectNav {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
+  }
+
+  .projectNavAll {
+    grid-column: 1 / -1;
     grid-row: 1;
-    position: sticky;
-    top: 24px;
+    justify-self: center;
   }
 
-  .section > :not(.kicker) {
-    grid-column: 2;
-  }
-
-  .body {
-    font-size: 1rem;
+  .projectNavName {
+    font-size: 1.0625rem;
   }
 }
 
 @media (min-width: 1200px) {
   .content {
-    padding: 28px 32px 80px;
-    gap: 104px;
-  }
-
-  .topContent {
-    gap: 48px;
+    padding: 28px 32px 104px;
+    gap: 112px;
   }
 
   .bodyContent {
-    gap: 104px;
+    gap: 112px;
   }
 
-  .heroTitle {
-    font-size: clamp(5.5rem, 9vw, 8.5rem);
+  .caseSection {
+    gap: 36px;
   }
 
-  .lead {
-    font-size: 1.25rem;
-  }
-
-  .section {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  .decision {
     column-gap: 64px;
-    row-gap: 28px;
   }
 
-  .heading {
-    font-size: clamp(3rem, 4.8vw, 4.25rem);
-  }
-
-  .body {
-    font-size: 1.0625rem;
-    max-width: 52rem;
+  .bookGrids {
+    gap: 40px;
   }
 }

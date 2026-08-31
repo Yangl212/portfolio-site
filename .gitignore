@@ -12,3 +12,8 @@ out/
 # Throwaway verification screenshots. Real images live in pic/ or public/,
 # never at the repo root.
 /*.png
+
+# Master PNGs for the Alcohol Directory flipbook (110 MB). The deployed book
+# reads the WebP copies in public/alcohol/book/pages/ -- these are the originals
+# to re-export from, and they must stay out of public/ so they are not shipped.
+/alcohol-book-source/
