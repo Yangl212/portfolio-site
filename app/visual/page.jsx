@@ -1,31 +1,31 @@
 import Link from "next/link"
 
-import { MoreWorkCarousel } from "../components/MoreWorkCarousel"
-import { SiteFooter } from "../components/SiteFooter"
-import { SiteHeader } from "../components/SiteHeader"
-import { featuredProjects, moreProjects } from "../lib/projects"
+import { MoreWorkCarousel } from "../../components/MoreWorkCarousel"
+import { SiteFooter } from "../../components/SiteFooter"
+import { SiteHeader } from "../../components/SiteHeader"
+import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
 /* Both home pages render the same markup over the same eight projects. The
    track decides the order and where the cards link, nothing else. */
-const TRACK = "uiux"
+const TRACK = "visual"
 
-export default function HomePage() {
+export default function VisualPage() {
   const featured = featuredProjects(TRACK)
   const more = moreProjects(TRACK)
 
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/" track={TRACK} />
+        <SiteHeader active="/visual" track={TRACK} />
 
         <section className={styles.content}>
           <header className={styles.hero}>
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
             <p className={`${styles.heroCopy} ${styles.reveal}`}>
-              A product designer focused on UX, AI, and interactive experiences - based in New York,
-              currently at Parsons School of Design.
+              Visual &amp; Brand Designer working across identity, digital, and visual systems.
+              I care about strong concepts, clear communication, and making things people remember.
             </p>
           </header>
 

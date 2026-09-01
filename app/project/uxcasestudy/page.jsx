@@ -1,11 +1,11 @@
-import Link from "next/link"
-
 import { AutoplayVideo } from "../../../components/AutoplayVideo"
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ScaledIframe } from "../../../components/ScaledIframe"
+import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
+import { trackHome } from "../../../lib/projects"
 import boaCover from "../../../pic/Frame 2.png"
 
 import styles from "./page.module.css"
@@ -266,12 +266,12 @@ const systemAssets = [
   { src: img("9b785afb90f4467916a28a2f125a7a41e2d54699.png"), alt: "BOA typography specimen", label: "Typography" }
 ]
 
-export default function UxCaseStudyPage() {
+export default function UxCaseStudyPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.headerMask}>
-          <SiteHeader active="/" />
+          <SiteHeader active={trackHome(track)} track={track} />
         </div>
 
         <section className={styles.content}>
@@ -645,23 +645,7 @@ export default function UxCaseStudyPage() {
               </div>
             </section>
 
-            <nav className={styles.projectNav} aria-label="Project navigation">
-              <Link className={styles.projectNavPrev} href="/project/backstage">
-                <span className={styles.projectNavLabel}>&#8592; Previous Project</span>
-                <span className={styles.projectNavName}>
-                  <span className={styles.projectNavDot} aria-hidden="true" />
-                  Backstage
-                </span>
-              </Link>
-              <Link className={styles.projectNavAll} href="/">All Projects</Link>
-              <Link className={styles.projectNavNext} href="/project/lastmessage">
-                <span className={styles.projectNavLabel}>Next Project &#8594;</span>
-                <span className={styles.projectNavName}>
-                  Last Message
-                  <span className={styles.projectNavDot} aria-hidden="true" />
-                </span>
-              </Link>
-            </nav>
+            <ProjectNav slug="uxcasestudy" track={track} styles={styles} />
           </div>
         </section>
 

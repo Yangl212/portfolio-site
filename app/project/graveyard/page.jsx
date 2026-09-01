@@ -1,17 +1,18 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
+import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
 const prototypeUrl = "https://graveyard.framer.website/?editSite"
 
-export default function GraveyardPage() {
+export default function GraveyardPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.headerMask}>
-          <SiteHeader active="/" />
+          <SiteHeader active={trackHome(track)} track={track} />
         </div>
 
         <section className={styles.content}>

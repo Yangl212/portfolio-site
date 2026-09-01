@@ -1,381 +1,614 @@
 import { ProjectHero } from "../../../components/ProjectHero"
+import { Reveal } from "../../../components/Reveal"
+import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
+import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
 const img = (hash, ext = "png") => `/framer-assets/images/${hash}.${ext}`
 
-const sections = [
+const facts = [
+  { label: "Players", value: "2–4 + 1 judge" },
+  { label: "Length", value: "~20 minutes" },
+  { label: "Turn", value: "Ability → sense → draw" },
+  { label: "You lose at", value: "7 filled slots" }
+]
+
+const deliverables = [
+  "4 sensory cards",
+  "4 ability cards",
+  "Reward cards",
+  "Candy jar boards",
+  "Folded instruction sheet",
+  "Two-piece box",
+  "Opaque candy boxes",
+  "Wordmark and pattern system"
+]
+
+const idea = [
   {
-    label: "Research",
-    blocks: [
-      {
-        type: "heading",
-        text: 'Many creators focus heavily on "concept"'
-      },
-      {
-        type: "text",
-        lines: [
-          "I investigates the growing imbalance between concept-driven design and playability in modern game development.",
-          "While many creators prioritize strong conceptual or narrative depth, this often leads to issues such as disrupted storytelling, reduced interactivity, and neglect of player engagement.",
-          "Through case studies like Star Wars, Dear Esther, and Spore, the research reveals how social expectations, excessive narrative focus, and fragmented gameplay can weaken emotional immersion and creative integrity.",
-          "The study aims to rethink how games can maintain artistic expression while preserving their fundamental playful nature."
-        ]
-      },
-      {
-        type: "subheading",
-        text: "Star Wars & Baldur's Gate 3 — Story Development Altered by Social Impact"
-      },
-      {
-        type: "text",
-        lines: [
-          "In recent years, many large-scale productions like Star Wars and Baldur's Gate 3 have faced creative tension between storytelling and public expectations. Under strong social and political influence, narrative direction is often adjusted to meet audience sensitivities or align with inclusive representation goals. While these intentions are valuable, they can sometimes disrupt narrative coherence and weaken artistic integrity, leading to controversy over authenticity and emotional depth."
-        ]
-      },
-      { type: "image", src: img("3d9136506f9a67fab081f8e3635c9f3731ae1796") },
-      {
-        type: "subheading",
-        text: "Spore — Ignoring Player Needs"
-      },
-      {
-        type: "text",
-        lines: [
-          "Developed by Maxis, Spore was introduced as an ambitious simulation of life evolution—from a single cell to a space-faring civilization. However, its fragmented design across multiple stages and shallow gameplay loops made players feel disconnected from the core experience. Despite its grand concept, many found it lacking depth, replay value, and emotional engagement."
-        ]
-      }
-    ]
+    label: "What is Suglar?",
+    body: "A 2–4 player board game made out of real candy. Every piece on the table is edible and hidden inside an identical opaque box, so a turn is spent working out what you are about to eat rather than looking at it."
   },
   {
-    label: "Precedents",
-    blocks: [
-      { type: "heading", text: "Meltdown" },
-      { type: "image", src: img("b4de6d98f3125ef938512f8b05a22250bdc288bb") },
-      {
-        type: "text",
-        lines: [
-          "Meltdown is a board game centered on the theme of environmental crisis and climate change. Players work together to prevent a global disaster while managing limited resources and time. The most distinctive feature of the game lies in its melting ice block system — real ice cubes are used as a dynamic game component that gradually melts during play.",
-          "The melting ice not only serves as a visual timer, creating real-time tension, but also symbolizes the irreversible loss caused by global warming. As the ice disappears, game pieces shift, territories collapse, and players must adapt their strategies in response. This physical transformation bridges gameplay with environmental awareness, turning the act of play into an emotional and sensory reminder of climate fragility."
-        ]
-      },
-      { type: "heading", text: "Nyctophobia" },
-      {
-        type: "text",
-        lines: [
-          "Nyctophobia is a horror-themed tactile board game designed by Catherine Stippell and published by Pandasaurus Games. It accommodates 3–6 players, with one acting as the Hunter—the only person who can see the board—while the others play as Survivors, wearing blackout glasses that completely block their vision."
-        ]
-      },
-      { type: "image", src: img("b3e1d63092bf3773c3bf3f1fae37215c0dd2bb7b") },
-      {
-        type: "text",
-        lines: [
-          'The game takes place on an 8×8 maze-like grid filled with "trees" and obstacles. Survivors must rely on touch, memory, and teamwork to navigate the board, find the car, and escape before the Hunter catches them. By removing sight entirely, Nyctophobia transforms traditional gameplay into a sensory and psychological experience, heightening tension and empathy while exploring how people perceive fear in darkness.'
-        ]
-      }
-    ]
+    label: "Who is it for?",
+    body: "People who like party games and sensory play more than rule-heavy strategy — and anyone who has ever picked a chocolate out of an assorted box by feel and hoped for the best."
   },
   {
-    label: "Concept",
-    blocks: [
-      { type: "heading", text: "Aesthetic inspiration" },
-      {
-        type: "text",
-        lines: [
-          "The aesthetic inspiration for Sugar comes from the discovery that candy is a fascinating material — colorful, tactile, and emotionally evocative. Its glossy surfaces, diverse textures, and playful colors stimulate multiple senses at once, creating both visual pleasure and nostalgic joy."
-        ]
-      },
-      {
-        type: "imageRow",
-        srcs: [
-          img("1a6a64361235b25c0b71d54415121eaff77f3cec"),
-          img("c124c1b38831c7e0a1e97714823784bc0712dca5")
-        ]
-      },
-      {
-        type: "text",
-        lines: [
-          "By translating these qualities into game design, Sugar aims to build a multi-sensory and emotionally rich play experience where aesthetics and interactivity merge, reminding players that beauty and playability can coexist in harmony."
-        ]
-      },
-      { type: "image", src: img("521a1d251890ab0cbeb008316ff7cc8d4bb633e5") },
-      { type: "heading", text: "Goals" },
-      { type: "subheading", text: "Design Qualities" },
-      {
-        type: "text",
-        lines: [
-          "Sugar is a multi-sensory game combining color, texture, and touch. It creates playful tension between sweetness and strategy, turning visual pleasure into emotional interaction."
-        ]
-      },
-      { type: "subheading", text: "Community of Practice" },
-      {
-        type: "text",
-        lines: [
-          "Targeted at artists, ordinary players, and game lovers who enjoy sensory, emotional, and creative experiences."
-        ]
-      }
-    ]
-  },
-  {
-    label: "User test 1",
-    blocks: [
-      { type: "heading", text: "Strategic Gameplay Exploration" },
-      {
-        type: "text",
-        lines: [
-          'This version of Sugar is a two-player competitive game inspired by Chinese chess mechanics. Players take turns placing candy pieces on a grid, using strategic moves to block the opponent\'s path. When one player successfully surrounds another\'s piece, they can "eat" the opponent\'s candy and claim it as their own. The game ends when there are no more available moves, and the player with the most remaining candies on the board wins.'
-        ]
-      },
-      {
-        type: "imageRow",
-        srcs: [
-          img("017e4f8f7ba4a879095ad7f3f1ad01e913afbf99"),
-          img("5d748aa3529acc1325c022572acde4c4d78a6e49")
-        ]
-      },
-      { type: "subheading", text: "Feedback" },
-      {
-        type: "text",
-        lines: [
-          "Players quickly understood the basic rules and enjoyed the visual satisfaction of using real candies as pieces.",
-          "The tactile experience of picking and moving candies made the game feel more playful and engaging.",
-          "Some participants mentioned that strategic blocking created tension similar to Go or Chinese Chess.",
-          "A few players suggested adding different candy shapes or colors to represent special abilities or ranks.",
-          "Several testers noted that the game felt balanced yet competitive, making every move meaningful.",
-          "Others found the melting or sticky texture of candy could be a fun metaphor but might need material adjustments for replayability."
-        ]
-      }
-    ]
-  },
-  {
-    label: "User test 2",
-    blocks: [
-      { type: "heading", text: "Basic Game Logic Attempt" },
-      {
-        type: "text",
-        lines: ["This version of Sugar takes inspiration from match-three puzzle games, but with a sensory twist."]
-      },
-      { type: "image", src: img("58e76814069dd3eb13e137479a88e7f64b7abeff") },
-      {
-        type: "text",
-        lines: [
-          'Players cannot see the candies hidden in each grid. Instead, they must choose tiles blindly, hoping to find three of the same kind to earn candies they can "eat." Each player has several ability cards that allow them to use smell, taste, or touch to decide whether to take a candy or skip it. If a player collects more than seven candies, they lose the game due to "overindulgence." The last remaining player wins.'
-        ]
-      },
-      { type: "subheading", text: "Feedback" },
-      {
-        type: "text",
-        lines: [
-          "Players found the game fun and engaging, especially the hidden candy mechanic and sensory guessing system. They enjoyed the tension of using smell and touch but suggested adding more skill cards and faster pacing for multiplayer rounds. Some players also proposed introducing interaction-based ability cards, such as exchanging cards or stealing candies from others, to increase player-to-player engagement. Overall, the experience was described as unique, playful, and slightly challenging, with potential to deepen strategy in future versions."
-        ]
-      }
-    ]
-  },
-  {
-    label: "style guide",
-    blocks: [
-      { type: "heading", text: "Logo & Fonts" },
-      {
-        type: "imageRow",
-        srcs: [
-          img("e3cca4a6e38f5e0d14fddf93839f8a9886be5970"),
-          img("03206a6eec0ab00994f9861a005553083838358d"),
-          img("b88ed990c08c77db5d2bb0c85f00300843a7fea7")
-        ]
-      },
-      { type: "heading", text: "Color & Elements" },
-      { type: "image", src: img("6a8f41e9abea36ec8fecdb89292885bb2e9b0c61") }
-    ]
-  },
-  {
-    label: "Game Instruction",
-    blocks: [
-      { type: "heading", text: "Initial Setup" },
-      {
-        type: "text",
-        lines: [
-          "Game Type: Strategy & Puzzle",
-          "Number of Players: 2–4 players, plus 1 judge",
-          "Game Duration: Approximately 20 minutes"
-        ]
-      },
-      { type: "subheading", text: "Player Starting Cards" },
-      { type: "image", src: img("0655cdeffaed1281624465ab4336ebd06a736b14") },
-      {
-        type: "text",
-        lines: [
-          "Each player begins with one Sensory Card (representing smell, visual, touch, or taste) and one Ability Card. These cards determine the player's special actions and sensory access during gameplay."
-        ]
-      },
-      { type: "subheading", text: "Candy Jar Rules" },
-      {
-        type: "text",
-        lines: ["Put candy in the candy jar. Each player has 7 slots to store candies."]
-      },
-      { type: "image", src: img("1b77f96c64ac5e712ed86cd973172c0a7bc0d28a") },
-      {
-        type: "text",
-        lines: [
-          "When three identical candies are stored in the jar, they can be removed. The player will gain 1 point and draw a reward card. If a player's 7 candy jar are completely filled with candies and no elimination is possible, the player failure."
-        ]
-      },
-      { type: "image", src: img("72b9aa8cf4d089587276c3663f7568af69d67ef7") },
-      { type: "heading", text: "Game-flow" },
-      {
-        type: "text",
-        lines: [
-          "After starts, players take turns drawing candies. The judge guides players through the sequence: ability cards, sensory cards, and candy drawing."
-        ]
-      },
-      { type: "image", src: img("c1dd5a84d8c7415ccad4b0cda228b3b165d0fd51") },
-      { type: "heading", text: "Judge's Responsibilities" },
-      {
-        type: "text",
-        lines: [
-          "When a player is eliminated, their candies must be randomly returned to the board.",
-          "When a card is used, it must be placed into the discard pile.",
-          "During each player's turn, the judge must confirm with them whether they will use ability cards or a sensory card."
-        ]
-      },
-      { type: "heading", text: "Sensory Cards" },
-      {
-        type: "text",
-        lines: [
-          "Sensory cards can explore the candy and gather information. Based on the information obtained, players can decide whether to collect the candy."
-        ]
-      },
-      { type: "image", src: img("49999264c8c1175e04f35aa117e5ea0e04d29359") },
-      {
-        type: "text",
-        lines: [
-          "Visual — Directly observe the appearance of the candy.",
-          "Touch — Close eyes and touch the candy with your hand.",
-          "Taste — Taste a candy, but keep your eyes closed.",
-          "Smell — Close eyes and use smell to identify the candy."
-        ]
-      },
-      { type: "heading", text: "Ability Cards" },
-      {
-        type: "text",
-        lines: [
-          "Ability cards should be used FIRST during a player's turn, and MULTIPLY cards can be used at once. Used skill cards will be returned to the deck."
-        ]
-      },
-      { type: "image", src: img("d4d4dce404837d1eb97dda9fc41e0e4b385798b6") },
-      {
-        type: "text",
-        lines: [
-          "Change — Choose a player and exchange one candy stored in the candy jar.",
-          "Claim — Choose a player and randomly draw one card from their hand.",
-          "Clone — Duplicate one candy from the candy jar.",
-          "Forfeit — Discard one candy stored in the candy jar."
-        ]
-      }
-    ]
-  },
-  {
-    label: "Final Product",
-    blocks: [
-      { type: "image", src: img("3481cabd3205746d092e3c5502bb5c105650078a") },
-      { type: "image", src: img("00bb1b7ff07ca26c4e9c8c0cdf78fa973d6a4fde") }
-    ]
-  },
-  {
-    label: "User Feedback",
-    blocks: [
-      { type: "image", src: img("8a20674441c2b898970a4715a754956babc1861e") },
-      { type: "image", src: img("be9017fde875eccd706cd08fd62ab5ece4ea6fb7") },
-      { type: "image", src: img("de15468bc22d5c9ef56cbe03a29c9ab1dd1b643d") }
-    ]
+    label: "Why build it?",
+    body: "The research behind the brief kept turning up games with a rich concept and thin play. I wanted the concept to be the mechanic: if the game is about candy, then candy has to be the thing you physically handle."
   }
 ]
 
-function Block({ block }) {
-  if (block.type === "heading") {
-    return <h2 className={styles.heading}>{block.text}</h2>
+/* Two existing games that already prove the argument, kept short. Both use a
+   physical component as the rule rather than as decoration. */
+const references = [
+  {
+    name: "Meltdown",
+    image: img("b4de6d98f3125ef938512f8b05a22250bdc288bb"),
+    keywords: "Cooperative · Consumable component",
+    body: "A climate-crisis board game played around real ice cubes. The ice melts through the session, shifting the board and running down the clock at the same time.",
+    takeaway: "A component that is used up can carry a game’s meaning better than a rule can state it."
+  },
+  {
+    name: "Nyctophobia",
+    image: img("b3e1d63092bf3773c3bf3f1fae37215c0dd2bb7b"),
+    keywords: "Asymmetric · Tactile · Blackout",
+    body: "Three to six players, one of whom can see. The rest wear blackout glasses and navigate an 8×8 maze of obstacles by touch, memory, and talking to each other.",
+    takeaway: "Take a sense away and the remaining ones become the game. Suglar takes sight off the pieces rather than off the players."
   }
-  if (block.type === "subheading") {
-    return <h3 className={styles.subheading}>{block.text}</h3>
-  }
-  if (block.type === "text") {
-    return (
-      <>
-        {block.lines.map((line, index) => (
-          <p key={index} className={styles.body}>
-            {line}
-          </p>
-        ))}
-      </>
-    )
-  }
-  if (block.type === "image") {
-    return (
-      <div className={styles.imageFull}>
-        <img src={block.src} alt="" />
-      </div>
-    )
-  }
-  if (block.type === "imageRow") {
-    return (
-      <div className={styles.imageRow}>
-        {block.srcs.map((src) => (
-          <div key={src} className={styles.imageRowItem}>
-            <img src={src} alt="" />
-          </div>
-        ))}
-      </div>
-    )
-  }
-  return null
-}
+]
 
-export default function SuglarPage() {
+const rounds = [
+  {
+    label: "Round 01",
+    title: "A chess board made of candy",
+    body: "Two players place candies on a grid and try to surround each other. Surround an opponent’s piece and you eat it. The player holding the most candy when the moves run out wins.",
+    notes: [
+      { tone: "worked", label: "Worked", text: "Testers understood it in under a minute and liked handling real candy as pieces. Several compared the blocking to Go." },
+      { tone: "broke", label: "Broke", text: "It was Go with chocolate on it. Everything was visible, so the material was decoration — swap in plastic counters and nothing about the game changes." }
+    ],
+    images: [
+      { src: img("017e4f8f7ba4a879095ad7f3f1ad01e913afbf99"), alt: "Grid board layout with candy pieces and the capture pattern diagrammed beside it" },
+      { src: img("5d748aa3529acc1325c022572acde4c4d78a6e49"), alt: "The first paper board being cut on a green cutting mat" }
+    ],
+    caption: "Round one board and capture rules"
+  },
+  {
+    label: "Round 02",
+    title: "Blind match-three",
+    body: "Candies are hidden in the cells of a grid. Players pick blind, and three of a kind can be eaten. Sensory cards let you inspect a candy before committing, and holding more than seven loses the game.",
+    notes: [
+      { tone: "worked", label: "Worked", text: "The hidden draw and the sensory guess were the only things anyone talked about afterwards. The overindulgence rule got laughs every time it fired." },
+      { tone: "broke", label: "Broke", text: "Four-player rounds dragged, and everyone was quietly solving their own jar. There was almost no reason to look at another player’s board." }
+    ],
+    images: [
+      { src: img("58e76814069dd3eb13e137479a88e7f64b7abeff"), alt: "Cardboard grid prototype filled with wrapped candies, sorted candy on a table, and the taped play surface" }
+    ],
+    caption: "Round two prototype, built from cardboard and sorted supermarket candy"
+  },
+  {
+    label: "Final",
+    title: "The rules that shipped",
+    body: "Round two kept its core and gained the three things it was missing: ability cards, so a turn can reach into someone else’s game; a judge, who runs the sequence and returns eliminated candy to the board; and a printed instruction sheet, so the order of a turn is never argued about mid-game.",
+    notes: [
+      { tone: "worked", label: "Added", text: "Change, Claim, Clone, and Forfeit — four ability cards, three of which only work by targeting another player." },
+      { tone: "worked", label: "Added", text: "A fifth seat at the table. The judge keeps pacing tight and is the only person who knows what went back onto the board." }
+    ],
+    images: [],
+    caption: null
+  }
+]
+
+/* Sampled from the finished card and box artwork, so the chips here are the
+   colors the game actually prints. */
+const palette = [
+  { hex: "#FFEEFE", name: "Sugar white", role: "Ground" },
+  { hex: "#E15582", name: "Suglar pink", role: "Wordmark" },
+  { hex: "#EF8CD1", name: "Bubblegum", role: "Sensory cards" },
+  { hex: "#C6C8F3", name: "Periwinkle", role: "Logo offset" },
+  { hex: "#FFD952", name: "Lemon", role: "Ability cards" },
+  { hex: "#E1A210", name: "Amber", role: "Field" },
+  { hex: "#F18C0D", name: "Orange", role: "Field" },
+  { hex: "#FD2894", name: "Hot pink", role: "Field" },
+  { hex: "#F1B2BA", name: "Blush", role: "Field" },
+  { hex: "#EEDFB8", name: "Cream", role: "Field" },
+  { hex: "#6A9CE3", name: "Cornflower", role: "Field" },
+  { hex: "#2177B0", name: "Sea blue", role: "Field" },
+  { hex: "#1C0B64", name: "Ink", role: "Contrast" },
+  { hex: "#73B6BF", name: "Teal", role: "Field" },
+  { hex: "#6FA195", name: "Sage", role: "Field" },
+  { hex: "#C4DDD1", name: "Mint", role: "Field" },
+  { hex: "#D47E4B", name: "Caramel", role: "Field" },
+  { hex: "#2F3237", name: "Charcoal", role: "Contrast" }
+]
+
+/* Scored by playtesters on the five-point card at the end of the final
+   session, alongside the written comments below. */
+const ratings = [
+  { label: "Innovative", score: 5 },
+  { label: "Immersion", score: 5 },
+  { label: "Replayability", score: 5 },
+  { label: "Graphics", score: 4 },
+  { label: "Multiplayer", score: 3 },
+  { label: "Fluency", score: 3 }
+]
+
+const quotes = [
+  {
+    text: "Finding and eating my favorite candies feels great. However, I think adding more skill cards might enhance the interaction between the game and the players.",
+    source: "Playtester · replayability 5/5"
+  },
+  {
+    text: "I really love the artistic design of this game; the visuals are fantastic. However, the card texture could be improved — consider using more professional printing next time.",
+    source: "Playtester · graphics 4/5"
+  },
+  {
+    text: "Candy brings joy. Incorporating multiple senses is very interesting, and this is my first time playing such a game. However, I find it difficult to distinguish scents.",
+    source: "Playtester · innovative 5/5"
+  }
+]
+
+const reflection = [
+  {
+    label: "Limitation",
+    body: "Smell is the weakest of the four senses in play. Wrapped supermarket candy barely smells of anything, so the Smell card is the least-used card in the deck — the mechanic is sound, the component choice undercut it."
+  },
+  {
+    label: "Key tradeoff",
+    body: "Real candy is what makes the game memorable and what makes it impossible to ship. Every session eats its own components. I chose the experience over the product, which is the right call for a studio brief and the wrong one for a shelf."
+  },
+  {
+    label: "Next validation",
+    body: "Print the cards properly and run four strangers through a full round without me at the table. Fluency scored 3/5 and I still cannot tell whether that was the rules or the judge’s pacing."
+  }
+]
+
+export default function SuglarPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.headerMask}>
-          <SiteHeader active="/" />
+          <SiteHeader active={trackHome(track)} track={track} />
         </div>
 
         <section className={styles.content}>
           <div className={styles.topContent}>
-            <ProjectHero label="Student Work" discipline="Game & Visual Design · 2023" title="Suglar" image={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")} imageAlt="Suglar candy-inspired board game" summary="A multi-sensory board game that translates the color, texture, and emotion of candy into playful strategy." problem="Many tabletop games prioritize rules over the tactile and emotional qualities of play." contribution="Game concept, visual system, material exploration, and playtesting." outcome="An immersive game experience where sweetness becomes strategy." role="Game & Visual Designer" scope="Concept · Game Mechanics · Visual Design · Prototyping" platform="Physical Game" timeline="8 weeks" />
-
-            <header hidden className={`${styles.hero} ${styles.reveal}`} style={{ animationDelay: "60ms" }}>
-              <div className={styles.heroHeader}>
-                <div className={styles.heroCopy}>
-                  <h1 className={styles.heroTitle}>Suglar</h1>
-                </div>
-              </div>
-            </header>
-
-            <div hidden className={`${styles.imageFull} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
-              <img
-                src={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")}
-                alt="Suglar candy-inspired board game"
-              />
-            </div>
-
-            <p hidden className={`${styles.lead} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-              Suglar is a multi-sensory board game inspired by the colors, textures, and emotions of candy. It
-              transforms sweetness into strategy — combining visual delight with tactile play. Through color,
-              material, and interaction, the game explores how beauty and playability can coexist in a joyful,
-              immersive experience.
-            </p>
+            <ProjectHero
+              label="Student Work"
+              discipline="Game & Visual Design · 2023"
+              title="Suglar"
+              image={img("3481cabd3205746d092e3c5502bb5c105650078a")}
+              imageAlt="The Suglar box open, showing the patterned lid, the printed sleeve, the card trays, and one of the black candy boxes"
+              summary="A candy board game you play with your hands and your nose. Four senses, seven slots, and a losing condition that fires when you eat too much."
+              problem="Board games are designed almost entirely for the eyes, so what a game is physically made of rarely changes how it plays."
+              contribution="Solo: game design across three rule sets and two playtest rounds, card and brand system, packaging, and the printed prototype."
+              outcome="A 2–4 player game where hidden candy is identified by smell, touch, or taste. Playtesters scored it 5/5 for innovation, immersion, and replayability."
+              role="Game & Visual Designer (solo)"
+              scope="Game design · Playtesting · Identity · Packaging"
+              platform="Physical board game"
+              timeline="8 weeks"
+            />
           </div>
 
           <div className={styles.bodyContent}>
-            {sections.map((sec) => (
-              <section key={sec.label} className={styles.section}>
-                <h3 className={styles.kicker}>{sec.label}</h3>
-                {sec.blocks.map((block, blockIndex) => (
-                  <Block key={blockIndex} block={block} />
+            {/* Finished object first, the same way the Taroo page opens. This is
+                a physical product, so the box is the fastest answer to "what is
+                it" that the page can give. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Final Product</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>What actually ships in the box.</h2>
+                </div>
+              </div>
+
+              <div className={styles.productGallery}>
+                <figure>
+                  <img
+                    src={img("00bb1b7ff07ca26c4e9c8c0cdf78fa973d6a4fde")}
+                    alt="The folded instruction sheet opened out beside the four yellow ability cards and the four pink sensory cards"
+                    width="840"
+                    height="936"
+                  />
+                  <figcaption>Instruction sheet, four ability cards, four sensory cards</figcaption>
+                </figure>
+              </div>
+
+              <dl className={styles.factRow}>
+                {facts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt>{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
                 ))}
-              </section>
-            ))}
+              </dl>
+
+              <ul className={styles.deliverables}>
+                {deliverables.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+
+            {/* The idea, kept to three answers, then the two references that
+                make the argument for a consumable component. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>The Idea</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Make the material the mechanic.</h2>
+                </div>
+              </div>
+
+              <div className={styles.ideaGrid}>
+                {idea.map((item) => (
+                  <article key={item.label}>
+                    <p className={styles.microLabel}>{item.label}</p>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className={styles.referenceGrid}>
+                {references.map((reference) => (
+                  <article className={styles.referenceCard} key={reference.name}>
+                    <div className={styles.referenceImage}>
+                      <img src={reference.image} alt={`${reference.name} components`} loading="lazy" />
+                    </div>
+                    <h3>{reference.name}</h3>
+                    <p className={styles.referenceKeywords}>{reference.keywords}</p>
+                    <p>{reference.body}</p>
+                    <p className={styles.referenceTakeaway}>{reference.takeaway}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* The section a hiring manager actually reads: three rules, each
+                next to the artefact that carries it. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Key Design Decisions</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Three rules carry the whole game.</h2>
+                  <p className={styles.sectionLead}>
+                    Each one came out of a playtest that failed in a specific way, and each one is printed on a card
+                    rather than explained in a manual.
+                  </p>
+                </div>
+              </div>
+
+              <article className={styles.decision}>
+                <div className={styles.decisionCopy}>
+                  <p className={styles.microLabel}>01 / Core mechanic</p>
+                  <h3>You cannot see the candy you are about to eat.</h3>
+                  <p>
+                    Every candy sits inside an identical opaque box. On your turn you may spend one sensory card
+                    &mdash; Visual, Touch, Taste, or Smell &mdash; to inspect a candy privately, then decide whether to
+                    keep it. What you learn is never revealed to the other players.
+                  </p>
+                  <p>
+                    This is the rule the rest of the game hangs off. It turns a match-three loop into a bluffing loop,
+                    and it makes the four senses worth different amounts depending on what is still on the board:
+                    Visual is strongest early, Touch and Taste hold their value, Smell is the gamble.
+                  </p>
+                  <p className={styles.ruleNote}>
+                    Spend no sensory card and you must take the candy blind. Skipping the inspection is not a free
+                    action, it is the risk.
+                  </p>
+                </div>
+                <figure className={styles.decisionVisual}>
+                  <img
+                    src={img("49999264c8c1175e04f35aa117e5ea0e04d29359")}
+                    alt="The four Suglar sensory cards: Visual, Smell, Touch, and Taste, each drawn as a geometric symbol on pink"
+                    width="1534"
+                    height="510"
+                  />
+                  <figcaption>The four sensory cards</figcaption>
+                </figure>
+              </article>
+
+              <article className={styles.decision}>
+                <div className={styles.decisionCopy}>
+                  <p className={styles.microLabel}>02 / Win condition</p>
+                  <h3>Seven slots, and eating too much is how you lose.</h3>
+                  <p>
+                    Each player holds a candy jar with seven slots. Three identical candies clear out of the jar and
+                    score a point plus a reward card. Fill all seven with nothing left to clear and you are out for
+                    overindulgence.
+                  </p>
+                  <p>
+                    The cap is what makes a blind draw dangerous. On slot two a bad guess costs nothing; on slot five
+                    it can end your game. So the sensory cards get more valuable at exactly the point in the round
+                    where they are hardest to spare.
+                  </p>
+                </div>
+                <figure className={styles.decisionVisual}>
+                  <div className={styles.stack}>
+                    <img
+                      src={img("1b77f96c64ac5e712ed86cd973172c0a7bc0d28a")}
+                      alt="Candy jar diagram with seven slots, and three matching candies clearing while two mismatched sets do not"
+                      width="921"
+                      height="384"
+                    />
+                    <img
+                      src={img("72b9aa8cf4d089587276c3663f7568af69d67ef7")}
+                      alt="Three rows of seven candies showing which combinations clear the jar and which fill it"
+                      width="921"
+                      height="311"
+                    />
+                  </div>
+                  <figcaption>Clearing the jar, and the two ways it fills up instead</figcaption>
+                </figure>
+              </article>
+
+              <article className={styles.decision}>
+                <div className={styles.decisionCopy}>
+                  <p className={styles.microLabel}>03 / Player interaction</p>
+                  <h3>Four ability cards, added because round two had none.</h3>
+                  <p>
+                    Change swaps a candy in your jar with another player&apos;s. Claim draws a random card out of
+                    someone&apos;s hand. Clone duplicates a candy you already hold. Forfeit discards one. They are
+                    played first in a turn, and you may play as many as you like.
+                  </p>
+                  <p>
+                    Round-two testers said the same thing three different ways: the game was fun but solitary. Three of
+                    the four abilities only do anything by reaching into another player&apos;s game, which is the
+                    entire point of adding them.
+                  </p>
+                </div>
+                <figure className={styles.decisionVisual}>
+                  <img
+                    src={img("d4d4dce404837d1eb97dda9fc41e0e4b385798b6")}
+                    alt="The four Suglar ability cards on yellow: Change, Claim, Clone, and Forfeit"
+                    width="1534"
+                    height="509"
+                  />
+                  <figcaption>The four ability cards</figcaption>
+                </figure>
+              </article>
+            </section>
+
+            {/* How the rules above were earned. Two rounds that each failed for
+                a nameable reason, then what shipped. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Iteration</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Two playtests, two rebuilds.</h2>
+                  <p className={styles.sectionLead}>
+                    The first version was strategically fine and thematically pointless. The second fixed the theme and
+                    broke the table. The third is the one in the box.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.rounds}>
+                {rounds.map((round) => (
+                  <article
+                    className={styles.round}
+                    key={round.label}
+                    data-visual={round.images.length ? undefined : "none"}
+                  >
+                    <div className={styles.roundCopy}>
+                      <p className={styles.roundLabel}>{round.label}</p>
+                      <h3>{round.title}</h3>
+                      <p>{round.body}</p>
+                      <ul className={styles.roundNotes}>
+                        {round.notes.map((note) => (
+                          <li key={note.text} data-tone={note.tone}>
+                            <b>{note.label}</b>
+                            <span>{note.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {round.images.length > 0 && (
+                      <figure className={styles.roundVisual}>
+                        <div className={styles.stack}>
+                          {round.images.map((image) => (
+                            <img key={image.src} src={image.src} alt={image.alt} loading="lazy" />
+                          ))}
+                        </div>
+                        <figcaption>{round.caption}</figcaption>
+                      </figure>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* The visual system, compact: wordmark, type, palette, elements. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Visual System</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>One shape kit, printed on everything.</h2>
+                  <p className={styles.sectionLead}>
+                    Cards, box, sleeve, and instruction sheet are all drawn from the same four primitives and the same
+                    sampled candy palette, so the components read as one set without matching each other exactly.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.systemBlock}>
+                <div className={styles.systemCopy}>
+                  <h3>The wordmark is the logo, offset.</h3>
+                  <p>
+                    A condensed display cut with a periwinkle duplicate slipped behind it. The offset does the work a
+                    gloss or a bevel would normally do &mdash; it reads as sugar-coated without a single gradient.
+                  </p>
+                  <p>
+                    Type underneath it stays plain on purpose: Bebas Neue Regular for display, Belanosima Semibold for
+                    card labels, Montserrat Semibold and Bold for anything a player has to read while holding candy in
+                    the other hand.
+                  </p>
+                </div>
+                <div className={styles.wordmarkRow}>
+                  <div>
+                    <img
+                      src={img("e3cca4a6e38f5e0d14fddf93839f8a9886be5970")}
+                      alt="The Suglar wordmark in flat pink"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={img("03206a6eec0ab00994f9861a005553083838358d")}
+                      alt="The Suglar wordmark with its periwinkle and pink offset duplicates"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={img("b88ed990c08c77db5d2bb0c85f00300843a7fea7")}
+                      alt="Type specimen: Montserrat Semibold and Bold, Belanosima Semibold, Bebas Neue Regular"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.systemBlock} data-wide="">
+                <div className={styles.systemCopy}>
+                  <h3>Eighteen colors, all sampled off candy.</h3>
+                  <p>
+                    The palette was pulled from wrappers and confectionery photography rather than picked in a color
+                    wheel, which is why it sits slightly off-primary throughout: the yellows are lemon-drop, the blues
+                    are wrapper-foil, and the ground is the pale pink of a sugar coating.
+                  </p>
+                </div>
+                <div className={styles.paletteGrid}>
+                  {palette.map((color) => (
+                    <div className={styles.swatch} key={color.hex}>
+                      <div className={styles.swatchChip} style={{ background: color.hex }} />
+                      <p className={styles.swatchName}>{color.name}</p>
+                      <p className={styles.swatchHex}>{color.hex}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.systemBlock} data-wide="">
+                <div className={styles.systemCopy}>
+                  <h3>Circle, square, arc, half-circle.</h3>
+                  <p>
+                    Every tile in the pattern is one of four primitives nested inside a square, and every overlap is a
+                    flat transparency rather than a new color. It scales from a 12mm card corner to the full box wrap
+                    without redrawing anything.
+                  </p>
+                </div>
+                <figure className={styles.systemFigure}>
+                  <img
+                    src={img("6a8f41e9abea36ec8fecdb89292885bb2e9b0c61")}
+                    alt="Style guide board: four transparency studies above twelve geometric element tiles"
+                    width="2588"
+                    height="1634"
+                    loading="lazy"
+                  />
+                  <figcaption>Transparency studies and the element library</figcaption>
+                </figure>
+              </div>
+
+              <figure className={styles.systemFigure}>
+                <img
+                  src={img("a24d5da4bb5ee86851c88fe6ceac10ef0c01e5ad")}
+                  alt="Suglar key visual: a nine-tile grid of geometric candy elements beside the wordmark"
+                  width="5760"
+                  height="3240"
+                  loading="lazy"
+                />
+                <figcaption>The same kit assembled as the key visual</figcaption>
+              </figure>
+            </section>
+
+            {/* What came back from the final session, scores included. */}
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Results</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Strong on novelty, weak on pace.</h2>
+                  <p className={styles.sectionLead}>
+                    Playtesters scored the finished game on six measures and wrote a comment each. The scores split
+                    cleanly: everything about the concept landed, everything about running a four-player table did not.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.ratingGrid}>
+                {ratings.map((rating) => (
+                  <div className={styles.rating} key={rating.label}>
+                    <p className={styles.ratingLabel}>
+                      {rating.label}
+                      <em>{rating.score}/5</em>
+                    </p>
+                    <div className={styles.ratingDots} role="img" aria-label={`${rating.score} out of 5`}>
+                      {[1, 2, 3, 4, 5].map((step) => (
+                        <span key={step} data-on={step <= rating.score ? "" : undefined} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.quoteGrid}>
+                {quotes.map((quote) => (
+                  <figure className={styles.quote} key={quote.source}>
+                    <blockquote>&ldquo;{quote.text}&rdquo;</blockquote>
+                    <figcaption>{quote.source}</figcaption>
+                  </figure>
+                ))}
+              </div>
+
+              <div className={styles.buildGallery}>
+                <figure>
+                  <img
+                    src={img("8a20674441c2b898970a4715a754956babc1861e")}
+                    alt="Rows of small black boxes assembled by hand, with printed sensory cards and the instruction sheet beside them"
+                    loading="lazy"
+                  />
+                  <figcaption>The opaque candy boxes, cut and folded for the session</figcaption>
+                </figure>
+                <figure>
+                  <img
+                    src={img("be9017fde875eccd706cd08fd62ab5ece4ea6fb7")}
+                    alt="The playtest table set up with the black boxes, the instruction sheet standing open, and cards dealt out"
+                    loading="lazy"
+                  />
+                  <figcaption>The final playtest table, set and ready</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Reflection</p>
+                <h2 className={styles.sectionTitle}>The best component is the one I cannot ship.</h2>
+              </div>
+
+              <div className={styles.reflectionGrid}>
+                {reflection.map((item) => (
+                  <article key={item.label}>
+                    <p className={styles.microLabel}>{item.label}</p>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <ProjectNav slug="suglar" track={track} styles={styles} />
           </div>
         </section>
 
-        <SiteFooter className={styles.reveal} />
+        <Reveal
+          fade={`.${styles.productGallery} figure, .${styles.referenceImage}, .${styles.decisionVisual}, .${styles.roundVisual}, .${styles.wordmarkRow} > div, .${styles.swatch}, .${styles.systemFigure}, .${styles.buildGallery} figure`}
+        />
+
+        <SiteFooter />
       </div>
     </main>
   )

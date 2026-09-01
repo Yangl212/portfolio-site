@@ -1,5 +1,6 @@
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
+import { trackBase } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
@@ -37,11 +38,13 @@ function LinkedinIcon() {
   )
 }
 
-export default function ContactPage() {
+export default function ContactPage({ track = "uiux" }) {
+  const base = trackBase(track)
+
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active="/contact" />
+        <SiteHeader active={`${base}/contact`} track={track} />
 
         <section className={styles.content}>
           <div className={`${styles.hero} ${styles.reveal}`}>

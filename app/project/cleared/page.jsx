@@ -1,9 +1,9 @@
-import Link from "next/link"
-
 import { ProjectHero } from "../../../components/ProjectHero"
 import { ScaledFigures } from "../../../components/ScaledFigures"
+import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
+import { trackHome } from "../../../lib/projects"
 import coverImage from "../../../pic/Cover.png"
 
 import { clearedBlocks, clearedStyles } from "./caseStudy"
@@ -67,14 +67,14 @@ const reflections = [
   }
 ]
 
-export default function ClearedPage() {
+export default function ClearedPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <style dangerouslySetInnerHTML={{ __html: clearedStyles }} />
 
       <div className={styles.frame}>
         <div className={styles.headerMask}>
-          <SiteHeader active="/" />
+          <SiteHeader active={trackHome(track)} track={track} />
         </div>
 
         <section className={styles.content}>
@@ -302,25 +302,7 @@ export default function ClearedPage() {
               </div>
             </section>
 
-            <nav className={styles.projectNav} aria-label="Project navigation">
-              <Link className={styles.projectNavPrev} href="/project/uxcasestudy">
-                <span className={styles.projectNavLabel}>&#8592; Previous Project</span>
-                <span className={styles.projectNavName}>
-                  <span className={styles.projectNavDot} aria-hidden="true" />
-                  BOA: Budgeting Redesign
-                </span>
-              </Link>
-              <Link className={styles.projectNavAll} href="/">
-                All Projects
-              </Link>
-              <Link className={styles.projectNavNext} href="/project/lastmessage">
-                <span className={styles.projectNavLabel}>Next Project &#8594;</span>
-                <span className={styles.projectNavName}>
-                  Last Message
-                  <span className={styles.projectNavDot} aria-hidden="true" />
-                </span>
-              </Link>
-            </nav>
+            <ProjectNav slug="cleared" track={track} styles={styles} />
           </div>
         </section>
 
