@@ -164,6 +164,53 @@
   overflow: hidden;
 }
 
+/* --- Interactive prototype ------------------------------------------------
+   Same section furniture as the BOA study, but that prototype is a phone and
+   this one is a 1440x900 desktop window, so the stage sits under the written
+   half at full column width instead of beside it. */
+
+.prototypeStage {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prototypeStage figcaption {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* The prototype draws its own 1440x900 app window with a drop shadow and sizes
+   itself to whatever viewport it lands in, and its <body> is made transparent
+   by ScaledIframe, so the window sits straight on the page with no panel behind
+   it. Nothing here may paint a background -- that is the whole point.
+
+   The frame is deliberately larger than the window it holds: at 1500x980 the
+   prototype measures enough room to stay at scale 1, which buys it 40px of
+   transparent canvas on every side. The shadow reaches 22px past the window,
+   so that margin is what keeps it from being clipped into a hard grey line
+   along the bottom edge. Shrink either number and the band comes back. */
+.prototypeViewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.prototypeFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 1500px;
+  height: 980px;
+  border: 0;
+  transform-origin: top left;
+}
+
 .researchNote {
   margin: 0;
   max-width: 60ch;

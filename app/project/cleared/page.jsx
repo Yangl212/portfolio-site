@@ -1,5 +1,6 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { ScaledFigures } from "../../../components/ScaledFigures"
+import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -51,6 +52,8 @@ const designHighlights = [
     alt: "Schedule conflict screen proposing a new time with move and leave options"
   }
 ]
+
+const PROTOTYPE_SRC = "/cleared/calendar-assistant-prototype.html"
 
 const reflections = [
   {
@@ -153,6 +156,31 @@ export default function ClearedPage({ track = "uiux" }) {
                   </article>
                 ))}
               </div>
+            </section>
+
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Interactive Prototype</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Try the queue on a real week.</h2>
+                  <p className={styles.sectionLead}>
+                    The three moves above, connected into one week and running live in the page.
+                  </p>
+                </div>
+              </div>
+
+              <figure className={styles.prototypeStage}>
+                <ScaledIframe
+                  className={styles.prototypeViewport}
+                  frameClassName={styles.prototypeFrame}
+                  src={PROTOTYPE_SRC}
+                  title="Interactive high-fidelity prototype of the Cleared suggestion queue on a calendar week"
+                  width={1500}
+                  height={980}
+                  transparent
+                />
+                <figcaption>Live prototype &#183; Desktop 1440 &#215; 900</figcaption>
+              </figure>
             </section>
 
             <section className={styles.caseSection}>
