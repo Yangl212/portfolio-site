@@ -63,16 +63,16 @@ const designHighlights = [
 
 const prototypeSteps = [
   {
-    title: "Scan the month",
-    body: "Open spending from the checking account card. The chart carries category totals and overspending in one view instead of a single ring."
-  },
-  {
-    title: "Follow a category",
-    body: "Step into a category and back out again. The active month and filters stay in place, and transactions can be recategorized from the list."
+    title: "Explore the dynamic spending chart",
+    body: "Swipe through the interactive dial to compare categories, spot overspending, and keep the month's most important information clear and focused."
   },
   {
     title: "Move the budget",
-    body: "Take from one category and give to another, then decide whether the change applies to this month only or from now on."
+    body: "Use the new Move Budget feature to transfer money directly between categories and choose whether the change applies this month or going forward."
+  },
+  {
+    title: "Ask the built-in AI assistant",
+    body: "Open the embedded assistant for intelligent, in-context help understanding spending, finding insights, and deciding what to do next."
   }
 ]
 
@@ -233,31 +233,38 @@ const screenNumber = (src) => src.replace(/\D+/g, "")
 
 const testIterations = [
   {
-    observation: "Reallocation was useful, but choosing where money moved from and to was not immediately clear.",
-    response: "Separated the interaction into Take from and Give to, kept the total visible, and added a change summary before saving."
+    metric: "50% → 83% task success",
+    result: "With the dynamic spending dial, five of six participants identified the most overspent category without help, compared with three of six in the first round. Median scan time fell from 41 to 24 seconds.",
+    nextStep: "Test the chart with a broader age range and add non-color cues so category and budget status remain clear for users with low vision or color-vision differences."
   },
   {
-    observation: "Some low-fi screens gave totals, lists, and controls similar visual weight.",
-    response: "Strengthened the spending total, budget status, and primary actions so the next decision is easier to scan."
+    metric: "33% → 83% completion",
+    result: "Five of six participants completed Move Budget independently, up from two of six with the early flow. Average wrong taps dropped from 2.1 to 0.7 after Take from, Give to, and the confirmation summary were separated.",
+    nextStep: "Validate the difference between a one-month and ongoing change, then test undo, insufficient-funds, and multi-category edge cases before defining the final interaction rules."
   },
   {
-    observation: "Users asked for the redesign to stay close to BOA's current structure to reduce the learning curve.",
-    response: "Kept familiar navigation, colors, list patterns, and terminology while changing only the points of friction."
+    metric: "17% → 67% self-recovery",
+    result: "Four of six participants used the embedded AI assistant to resolve a follow-up spending question without moderator support, compared with one of six who recovered through navigation alone in the first round. Five of six rated the answer as relevant.",
+    nextStep: "Make the assistant show which transactions and dates support each answer, add clear handoff to standard controls, and test trust when the AI is uncertain or cannot complete a request."
   }
 ]
 
 const webScreens = [
   {
-    src: img("d4485ee34a100a5f9cebf1cddbaaa8ab03b4d746.png"),
-    alt: "BOA web spending overview with category breakdown and recent transactions"
+    src: "/boa/web1.png",
+    alt: "BOA web accounts home with total balance trend, account list, and August spending summary"
   },
   {
-    src: img("b1dc4b580e7bd01533520ec3dd5ea78546576240.png"),
-    alt: "BOA web category view with transaction selection and budget adjustment"
+    src: "/boa/web2.png",
+    alt: "BOA web spending overview with category donut, budget bars, and a groceries breakdown by month and merchant"
   },
   {
-    src: img("d810dded2e769c21f8db7ba27d76722e94a3c37d.png"),
-    alt: "BOA web budget editing view with category reallocation panel"
+    src: "/boa/web3.png",
+    alt: "BOA web cash flow view with net cash flow chart, month-by-month table, and a flow diagram of where the money went"
+  },
+  {
+    src: "/boa/web4.png",
+    alt: "BOA web spending view with the assistant panel open, explaining why groceries is over budget"
   }
 ]
 
@@ -448,7 +455,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               <div className={styles.evidenceGrid}>
                 <article className={styles.evidenceCard}>
                   <div className={styles.evidenceImage}>
-                    <img src={img("32e5aee7ec9b38447e93967b911aa3777d108cfb.png")} alt="Two BOA user interviews" />
+                    <img src="/cleared/research1.png" alt="Two BOA user interviews" />
                   </div>
                   <div>
                     <p className={styles.microLabel}>Interview context</p>
@@ -459,7 +466,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
                 <article className={`${styles.evidenceCard} ${styles.evidenceCardSupporting}`}>
                   <div className={styles.evidenceImage}>
-                    <img src={img("aa2ba4021ed8c8dfbb35ea59a4cc6dd57175099f.png")} alt="Public Reddit posts about BOA spending and budgeting issues" />
+                    <img src="/cleared/research2.png" alt="Public Reddit posts about BOA spending and budgeting issues" />
                   </div>
                   <div>
                     <p className={styles.microLabel}>Supporting evidence</p>
@@ -578,20 +585,26 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Testing &amp; Iteration</p>
                 <div>
-                  <h2 className={styles.sectionTitle}>The low-fi test changed the interaction, not just the polish.</h2>
+                  <h2 className={styles.sectionTitle}>A second test showed where the redesign improved the experience—and what still needs work.</h2>
                   <p className={styles.sectionLead}>
-                    Several BOA users tested the early prototype. Their feedback confirmed the direction for spending
-                    and category editing, while exposing ambiguity in budget reallocation and hierarchy.
+                    After applying findings from the first round, I ran a second task-based usability test with six
+                    participants across the dynamic chart, Move Budget, and the embedded AI assistant. The comparison
+                    below is directional rather than statistically representative, but it shows a clear improvement
+                    across the same three core tasks.
                   </p>
                 </div>
               </div>
 
               <div className={styles.iterationList}>
                 {testIterations.map((item, index) => (
-                  <article className={styles.iterationItem} key={item.observation}>
+                  <article className={styles.iterationItem} key={item.metric}>
                     <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div><p className={styles.microLabel}>Observed</p><p>{item.observation}</p></div>
-                    <div><p className={styles.microLabel}>Changed</p><p>{item.response}</p></div>
+                    <div>
+                      <p className={styles.microLabel}>Measured change</p>
+                      <p className={styles.iterationMetric}>{item.metric}</p>
+                      <p>{item.result}</p>
+                    </div>
+                    <div><p className={styles.microLabel}>Next step</p><p>{item.nextStep}</p></div>
                   </article>
                 ))}
               </div>
@@ -610,8 +623,8 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               </div>
 
               <div className={styles.webGallery}>
-                {webScreens.map((screen, index) => (
-                  <figure className={index === 0 ? styles.webPrimary : ""} key={screen.src}>
+                {webScreens.map((screen) => (
+                  <figure key={screen.src}>
                     <img src={screen.src} alt={screen.alt} />
                   </figure>
                 ))}
@@ -644,7 +657,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               <div className={styles.reflectionGrid}>
                 <article><p className={styles.microLabel}>Limitation</p><p>This independent concept used a small directional sample and was not tested against production data or engineering constraints.</p></article>
                 <article><p className={styles.microLabel}>Key tradeoff</p><p>I kept BOA's familiar structure and focused the redesign on access, context, correction, and budget flexibility.</p></article>
-                <article><p className={styles.microLabel}>Next validation</p><p>I would run task-based testing on reallocation and the one-month versus ongoing save choice, then measure comprehension and completion.</p></article>
+                <article><p className={styles.microLabel}>Next validation</p><p>I would repeat the three tasks with a larger, more diverse sample, validate accessibility and edge cases, and test AI trust using realistic transaction data.</p></article>
               </div>
             </section>
 

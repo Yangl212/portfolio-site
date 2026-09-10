@@ -789,6 +789,13 @@
   color: var(--text);
 }
 
+.iterationItem > div > p.iterationMetric {
+  font-size: clamp(1.45rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
 .webGallery {
   display: grid;
   grid-template-columns: 1fr;
@@ -954,17 +961,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .webGallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .lowFiScreens {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px 20px;
-  }
-
-  .webPrimary {
-    grid-column: 1 / -1;
   }
 }
 
