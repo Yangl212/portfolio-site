@@ -6,6 +6,8 @@ export function ProjectHero({
   title,
   image,
   imageAlt,
+  imageFit = "cover",
+  mobileImage,
   summary,
   problem,
   contribution,
@@ -26,7 +28,10 @@ export function ProjectHero({
 
       <header className={styles.hero}>
         <h1 className={styles.title}>{title}</h1>
-        <div className={styles.image}><img src={image} alt={imageAlt} /></div>
+        <div className={`${styles.image} ${imageFit === "contain" ? styles.imageContain : ""}`}>
+          <img className={mobileImage ? styles.desktopImage : ""} src={image} alt={imageAlt} />
+          {mobileImage ? <img className={styles.mobileImage} src={mobileImage} alt={imageAlt} /> : null}
+        </div>
         <p className={styles.summary}>{summary}</p>
         <div className={styles.details}>
           <dl className={styles.facts}>

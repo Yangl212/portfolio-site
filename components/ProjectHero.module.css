@@ -5,6 +5,7 @@
 .title { margin: 0; max-width: 20ch; font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; text-transform: uppercase; }
 .image { width: 100%; overflow: hidden; }
 .image img { width: 100%; height: auto; display: block; }
+.image .mobileImage { display: none; }
 .summary { width: 100%; max-width: 60ch; margin: 0; color: var(--text); font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: 1.0625rem; font-weight: 400; line-height: 1.6; }
 .details { display: flex; flex-direction: column; gap: 24px; }
 .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; margin: 0; padding: 26px 0; border-top: 1px solid rgba(34, 34, 34, .14); border-bottom: 1px solid rgba(34, 34, 34, .14); }
@@ -34,4 +35,15 @@
 
 @media (min-width: 810px) { .wrap { gap: 40px; } .summary { font-size: 1.125rem; } .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-areas: "title image" "summary image" "details image"; column-gap: 48px; row-gap: 28px; align-items: start; } .title { grid-area: title; } .image { grid-area: image; height: 100%; } .image img { height: 100%; object-fit: cover; object-position: center; } .summary { grid-area: summary; align-self: end; } .details { grid-area: details; } }
 @media (min-width: 1200px) { .wrap { gap: 48px; } .title { font-size: clamp(3rem, 2rem + 2.6vw, 4rem); } .summary { font-size: 1.125rem; } .hero { column-gap: 64px; } .facts { gap: 28px 44px; padding: 30px 0; } .meta { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } .action { min-height: 48px; padding: 14px 22px; font-size: .9375rem; } }
+@media (max-width: 809px) { .image .desktopImage { display: none; } .image .mobileImage { display: block; } }
 @media (max-width: 639px) { .summary { width: 100%; max-width: 100%; } .facts, .meta { grid-template-columns: 1fr; } }
+
+/* Keep portrait interface captures inside the same footprint as the original
+   project cover instead of cropping and enlarging them. */
+.image.imageContain { aspect-ratio: 1774 / 1946; }
+.image.imageContain img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+
+@media (max-width: 809px) {
+  .image.imageContain { aspect-ratio: 3302 / 1920; }
+  .image.imageContain .mobileImage { object-fit: cover; }
+}

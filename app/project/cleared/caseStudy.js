@@ -242,9 +242,7 @@ const liftSpecSheetContrast = (markup) =>
 const [designSystemBlock, screensBlock] = interfaceWrapper.children[0].children[1].children
 
 // The six screens are a grid of cells, each one a 393px phone plus its caption.
-// The phones alone are reused as the design highlight visuals.
 const screensGrid = screensBlock.children[1]
-const screenPhones = screensGrid.children.map((cell) => withInterfaceType(html(cell.children[0])))
 
 export const clearedStyles = caseStudyStyles
 
@@ -270,10 +268,6 @@ export const clearedBlocks = {
 
   dayJourney: html(journeySection.children[1]),
   sixScreens: withInterfaceType(html(screensGrid)),
-
-  queueScreen: screenPhones[5],
-  cardScreen: screenPhones[1],
-  confirmScreen: screenPhones[4],
 
   designSystem: withInterfaceType(liftSpecSheetContrast(html(designSystemBlock.children[1]))),
 

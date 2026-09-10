@@ -6,11 +6,12 @@ import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
-import boaCover from "../../../pic/Frame 2.png"
+import boaCover from "../../../pic/Cover1.png"
 
 import styles from "./page.module.css"
 
 const img = (hash) => `/framer-assets/images/${hash}`
+const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260910-0930"
 
 const problemSnapshots = [
   {
@@ -280,8 +281,10 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               label="Independent Case Study"
               discipline={"UI/UX Design \u00b7 2026"}
               title="BOA: Budgeting Redesign"
-              image={boaCover.src}
-              imageAlt="BOA spending and budgeting redesign cover"
+              image="/boa/home-screen.png"
+              imageAlt="BOA redesigned home screen"
+              imageFit="contain"
+              mobileImage={boaCover.src}
               summary="Redesigning BOA's spending and budgeting experience so users can find spending totals, correct categories, and adjust a monthly budget without rebuilding it."
               problem="Spending totals, category edits, and budget controls are split across disconnected screens."
               contribution="Mapped the existing flows, tested low-fi concepts, and designed mobile and web interactions."
@@ -383,7 +386,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                   </ol>
                   <a
                     className={styles.prototypeLink}
-                    href="/boa/Spending%20Prototype%20(embeddable).html"
+                    href={PROTOTYPE_SRC}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -395,7 +398,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                   <ScaledIframe
                     className={styles.prototypeViewport}
                     frameClassName={styles.prototypeFrame}
-                    src="/boa/Spending%20Prototype%20(embeddable).html"
+                    src={PROTOTYPE_SRC}
                     title="Interactive high-fidelity BOA spending and budgeting prototype"
                     width={510}
                     height={1000}
