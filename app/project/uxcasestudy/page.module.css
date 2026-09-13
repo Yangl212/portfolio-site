@@ -625,7 +625,6 @@
 }
 
 .flowPair figure,
-.webGallery figure,
 .systemGrid figure {
   min-width: 0;
   margin: 0;
@@ -752,12 +751,6 @@
 }
 
 .systemGrid img,
-.webGallery img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .iterationItem {
   padding: 20px 0;
   display: grid;
@@ -796,17 +789,8 @@
   letter-spacing: -0.04em;
 }
 
-.webGallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.webGallery figure {
-  overflow: hidden;
-  padding-top: 12px;
-  border-top: 1px solid var(--divider);
-  background: #ffffff;
+.webCarousel {
+  min-width: 0;
 }
 
 .systemIntro {

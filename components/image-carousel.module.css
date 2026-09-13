@@ -1,0 +1,119 @@
+/* One slide sits centred and solid; its neighbours stay in the track at reduced
+   opacity so the edges of the viewport hint at the pages either side. */
+.carousel {
+  --slide: 76%;
+  --gap: 2.5%;
+  min-width: 0;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.viewport { overflow: hidden; }
+.viewport:focus-visible { outline: 1px solid var(--text); outline-offset: 6px; }
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  transform: translateX(calc((100% - var(--slide)) / 2 - var(--active) * (var(--slide) + var(--gap))));
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide {
+  width: var(--slide);
+  flex: 0 0 var(--slide);
+  margin: 0;
+  background: #ffffff;
+  opacity: 0.28;
+  transform: scale(0.94);
+  transition: opacity 620ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide[data-active="true"] { opacity: 1; transform: none; }
+.slideButton { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.slide:not([data-active="true"]) .slideButton { cursor: pointer; }
+.slideButton img { width: 100%; height: auto; display: block; }
+
+.controls { display: flex; align-items: center; justify-content: center; gap: 18px; }
+
+.dots { display: flex; align-items: center; gap: 6px; }
+.dots button { width: 6px; height: 6px; padding: 0; border: 0; border-radius: 999px; background: rgba(34, 34, 34, 0.24); cursor: pointer; transition: width 180ms ease, background 180ms ease; }
+.dots button[data-active="true"] { width: 18px; background: var(--text); }
+
+.controls > button { width: 32px; height: 32px; padding: 0; border: 1px solid rgba(34, 34, 34, 0.26); border-radius: 50%; background: transparent; color: var(--text); cursor: pointer; font-size: 1rem; line-height: 1; transition: background 180ms ease, color 180ms ease; }
+.controls > button:hover, .controls > button:focus-visible { background: var(--text); color: var(--panel-bg); }
+
+/* --- Full screen -------------------------------------------------------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 28px);
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(16, 16, 16, 0.92);
+  cursor: zoom-out;
+  animation: fade 220ms ease;
+}
+
+.lightboxImage {
+  max-width: min(1600px, 92vw);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  display: block;
+  background: #ffffff;
+  cursor: default;
+}
+
+.lightbox button {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.lightbox button:hover, .lightbox button:focus-visible { background: #ffffff; color: #101010; }
+
+.lightboxClose { position: absolute; top: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); }
+
+.lightboxCounter {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 3vw, 32px);
+  margin: 0;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 809px) {
+  .carousel { --slide: 86%; }
+  .lightboxPrev, .lightboxNext { display: none; }
+  .lightboxImage { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track, .slide { transition: none; }
+  .lightbox { animation: none; }
+}

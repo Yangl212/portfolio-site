@@ -1,4 +1,5 @@
 import { AutoplayVideo } from "../../../components/AutoplayVideo"
+import { ImageCarousel } from "../../../components/ImageCarousel"
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ScaledIframe } from "../../../components/ScaledIframe"
@@ -306,30 +307,6 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
           <div className={styles.bodyContent}>
             <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Problem Snapshot</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>The tool asks users to hunt for information, then rebuild context.</h2>
-                  <p className={styles.sectionLead}>
-                    The strongest issues clustered around three moments: finding and verifying spending, correcting
-                    categories, and adapting a budget after the month had already started.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.problemGrid}>
-                {problemSnapshots.map((problem) => (
-                  <article className={styles.problemCard} key={problem.title}>
-                    <p className={styles.problemSignal}>{problem.signal}</p>
-                    <h3>{problem.title}</h3>
-                    <p>{problem.body}</p>
-                    <p className={styles.problemEvidence}>{problem.evidence}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Design Highlights</p>
                 <div>
                   <h2 className={styles.sectionTitle}>Three changes carry the redesign.</h2>
@@ -366,54 +343,26 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             </section>
 
             <section className={styles.caseSection}>
-              <div className={styles.prototypeLayout}>
-                <div className={styles.prototypeGuide}>
-                  <div className={styles.sectionHeader}>
-                    <p className={styles.kicker}>Interactive Prototype</p>
-                    <div>
-                      <h2 className={styles.sectionTitle}>Try the high-fidelity spending experience.</h2>
-                      <p className={styles.sectionLead}>
-                        The clips above introduce the key ideas one at a time. This working prototype connects them
-                        into a single journey, running live in the page.
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className={styles.microLabel}>Three things to try</p>
-                  <ol className={styles.prototypeSteps}>
-                    {prototypeSteps.map((step, index) => (
-                      <li key={step.title}>
-                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                        <div>
-                          <h3>{step.title}</h3>
-                          <p>{step.body}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                  <a
-                    className={styles.prototypeLink}
-                    href={PROTOTYPE_SRC}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open at full size <span aria-hidden="true">&#8594;</span>
-                  </a>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>Problem Snapshot</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>The tool asks users to hunt for information, then rebuild context.</h2>
+                  <p className={styles.sectionLead}>
+                    The strongest issues clustered around three moments: finding and verifying spending, correcting
+                    categories, and adapting a budget after the month had already started.
+                  </p>
                 </div>
+              </div>
 
-                <figure className={styles.prototypeStage}>
-                  <ScaledIframe
-                    className={styles.prototypeViewport}
-                    frameClassName={styles.prototypeFrame}
-                    src={PROTOTYPE_SRC}
-                    title="Interactive high-fidelity BOA spending and budgeting prototype"
-                    width={510}
-                    height={1000}
-                    maxDisplayWidth={440}
-                    transparent
-                  />
-                  <figcaption>Live prototype &#183; iPhone 390 &#215; 844</figcaption>
-                </figure>
+              <div className={styles.problemGrid}>
+                {problemSnapshots.map((problem) => (
+                  <article className={styles.problemCard} key={problem.title}>
+                    <p className={styles.problemSignal}>{problem.signal}</p>
+                    <h3>{problem.title}</h3>
+                    <p>{problem.body}</p>
+                    <p className={styles.problemEvidence}>{problem.evidence}</p>
+                  </article>
+                ))}
               </div>
             </section>
 
@@ -582,6 +531,58 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             </section>
 
             <section className={styles.caseSection}>
+              <div className={styles.prototypeLayout}>
+                <div className={styles.prototypeGuide}>
+                  <div className={styles.sectionHeader}>
+                    <p className={styles.kicker}>Interactive Prototype</p>
+                    <div>
+                      <h2 className={styles.sectionTitle}>Try the high-fidelity spending experience.</h2>
+                      <p className={styles.sectionLead}>
+                        The clips above introduce the key ideas one at a time. This working prototype connects them
+                        into a single journey, running live in the page.
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className={styles.microLabel}>Three things to try</p>
+                  <ol className={styles.prototypeSteps}>
+                    {prototypeSteps.map((step, index) => (
+                      <li key={step.title}>
+                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h3>{step.title}</h3>
+                          <p>{step.body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                  <a
+                    className={styles.prototypeLink}
+                    href={PROTOTYPE_SRC}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open at full size <span aria-hidden="true">&#8594;</span>
+                  </a>
+                </div>
+
+                <figure className={styles.prototypeStage}>
+                  <ScaledIframe
+                    className={styles.prototypeViewport}
+                    frameClassName={styles.prototypeFrame}
+                    src={PROTOTYPE_SRC}
+                    title="Interactive high-fidelity BOA spending and budgeting prototype"
+                    width={510}
+                    height={1000}
+                    maxDisplayWidth={440}
+                    transparent
+                  />
+                  <figcaption>Live prototype &#183; iPhone 390 &#215; 844</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Testing &amp; Iteration</p>
                 <div>
@@ -622,13 +623,11 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 </div>
               </div>
 
-              <div className={styles.webGallery}>
-                {webScreens.map((screen) => (
-                  <figure key={screen.src}>
-                    <img src={screen.src} alt={screen.alt} />
-                  </figure>
-                ))}
-              </div>
+              <ImageCarousel
+                className={styles.webCarousel}
+                label="BOA web adaptation screens"
+                slides={webScreens}
+              />
 
               <div className={styles.systemIntro}>
                 <p className={styles.microLabel}>Working within a familiar system</p>
@@ -666,7 +665,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiScreens} figure, .${styles.webGallery} figure, .${styles.systemGrid} figure`}
+          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiScreens} figure, .${styles.webCarousel}, .${styles.systemGrid} figure`}
           barsUp={`.${styles.researchBar}`}
         />
 
