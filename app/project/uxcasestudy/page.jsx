@@ -307,12 +307,13 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
           <div className={styles.bodyContent}>
             <section className={styles.caseSection}>
               <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Design Highlights</p>
+                <p className={styles.kicker}>Solution Overview</p>
                 <div>
-                  <h2 className={styles.sectionTitle}>Three changes carry the redesign.</h2>
+                  <h2 className={styles.sectionTitle}>The redesign comes down to three moves.</h2>
                   <p className={styles.sectionLead}>
-                    The final mobile concept focuses on a spending chart that shows more at a glance, a budget view
-                    that makes overspending obvious, and reallocation users can do in one move.
+                    Spending you can read at a glance, a budget view that makes overspending obvious, and
+                    reallocation that takes one step instead of a rebuild. The sections that follow work back
+                    through the research, the decisions, and the testing behind them.
                   </p>
                 </div>
               </div>
@@ -348,8 +349,9 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 <div>
                   <h2 className={styles.sectionTitle}>The tool asks users to hunt for information, then rebuild context.</h2>
                   <p className={styles.sectionLead}>
-                    The strongest issues clustered around three moments: finding and verifying spending, correcting
-                    categories, and adapting a budget after the month had already started.
+                    Each of those three moves answers a specific breakdown. The strongest issues clustered around
+                    three moments: finding and verifying spending, correcting categories, and adapting a budget
+                    after the month had already started.
                   </p>
                 </div>
               </div>
@@ -538,8 +540,8 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <div>
                       <h2 className={styles.sectionTitle}>Try the high-fidelity spending experience.</h2>
                       <p className={styles.sectionLead}>
-                        The clips above introduce the key ideas one at a time. This working prototype connects them
-                        into a single journey, running live in the page.
+                        The wireframes above settle the structure. This working prototype puts the finished
+                        interface on top of it, connected into a single journey and running live in the page.
                       </p>
                     </div>
                   </div>
