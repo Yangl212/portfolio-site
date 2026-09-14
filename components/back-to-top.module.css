@@ -1,0 +1,55 @@
+.button {
+  position: fixed;
+  right: clamp(14px, 2vw, 28px);
+  bottom: clamp(14px, 2vw, 28px);
+  z-index: 40;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34, 34, 34, 0.28);
+  border-radius: 50%;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  /* Faint enough to read as a mark in the corner, never as a control sitting
+     on top of the artwork. */
+  opacity: 0.22;
+  transform: translateY(6px);
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 260ms ease, transform 260ms ease, background 180ms ease, color 180ms ease,
+    visibility 0s linear 260ms;
+}
+
+.button[data-visible="true"] {
+  opacity: 0.22;
+  transform: none;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.button[data-visible="false"] {
+  opacity: 0;
+}
+
+.button[data-visible="true"]:hover,
+.button[data-visible="true"]:focus-visible {
+  opacity: 1;
+  background: var(--text);
+  color: var(--panel-bg);
+  border-color: var(--text);
+}
+
+/* Touch has no hover, so there the button carries its own weight. */
+@media (hover: none) {
+  .button[data-visible="true"] { opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: opacity 120ms ease, visibility 0s linear 120ms; transform: none; }
+}
