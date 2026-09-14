@@ -103,26 +103,34 @@ const rounds = [
 ]
 
 /* Sampled from the finished card and box artwork, so the chips here are the
-   colors the game actually prints. */
-const palette = [
+   colors the game actually prints.
+
+   The split is by reach, not by taste: these five turn up on the box, the
+   board, and every card, and between them they cover roughly four fifths of
+   the printed surface. Everything in the tier below is local to one component
+   or lives inside an illustration. */
+const corePalette = [
   { hex: "#FFEEFE", name: "Sugar white", role: "Ground" },
   { hex: "#E15582", name: "Suglar pink", role: "Wordmark" },
-  { hex: "#EF8CD1", name: "Bubblegum", role: "Sensory cards" },
-  { hex: "#C6C8F3", name: "Periwinkle", role: "Logo offset" },
-  { hex: "#FFD952", name: "Lemon", role: "Ability cards" },
-  { hex: "#E1A210", name: "Amber", role: "Field" },
-  { hex: "#F18C0D", name: "Orange", role: "Field" },
-  { hex: "#FD2894", name: "Hot pink", role: "Field" },
-  { hex: "#F1B2BA", name: "Blush", role: "Field" },
-  { hex: "#EEDFB8", name: "Cream", role: "Field" },
-  { hex: "#6A9CE3", name: "Cornflower", role: "Field" },
-  { hex: "#2177B0", name: "Sea blue", role: "Field" },
-  { hex: "#1C0B64", name: "Ink", role: "Contrast" },
-  { hex: "#73B6BF", name: "Teal", role: "Field" },
-  { hex: "#6FA195", name: "Sage", role: "Field" },
-  { hex: "#C4DDD1", name: "Mint", role: "Field" },
-  { hex: "#D47E4B", name: "Caramel", role: "Field" },
-  { hex: "#2F3237", name: "Charcoal", role: "Contrast" }
+  { hex: "#6A9CE3", name: "Cornflower", role: "Board blue" },
+  { hex: "#C4DDD1", name: "Mint", role: "Board green" },
+  { hex: "#2F3237", name: "Charcoal", role: "Type & rules" }
+]
+
+const supportPalette = [
+  { hex: "#EF8CD1", name: "Bubblegum" },
+  { hex: "#FFD952", name: "Lemon" },
+  { hex: "#C6C8F3", name: "Periwinkle" },
+  { hex: "#FD2894", name: "Hot pink" },
+  { hex: "#F1B2BA", name: "Blush" },
+  { hex: "#E1A210", name: "Amber" },
+  { hex: "#F18C0D", name: "Orange" },
+  { hex: "#D47E4B", name: "Caramel" },
+  { hex: "#EEDFB8", name: "Cream" },
+  { hex: "#6FA195", name: "Sage" },
+  { hex: "#73B6BF", name: "Teal" },
+  { hex: "#2177B0", name: "Sea blue" },
+  { hex: "#1C0B64", name: "Ink" }
 ]
 
 /* Scored by playtesters on the five-point card at the end of the final
@@ -182,12 +190,12 @@ export default function SuglarPage({ track = "uiux" }) {
               title="Suglar"
               image={img("3481cabd3205746d092e3c5502bb5c105650078a")}
               imageAlt="The Suglar box open, showing the patterned lid, the printed sleeve, the card trays, and one of the black candy boxes"
-              summary="A candy board game you play with your hands and your nose. Four senses, seven slots, and a losing condition that fires when you eat too much."
-              problem="Board games are designed almost entirely for the eyes, so what a game is physically made of rarely changes how it plays."
-              contribution="Solo: game design across three rule sets and two playtest rounds, card and brand system, packaging, and the printed prototype."
-              outcome="A 2–4 player game where hidden candy is identified by smell, touch, or taste. Playtesters scored it 5/5 for innovation, immersion, and replayability."
+              summary="A candy board game you play with your hands and your nose. You lose by eating too much."
+              problem="Board games are designed for the eyes, so what one is made of rarely changes how it plays."
+              contribution="Solo: three rule sets, two playtest rounds, the card and brand system, and the printed prototype."
+              outcome="Hidden candy, identified by smell, touch, or taste. Playtesters scored it 5/5 for innovation, immersion, and replayability."
               role="Game & Visual Designer (solo)"
-              scope="Game design · Playtesting · Identity · Packaging"
+              scope={"Game design · Playtesting · Identity"}
               platform="Physical board game"
               timeline="8 weeks"
             />
@@ -475,21 +483,43 @@ export default function SuglarPage({ track = "uiux" }) {
 
               <div className={styles.systemBlock} data-wide="">
                 <div className={styles.systemCopy}>
-                  <h3>Eighteen colors, all sampled off candy.</h3>
+                  <h3>Five colors hold the set together; thirteen more fill it in.</h3>
                   <p>
-                    The palette was pulled from wrappers and confectionery photography rather than picked in a color
-                    wheel, which is why it sits slightly off-primary throughout: the yellows are lemon-drop, the blues
-                    are wrapper-foil, and the ground is the pale pink of a sugar coating.
+                    Sampled off wrappers rather than picked in a color wheel: lemon-drop yellows, wrapper-foil blues,
+                    a ground the pale pink of a sugar coating.
+                  </p>
+                  <p>
+                    Five of them run across the box, the board, and every card. The other thirteen stay local -
+                    Bubblegum on sensory cards, Lemon on ability cards, the rest inside the illustration.
                   </p>
                 </div>
-                <div className={styles.paletteGrid}>
-                  {palette.map((color) => (
-                    <div className={styles.swatch} key={color.hex}>
-                      <div className={styles.swatchChip} style={{ background: color.hex }} />
-                      <p className={styles.swatchName}>{color.name}</p>
-                      <p className={styles.swatchHex}>{color.hex}</p>
+                <div className={styles.paletteTiers}>
+                  <div className={styles.paletteTier}>
+                    <p className={styles.paletteTierLabel}>Core &#183; On every component</p>
+                    <div className={styles.paletteGrid} data-tier="core">
+                      {corePalette.map((color) => (
+                        <div className={styles.swatch} key={color.hex}>
+                          <div className={styles.swatchChip} style={{ background: color.hex }} />
+                          <p className={styles.swatchName}>{color.name}</p>
+                          <p className={styles.swatchRole}>{color.role}</p>
+                          <p className={styles.swatchHex}>{color.hex}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  <div className={styles.paletteTier}>
+                    <p className={styles.paletteTierLabel}>Supporting &#183; Card fills and candy accents</p>
+                    <div className={styles.paletteGrid} data-tier="support">
+                      {supportPalette.map((color) => (
+                        <div className={styles.swatch} key={color.hex}>
+                          <div className={styles.swatchChip} style={{ background: color.hex }} />
+                          <p className={styles.swatchName}>{color.name}</p>
+                          <p className={styles.swatchHex}>{color.hex}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
