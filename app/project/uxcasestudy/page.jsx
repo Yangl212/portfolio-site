@@ -12,7 +12,7 @@ import boaCover from "../../../pic/Cover1.png"
 import styles from "./page.module.css"
 
 const img = (hash) => `/framer-assets/images/${hash}`
-const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260910-0930"
+const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260915-1526"
 
 const problemSnapshots = [
   {
