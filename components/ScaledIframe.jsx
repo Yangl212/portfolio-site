@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 /* Injected into the embedded document rather than patched into the file it
    loads. The bundled prototypes paint their own ground on <body>, and every
@@ -23,10 +23,42 @@ export function ScaledIframe({
   maxDisplayWidth = width,
   className,
   frameClassName,
-  transparent = false
+  transparent = false,
+  preloadMargin = 1200
 }) {
   const viewportRef = useRef(null)
   const frameRef = useRef(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+
+  /* These embeds are self-unpacking bundles: a couple of megabytes that the
+     document base64-decodes, decompresses, and only then boots. `loading=lazy`
+     starts that work when the frame is nearly on screen, so the reader arrives
+     to a blank stage and waits it out. Starting a screen or two early means the
+     unpack happens while they are still reading the section above. */
+  useEffect(() => {
+    const viewport = viewportRef.current
+
+    if (!viewport) return undefined
+
+    if (typeof IntersectionObserver !== "function") {
+      setShouldLoad(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+
+        setShouldLoad(true)
+        observer.disconnect()
+      },
+      { rootMargin: `${preloadMargin}px 0px` }
+    )
+
+    observer.observe(viewport)
+
+    return () => observer.disconnect()
+  }, [preloadMargin])
 
   useLayoutEffect(() => {
     const viewport = viewportRef.current
@@ -50,7 +82,7 @@ export function ScaledIframe({
   useLayoutEffect(() => {
     const frame = frameRef.current
 
-    if (!transparent || !frame) return undefined
+    if (!transparent || !frame || !shouldLoad) return undefined
 
     let observer
 
@@ -95,7 +127,7 @@ export function ScaledIframe({
       frame.removeEventListener("load", watchDocument)
       observer?.disconnect()
     }
-  }, [transparent, src])
+  }, [transparent, src, shouldLoad])
 
   return (
     <div
@@ -106,11 +138,10 @@ export function ScaledIframe({
       <iframe
         ref={frameRef}
         className={frameClassName}
-        src={src}
+        src={shouldLoad ? src : undefined}
         title={title}
         width={width}
         height={height}
-        loading="lazy"
       />
     </div>
   )
