@@ -97,8 +97,9 @@ source = source
   .replaceAll("Then repeat the same process for the next item.", "Ten more items needing the same five screens.")
   // The comparison table pointed at a section that no longer follows it.
   .replaceAll(">See below</span>", ">Only inside one thread, and the time is still found by hand.</span>")
-  // The product panel still carried a working title.
-  .replaceAll(">Personal </span>", ">Cleared</span>")
+  // The product panel still carried a working title; the redesign drops the
+  // coined name for a plain description of what the layer does.
+  .replaceAll(">Personal </span>", ">AI Scheduling</span>")
   .replaceAll(">Assistant App</span>", ">for Gmail</span>")
 
 for (const [className, screen] of flowCardScreens) {
