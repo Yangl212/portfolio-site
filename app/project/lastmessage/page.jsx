@@ -1,549 +1,308 @@
-import { AutoplayVideo } from "../../../components/AutoplayVideo"
-import { ProjectHero } from "../../../components/ProjectHero"
-import { Reveal } from "../../../components/Reveal"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
-
+import CaseVideo from "../cleared/CaseVideo"
 import styles from "./page.module.css"
 
-const img = (hash) => `/framer-assets/images/${hash}`
-
+const img = (hash) => "/framer-assets/images/" + hash
 const liveUrl = "https://lastmessage.online/test-intro.html"
 const playtestUrl = "https://www.youtube.com/watch?v=UkSPX1I5Q-U"
+const comparison = img("bb00cb03b3e532c6003864bef9d21154b5215f5f.png")
 
-const challengeConstraints = [
-  {
-    label: "Fragmented",
-    body: "Information lives in chats, member files, call logs, and diary entries rather than one document."
-  },
-  {
-    label: "Non-linear",
-    body: "Users decide what to open next, so the interface cannot assume a reading order."
-  },
-  {
-    label: "Conversational",
-    body: "Some information only exists inside a conversation with an AI character, which cannot be scripted."
-  }
+const investigation = [
+  { title: "Take the case", body: "An incident report establishes the player's role and the mystery." },
+  { title: "Question & inspect", body: "Choose between conversations, member files, calls, and diaries." },
+  { title: "Connect the evidence", body: "Cross-reference records and follow clues onto the web." },
+  { title: "Open another route", body: "Use discoveries to access more records and revisit characters." },
+  { title: "Reach an ending", body: "Different paths resolve the case differently; a hidden layer remains." }
 ]
-
-const designHighlights = [
-  {
-    label: "01 / Live NPCs",
-    title: "The NPCs respond to the player, not a dialogue tree",
-    body: "Players question characters in their own words. Each NPC responds in real time through the ChatGPT API, guided by a distinct personality, private knowledge boundary, and story state - so an improvised conversation can reveal evidence without breaking character.",
-    media: {
-      video: "/lastmessage/01.mp4",
-      slot: "Video 01",
-      title: "Real-time NPC interaction",
-      hint: "Show a free-form question, an in-character response, and a clue becoming available.",
-      path: "/lastmessage/01.mp4"
-    },
-    alt: "Screen recording of a real-time conversation with a Last Message NPC"
-  },
-  {
-    label: "02 / Branching Endings",
-    title: "Eight endings, plus one that has to be uncovered",
-    body: "The case does not collapse into one final multiple-choice screen. What the player uncovers and which route they follow can resolve the same mystery in eight different ways. A ninth, hidden ending rewards players who connect the least visible traces.",
-    media: {
-      video: "/lastmessage/02.mp4",
-      slot: "Video 02",
-      title: "Eight routes + one hidden ending",
-      hint: "Move through the ending map, then reveal how an earlier decision changes the outcome.",
-      path: "/lastmessage/02.mp4"
-    },
-    alt: "Screen recording showing the branching endings in Last Message"
-  },
-  {
-    label: "03 / Open-web Investigation",
-    title: "The investigation leaves the game and enters the real web",
-    body: "Critical clues are placed where people already search and browse. Players use familiar, live websites to verify identities, follow traces, and bring what they discover back into the case - turning the browser itself into part of the game world.",
-    media: {
-      video: "/lastmessage/03.mp4",
-      slot: "Video 03",
-      title: "A clue hidden on the live web",
-      hint: "Start inside the case, search on a familiar website, then return with the key evidence.",
-      path: "/lastmessage/03.mp4"
-    },
-    alt: "Screen recording of a player finding a Last Message clue on a real website"
-  },
-  {
-    label: "04 / Consequence",
-    title: "Every clue changes what becomes possible",
-    body: "Calls, chat fragments, member files, and open-web discoveries are not collectible decoration. The system records what the player has verified, then changes access, NPC responses, and ending routes. That is what makes a non-linear mystery feel consequential rather than scattered.",
-    media: {
-      video: "/lastmessage/04.mp4",
-      slot: "Video 04",
-      title: "Evidence changes the story state",
-      hint: "Verify one clue, then show a locked record, NPC response, or route becoming available.",
-      path: "/lastmessage/04.mp4"
-    },
-    alt: "Screen recording showing evidence changing the story state in Last Message"
-  }
-]
-
-function HighlightMedia({ media, alt }) {
-  if (media.video) {
-    return (
-      <AutoplayVideo
-        className={styles.highlightVideo}
-        src={media.video}
-        width="1200"
-        height="750"
-        ariaLabel={alt}
-      />
-    )
-  }
-
-  return (
-    <div className={styles.videoPlaceholder} role="img" aria-label={alt}>
-      <div className={styles.placeholderTop}>
-        <span>{media.slot}</span>
-        <span className={styles.placeholderStatus}>Awaiting footage</span>
-      </div>
-      <div className={styles.placeholderCenter}>
-        <span className={styles.placeholderPlay} aria-hidden="true" />
-        <p className={styles.placeholderTitle}>{media.title}</p>
-        <p className={styles.placeholderHint}>{media.hint}</p>
-      </div>
-      <p className={styles.placeholderPath}>Future asset · public{media.path}</p>
-    </div>
-  )
-}
 
 const aiRules = [
   {
-    label: "Personality",
-    title: "Each character is a person, not an assistant",
-    detail: "Midnight's prompt opens by stating he is not an AI, a narrator, or a system, then fixes his tone as calm, patient, and controlled with a subtle sense of distance."
+    label: "01 / Character",
+    title: "A consistent voice",
+    detail: "Each character has a separate prompt for tone and conversational style. Midnight, for example, is calm and controlled, with a deliberate sense of distance."
   },
   {
-    label: "Knowledge boundary",
-    title: "Define what a character may confirm",
-    detail: "Characters may acknowledge that other members exist, but may never reveal critical or hidden information. Each character has a separate prompt file, so knowledge does not leak between them."
+    label: "02 / Knowledge",
+    title: "A limit on what can be revealed",
+    detail: "Rules distinguish acknowledging another member from revealing their private file. These instructions guide responses; they do not guarantee that the model will never reveal too much."
   },
   {
-    label: "Off-topic handling",
-    title: "Redirect instead of refusing",
-    detail: "Weather, meals, and daily small talk are detected and answered politely but firmly: tone tightens, the topic is named as out of place, then the conversation is turned back to the user's emotional state."
-  },
-  {
-    label: "Pressure testing",
-    title: "Plan for users who attack the fiction",
-    detail: "Separate rule sets catch attempts to expose the site as dangerous, shut it down, report the administrator, or ask what the AI can technically do, so probing the model becomes an in-world response."
-  },
-  {
-    label: "Progression",
-    title: "Conversation is one of the ways to unlock",
-    detail: "Name, member-number, and topic patterns decide when an answer counts as evidence, which is what connects a conversation to the member registry and the endings."
-  }
-]
-
-const dialogueRules = [
-  { turn: "user", text: "what's the weather like where you are?" },
-  { turn: "rule", text: "Off-topic daily message - answer politely, tighten tone, name the boundary, redirect to feeling" },
-  { turn: "character", text: "That is not what this space is for. Let's stay with how you have been feeling this week." },
-  { turn: "user", text: "who is No. 1?" },
-  { turn: "rule", text: "Member-number query - may confirm the member exists, may not reveal the file" },
-  { turn: "character", text: "There are others here. What they carry is not mine to hand over." }
-]
-
-const researchTests = [
-  {
-    label: "Test 01",
-    title: "Trash trace inference",
-    body: "Participants were shown decontextualized trash and asked who it belonged to. They built confident stories from very little, but their readings diverged sharply.",
-    image: img("8e13dc05a4b730bb0c86cf502c98eff96923d3a4.png"),
-    alt: "Annotated trash items used in the trace inference test, labelled with baking paper, kitchen gloves, alcohol pad, and cosmetic packaging"
-  },
-  {
-    label: "Test 02",
-    title: "Visual detective experiment",
-    body: "A single room was broken into ten inspectable objects, each with its own short record. Participants moved between them in their own order rather than reading top to bottom.",
-    image: img("e170301fd8cc341588840a663f2c940611f1d986.png"),
-    alt: "Illustrated room scene with ten clue cards covering a diary, contact lens, medicine bottle, trash bin, door, cup, invitation letter, chair, and calendar"
+    label: "03 / Off-script input",
+    title: "A response when players test the rules",
+    detail: "Off-topic questions, challenges to the administrator, and questions about the AI have defined response rules. Repeated probing can become a story consequence, as the recording shows."
   }
 ]
 
 const iterations = [
   {
-    label: "Entry",
-    problem: "The opening carried too much text, and testers could not say who they were supposed to be or why they were investigating.",
-    change: "Cut the introduction down, made the first screen visual, and framed it as a police incident report so the role is legible before any reading starts.",
-    result: "In the eight-person test on the working build, most players followed the main storyline and identified the main suspect."
+    label: "01 / Entry",
+    title: "Give the player a role before the first chat.",
+    problem: "The text-heavy opening left testers unclear about who they were and why they were investigating.",
+    changeLabel: "Changed",
+    change: "Shortened the introduction and reframed the first screen as a visual police incident report.",
+    outcomeLabel: "Later observation",
+    outcome: "Most players in the eight-person working-build test followed the main storyline and identified the main suspect. This was not an isolated before-and-after test of the introduction."
   },
   {
-    label: "AI boundaries",
-    problem: "Players tested the characters from outside the story, and weak keyword matching produced repeated answers that read as artificial.",
-    change: "Replaced keyword lookups with per-character prompt rules: fixed personality, an explicit knowledge boundary, off-topic redirection, and named responses for attempts to break the fiction.",
-    result: "Each of those attempts now has a defined in-world response, so the failure case is designed for rather than left to the model."
+    label: "02 / Conversation",
+    title: "Design for questions outside the script.",
+    problem: "Players challenged the fiction; keyword-based replies repeated themselves and made characters feel artificial.",
+    changeLabel: "Changed",
+    change: "Moved to character-specific prompts with personality, knowledge limits, and rules for off-topic input.",
+    outcomeLabel: "Implemented behavior",
+    outcome: "The current build demonstrates warnings and a revoked-access ending. More varied prompts are still needed to assess how consistently the boundaries hold."
   },
   {
-    label: "Hidden layer",
-    problem: "Of eight players, most identified the main suspect in around thirty-five minutes, but only two reached the secret ending.",
-    change: "Treated this as a guidance problem rather than a difficulty problem - the traces leading to the hidden layer need to be visible, and progress through each record set needs to be countable.",
-    result: "This is the open issue in the current build and has not been retested."
+    label: "03 / Discovery",
+    title: "Make the hidden route discoverable without giving it away.",
+    problem: "Only two of the eight players reached the secret ending. The playtest alone does not explain whether others missed its clues or chose not to pursue them.",
+    changeLabel: "Proposed next iteration",
+    change: "Test clearer progress through each record set and more visible traces leading into the hidden layer.",
+    outcomeLabel: "Not yet retested",
+    outcome: "Observe where players stop, what they think remains, and whether an additional cue helps them choose a next step without revealing the answer."
   }
 ]
 
-const implementationChanges = [
-  {
-    label: "Navigation",
-    body: "Chat, member registry, and mission board were separated into their own routes once real content made a single stacked view unreadable."
-  },
-  {
-    label: "Interaction states",
-    body: "Locked, unlocked, alive, and deceased needed visible treatments in the build, because a static frame cannot show what a record looks like before it opens."
-  },
-  {
-    label: "Dialogue",
-    body: "Prompt rules were rewritten against real transcripts, not in the abstract - most boundary rules exist because a tester found the gap first."
-  },
-  {
-    label: "Localisation",
-    body: "A technical review flagged that some patterns came from Chinese chat apps, so each character kept a parallel English and Chinese rule set."
-  }
-]
+function Demo({ name, label }) {
+  return <CaseVideo className={styles.demo} src={"/lastmessage/media/" + name + "-loop.mp4"}
+    poster={"/lastmessage/media/" + name + "-poster.webp"} width={1600} height={1000} label={label} />
+}
 
-const visualSystem = [
-  {
-    label: "Type",
-    body: "A pixel display face carries the title and section headers; body content stays in a plain monospace so records read like files rather than prose."
-  },
-  {
-    label: "Surface",
-    body: "Near-black surfaces with white text keep the archive quiet. Red is reserved for status and alerts, and appears only where a record changes state."
-  },
-  {
-    label: "Components",
-    body: "One record pattern repeats across members, calls, and logs: a header, a status tag, a set of folders, and a counter. New content never needs a new layout."
-  }
-]
+function SectionHeading({ label, title, children }) {
+  return <header className={styles.sectionHeader}>
+    <p className={styles.kicker}>{label}</p>
+    <h2>{title}</h2>
+    {children && <p className={styles.sectionLead}>{children}</p>}
+  </header>
+}
 
 export default function LastMessagePage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <div className={styles.headerMask}>
-          <SiteHeader active={trackHome(track)} track={track} />
-        </div>
-
-        <section className={styles.content}>
-          <div className={styles.topContent}>
-            <ProjectHero
-              label="Professional Work"
-              discipline={"Product Design · AI Interaction · 2026"}
-              title="Last Message"
-              image="/lastmessage/cover.png"
-              imageAlt="Last Message title screen on a laptop, its glitched terminal art reading Detctive ARG"
-              summary="An AI-driven interactive web experience built around conversation, fragmented information, and non-linear exploration."
-              problem="Fragmented information usually forces people down one fixed path."
-              contribution="UX, UI, AI interaction rules, and the functional website."
-              outcome="A live product where AI characters, clue records, and locked states respond to how each user explores."
-              role="Product Designer"
-              scope={"UX · UI · AI Interaction · Prototype"}
-              platform="Web"
-              timeline="4 months"
-              action={{ href: liveUrl, label: "Open the live product", arrow: false }}
-              secondaryAction={{ href: playtestUrl, label: "Watch the playtest" }}
-            />
-          </div>
-
-          <div className={styles.bodyContent}>
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>UX Challenge</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>
-                    How can an interface help users navigate fragmented information without forcing them through a
-                    fixed path?
-                  </h2>
-                  <p className={styles.sectionLead}>
-                    Every answer in this product is split across a conversation, a file, and a log. The design problem
-                    was to keep that structure legible while leaving the order of discovery to the user.
-                  </p>
+        <SiteHeader active={trackHome(track)} track={track} />
+        <div className={styles.content}>
+          <section className={styles.hero} aria-labelledby="project-title">
+            <div className={styles.eyebrow}>
+              <span className={styles.pill}>MFA Thesis Project</span>
+              <span>Product Design · AI Interaction · 2026</span>
+            </div>
+            <div className={styles.heroIntro}>
+              <div className={styles.heroCopy}>
+                <h1 id="project-title">Last Message</h1>
+                <p className={styles.heroLead}>A browser-based detective game where players question AI characters and piece together a case in their own order.</p>
+                <p className={styles.heroQuestion}>The design challenge: keep an open-ended investigation understandable when both the player's route and the conversation can change.</p>
+                <div className={styles.actions}>
+                  <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">Play the live game <span aria-hidden="true">↗</span></a>
+                  <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">Watch the playtest</a>
                 </div>
               </div>
+              <img className={styles.heroImage} src="/lastmessage/cover.png" alt="Last Message detective game title screen on a laptop" fetchPriority="high" />
+            </div>
+            <dl className={styles.meta}>
+              <div><dt>My role</dt><dd>Product Designer</dd></div>
+              <div><dt>My scope</dt><dd>UX / UI, AI behavior &amp; web development</dd></div>
+              <div><dt>Context</dt><dd>Parsons · MFA Design &amp; Technology</dd></div>
+              <div><dt>Timeline</dt><dd>4 months</dd></div>
+            </dl>
+            <div className={styles.contribution}>
+              <p className={styles.microLabel}>What I delivered</p>
+              <p>A playable website, from investigation structure and interface design to character rules and implementation. Tested with eight players; the hidden route remains an iteration priority.</p>
+            </div>
+          </section>
 
-              <div className={styles.constraintGrid}>
-                {challengeConstraints.map((item) => (
-                  <article key={item.label}>
-                    <p className={styles.microLabel}>{item.label}</p>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
+          <nav className={styles.sectionNav} aria-label="Case study sections">
+            <a href="#experience">The experience</a>
+            <a href="#investigation-flow">Investigation flow</a>
+            <a href="#ai-behavior">AI behavior</a>
+            <a href="#playtesting">Playtesting</a>
+            <a href="#figma-to-build">Figma to build</a>
+          </nav>
+
+          <section className={styles.caseSection} id="experience">
+            <SectionHeading label="01 / The experience" title="Let players follow a question, wherever it leads.">
+              Players enter as a detective investigating a death. Conversations, records, and clues on external websites offer different ways into the same case.
+            </SectionHeading>
+            <article className={styles.feature}>
+              <div className={styles.featureCopy}>
+                <p className={styles.microLabel}>Conversation</p>
+                <h3>Ask in your own words.</h3>
+                <p>Private chats let players question characters through free-form input. Each character's prompt defines a voice and the information they are allowed to share.</p>
+                <dl className={styles.reasoning}>
+                  <div><dt>Design choice</dt><dd>Use a familiar chat interface so the player can focus on what to ask.</dd></div>
+                  <div><dt>Tradeoff</dt><dd>Open input gives players freedom, but also demands behavior for unexpected questions.</dd></div>
+                </dl>
+                <a className={styles.textLink} href="/lastmessage/media/chat-loop.mp4" target="_blank" rel="noreferrer">View conversation at full size ↗</a>
               </div>
-            </section>
+              <Demo name="chat" label="Private conversation with Mike Anderson" />
+            </article>
+            <article className={styles.feature}>
+              <div className={styles.featureCopy}>
+                <p className={styles.microLabel}>Cross-reference</p>
+                <h3>Follow a clue beyond the game.</h3>
+                <p>A character's trail extends to a profile on X. Players investigate outside the case interface and bring their interpretation back into the story.</p>
+                <dl className={styles.reasoning}>
+                  <div><dt>Design choice</dt><dd>Let a familiar website become another piece of evidence in the fictional investigation.</dd></div>
+                  <div><dt>Tradeoff</dt><dd>Leaving the interface adds immersion, but makes the return path and the next useful action less obvious.</dd></div>
+                </dl>
+                <a className={styles.textLink} href="/lastmessage/media/web-clue-loop.mp4" target="_blank" rel="noreferrer">View clue at full size ↗</a>
+              </div>
+              <Demo name="web-clue" label="The fictional character's profile on X, used as an investigation clue" />
+            </article>
+          </section>
 
-            <section className={`${styles.caseSection} ${styles.highlightsSection}`}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Design Highlights</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Four systems make the mystery feel alive.</h2>
-                  <p className={styles.sectionLead}>
-                    Live characters make the investigation responsive; branching endings, open-web clues, and
-                    persistent evidence make every discovery matter.
-                  </p>
+          <section className={styles.caseSection} id="investigation-flow">
+            <SectionHeading label="02 / Investigation flow" title="Keep the next move visible without prescribing the answer.">
+              The core loop is to question, inspect, and connect evidence. Players can revisit records and characters as new information opens another route.
+            </SectionHeading>
+            <div className={styles.flowBlock}>
+              <p className={styles.microLabel}>Investigation loop · high-level structure</p>
+              <ol className={styles.flow}>
+                {investigation.map((step, index) => <li key={step.title}>
+                  <span className={styles.stepNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3><p>{step.body}</p>
+                </li>)}
+              </ol>
+              <p className={styles.returnPath}><span aria-hidden="true">↶</span> New information sends the player back to earlier conversations and records.</p>
+            </div>
+            <div className={styles.mapIntro}>
+              <h3>Eight endings, plus a hidden ninth.</h3>
+              <p>Opened from an ending screen in this recording, the story map shows revealed and locked branches. It offers a view of the routes through the case after an outcome has been reached.</p>
+            </div>
+            <Demo name="routes" label="Story map showing revealed and locked routes through the branching endings" />
+            <div className={styles.decisionGrid}>
+              <article><p className={styles.microLabel}>Information architecture</p><h3>Give each kind of evidence a home.</h3><p>Chat, the member registry, and the mission board occupy separate routes. The player can return to the same record structure as the case grows.</p></article>
+              <article><p className={styles.microLabel}>State feedback</p><h3>Show what has changed.</h3><p>Locked records, available files, member status, and counters distinguish what is known from what still needs investigation.</p></article>
+            </div>
+            <details className={styles.disclosure}>
+              <summary>Early explorations behind the non-linear structure</summary>
+              <div className={styles.disclosureBody}>
+                <p className={styles.sectionLead}>Two exploratory exercises informed the direction: people could form different interpretations from the same fragments and inspect clues in their own order. These exercises informed the concept; they did not validate the final game's usability.</p>
+                <div className={styles.evidenceGrid}>
+                  <figure>
+                    <a href={img("8e13dc05a4b730bb0c86cf502c98eff96923d3a4.png")} target="_blank" rel="noreferrer" aria-label="Open trace inference study image at full size"><img loading="lazy" src={img("8e13dc05a4b730bb0c86cf502c98eff96923d3a4.png")} alt="Annotated discarded objects used to explore how people infer a story from traces" /></a>
+                    <figcaption><strong>01 / Trace inference</strong>Participants inferred an owner from discarded objects. Their confident but differing interpretations suggested room for more than one reading of a clue.</figcaption>
+                  </figure>
+                  <figure>
+                    <a href={img("e170301fd8cc341588840a663f2c940611f1d986.png")} target="_blank" rel="noreferrer" aria-label="Open visual detective exercise at full size"><img loading="lazy" src={img("e170301fd8cc341588840a663f2c940611f1d986.png")} alt="Illustrated room with ten inspectable objects and their clue records" /></a>
+                    <figcaption><strong>02 / Visual detective exercise</strong>A room contained ten inspectable objects with short records. Participants chose their own inspection order, informing the modular record structure.</figcaption>
+                  </figure>
                 </div>
               </div>
+            </details>
+          </section>
 
-              <div className={styles.highlightList}>
-                {designHighlights.map((highlight) => (
-                  <article className={styles.highlightCard} data-wide={highlight.wide ? "true" : undefined} key={highlight.title}>
-                    <div className={styles.highlightCopy}>
-                      <p className={styles.microLabel}>{highlight.label}</p>
-                      <h3>{highlight.title}</h3>
-                      <p>{highlight.body}</p>
-                    </div>
-                    <div className={styles.highlightVisual}>
-                      <HighlightMedia media={highlight.media} alt={highlight.alt} />
-                    </div>
-                  </article>
-                ))}
+          <section className={styles.caseSection} id="ai-behavior">
+            <SectionHeading label="03 / AI interaction design" title="Design what happens when the player goes off script.">
+              Free-form conversation needs limits. I defined character personalities, knowledge boundaries, and responses to off-topic input, then connected those behaviors to the investigation.
+            </SectionHeading>
+            <article className={styles.feature}>
+              <div className={styles.featureCopy}>
+                <p className={styles.microLabel}>A boundary in the working build</p>
+                <h3>A warning becomes a consequence.</h3>
+                <p>The chat history records repeated weather questions and Lily's warnings. The recording then shows the disconnected chat and the “Revoked” ending.</p>
+                <dl className={styles.reasoning}>
+                  <div><dt>Intent</dt><dd>Keep an off-topic exchange inside the story instead of returning a generic assistant response.</dd></div>
+                  <div><dt>Tradeoff</dt><dd>Revoking access makes the boundary consequential. It also risks punishing normal curiosity; the clarity of the warning needs further testing.</dd></div>
+                </dl>
+                <a className={styles.textLink} href="/lastmessage/media/boundary-loop.mp4" target="_blank" rel="noreferrer">View interaction at full size ↗</a>
               </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>AI Interaction Design</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>I designed how the characters behave, not just what they say.</h2>
-                  <p className={styles.sectionLead}>
-                    A character that answers anything breaks a mystery. Each one needed a personality, a boundary, and a
-                    defined response for the moment a user stops playing along and starts testing the model.
-                  </p>
+              <Demo name="boundary" label="Lily's warnings in the chat history, disconnection, and the Revoked ending" />
+            </article>
+            <div className={styles.ruleGrid}>
+              {aiRules.map(rule => <article key={rule.label}><p className={styles.microLabel}>{rule.label}</p><h3>{rule.title}</h3><p>{rule.detail}</p></article>)}
+            </div>
+            <details className={styles.disclosure}>
+              <summary>Character prompts and response rules</summary>
+              <div className={styles.disclosureBody}>
+                <div className={styles.ruleExample}>
+                  <p className={styles.microLabel}>Illustrative exchange · not a playtest transcript</p>
+                  <dl>
+                    <div><dt>Player</dt><dd>“Who is No. 1?”</dd></div>
+                    <div><dt>Rule</dt><dd>May confirm a member exists; may not reveal their private file.</dd></div>
+                    <div><dt>Character</dt><dd>“There are others here. What they carry is not mine to hand over.”</dd></div>
+                  </dl>
                 </div>
-              </div>
-
-              <div className={styles.ruleGrid}>
-                {aiRules.map((rule) => (
-                  <article className={styles.ruleCard} key={rule.label}>
-                    <p className={styles.microLabel}>{rule.label}</p>
-                    <h3>{rule.title}</h3>
-                    <p>{rule.detail}</p>
-                  </article>
-                ))}
-              </div>
-
-              <div className={styles.dialogueBlock}>
-                <p className={styles.microLabel}>Rule illustration - how a boundary reads in conversation</p>
-                <div className={styles.dialogue}>
-                  {dialogueRules.map((line, index) => (
-                    <p className={styles.dialogueLine} data-turn={line.turn} key={index}>
-                      <span className={styles.dialogueWho}>
-                        {line.turn === "user" ? "User" : line.turn === "rule" ? "Rule" : "Character"}
-                      </span>
-                      <span>{line.text}</span>
-                    </p>
-                  ))}
+                <div className={styles.evidenceGrid}>
+                  <figure>
+                    <a href={img("5247c345f474e10806399fab7a3a5708be0aa486.png")} target="_blank" rel="noreferrer" aria-label="Open Midnight's character prompt at full size"><img loading="lazy" src={img("5247c345f474e10806399fab7a3a5708be0aa486.png")} alt="Midnight's system prompt with tone, conversation, and boundary instructions" /></a>
+                    <figcaption><strong>Character-level instructions</strong>Midnight's prompt defines tone, conversation style, boundaries, and off-topic handling.</figcaption>
+                  </figure>
+                  <figure>
+                    <a href={img("01a293011536bfac21d1b0d0106f69962c9f74c7.png")} target="_blank" rel="noreferrer" aria-label="Open bilingual response rules at full size"><img loading="lazy" src={img("01a293011536bfac21d1b0d0106f69962c9f74c7.png")} alt="English and Chinese rules for off-topic detection and challenges to the story" /></a>
+                    <figcaption><strong>Input-handling rules</strong>English and Chinese patterns cover member queries, off-topic messages, and attempts to challenge the fiction.</figcaption>
+                  </figure>
                 </div>
+                <p className={styles.sourceNote}>Built with Claude Code and the ChatGPT API. My design work covered the characters, response boundaries, interface states, and the relationship between conversation and progression.</p>
               </div>
+            </details>
+          </section>
 
-              <div className={styles.evidenceGrid}>
-                <figure>
-                  <img
-                    src={img("5247c345f474e10806399fab7a3a5708be0aa486.png")}
-                    alt="Character system prompt with sections for tone and style, conversation approach, boundaries and guidance, and handling off-topic conversation"
-                  />
-                  <figcaption>
-                    The system prompt for Midnight, organised into tone, conversation approach, boundaries, off-topic
-                    handling, and how to respond to distress.
-                  </figcaption>
-                </figure>
-                <figure>
-                  <img
-                    src={img("01a293011536bfac21d1b0d0106f69962c9f74c7.png")}
-                    alt="Intent rules covering danger signals, site destruction, administrator exposure, model capability questions, and off-topic detection in English and Chinese"
-                  />
-                  <figcaption>
-                    Intent rules behind the conversation, including off-topic detection and the cases where a user tries
-                    to break the fiction - each defined in English and Chinese.
-                  </figcaption>
-                </figure>
+          <section className={styles.caseSection} id="playtesting">
+            <SectionHeading label="04 / Playtesting & iteration" title="The main case was legible. The hidden layer needed more work.">
+              Testing ran from an early chatroom proof of concept to an eight-player test of the working build. Most players followed the main story and found the main suspect; fewer discovered the secret ending.
+            </SectionHeading>
+            <div className={styles.statRow}>
+              <article><strong>8</strong><span>players in the working-build test</span></article>
+              <article><strong>~35 min</strong><span>reported time to identify the main suspect</span></article>
+              <article><strong>2 of 8</strong><span>players reached the secret ending</span></article>
+            </div>
+            <p className={styles.sourceNote}>These are observations from a small playtest, rather than a measured improvement against an earlier version.</p>
+            <div className={styles.iterationList}>
+              {iterations.map(item => <article className={styles.iterationItem} key={item.label}>
+                <div><p className={styles.microLabel}>{item.label}</p><h3>{item.title}</h3><p>{item.problem}</p></div>
+                <dl className={styles.reasoning}>
+                  <div><dt>{item.changeLabel}</dt><dd>{item.change}</dd></div>
+                  <div><dt>{item.outcomeLabel}</dt><dd>{item.outcome}</dd></div>
+                </dl>
+              </article>)}
+            </div>
+            <details className={styles.disclosure}>
+              <summary>The first playable chatroom</summary>
+              <div className={[styles.disclosureBody, styles.origin].join(" ")}>
+                <a href={img("5a194480daae1010ec7ec4e0cbfe9506c2d91cb8.png")} target="_blank" rel="noreferrer" aria-label="Open the early chatroom prototype at full size"><img loading="lazy" src={img("5a194480daae1010ec7ec4e0cbfe9506c2d91cb8.png")} alt="Early light chat interface with a general channel and member list" /></a>
+                <p>A plain chatroom and member list provided an early way to explore the interaction. Testing exposed the need to establish a role and a reason to investigate before asking players to start a conversation.</p>
               </div>
+            </details>
+          </section>
 
-              <p className={styles.note}>
-                Claude Code and the ChatGPT API were the implementation tools. The personalities, boundaries, refusal
-                behaviour, and the link between conversation and progression were design decisions.
-              </p>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Research to Product Direction</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Two studies pointed away from a linear story.</h2>
-                  <p className={styles.sectionLead}>
-                    Both tests asked people to reconstruct something from incomplete evidence. They did it readily, and
-                    they did it in their own order - which is what made a non-linear structure the right call.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.researchGrid}>
-                {researchTests.map((test) => (
-                  <article className={styles.researchCard} key={test.label}>
-                    <div>
-                      <p className={styles.microLabel}>{test.label}</p>
-                      <h3>{test.title}</h3>
-                      <p>{test.body}</p>
-                    </div>
-                    <div className={styles.researchImage}>
-                      <img src={test.image} alt={test.alt} />
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              <p className={styles.note}>
-                Users will connect incomplete information on their own, but they will not agree on the reading. The
-                product had to support many routes through the same evidence and stay legible on each of them.
-              </p>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Testing &amp; Iteration</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Three changes came out of watching people play.</h2>
-                  <p className={styles.sectionLead}>
-                    Testing ran alongside development, from an early proof of concept through an eight-person session on
-                    the working build.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.originBlock}>
-                <figure>
-                  <img
-                    src={img("5a194480daae1010ec7ec4e0cbfe9506c2d91cb8.png")}
-                    alt="Early proof of concept: a plain light chat interface with a general channel and member list"
-                  />
-                </figure>
-                <div>
-                  <p className={styles.microLabel}>Starting point</p>
-                  <h3>The first playable build</h3>
-                  <p>
-                    A plain chatroom with a member list, used to check whether a browser chat could hold the case at
-                    all. It confirmed the container worked, and made it obvious that the entry gave players no role to
-                    step into.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.statRow}>
-                <article><span>Final test</span><strong>8</strong><p>players</p></article>
-                <article><span>Main suspect found in</span><strong>~35</strong><p>minutes</p></article>
-                <article><span>Reached the secret ending</span><strong>2</strong><p>of 8 players</p></article>
-              </div>
-
-              <div className={styles.iterationList}>
-                {iterations.map((item, index) => (
-                  <article className={styles.iterationItem} key={item.label}>
-                    <span className={styles.iterationNumber}>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <p className={styles.microLabel}>{item.label} - problem</p>
-                      <p>{item.problem}</p>
-                    </div>
-                    <div>
-                      <p className={styles.microLabel}>Design change</p>
-                      <p>{item.change}</p>
-                    </div>
-                    <div>
-                      <p className={styles.microLabel}>Result</p>
-                      <p>{item.result}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>From Figma to Functional Product</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>The design kept changing after it started running.</h2>
-                  <p className={styles.sectionLead}>
-                    High-fidelity screens set the layout system and interaction model. Building the real site exposed
-                    states and pacing a static frame could not, and those were resolved as design work.
-                  </p>
-                </div>
-              </div>
-
-              <figure className={styles.compareFigure}>
-                <img
-                  src={img("bb00cb03b3e532c6003864bef9d21154b5215f5f.png")}
-                  alt="High-fidelity Figma screens on the left beside the built administrator registry and mission board on the right"
-                />
-                <figcaption>
-                  Left: high-fidelity screens in Figma. Right: the same screens running, with locked member rows, a
-                  status tag on the deceased member, and the diary set that opens as evidence is verified.
-                </figcaption>
-              </figure>
-
-              <div className={styles.changeGrid}>
-                {implementationChanges.map((item) => (
-                  <article key={item.label}>
-                    <p className={styles.microLabel}>{item.label}</p>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Visual System</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>An archive that was not meant to be read.</h2>
-                  <p className={styles.sectionLead}>
-                    The interface borrows from file browsers and incident reports rather than from games, so unfamiliar
-                    content still lands in a familiar structure.
-                  </p>
-                </div>
-              </div>
-
+          <section className={styles.caseSection} id="figma-to-build">
+            <SectionHeading label="05 / From Figma to a working website" title="Building it exposed the states a static screen could miss.">
+              The high-fidelity designs established the visual language. Working with real content made navigation, locked records, and changing member states part of the design work.
+            </SectionHeading>
+            <figure className={styles.compareFigure}>
+              <a href={comparison} target="_blank" rel="noreferrer" aria-label="Open Figma and implemented interface comparison at full size"><img loading="lazy" src={comparison} alt="Figma designs on the left and the implemented member registry and mission board on the right" /></a>
+              <figcaption><span>Left: Figma designs. Right: implemented screens with locked records, member status, and diary access.</span><a className={styles.textLink} href={comparison} target="_blank" rel="noreferrer">View full size ↗</a></figcaption>
+            </figure>
+            <div className={styles.ruleGrid}>
+              <article><p className={styles.microLabel}>Navigation</p><h3>Separate destinations as content grows.</h3><p>Chat, the registry, and the mission board moved into their own routes when a single stacked view became too dense.</p></article>
+              <article><p className={styles.microLabel}>Interaction states</p><h3>Design before and after access.</h3><p>Locked and unlocked records, plus alive and deceased member states, needed recognizable treatments beyond the default screen.</p></article>
+              <article><p className={styles.microLabel}>Language</p><h3>Support English and Chinese input.</h3><p>Character rules were maintained in both languages. Supporting the same intent requires more than translating the interface labels.</p></article>
+            </div>
+            <div className={styles.visualSystem}>
+              <p className={styles.microLabel}>Visual system / a readable digital archive</p>
               <div className={styles.systemGrid}>
-                {visualSystem.map((item) => (
-                  <article key={item.label}>
-                    <p className={styles.microLabel}>{item.label}</p>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
+                <div><h3>Type</h3><p>Pixel display type establishes the fiction; monospace body text gives records a consistent rhythm.</p></div>
+                <div><h3>Contrast</h3><p>Dark surfaces and light text frame the evidence, with red accents for status and alerts.</p></div>
+                <div><h3>Record patterns</h3><p>Repeated headers, folders, status tags, and counters help players recognize new information.</p></div>
               </div>
-            </section>
+            </div>
+          </section>
 
-            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Reflection</p>
-                <h2 className={styles.sectionTitle}>Designing behaviour is harder than designing screens.</h2>
-              </div>
-
-              <div className={styles.reflectionGrid}>
-                <article>
-                  <p className={styles.microLabel}>Biggest challenge</p>
-                  <p>Keeping a story legible when the user sets the order. Most of the work went into what stays visible between fragments, not into the fragments themselves.</p>
-                </article>
-                <article>
-                  <p className={styles.microLabel}>Limits of AI interaction</p>
-                  <p>A character is only as reliable as its boundary rules, and every rule was written after someone found the gap. This does not generalise from a small test group.</p>
-                </article>
-                <article>
-                  <p className={styles.microLabel}>What I would test next</p>
-                  <p>Whether visible progress through each record set raises discovery of the hidden layer, and whether the boundary rules hold up against users who set out to break them.</p>
-                </article>
-              </div>
-            </section>
-
-            <ProjectNav slug="lastmessage" track={track} styles={styles} />
-          </div>
-        </section>
-
-        <Reveal
-          fade={`.${styles.highlightVisual}, .${styles.compareFigure}, .${styles.researchImage}, .${styles.evidenceGrid} figure, .${styles.originBlock} figure`}
-        />
-
+          <section className={[styles.caseSection, styles.reflection].join(" ")}>
+            <SectionHeading label="What I take forward" title="An open-ended experience still needs clear feedback.">
+              The hardest part was keeping the player's place in the investigation visible while leaving interpretation open. Next, I would test hidden-route cues and whether players understand a character's warning before it costs them access.
+            </SectionHeading>
+            <div className={styles.actions}>
+              <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">Explore Last Message <span aria-hidden="true">↗</span></a>
+              <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">Watch the playtest</a>
+            </div>
+          </section>
+          <ProjectNav slug="lastmessage" track={track} styles={styles} />
+        </div>
         <SiteFooter />
       </div>
     </main>
