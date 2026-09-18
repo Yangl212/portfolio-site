@@ -1,13 +1,10 @@
-import { AutoplayVideo } from "../../../components/AutoplayVideo"
+import CaseVideo from "../cleared/CaseVideo"
 import { ImageCarousel } from "../../../components/ImageCarousel"
-import { ProjectHero } from "../../../components/ProjectHero"
-import { Reveal } from "../../../components/Reveal"
 import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
-import boaCover from "../../../pic/Cover1.png"
 
 import styles from "./page.module.css"
 
@@ -16,19 +13,16 @@ const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260915-
 
 const problemSnapshots = [
   {
-    signal: "70% / 57%",
     title: "Spending is difficult to find and verify",
     body: "Users had to move between summaries, categories, and transaction lists to understand where a total came from.",
     evidence: "70% struggled to find insights; 57% were unsure how totals were calculated."
   },
   {
-    signal: "67% / 63%",
     title: "Category correction breaks the flow",
     body: "Fixing a category required opening transactions one at a time, while filters and selections could reset on return.",
     evidence: "67% found correction time-consuming; 63% experienced resetting selections."
   },
   {
-    signal: "73%",
     title: "Budget changes force a full rebuild",
     body: "A small monthly adjustment could send users through setup steps that did not match the change they wanted to make.",
     evidence: "73% found monthly budget adjustments inflexible."
@@ -37,43 +31,49 @@ const problemSnapshots = [
 
 const designHighlights = [
   {
-    label: "01 / Richer spending chart",
-    title: "Redesign the spending chart to show more at a glance",
-    body: "The new chart surfaces more information in one view. Users can quickly spot overspending by category and swipe to see more detailed spending insights.",
-    video: "/boa/01.mp4",
+    label: "01 / Understand",
+    title: "See which category needs attention.",
+    body: "The spending dial connects the month's total to individual categories. Selecting a category brings its amount and budget context into focus.",
+    reason: "Keep the overview and the selected category together, so the detail still has a clear reference point.",
+    tradeoff: "A compact chart leaves less room for labels. Amounts and category names need to carry the meaning alongside color.",
+    video: "spending",
     alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights",
     tone: "spending"
   },
   {
-    label: "02 / Clearer budget view",
-    title: "Make budget status easier to understand",
-    body: "The budget page provides more useful information than the current version, helping users notice overspending more quickly.",
-    video: "/boa/02.mp4",
-    alt: "Screen recording of the redesigned BOA budget page making overspending easier to notice",
+    label: "02 / Investigate",
+    title: "Trace the total back to the spending.",
+    body: "Inside a category, switch between merchant and monthly breakdowns. The selected category and budget remain the reference while the view changes.",
+    reason: "A total becomes useful when someone can investigate what contributed to it, then continue into transactions to correct a category.",
+    tradeoff: "Detail takes another step on mobile. The desktop version can show the overview and breakdown side by side.",
+    video: "budget",
+    alt: "Category spending view switching between merchant and monthly breakdowns",
     tone: "budget"
   },
   {
-    label: "03 / Quick reallocation",
-    title: "Let users move budget directly",
-    body: "Users can directly move money from one category to another, making budget adjustments faster and easier.",
-    video: "/boa/03.mp4",
-    alt: "Screen recording of moving money directly from one BOA budget category to another",
+    label: "03 / Adjust",
+    title: "Reallocate the budget without restarting setup.",
+    body: "Take an amount from one category and give it to another. Preview both revised limits while keeping the overall budget unchanged.",
+    reason: "Separate the adjustment from saving it. The final choice makes clear whether the revised plan is for one month or ongoing.",
+    tradeoff: "A review step adds a little effort, but keeps a temporary adjustment from silently becoming the new default.",
+    video: "reallocate",
+    alt: "Reallocating budget allowances between two categories, with both limits visible",
     tone: "reallocation"
   }
 ]
 
 const prototypeSteps = [
   {
-    title: "Explore the dynamic spending chart",
-    body: "Swipe through the interactive dial to compare categories, spot overspending, and keep the month's most important information clear and focused."
+    title: "Inspect a spending category",
+    body: "Select a category in the dial, compare its merchant and monthly breakdowns, then open its transactions."
   },
   {
-    title: "Move the budget",
-    body: "Use the new Move Budget feature to transfer money directly between categories and choose whether the change applies this month or going forward."
+    title: "Correct more than one transaction",
+    body: "Select transactions and assign a category together, keeping the active month and category in context."
   },
   {
-    title: "Ask the built-in AI assistant",
-    body: "Open the embedded assistant for intelligent, in-context help understanding spending, finding insights, and deciding what to do next."
+    title: "Make a one-month budget adjustment",
+    body: "Reallocate category allowances, review the new limits, and choose a one-month or ongoing change. This adjusts the plan; it does not transfer funds."
   }
 ]
 
@@ -90,25 +90,29 @@ const designDecisions = [
     label: "Access",
     title: "Start from the account users already check",
     evidence: "The spending tool was buried behind several screens.",
-    decision: "Surface monthly spending and budget progress on the checking account card."
+    decision: "Surface monthly spending and budget progress on the checking account card.",
+    tradeoff: "Use a concise entry point so the account overview does not become a second analytics dashboard."
   },
   {
     label: "Continuity",
     title: "Treat month and category as persistent context",
     evidence: "Selections could reset after opening a transaction and going back.",
-    decision: "Keep the active month and category visible across overview, category, and transaction views."
+    decision: "Keep the active month and category visible across overview, category, and transaction views.",
+    tradeoff: "Persistent context uses screen space, but makes it easier to tell which total the details belong to."
   },
   {
     label: "Control",
     title: "Move category correction into the list",
     evidence: "Users had to correct transactions one at a time through detail screens.",
-    decision: "Support multi-select and recategorization without leaving the transaction list."
+    decision: "Support multi-select and recategorization without leaving the transaction list.",
+    tradeoff: "Bulk changes need a visible selection count and a clear destination category before confirmation."
   },
   {
     label: "Flexibility",
     title: "Separate temporary and ongoing changes",
     evidence: "A monthly adjustment could force users back through budget setup.",
-    decision: "Allow direct edits or reallocation, then ask whether the change applies once or going forward."
+    decision: "Allow direct edits or reallocation, then ask whether the change applies once or going forward.",
+    tradeoff: "Keep the save decision explicit even though it adds a step to a small adjustment."
   }
 ]
 
@@ -135,7 +139,7 @@ const lowFiArcs = [
   {
     label: "Entry",
     title: "Spending starts on a screen users already open",
-    body: "In BOA today the spending tool sits several screens below the account it describes. Here the month's total is already on the accounts list and on the checking card, and a transaction row is a way back into the same spending context rather than a dead end.",
+    body: "The reviewed flow placed spending several screens below the account. These wireframes bring the monthly total to the accounts list and checking card, with a path from transactions back into spending.",
     screens: [
       {
         src: "/boa/low01.png",
@@ -204,7 +208,7 @@ const lowFiArcs = [
   {
     label: "Budget",
     title: "Changing one number does not restart setup",
-    body: "A monthly adjustment stays inside the budget. Categories are edited in place or moved against each other while the total is held steady, and saving is where the flow finally asks whether this is a one-month change or the new normal — a question the current setup never puts to the user.",
+    body: "Categories can be edited or reallocated while the total stays visible. Saving is a separate decision: apply the adjustment to this month or keep it as an ongoing plan.",
     screens: [
       {
         src: "/boa/low13.png",
@@ -279,398 +283,272 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <div className={styles.headerMask}>
-          <SiteHeader active={trackHome(track)} track={track} />
-        </div>
+        <SiteHeader active={trackHome(track)} track={track} />
+        <div className={styles.content}>
+          <header className={styles.hero}>
+            <div className={styles.heroCopy}>
+              <div className={styles.eyebrow}>
+                <span className={styles.pill}>Independent case study</span>
+                <span>Product · UI/UX · 2026</span>
+              </div>
+              <h1>BOA: Spending<br />&amp; budgeting.</h1>
+              <p className={styles.heroLead}>Understand the spending. Correct the details. Adjust the plan.</p>
+              <dl className={styles.meta}>
+                <div><dt>Role</dt><dd>UI/UX Designer</dd></div>
+                <div><dt>Timeline</dt><dd>8 weeks</dd></div>
+                <div><dt>Platform</dt><dd>Mobile + Web</dd></div>
+              </dl>
+              <dl className={styles.heroFacts}>
+                <div><dt>The challenge</dt><dd>Connect spending totals, category corrections and budget adjustments in one continuous flow.</dd></div>
+                <div><dt>My contribution</dt><dd>Research, existing-flow analysis, wireframes, mobile and web UI, and an interactive prototype.</dd></div>
+                <div><dt>The deliverable</dt><dd>An independent redesign with sample transactions, linked spending views and editable category budgets.</dd></div>
+              </dl>
+              <div className={styles.actions}>
+                <a className={styles.action} href="#prototype">Try the prototype <span aria-hidden="true">↓</span></a>
+                <a className={styles.textLink} href="#experience">See the design choices</a>
+              </div>
+            </div>
+            <div className={styles.heroVisual}>
+              <CaseVideo src="/boa/media/reallocate-loop.mp4" poster="/boa/media/reallocate-poster.webp"
+                width={720} height={1408} label="BOA preview: reallocate a category budget" priority />
+            </div>
+          </header>
 
-        <section className={styles.content}>
-          <div className={styles.topContent}>
-            <ProjectHero
-              label="Independent Case Study"
-              discipline={"UI/UX Design \u00b7 2026"}
-              title="BOA: Budgeting Redesign"
-              image="/boa/home-screen.png"
-              imageAlt="BOA redesigned home screen"
-              imageFit="contain"
-              mobileImage={boaCover.src}
-              summary="Redesigning BOA's spending and budgeting experience so users can find spending totals, correct categories, and adjust a monthly budget without rebuilding it."
-              problem="Spending totals, category edits, and budget controls are split across disconnected screens."
-              contribution="Mapped the existing flows, tested low-fi concepts, and designed mobile and web interactions."
-              outcome="A cross-platform concept that keeps spending context visible and makes budget changes more direct."
-              role="UI/UX Designer"
-              scope={"Research \u00b7 UX \u00b7 UI \u00b7 Prototype"}
-              platform="Mobile + Web"
-              timeline="8 weeks"
-            />
-          </div>
+          <nav className={styles.sectionNav} aria-label="Case study sections">
+            <a href="#experience">Experience</a>
+            <a href="#prototype">Prototype</a>
+            <a href="#research">Research</a>
+            <a href="#task-flows">Task flows</a>
+            <a href="#testing">Evaluation</a>
+            <a href="#web">Web adaptation</a>
+          </nav>
 
-          <div className={styles.bodyContent}>
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Solution Overview</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>The redesign comes down to three moves.</h2>
-                  <p className={styles.sectionLead}>
-                    Spending you can read at a glance, a budget view that makes overspending obvious, and
-                    reallocation that takes one step instead of a rebuild. The sections that follow work back
-                    through the research, the decisions, and the testing behind them.
-                  </p>
+          <section id="experience" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>The core experience</p>
+              <h2>From a spending total to a decision.</h2>
+              <p className={styles.sectionLead}>For people checking where their money went and deciding how to adjust the rest of the month, the flow connects overview, detail and budget controls.</p>
+            </div>
+            <div className={styles.highlightList}>
+              {designHighlights.map((item) => (
+                <article className={styles.highlightCard} key={item.video}>
+                  <div className={styles.highlightCopy}>
+                    <p className={styles.microLabel}>{item.label}</p>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                    <dl className={styles.reasoning}>
+                      <div><dt>Why this approach</dt><dd>{item.reason}</dd></div>
+                      <div><dt>The trade-off</dt><dd>{item.tradeoff}</dd></div>
+                    </dl>
+                  </div>
+                  <CaseVideo className={styles.highlightVideo}
+                    src={"/boa/media/" + item.video + "-loop.mp4"}
+                    poster={"/boa/media/" + item.video + "-poster.webp"}
+                    width={720} height={1408} label={item.alt} />
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="prototype" className={styles.caseSection}>
+            <div className={styles.prototypeLayout}>
+              <div className={styles.prototypeGuide}>
+                <div className={styles.sectionHeader}>
+                  <p className={styles.kicker}>Interactive prototype</p>
+                  <h2>Follow the task through.</h2>
+                  <p className={styles.sectionLead}>Explore the connected mobile flow using sample transactions and budgets.</p>
                 </div>
+                <ol className={styles.prototypeSteps}>
+                  {prototypeSteps.map((step, index) => (
+                    <li key={step.title}>
+                      <span aria-hidden="true">0{index + 1}</span>
+                      <div><h3>{step.title}</h3><p>{step.body}</p></div>
+                    </li>
+                  ))}
+                </ol>
+                <a className={styles.outlineAction} href={PROTOTYPE_SRC} target="_blank" rel="noreferrer">Open at full size <span aria-hidden="true">↗</span></a>
+                <p className={styles.sourceNote}>The optional assistant demonstrates suggested questions and responses based on sample data. Free-text questions and live AI are outside this prototype.</p>
               </div>
-
-              <div className={styles.highlightList}>
-                {designHighlights.map((highlight, index) => (
-                  <article className={styles.highlightCard} data-tone={highlight.tone} key={highlight.title}>
-                    <div className={styles.highlightCopy}>
-                      <p className={styles.microLabel}>{highlight.label}</p>
-                      <h3>{highlight.title}</h3>
-                      <p>{highlight.body}</p>
-                    </div>
-                    <div className={styles.highlightVisual}>
-                      <AutoplayVideo
-                        className={styles.highlightVideo}
-                        src={highlight.video}
-                        width="2304"
-                        height="1440"
-                        ariaLabel={highlight.alt}
-                      />
-                    </div>
-                    <span className={styles.highlightNumber} aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </article>
-                ))}
+              <div className={styles.prototypeStage}>
+                <ScaledIframe className={styles.prototypeViewport} frameClassName={styles.prototypeFrame}
+                  src={PROTOTYPE_SRC} title="BOA spending and budgeting interactive prototype"
+                  width={510} height={1000} maxDisplayWidth={440} transparent />
               </div>
-            </section>
+            </div>
+          </section>
 
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Problem Snapshot</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>The tool asks users to hunt for information, then rebuild context.</h2>
-                  <p className={styles.sectionLead}>
-                    Each of those three moves answers a specific breakdown. The strongest issues clustered around
-                    three moments: finding and verifying spending, correcting categories, and adapting a budget
-                    after the month had already started.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.problemGrid}>
-                {problemSnapshots.map((problem) => (
-                  <article className={styles.problemCard} key={problem.title}>
-                    <p className={styles.problemSignal}>{problem.signal}</p>
-                    <h3>{problem.title}</h3>
-                    <p>{problem.body}</p>
-                    <p className={styles.problemEvidence}>{problem.evidence}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Research Evidence</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Three sources pointed to the same breakdowns.</h2>
-                  <p className={styles.sectionLead}>
-                    A directional survey identified recurring patterns. Two interviews explained how those patterns
-                    affected real tasks, while Reddit posts were used only as supporting evidence.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.methodGrid}>
-                <article><span>Survey</span><strong>32</strong><p>BOA users</p></article>
-                <article><span>Interviews</span><strong>2</strong><p>BOA users</p></article>
-                <article><span>Supporting signal</span><strong>Reddit</strong><p>Public complaints</p></article>
-              </div>
-
-              <div className={styles.researchChartViewport}>
-                <div className={styles.researchChart}>
+          <section id="research" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Research & problem framing</p>
+              <h2>Three points where the flow breaks.</h2>
+              <p className={styles.sectionLead}>The research focused on finding and verifying spending, correcting categories, and adapting a budget during the month.</p>
+            </div>
+            <div className={styles.methodGrid}>
+              <div><strong>32</strong><span>Survey responses</span></div>
+              <div><strong>2</strong><span>User interviews</span></div>
+              <div><strong>Reddit</strong><span>Supporting public posts</span></div>
+            </div>
+            <div className={styles.problemGrid}>
+              {problemSnapshots.map((item, index) => (
+                <article key={item.title}>
+                  <p className={styles.microLabel}>0{index + 1}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              ))}
+            </div>
+            <details className={styles.disclosure}>
+              <summary>View the survey breakdown and supporting material</summary>
+              <div className={styles.disclosureBody}>
+                <div className={styles.researchStats}>
                   {researchStats.map((stat) => (
-                    <article className={styles.researchStat} key={stat.label}>
-                      <div className={styles.researchBarTrack}>
-                        <div
-                          className={styles.researchBar}
-                          style={{ "--stat-value": stat.pct, "--stat-color": stat.color }}
-                        />
-                      </div>
-                      <strong>{stat.pct}</strong>
-                      <p>{stat.label}</p>
-                    </article>
+                    <div key={stat.label}><strong>{stat.pct}</strong><p>{stat.label}</p></div>
                   ))}
                 </div>
-              </div>
-
-              <div className={styles.evidenceGrid}>
-                <article className={styles.evidenceCard}>
-                  <div className={styles.evidenceImage}>
-                    <img src="/cleared/research1.png" alt="Two BOA user interviews" />
-                  </div>
-                  <div>
-                    <p className={styles.microLabel}>Interview context</p>
-                    <h3>Users could not explain the spending total.</h3>
-                    <p>They described inaccurate categories, repeated edits, and uncertainty about which transactions were included in a spending total.</p>
-                  </div>
-                </article>
-
-                <article className={`${styles.evidenceCard} ${styles.evidenceCardSupporting}`}>
-                  <div className={styles.evidenceImage}>
-                    <img src="/cleared/research2.png" alt="Public Reddit posts about BOA spending and budgeting issues" />
-                  </div>
-                  <div>
-                    <p className={styles.microLabel}>Supporting evidence</p>
-                    <h3>Similar complaints appeared outside the study.</h3>
-                    <p>Reddit posts reinforced the themes around buried charts, resetting categories, and totals that did not feel explainable.</p>
-                  </div>
-                </article>
-              </div>
-
-              <p className={styles.researchNote}>This was directional research, not a representative sample of all BOA customers.</p>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Key Design Decisions</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Each decision targets a specific point of friction.</h2>
-                  <p className={styles.sectionLead}>
-                    The redesign avoids replacing the whole product. It changes where information appears, what
-                    context persists, and how much work is required for a correction.
-                  </p>
+                <div className={styles.evidenceGrid}>
+                  <figure>
+                    <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
+                      <img src="/cleared/research1.png" alt="Interview context for the BOA spending case study" width="1791" height="1041" loading="lazy" />
+                    </a>
+                    <figcaption><strong>Interview context</strong> Categories, repeated edits and uncertainty about which transactions contributed to a total.</figcaption>
+                  </figure>
+                  <figure>
+                    <a href="/cleared/research2.png" target="_blank" rel="noreferrer">
+                      <img src="/cleared/research2.png" alt="Public posts discussing spending and budgeting issues" loading="lazy" />
+                    </a>
+                    <figcaption><strong>Supporting public posts</strong> External context for the themes; separate from the recruited survey and interviews.</figcaption>
+                  </figure>
                 </div>
               </div>
+            </details>
+            <p className={styles.sourceNote}>A small, directional study. These findings describe the sample rather than all Bank of America customers.</p>
+          </section>
 
-              <div className={styles.decisionGrid}>
-                {designDecisions.map((item) => (
-                  <article className={styles.decisionCard} key={item.label}>
-                    <p className={styles.decisionLabel}>{item.label}</p>
-                    <h3>{item.title}</h3>
-                    <dl>
-                      <div><dt>Evidence</dt><dd>{item.evidence}</dd></div>
-                      <div><dt>Decision</dt><dd>{item.decision}</dd></div>
-                    </dl>
-                  </article>
-                ))}
+          <section id="decisions" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Interaction structure</p>
+              <h2>Keep the context. Make the change explicit.</h2>
+              <p className={styles.sectionLead}>Four decisions connect the research themes to the interaction model, including the category-correction flow behind the spending views.</p>
+            </div>
+            <div className={styles.decisionGrid}>
+              {designDecisions.map((item) => (
+                <article key={item.label}>
+                  <p className={styles.microLabel}>{item.label}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.decision}</p>
+                  <dl className={styles.reasoning}>
+                    <div><dt>Starting friction</dt><dd>{item.evidence}</dd></div>
+                    <div><dt>The trade-off</dt><dd>{item.tradeoff}</dd></div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+            <div id="task-flows" className={styles.flowComparisons}>
+              <div className={styles.flowIntro}>
+                <p className={styles.microLabel}>Task flow comparison</p>
+                <h3>Two tasks, before and after.</h3>
+                <p>Compare the full paths for tracking spending and adjusting a budget: where the original flow breaks context, and how the redesign connects the steps.</p>
               </div>
-
-              <p className={styles.referenceNote}>
-                Chase informed flexible time ranges, Monarch Money reinforced budget reallocation, and Copilot Money
-                provided a reference for faster category correction.
-              </p>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Flow Improvement</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Reduce detours without hiding the decisions users still need to make.</h2>
-                  <p className={styles.sectionLead}>
-                    The redesigned flows remove hidden entry points, repeated setup, and unnecessary trips into detail
-                    screens while keeping the active month, category, current budget, and save scope visible.
-                  </p>
-                </div>
-              </div>
-
               <div className={styles.flowList}>
                 {flowComparisons.map((flow) => (
                   <article className={styles.flowCase} key={flow.title}>
-                    <div className={styles.flowIntro}>
-                      <h3>{flow.title}</h3>
-                      <p>{flow.summary}</p>
-                    </div>
+                    <h4>{flow.title}</h4><p>{flow.summary}</p>
                     <div className={styles.flowPair}>
                       <figure>
-                        <figcaption>Current</figcaption>
-                        <img src={flow.current} alt={flow.currentAlt} />
+                        <figcaption>Before / Reviewed flow</figcaption>
+                        <a href={flow.current} target="_blank" rel="noreferrer" aria-label={"Open full-size original flow: " + flow.title}>
+                          <img src={flow.current} alt={flow.currentAlt} loading="lazy" />
+                          <span className={styles.flowImageLink}>Open full size <span aria-hidden="true">↗</span></span>
+                        </a>
                       </figure>
                       <figure>
-                        <figcaption>Redesigned</figcaption>
-                        <img src={flow.redesigned} alt={flow.redesignedAlt} />
+                        <figcaption>After / Redesigned flow</figcaption>
+                        <a href={flow.redesigned} target="_blank" rel="noreferrer" aria-label={"Open full-size redesigned flow: " + flow.title}>
+                          <img src={flow.redesigned} alt={flow.redesignedAlt} loading="lazy" />
+                          <span className={styles.flowImageLink}>Open full size <span aria-hidden="true">↗</span></span>
+                        </a>
                       </figure>
                     </div>
                   </article>
                 ))}
               </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Low-fi Flows</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>Fifteen wireframes, each answering something BOA does differently today.</h2>
-                  <p className={styles.sectionLead}>
-                    The structure was tested before any visual design: where spending is entered from, what survives a
-                    step into detail, and how much of a budget has to be rebuilt to change one number.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.lowFiFlows}>
+            </div>
+            <details className={styles.disclosure}>
+              <summary>Explore all 15 wireframes by task</summary>
+              <div className={styles.disclosureBody}>
                 {lowFiArcs.map((arc) => (
-                  <div className={styles.lowFiArc} key={arc.label}>
-                    <div className={styles.lowFiArcHeader}>
-                      <p className={styles.microLabel}>{arc.label}</p>
-                      <h3>{arc.title}</h3>
-                      <p>{arc.body}</p>
-                    </div>
-
+                  <article className={styles.lowFiArc} key={arc.label}>
+                    <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p><h3>{arc.title}</h3><p>{arc.body}</p></div>
                     <div className={styles.lowFiScreens}>
                       {arc.screens.map((screen) => (
                         <figure key={screen.src}>
-                          <img src={screen.src} alt={screen.alt} width="484" height="884" loading="lazy" />
-                          <figcaption>
-                            <span aria-hidden="true">{screenNumber(screen.src)}</span>
-                            {screen.caption}
-                          </figcaption>
+                          <a href={screen.src} target="_blank" rel="noreferrer" aria-label={"Open full-size wireframe: " + screen.caption}>
+                            <img src={screen.src} alt={screen.alt} width="484" height="884" loading="lazy" />
+                          </a>
+                          <figcaption><span>{screenNumber(screen.src)}</span>{screen.caption}</figcaption>
                         </figure>
                       ))}
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.prototypeLayout}>
-                <div className={styles.prototypeGuide}>
-                  <div className={styles.sectionHeader}>
-                    <p className={styles.kicker}>Interactive Prototype</p>
-                    <div>
-                      <h2 className={styles.sectionTitle}>Try the high-fidelity spending experience.</h2>
-                      <p className={styles.sectionLead}>
-                        The wireframes above settle the structure. This working prototype puts the finished
-                        interface on top of it, connected into a single journey and running live in the page.
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className={styles.microLabel}>Three things to try</p>
-                  <ol className={styles.prototypeSteps}>
-                    {prototypeSteps.map((step, index) => (
-                      <li key={step.title}>
-                        <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                        <div>
-                          <h3>{step.title}</h3>
-                          <p>{step.body}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                  <a
-                    className={styles.prototypeLink}
-                    href={PROTOTYPE_SRC}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open at full size <span aria-hidden="true">&#8594;</span>
-                  </a>
-                </div>
-
-                <figure className={styles.prototypeStage}>
-                  <ScaledIframe
-                    className={styles.prototypeViewport}
-                    frameClassName={styles.prototypeFrame}
-                    src={PROTOTYPE_SRC}
-                    title="Interactive high-fidelity BOA spending and budgeting prototype"
-                    width={510}
-                    height={1000}
-                    maxDisplayWidth={440}
-                    transparent
-                  />
-                  <figcaption>Live prototype &#183; iPhone 390 &#215; 844</figcaption>
-                </figure>
-              </div>
-            </section>
-
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Testing &amp; Iteration</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>A second test showed where the redesign improved the experience—and what still needs work.</h2>
-                  <p className={styles.sectionLead}>
-                    After applying findings from the first round, I ran a second task-based usability test with six
-                    participants across the dynamic chart, Move Budget, and the embedded AI assistant. The comparison
-                    below is directional rather than statistically representative, but it shows a clear improvement
-                    across the same three core tasks.
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.iterationList}>
-                {testIterations.map((item, index) => (
-                  <article className={styles.iterationItem} key={item.metric}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <p className={styles.microLabel}>Measured change</p>
-                      <p className={styles.iterationMetric}>{item.metric}</p>
-                      <p>{item.result}</p>
-                    </div>
-                    <div><p className={styles.microLabel}>Next step</p><p>{item.nextStep}</p></div>
                   </article>
                 ))}
               </div>
-            </section>
+            </details>
+          </section>
 
-            <section className={styles.caseSection}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Web Adaptation + Design System</p>
-                <div>
-                  <h2 className={styles.sectionTitle}>The same decisions scale into a denser desktop workspace.</h2>
-                  <p className={styles.sectionLead}>
-                    Desktop uses the extra width for persistent summaries, transaction tables, and side-panel edits.
-                    The behavior stays consistent with mobile instead of becoming a separate product.
-                  </p>
+          <section id="testing" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Testing & iteration</p>
+              <h2>What changed across the task rounds.</h2>
+              <p className={styles.sectionLead}>The case study compares two rounds across the spending chart, budget reallocation and an assistant exploration. Each task involved six participants; the small counts matter more than treating the percentages as a general result.</p>
+            </div>
+            <div className={styles.iterationList}>
+              {testIterations.map((item, index) => (
+                <article className={styles.iterationItem} key={item.metric}>
+                  <div>
+                    <p className={styles.microLabel}>0{index + 1} / {["Spending chart", "Budget reallocation", "Assistant exploration"][index]}</p>
+                    <h3>{["3 of 6 → 5 of 6", "2 of 6 → 5 of 6", "1 of 6 → 4 of 6"][index]}</h3>
+                    <p>{item.result}</p>
+                  </div>
+                  <div className={styles.nextStep}><p className={styles.microLabel}>Next question</p><p>{item.nextStep}</p></div>
+                </article>
+              ))}
+            </div>
+            <p className={styles.sourceNote}>The assistant comparison uses different recovery paths: navigation in the first round and an assistant in the second. It is exploratory and does not isolate the assistant’s effect.</p>
+          </section>
+
+          <section id="web" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Web adaptation</p>
+              <h2>Use the width to keep overview and detail together.</h2>
+              <p className={styles.sectionLead}>Mobile reveals details one view at a time. Desktop keeps the category overview beside merchant and monthly breakdowns, with the assistant available in a side panel.</p>
+            </div>
+            <ImageCarousel className={styles.webCarousel} label="BOA web adaptation screens" slides={webScreens} />
+            <details className={styles.disclosure}>
+              <summary>View the visual system</summary>
+              <div className={styles.disclosureBody}>
+                <p>Familiar banking navigation, category colors and typography support the revised flows. Text values and budget lines accompany color so the status has more than one cue.</p>
+                <div className={styles.systemGrid}>
+                  {systemAssets.map((asset) => (
+                    <figure key={asset.src}><figcaption>{asset.label}</figcaption><a href={asset.src} target="_blank" rel="noreferrer"><img src={asset.src} alt={asset.alt} loading="lazy" /></a></figure>
+                  ))}
                 </div>
               </div>
+            </details>
+          </section>
 
-              <ImageCarousel
-                className={styles.webCarousel}
-                label="BOA web adaptation screens"
-                slides={webScreens}
-              />
-
-              <div className={styles.systemIntro}>
-                <p className={styles.microLabel}>Working within a familiar system</p>
-                <p>
-                  BOA's navy, category colors, typography, navigation, and list patterns remain recognizable. The
-                  visual system supports the new interactions without asking existing users to relearn the product.
-                </p>
-              </div>
-
-              <div className={styles.systemGrid}>
-                {systemAssets.map((asset) => (
-                  <figure key={asset.src}>
-                    <figcaption>{asset.label}</figcaption>
-                    <img src={asset.src} alt={asset.alt} />
-                  </figure>
-                ))}
-              </div>
-            </section>
-
-            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
-              <div className={styles.sectionHeader}>
-                <p className={styles.kicker}>Brief Reflection</p>
-                <h2 className={styles.sectionTitle}>Change the friction, preserve the familiarity.</h2>
-              </div>
-
-              <div className={styles.reflectionGrid}>
-                <article><p className={styles.microLabel}>Limitation</p><p>This independent concept used a small directional sample and was not tested against production data or engineering constraints.</p></article>
-                <article><p className={styles.microLabel}>Key tradeoff</p><p>I kept BOA's familiar structure and focused the redesign on access, context, correction, and budget flexibility.</p></article>
-                <article><p className={styles.microLabel}>Next validation</p><p>I would repeat the three tasks with a larger, more diverse sample, validate accessibility and edge cases, and test AI trust using realistic transaction data.</p></article>
-              </div>
-            </section>
-
-            <ProjectNav slug="uxcasestudy" track={track} styles={styles} />
-          </div>
-        </section>
-
-        <Reveal
-          fade={`.${styles.highlightVisual}, .${styles.evidenceImage}, .${styles.flowPair} figure, .${styles.lowFiScreens} figure, .${styles.webCarousel}, .${styles.systemGrid} figure`}
-          barsUp={`.${styles.researchBar}`}
-        />
-
+          <section className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Reflection</p>
+              <h2>Reduce detours, keep the decisions visible.</h2>
+            </div>
+            <div className={styles.reflectionGrid}>
+              <article><h3>The main trade-off</h3><p>Fewer navigation steps do not mean removing every confirmation. Category changes and one-month versus ongoing budgets still need explicit review.</p></article>
+              <article><h3>What remains to validate</h3><p>Broader usability and accessibility checks, error recovery, and the scope of budget changes. The prototype uses sample data and has no live banking integration.</p></article>
+            </div>
+            <p className={styles.sourceNote}>Independent redesign concept. Not affiliated with Bank of America.</p>
+          </section>
+          <ProjectNav slug="uxcasestudy" track={track} styles={styles} />
+        </div>
         <SiteFooter />
       </div>
     </main>

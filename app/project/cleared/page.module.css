@@ -1,569 +1,154 @@
-/* Section shell mirrors the BOA case study so both studies read as one system. */
-
 .page {
-  --divider: rgba(34, 34, 34, 0.14);
-  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
-  --fs-lead: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --fs-body: 0.9375rem;
-  --measure: 64ch;
+  --divider: rgba(34, 34, 34, .17);
   min-height: 100vh;
   background: var(--page-bg);
-}
-
-.frame {
-  width: 100%;
-  margin: 0;
-  overflow: hidden;
-  background: var(--panel-bg);
-  border: 1px solid var(--border);
-  border-bottom: 0;
-}
-
-.headerMask {
-  overflow: hidden;
-}
-
-.content {
-  width: 100%;
-  min-width: 0;
-  padding: 16px 16px 72px;
-  display: flex;
-  flex-direction: column;
-  gap: 72px;
-}
-
-.topContent,
-.bodyContent {
-  width: 100%;
-  min-width: 0;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.bodyContent {
-  display: flex;
-  flex-direction: column;
-  gap: 72px;
-}
-
-/* --- Section shell ------------------------------------------------------- */
-
-.caseSection {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding-top: 44px;
-  border-top: 1px solid var(--divider);
-}
-
-.sectionHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 720px;
-}
-
-.sectionHeader > div {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.kicker,
-.microLabel {
-  margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
-.kicker {
-  color: var(--text);
+.frame { background: var(--panel-bg); border: 1px solid var(--border); border-bottom: 0; }
+.content { width: min(100%, 1344px); margin: 0 auto; padding: 32px 24px 88px; display: flex; flex-direction: column; gap: 72px; }
+.page :is(h1, h2, h3, p, dl, dd, figure, blockquote) { margin: 0; }
+.page :is(a, button, summary):focus-visible { outline: 2px solid #245dd7; outline-offset: 5px; }
+.page :is(p, dd) { font-size: 1rem; line-height: 1.65; }
+.page h2 { max-width: 28ch; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.65rem); font-weight: 500; line-height: 1.14; letter-spacing: -.035em; text-wrap: balance; }
+.page h3 { font-size: 1.2rem; font-weight: 500; line-height: 1.3; letter-spacing: -.015em; }
+
+/* A readable interface, rather than a small interface inside a large cover. */
+.hero { display: grid; grid-template-areas: "eyebrow" "title" "lead" "meta" "visual" "facts" "actions"; align-items: start; gap: 26px; }
+.heroCopy { display: contents; }
+.hero .eyebrow { grid-area: eyebrow; }
+.hero h1 { grid-area: title; }
+.heroLead { grid-area: lead; }
+.heroFacts { grid-area: facts; }
+.hero .meta { grid-area: meta; }
+.hero .actions { grid-area: actions; }
+.eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .8125rem; color: var(--muted); }
+.pill { border-radius: 999px; background: var(--text); color: var(--inverse); padding: 7px 12px; font-size: .75rem; font-weight: 500; }
+.hero h1 { font-size: clamp(2.6rem, 1.7rem + 3.15vw, 4.5rem); line-height: 1.04; font-weight: 500; letter-spacing: -.045em; }
+.hero .heroLead { max-width: 47ch; font-size: clamp(1.1rem, 1rem + .45vw, 1.3rem); line-height: 1.55; }
+.heroFacts { display: grid; gap: 18px; padding: 24px 0; border-block: 1px solid var(--divider); }
+.heroFacts div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 16px; }
+.heroFacts dt, .meta dt, .reasoning dt { font-size: .75rem; line-height: 1.4; text-transform: uppercase; letter-spacing: .065em; font-weight: 500; color: var(--muted); }
+.heroFacts dt { padding-top: 4px; }
+.heroFacts dd { font-size: .9375rem; line-height: 1.55; }
+.meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.meta dd { margin-top: 8px; font-size: .875rem; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.action, .outlineAction, .textLink { min-height: 44px; display: inline-flex; justify-content: center; align-items: center; gap: 16px; font-size: .875rem; font-weight: 500; }
+.action { padding: 14px 20px; color: var(--inverse); background: var(--text); }
+.action:hover { background: #3e3e3e; }
+.textLink { text-decoration: underline; text-underline-offset: 5px; }
+.outlineAction { flex: none; border: 1px solid var(--divider); padding: 12px 16px; }
+.outlineAction:hover { border-color: var(--text); }
+.heroVisual { grid-area: visual; align-self: center; justify-self: center; width: min(100%, 330px); }
+
+.sectionNav { display: flex; flex-wrap: wrap; gap: 4px 30px; border-block: 1px solid var(--divider); padding: 12px 0; }
+.sectionNav a { display: flex; align-items: center; min-height: 44px; font-size: .875rem; }
+.sectionNav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.caseSection { min-width: 0; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 32px; }
+.caseSection + .caseSection { padding-top: 52px; border-top: 1px solid var(--divider); }
+.sectionHeader { max-width: 770px; display: flex; flex-direction: column; gap: 18px; }
+.page .kicker, .page .microLabel { font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
+.microLabel { color: var(--muted); }
+.sectionLead { max-width: 62ch; color: var(--muted); }
+.contextGrid { display: grid; gap: 28px; }
+.contextGrid > div { display: flex; flex-direction: column; gap: 18px; }
+.page .bodyLead { font-size: 1.25rem; line-height: 1.5; }
+.scenario { padding: 28px; background: rgba(255, 255, 255, .3); border-left: 2px solid var(--text); }
+.scenario blockquote { max-width: 30ch; font-size: 1.65rem; letter-spacing: -.025em; line-height: 1.35; }
+.baseline { display: grid; gap: 24px; border-block: 1px solid var(--divider); padding: 24px 0; }
+.baseline strong { display: block; font-size: .75rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; color: var(--muted); }
+.page .sourceNote { max-width: 90ch; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
+.sourceNote a { text-decoration: underline; text-underline-offset: 3px; color: var(--text); }
+.page .limitNote { max-width: 86ch; font-size: .9375rem; color: var(--muted); }
+
+/* The recorded device fills its column. Each loop explains one design choice. */
+.decisionList { display: flex; flex-direction: column; gap: 44px; }
+.decision { display: grid; gap: 30px; padding-top: 36px; border-top: 1px solid var(--divider); align-items: center; }
+.decisionCopy { display: flex; flex-direction: column; gap: 20px; max-width: 60ch; }
+.decisionCopy h3 { font-size: clamp(1.6rem, 1.1rem + 1.4vw, 2.1rem); line-height: 1.2; letter-spacing: -.03em; max-width: 25ch; }
+.reasoning { display: grid; gap: 22px; }
+.reasoning div { border-left: 2px solid var(--divider); padding-left: 18px; }
+.reasoning dd { margin-top: 8px; font-size: .9375rem; color: var(--muted); }
+.decisionVideo { width: min(100%, 310px); justify-self: center; }
+
+.trustExample { display: grid; border: 1px solid var(--divider); }
+.trustExample > div { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.trustExample > div + div { border-top: 1px solid var(--divider); }
+.trustExample > div:nth-child(2) { background: rgba(255, 255, 255, .3); }
+.trustExample p { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 1.3rem; font-weight: 500; letter-spacing: -.02em; }
+.trustExample small { font-size: .75rem; border: 1px dashed #6c727b; padding: 3px 9px; border-radius: 999px; letter-spacing: 0; }
+.trustExample > div > span:last-child { font-size: .9375rem; color: var(--muted); line-height: 1.6; }
+.deviceGrid { display: grid; gap: 28px; }
+.deviceGrid > div { display: flex; flex-direction: column; gap: 12px; max-width: 60ch; }
+.deviceGrid p { color: var(--muted); }
+.prototypeStage { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.prototypeIntro { display: flex; flex-direction: column; gap: 20px; padding-top: 28px; border-top: 1px solid var(--divider); }
+.prototypeIntro > div { display: flex; flex-direction: column; gap: 10px; max-width: 63ch; }
+.prototypeIntro p { color: var(--muted); font-size: .9375rem; }
+.prototypeIntro .outlineAction { align-self: flex-start; }
+.prototypeViewport { position: relative; width: 100%; overflow: hidden; }
+.prototypeFrame { position: absolute; inset: 0 auto auto 0; display: block; width: 1500px; height: 980px; border: 0; transform-origin: top left; }
+.prototypePreview { display: block; }
+.prototypePreview img { width: 100%; height: auto; border: 1px solid var(--divider); }
+.prototypeStage figcaption { font-size: .8125rem; color: var(--muted); line-height: 1.6; }
+
+.screenDetails { padding: 24px 0; border-block: 1px solid var(--divider); }
+.screenDetails summary { cursor: pointer; font-size: 1.1rem; font-weight: 500; min-height: 44px; }
+.screenDetails summary > span { display: block; font-size: .875rem; font-weight: 400; color: var(--muted); margin: 8px 0 0 21px; }
+.screensGrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 32px; }
+.screensGrid figure { width: min(100%, 360px); justify-self: center; display: flex; flex-direction: column; gap: 14px; }
+.screensGrid img { width: 100%; height: auto; }
+.imageLink { display: flex; justify-content: space-between; align-items: center; min-height: 44px; font-size: .8125rem; border-bottom: 1px solid var(--divider); }
+.screensGrid figcaption { display: flex; gap: 12px; font-size: .9375rem; line-height: 1.5; }
+.screensGrid figcaption > span { flex: none; color: var(--muted); }
+.validationGrid { display: grid; gap: 28px; }
+.validationGrid article { display: flex; flex-direction: column; gap: 18px; border-top: 2px solid var(--text); padding-top: 24px; }
+.observe { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--divider); }
+.observe > span { font-size: .75rem; text-transform: uppercase; letter-spacing: .065em; color: var(--muted); }
+.observe p { margin-top: 10px; font-size: .9375rem; }
+.nextValidation { display: flex; flex-direction: column; gap: 14px; max-width: 86ch; padding-top: 28px; border-top: 1px solid var(--divider); }
+.nextValidation p { color: var(--muted); }
+
+/* Preserve each portfolio track's project navigation. */
+.projectNav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 24px; padding-top: 40px; border-top: 1px solid var(--divider); }
+.projectNavPrev, .projectNavNext { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.projectNavNext { align-items: flex-end; text-align: right; }
+.projectNavLabel { font-size: .75rem; font-weight: 500; line-height: 1.3; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.projectNavName { display: inline-flex; align-items: center; gap: 10px; font-size: clamp(1rem, .8rem + .6vw, 1.5rem); font-weight: 500; line-height: 1.3; }
+.projectNavDot { flex: none; width: 8px; height: 8px; border-radius: 100%; background: #f3c443; }
+.projectNavAll { align-self: center; padding: 12px 18px; border: 1px solid var(--divider); border-radius: 999px; font-size: .8125rem; }
+.projectNavAll:hover { color: var(--inverse); background: var(--text); }
+
+@media (min-width: 700px) {
+  .contextGrid, .baseline, .deviceGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+  .screensGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trustExample, .validationGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .trustExample > div { padding: 24px; }
+  .trustExample > div + div { border-top: 0; border-left: 1px solid var(--divider); }
 }
 
-.sectionTitle {
-  max-width: 30ch;
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: -0.02em;
-  color: var(--text);
+@media (min-width: 960px) {
+  .content { padding: 40px 32px 104px; gap: 80px; }
+  .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "eyebrow visual" "title visual" "lead visual" "facts visual" "meta visual" "actions visual"; gap: 26px 64px; }
+  .heroVisual { width: min(100%, 320px); }
+  .decision { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 64px; padding-top: 44px; }
+  .prototypeIntro { flex-direction: row; justify-content: space-between; align-items: center; gap: 40px; }
+  .screensGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-.sectionLead {
-  max-width: var(--measure);
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: var(--fs-lead);
-  line-height: 1.65;
-  color: var(--muted);
-}
-
-/* --- Product baseline ---------------------------------------------------- */
-
-.baseline {
-  display: grid;
-  grid-template-columns: 1fr;
-  border-top: 1px solid var(--divider);
-}
-
-.baseline p {
-  margin: 0;
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid var(--divider);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.baseline span {
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.sourceNote,
-.limitNote {
-  max-width: 64ch;
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
-.sourceNote a {
-  color: var(--text);
-  text-underline-offset: 0.18em;
-}
-
-.sourceNote a:hover,
-.sourceNote a:focus-visible {
-  color: var(--muted);
-}
-
-/* --- Design highlights --------------------------------------------------- */
-
-.highlightsSection {
-  gap: 36px;
-}
-
-.highlightList {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.highlightCard {
-  padding: 28px 0 0;
-  display: grid;
-  gap: 24px;
-  border-top: 1px solid var(--divider);
-}
-
-.highlightCopy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.highlightCopy h3 {
-  margin: 0;
-  max-width: 22ch;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: clamp(1.375rem, 1.15rem + 1.1vw, 2rem);
-  font-weight: 500;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.highlightCopy > p:not(.microLabel) {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.highlightVisual {
-  min-width: 0;
-  overflow: visible;
-  border-radius: 12px;
-  box-shadow:
-    0 2px 6px rgba(34, 34, 34, 0.09),
-    0 18px 44px rgba(34, 34, 34, 0.18);
-}
-
-/* The recordings are 1152x720, so the frame is reserved before the file loads
-   and the cards never reflow mid-scroll. The fill matches the clips own grey
-   field, so a frame that has not decoded yet reads as an empty screen rather
-   than a dark hole. */
-.highlightVideo {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #dcdde0;
-}
-
-/* --- Interactive prototype ------------------------------------------------
-   Same section furniture as the BOA study, but that prototype is a phone and
-   this one is a 1440x900 desktop window, so the stage sits under the written
-   half at full column width instead of beside it. */
-
-.prototypeStage {
-  min-width: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.prototypeStage figcaption {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-/* The prototype draws its own 1440x900 app window with a drop shadow and sizes
-   itself to whatever viewport it lands in, and its <body> is made transparent
-   by ScaledIframe, so the window sits straight on the page with no panel behind
-   it. Nothing here may paint a background -- that is the whole point.
-
-   The frame is deliberately larger than the window it holds: at 1500x980 the
-   prototype measures enough room to stay at scale 1, which buys it 40px of
-   transparent canvas on every side. The shadow reaches 22px past the window,
-   so that margin is what keeps it from being clipped into a hard grey line
-   along the bottom edge. Shrink either number and the band comes back. */
-.prototypeViewport {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.prototypeFrame {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 1500px;
-  height: 980px;
-  border: 0;
-  transform-origin: top left;
-}
-
-/* --- High-fidelity screens ------------------------------------------------
-   Six screens meant to read as two rows of three: the top row accepts a
-   suggestion into the day, the bottom row catches one that conflicts. The
-   grid holds two columns until 640px so it never gets there by accident on a
-   narrow phone -- it only forms once the three-column breakpoint is wide
-   enough to hold it. */
-
-.screensGrid {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 30px 16px;
-}
-
-.screensGrid figure {
-  min-width: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.screensGrid img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 834 / 1752;
-  border-radius: 12px;
-}
-
-.screensGrid figcaption {
-  margin: 0;
-  display: flex;
-  gap: 8px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.35;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.screensGrid figcaption span {
-  flex: none;
-  color: var(--text);
-}
-
-/* --- Trust model --------------------------------------------------------- */
-
-.guardrailSection {
-  gap: 28px;
-}
-
-.guardrailGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  border-top: 1px solid var(--divider);
-}
-
-.guardrailGrid article {
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border-bottom: 1px solid var(--divider);
-}
-
-.guardrailGrid h3 {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-
-.guardrailGrid article > p:not(.microLabel) {
-  margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  color: var(--text);
-}
-
-/* --- Project navigation -------------------------------------------------- */
-
-.projectNav {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: start;
-  gap: 24px 20px;
-  padding-top: 40px;
-  border-top: 1px solid var(--divider);
-}
-
-.projectNavPrev,
-.projectNavNext {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-  text-decoration: none;
-}
-
-.projectNavNext {
-  align-items: flex-end;
-  text-align: right;
-}
-
-.projectNavLabel {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 160ms ease;
-}
-
-.projectNavName {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  transition: color 160ms ease;
-}
-
-.projectNavDot {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #f3c443;
-}
-
-.projectNavPrev:hover .projectNavName,
-.projectNavPrev:focus-visible .projectNavName,
-.projectNavNext:hover .projectNavName,
-.projectNavNext:focus-visible .projectNavName {
-  color: var(--muted);
-}
-
-.projectNavPrev:hover .projectNavLabel,
-.projectNavNext:hover .projectNavLabel {
-  color: var(--text);
-}
-
-.projectNavAll {
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  padding: 8px 18px;
-  border: 1px solid rgba(34, 34, 34, 0.24);
-  border-radius: 999px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--text);
-  text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
-}
-
-.projectNavAll:hover,
-.projectNavAll:focus-visible {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--inverse);
-}
-
-/* --- Breakpoints --------------------------------------------------------- */
-
-@media (min-width: 640px) {
-  .baseline,
-  .guardrailGrid,
-  .screensGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .screensGrid {
-    gap: 32px 20px;
-  }
-
-  .baseline {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .baseline p,
-  .guardrailGrid article {
-    padding: 22px;
-    border-right: 1px solid var(--divider);
-  }
-
-  .baseline p:first-child,
-  .guardrailGrid article:first-child {
-    padding-left: 0;
-  }
-
-  .baseline p:last-child,
-  .guardrailGrid article:last-child {
-    padding-right: 0;
-    border-right: 0;
-  }
-}
-
-@media (min-width: 810px) {
-  .content {
-    padding: 24px 24px 88px;
-    gap: 96px;
-  }
-
-  .bodyContent {
-    gap: 96px;
-  }
-
-  .caseSection {
-    gap: 32px;
-    padding-top: 52px;
-  }
-
-  .highlightCard {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    align-items: center;
-    gap: 40px;
-    padding: 48px 0 0;
-  }
-
-  .highlightCard:nth-child(even) .highlightCopy {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .highlightCard:nth-child(even) .highlightVisual {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  /* Swapping sides has to swap the track widths too, so the clip column keeps
-     the same width on every card. */
-  .highlightCard:nth-child(even) {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
-  }
-
-  .projectNav {
-    gap: 24px;
-    padding-top: 48px;
-  }
-}
-
-@media (max-width: 559px) {
-  .projectNav {
-    grid-template-columns: 1fr 1fr;
-    gap: 28px 16px;
-  }
-
-  .projectNavAll {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: center;
-  }
-
-  .projectNavName {
-    font-size: 1.0625rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .content {
-    padding: 28px 32px 104px;
-    gap: 112px;
-  }
-
-  .bodyContent {
-    gap: 112px;
-  }
-
-  .caseSection {
-    gap: 36px;
-  }
-
-  /* Only the column gap widens here. The vertical rhythm around the clips
-     stays at 48px so the cards read the same from 810px up. */
-  .highlightCard {
-    gap: 56px;
-  }
+@media (max-width: 599px) {
+  .content { padding: 24px 20px 64px; gap: 48px; }
+  .heroCopy { gap: 24px; }
+  .hero h1 { font-size: clamp(2.25rem, 9.5vw, 3.3rem); }
+  .heroFacts div { grid-template-columns: 1fr; gap: 6px; }
+  .heroFacts { gap: 18px; }
+  .meta { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .heroVisual { width: min(100%, 310px); }
+  .sectionNav { gap: 0 24px; }
+  .caseSection + .caseSection { padding-top: 36px; }
+  .scenario { padding: 24px 20px; }
+  .trustExample > div { padding: 24px 20px; }
+  .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
 }
