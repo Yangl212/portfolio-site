@@ -271,6 +271,54 @@
   transform-origin: top left;
 }
 
+/* --- High-fidelity screens ------------------------------------------------
+   Six screens meant to read as two rows of three: the top row accepts a
+   suggestion into the day, the bottom row catches one that conflicts. The
+   grid holds two columns until 640px so it never gets there by accident on a
+   narrow phone -- it only forms once the three-column breakpoint is wide
+   enough to hold it. */
+
+.screensGrid {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 16px;
+}
+
+.screensGrid figure {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screensGrid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 834 / 1752;
+  border-radius: 12px;
+}
+
+.screensGrid figcaption {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.screensGrid figcaption span {
+  flex: none;
+  color: var(--text);
+}
+
 /* --- Trust model --------------------------------------------------------- */
 
 .guardrailSection {
@@ -407,8 +455,13 @@
 
 @media (min-width: 640px) {
   .baseline,
-  .guardrailGrid {
+  .guardrailGrid,
+  .screensGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .screensGrid {
+    gap: 32px 20px;
   }
 
   .baseline {

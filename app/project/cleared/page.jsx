@@ -8,13 +8,13 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
-const PROTOTYPE_SRC = "/cleared/calendar-assistant-prototype.html"
+const PROTOTYPE_SRC = "/cleared/calendar-assistant-prototype.html?v=20260918"
 
 const designHighlights = [
   {
     label: "01 / Collect",
     title: "Review email suggestions inside Calendar",
-    body: "Cleared adds a suggestion layer to Google Calendar. It reads dates, deadlines and requests from Gmail, then shows proposed time blocks in the existing week view.",
+    body: "The redesign adds a suggestion layer to Google Calendar. It reads dates, deadlines and requests from Gmail, then shows proposed time blocks in the existing week view.",
     video: "/cleared/1.mp4",
     width: 2304,
     height: 1440,
@@ -58,6 +58,41 @@ const guardrails = [
   }
 ]
 
+// Six screens across two paths: accepting a suggestion, and catching a
+// conflict the suggestion would have caused.
+const flowScreens = [
+  {
+    src: "/cleared/phone1.png",
+    alt: "Calendar week view with two suggestions shown as dashed blocks",
+    caption: "Suggestions sit in the week as dashed blocks, never as real events"
+  },
+  {
+    src: "/cleared/phone2.png",
+    alt: "Suggestion detail sheet showing the source email with the relevant phrases marked",
+    caption: "Each one opens to its source email, not just a time and a title"
+  },
+  {
+    src: "/cleared/phone3.png",
+    alt: "Time picker sheet for adjusting the suggested start and end time",
+    caption: "Time and duration stay editable before anything is confirmed"
+  },
+  {
+    src: "/cleared/phone4.png",
+    alt: "Confirmed event shown solid on the calendar with an undo toast",
+    caption: "Confirmed, the block turns solid — and can still be undone"
+  },
+  {
+    src: "/cleared/phone5.png",
+    alt: "Conflict sheet warning that the suggested time overlaps an existing event",
+    caption: "A conflicting time is caught before it reaches the calendar"
+  },
+  {
+    src: "/cleared/phone6.png",
+    alt: "Two overlapping events kept visible in red after the user adds one anyway",
+    caption: "Added anyway, the conflict stays flagged instead of hidden"
+  }
+]
+
 export default function ClearedPage({ track = "uiux" }) {
   return (
     <main className={styles.page}>
@@ -69,12 +104,12 @@ export default function ClearedPage({ track = "uiux" }) {
         <section className={styles.content}>
           <div className={styles.topContent}>
             <ProjectHero
-              label="Independent Product Extension"
-              discipline="Product Design · 2026"
-              title="Cleared"
+              label="Independent Case Study"
+              discipline="UI/UX Design · 2026"
+              title="Google Calendar: AI Scheduling Redesign"
               image="/cleared/mockup.png"
-              imageAlt="Cleared assistant interface shown across Gmail and Google Calendar mockups"
-              summary="Cleared is an AI scheduling assistant inside Gmail and Google Calendar, turning email commitments into editable time suggestions."
+              imageAlt="AI scheduling suggestions shown across Gmail and Google Calendar mockups"
+              summary="Redesigning Google Calendar with an AI scheduling layer that reads Gmail for commitments and turns them into editable time suggestions."
               problem="Google can create events from individual emails, but reviewing multiple commitments against a full week still takes manual work."
               contribution="Extended familiar Gmail and Calendar patterns with a shared suggestion queue, review flow and interactive prototype."
               outcome="A review-first assistant that keeps inbox triage and weekly planning inside Google Workspace."
@@ -90,11 +125,11 @@ export default function ClearedPage({ track = "uiux" }) {
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Product Positioning</p>
                 <div>
-                  <h2 className={styles.sectionTitle}>An extension of Gmail and Calendar—not another planning app.</h2>
+                  <h2 className={styles.sectionTitle}>Built into Gmail and Calendar—not another planning app.</h2>
                   <p className={styles.sectionLead}>
-                    Cleared sits inside both products. In Gmail, it identifies commitments and keeps the source context;
-                    in Calendar, it checks availability and proposes where each item could fit. Nothing is added until
-                    the user reviews it.
+                    The redesign sits inside both products. In Gmail, it identifies commitments and keeps the source
+                    context; in Calendar, it checks availability and proposes where each item could fit. Nothing is
+                    added until the user reviews it.
                   </p>
                 </div>
               </div>
@@ -105,7 +140,7 @@ export default function ClearedPage({ track = "uiux" }) {
                   Gemini can extract event details, find availability and create Calendar events.
                 </p>
                 <p>
-                  <span>Cleared extension</span>
+                  <span>This redesign</span>
                   One shared queue for reviewing suggestions from multiple emails against the week.
                 </p>
               </div>
@@ -129,8 +164,8 @@ export default function ClearedPage({ track = "uiux" }) {
                 <div>
                   <h2 className={styles.sectionTitle}>Collect, check, decide.</h2>
                   <p className={styles.sectionLead}>
-                    Cleared connects two familiar workflows: collect the context in Gmail, review the fit in Calendar,
-                    then confirm—without adding another planning app.
+                    The redesign connects two familiar workflows: collect the context in Gmail, review the fit in
+                    Calendar, then confirm—without adding another planning app.
                   </p>
                 </div>
               </div>
@@ -161,7 +196,7 @@ export default function ClearedPage({ track = "uiux" }) {
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Interactive Prototype</p>
                 <div>
-                  <h2 className={styles.sectionTitle}>Try Cleared inside Calendar.</h2>
+                  <h2 className={styles.sectionTitle}>Try the redesigned Calendar.</h2>
                   <p className={styles.sectionLead}>
                     Open an email-based suggestion, inspect its Gmail source, adjust the time and add it to the week.
                   </p>
@@ -173,7 +208,7 @@ export default function ClearedPage({ track = "uiux" }) {
                   className={styles.prototypeViewport}
                   frameClassName={styles.prototypeFrame}
                   src={PROTOTYPE_SRC}
-                  title="Interactive prototype of Cleared extending Google Calendar with Gmail-based suggestions"
+                  title="Interactive prototype of Google Calendar redesigned with Gmail-based scheduling suggestions"
                   width={1500}
                   height={980}
                   transparent
@@ -182,13 +217,38 @@ export default function ClearedPage({ track = "uiux" }) {
               </figure>
             </section>
 
+            <section className={styles.caseSection}>
+              <div className={styles.sectionHeader}>
+                <p className={styles.kicker}>High-Fidelity Screens</p>
+                <div>
+                  <h2 className={styles.sectionTitle}>Confirm a suggestion, or catch a conflict before it lands.</h2>
+                  <p className={styles.sectionLead}>
+                    Six screens across two paths: reviewing a suggestion into a confirmed event, and catching a
+                    scheduling conflict before it reaches the calendar.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.screensGrid}>
+                {flowScreens.map((screen, index) => (
+                  <figure key={screen.src}>
+                    <img src={screen.src} alt={screen.alt} width="834" height="1752" loading="lazy" />
+                    <figcaption>
+                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                      {screen.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </section>
+
             <section className={`${styles.caseSection} ${styles.guardrailSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Trust Model</p>
                 <div>
                   <h2 className={styles.sectionTitle}>Show what came from where.</h2>
                   <p className={styles.sectionLead}>
-                    Cleared makes clear which details came from Gmail, which ones the assistant estimated and what will
+                    The redesign makes clear which details came from Gmail, which ones were estimated and what will
                     change in Google Calendar.
                   </p>
                 </div>
@@ -205,7 +265,7 @@ export default function ClearedPage({ track = "uiux" }) {
               </div>
 
               <p className={styles.limitNote}>
-                This independent extension concept is based on public Google Workspace documentation and is not
+                This independent redesign concept is based on public Google Workspace documentation and is not
                 affiliated with Google. It has not been user-tested; extraction accuracy, duration estimates and
                 confirmation speed are the next areas to validate.
               </p>
