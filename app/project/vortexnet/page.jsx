@@ -110,9 +110,13 @@ export default function VortexNetPage({ track = "uiux" }) {
               </div>
             </div>
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
-              <Shot name="dashboard-detail" priority width={2114} height={1722}
-                alt="Refined dashboard detail with CNY cash totals, cash movement, settlement deadlines and an assigned work queue"
-                caption="Today’s overview · Later refinement · Test data" />
+              {/* A close-up rather than the whole dashboard: at portfolio
+                  width the full screen put the legend, the units and the
+                  supporting notes below reading size. The complete screen is
+                  in the comparison below. */}
+              <Shot name="dashboard-detail" priority width={2074} height={1258}
+                alt="Close-up of the landing screen: four named CNY totals, the cash movement chart with its legend, the settlement schedule, and the first queue row with its next action"
+                caption="Close-up of the landing screen · Later refinement · Test data · Full screen below" />
             </div>
           </header>
 

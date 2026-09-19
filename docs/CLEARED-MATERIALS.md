@@ -99,3 +99,15 @@
 - 重建：`node scripts/cleared-desktop-media-build.cjs`；原片截取时间、裁切位置、海报时间及过渡参数均在脚本中。
 - 页面检查：`scripts/check-cleared-page.cjs`；原型来源标签、确认及 Undo 检查：`scripts/check-cleared-prototype.mjs`。
 - 浏览器脚本复用已有 Playwright，通过 `PLAYWRIGHT_MODULE` 指定路径，网站未增加运行依赖。
+
+## 按招聘方反馈修正的交互问题（原型）
+
+| 位置 | 问题 | 处理 |
+| --- | --- | --- |
+| 建议弹窗底部的 ✕ | 和右上角关闭用同一个符号，但实际是"移除建议"，点完待处理数从 3 变 2 | 底部改成文字按钮 **Dismiss suggestion**，单独一行，与主次按钮分开；右上角 ✕ 仍只负责关闭。移除后的提示改成"Suggestion removed — “标题” is off the calendar and out of the pending list"，Undo 保持不变 |
+| 周视图并排卡片 | 两个事件同时段时各占一半（约 53px），标题被挤成 "Revised…" | 改成错位叠放：两个时各占约 66%，三个及以上各占 50%，按 lane 顺序叠加 z-index，选中的置顶。窄卡片只保留任务名、时间、简短状态；来源行和"点击提示"移到点击后的详情里；窄卡片标题允许两行。现在标题 79px 宽两行完整显示，不再截断 |
+| 弹窗里的 inferred / estimate | 跟在时间后面的浅灰小字，权重太弱 | 改成三个彩色小标签：TASK 配绿色 **Stated in the email**，DEADLINE 配红色 **Inferred deadline**，DURATION 配琥珀色 **Estimated duration**。邮件明确写的和系统推测的一眼可分 |
+
+案例页首屏的 `SuggestionCard` 同步用了同一套标签，保持站内一致。
+
+改原型的流程：用 `cleared-proto/unpack.mjs` 解包 → 改 → `repack.mjs` 回填 → `new Function()` 验证内嵌脚本语法 → 覆盖 `public/cleared/calendar-assistant-prototype.html`。

@@ -61,6 +61,14 @@
 .card .value small { font-size: inherit; font-weight: 400; color: var(--ink-soft); }
 .card .note { font-size: 0.75rem; line-height: 1.5; color: var(--ink-soft); text-wrap: pretty; }
 
+/* Where a value came from, as a tag rather than a grey aside: whether the
+   deadline was written by the sender or worked out by the assistant is the
+   thing a reader has to be able to tell at a glance. */
+.card .tag { align-self: flex-start; margin: 2px 0 1px; padding: 2px 7px; border-radius: 5px; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.02em; }
+.card .stated { background: #eaf2ec; color: #2f6b45; }
+.card .inferred { background: #fcecec; color: #b4353a; }
+.card .estimated { background: #fbf1e4; color: #8a5a1c; }
+
 /* Collapsed with grid rows rather than a measured height, so the panel can
    open to whatever its content needs. The negative top margin cancels the
    card's gap while closed, so nothing reserves space for a hidden panel. */

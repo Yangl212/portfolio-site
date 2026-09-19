@@ -46,18 +46,29 @@ export function SuggestionCard({ caption }) {
           </span>
         </div>
 
+        {/* What the email actually said and what the assistant worked out are
+            tagged rather than blended, so the difference survives a glance. */}
         <dl className={styles.facts}>
+          <div>
+            <dt>Task</dt>
+            <dd>
+              <span className={styles.value}>Send the revised quote</span>
+              <span className={`${styles.tag} ${styles.stated}`}>Stated in the email</span>
+            </dd>
+          </div>
           <div>
             <dt data-alert="">Deadline</dt>
             <dd>
-              <span className={styles.value}>Friday 18:00 <small>· inferred</small></span>
+              <span className={styles.value}>Friday 18:00</span>
+              <span className={`${styles.tag} ${styles.inferred}`}>Inferred deadline</span>
               <span className={styles.note}>“by end of week” names no time. Worth checking with the sender.</span>
             </dd>
           </div>
           <div>
             <dt>Length</dt>
             <dd>
-              <span className={styles.value}>2 hours <small>· estimate</small></span>
+              <span className={styles.value}>2 hours</span>
+              <span className={`${styles.tag} ${styles.estimated}`}>Estimated duration</span>
               <span className={styles.note}>Your last four quotes averaged 1h50.</span>
             </dd>
           </div>
