@@ -181,12 +181,12 @@ export default function LastMessagePage({ track = "uiux" }) {
               <summary>Early explorations behind the non-linear structure</summary>
               <div className={styles.disclosureBody}>
                 <p className={styles.sectionLead}>Two exploratory exercises informed the direction: people could form different interpretations from the same fragments and inspect clues in their own order. These exercises informed the concept; they did not validate the final game's usability.</p>
-                <div className={styles.evidenceGrid}>
-                  <figure>
+                <div className={styles.studyList}>
+                  <figure className={styles.study}>
                     <a href={img("8e13dc05a4b730bb0c86cf502c98eff96923d3a4.png")} target="_blank" rel="noreferrer" aria-label="Open trace inference study image at full size"><img loading="lazy" src={img("8e13dc05a4b730bb0c86cf502c98eff96923d3a4.png")} alt="Annotated discarded objects used to explore how people infer a story from traces" /></a>
                     <figcaption><strong>01 / Trace inference</strong>Participants inferred an owner from discarded objects. Their confident but differing interpretations suggested room for more than one reading of a clue.</figcaption>
                   </figure>
-                  <figure>
+                  <figure className={styles.study}>
                     <a href={img("e170301fd8cc341588840a663f2c940611f1d986.png")} target="_blank" rel="noreferrer" aria-label="Open visual detective exercise at full size"><img loading="lazy" src={img("e170301fd8cc341588840a663f2c940611f1d986.png")} alt="Illustrated room with ten inspectable objects and their clue records" /></a>
                     <figcaption><strong>02 / Visual detective exercise</strong>A room contained ten inspectable objects with short records. Participants chose their own inspection order, informing the modular record structure.</figcaption>
                   </figure>
@@ -274,8 +274,8 @@ export default function LastMessagePage({ track = "uiux" }) {
               The high-fidelity designs established the visual language. Working with real content made navigation, locked records, and changing member states part of the design work.
             </SectionHeading>
             <figure className={styles.compareFigure}>
-              <a href={comparison} target="_blank" rel="noreferrer" aria-label="Open Figma and implemented interface comparison at full size"><img loading="lazy" src={comparison} alt="Figma designs on the left and the implemented member registry and mission board on the right" /></a>
-              <figcaption><span>Left: Figma designs. Right: implemented screens with locked records, member status, and diary access.</span><a className={styles.textLink} href={comparison} target="_blank" rel="noreferrer">View full size ↗</a></figcaption>
+              <img loading="lazy" src={comparison} alt="Figma designs on the left and the implemented member registry and mission board on the right" />
+              <figcaption><span>Left: Figma designs. Right: implemented screens with locked records, member status, and diary access.</span></figcaption>
             </figure>
             <div className={styles.ruleGrid}>
               <article><p className={styles.microLabel}>Navigation</p><h3>Separate destinations as content grows.</h3><p>Chat, the registry, and the mission board moved into their own routes when a single stacked view became too dense.</p></article>

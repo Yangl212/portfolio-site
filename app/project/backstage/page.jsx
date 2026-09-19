@@ -45,7 +45,7 @@ const researchInsights = [
   }
 ]
 
-/* Survey: 28 valid responses. Q1 is single-choice on an ordered frequency scale,
+/* Survey: 28 responses. Q1 is single-choice on an ordered frequency scale,
  * so it is one part-to-whole bar with a single ink ramp - denser = more often. */
 const meetFrequency = [
   { pct: "14.3%", share: 14.29, label: "Every week", tone: "var(--text)" },
@@ -209,7 +209,7 @@ const reflections = [
   },
   {
     label: "Limitations",
-    body: "This was a student project with a small survey, two rounds of qualitative testing, and no live events behind it. Nothing here has been validated against real attendance or safety incidents."
+    body: "This was a student project with a small survey, a few interviews, two rounds of qualitative testing, and no live events behind it. Nothing here has been validated against real attendance or safety incidents."
   },
   {
     label: "What I would test next",
@@ -450,7 +450,8 @@ export default function BackstagePage({ track = "uiux" }) {
               </div>
 
               <p className={styles.note}>
-                A small student study - 28 survey responses and a handful of interviews. Directional, not representative.
+                A small student study - 55 people in total, none counted twice: 28 survey responses, then a handful of
+                interviews and two rounds of usability testing. Directional, not representative.
               </p>
             </section>
 

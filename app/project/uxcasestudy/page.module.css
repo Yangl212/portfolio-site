@@ -32,7 +32,7 @@
 .outlineAction { border: 1px solid var(--divider); padding: 12px 18px; }
 .outlineAction:hover { border-color: var(--text); }
 .heroVisual { grid-area: visual; align-self: center; justify-self: center; width: min(100%, 320px); }
-.sectionNav { display: flex; flex-wrap: wrap; gap: 4px 28px; padding: 12px 0; border-block: 1px solid var(--divider); }
+.sectionNav { display: flex; flex-wrap: wrap; gap: 4px 30px; padding: 12px 0; border-block: 1px solid var(--divider); }
 .sectionNav a { display: flex; align-items: center; min-height: 44px; font-size: .875rem; }
 .sectionNav a:hover { text-decoration: underline; text-underline-offset: 5px; }
 .caseSection { min-width: 0; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 32px; }

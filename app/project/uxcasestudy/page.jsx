@@ -325,7 +325,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="experience" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>The core experience</p>
+              <p className={styles.kicker}>01 / The core experience</p>
               <h2>From a spending total to a decision.</h2>
               <p className={styles.sectionLead}>For people checking where their money went and deciding how to adjust the rest of the month, the flow connects overview, detail and budget controls.</p>
             </div>
@@ -354,7 +354,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             <div className={styles.prototypeLayout}>
               <div className={styles.prototypeGuide}>
                 <div className={styles.sectionHeader}>
-                  <p className={styles.kicker}>Interactive prototype</p>
+                  <p className={styles.kicker}>02 / Interactive prototype</p>
                   <h2>Follow the task through.</h2>
                   <p className={styles.sectionLead}>Explore the connected mobile flow using sample transactions and budgets.</p>
                 </div>
@@ -379,7 +379,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="research" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Research & problem framing</p>
+              <p className={styles.kicker}>03 / Research & problem framing</p>
               <h2>Three points where the flow breaks.</h2>
               <p className={styles.sectionLead}>The research focused on finding and verifying spending, correcting categories, and adapting a budget during the month.</p>
             </div>
@@ -426,7 +426,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="decisions" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Interaction structure</p>
+              <p className={styles.kicker}>04 / Interaction structure</p>
               <h2>Keep the context. Make the change explicit.</h2>
               <p className={styles.sectionLead}>Four decisions connect the research themes to the interaction model, including the category-correction flow behind the spending views.</p>
             </div>
@@ -497,7 +497,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="testing" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Testing & iteration</p>
+              <p className={styles.kicker}>05 / Testing & iteration</p>
               <h2>What changed across the task rounds.</h2>
               <p className={styles.sectionLead}>The case study compares two rounds across the spending chart, budget reallocation and an assistant exploration. Each task involved six participants; the small counts matter more than treating the percentages as a general result.</p>
             </div>
@@ -518,7 +518,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="web" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Web adaptation</p>
+              <p className={styles.kicker}>06 / Web adaptation</p>
               <h2>Use the width to keep overview and detail together.</h2>
               <p className={styles.sectionLead}>Mobile reveals details one view at a time. Desktop keeps the category overview beside merchant and monthly breakdowns, with the assistant available in a side panel.</p>
             </div>
