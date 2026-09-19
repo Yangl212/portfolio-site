@@ -84,8 +84,8 @@ const reviewFindings = [
   },
   {
     title: "Command consistency",
-    status: "Needs refinement",
-    response: "“Before Thursday” produces a Friday preview, and the applied time differs. Fix date constraints and preview accuracy before testing this path."
+    status: "Updated",
+    response: "“Before Thursday” now previews the first open slot in that window - Tuesday 16:00, not Friday - and books exactly what it previewed. If the calendar changes before you confirm, it re-previews instead of silently moving the event."
   }
 ]
 
