@@ -4,6 +4,7 @@ import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 import CaseVideo from "./CaseVideo"
 import { PrototypePreview } from "./PrototypePreview"
+import { SuggestionCard } from "./SuggestionCard"
 import styles from "./page.module.css"
 
 export const metadata = {
@@ -158,16 +159,12 @@ export default function ClearedPage({ track = "uiux" }) {
                 <a className={styles.textLink} href={prototypeUrl} target="_blank" rel="noreferrer">Open desktop prototype <span aria-hidden="true">↗</span></a>
               </div>
             </div>
-            <figure className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
-              <CaseVideo
-                src="/cleared/media/check-loop.mp4"
-                poster="/cleared/media/check-poster.webp"
-                width={360}
-                height={704}
-                label="Preview: inspect the email behind a mobile calendar suggestion"
-                priority
-              />
-            </figure>
+            {/* The hero is the product's own suggestion card rather than a
+                recording of it: the three moves the case study is about can
+                be made right here. */}
+            <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
+              <SuggestionCard caption="The prototype’s suggestion card, on sample data. See what the assistant read, add the block, undo it." />
+            </div>
           </header>
 
           <nav className={styles.sectionNav} aria-label="Case study sections">
