@@ -1,0 +1,141 @@
+.page {
+  --divider: rgba(34, 34, 34, .17);
+  min-height: 100vh;
+  background: var(--page-bg);
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+}
+
+.frame { background: var(--panel-bg); border: 1px solid var(--border); border-bottom: 0; }
+.content { width: min(100%, 1344px); margin: 0 auto; padding: 32px 24px 88px; display: flex; flex-direction: column; gap: 72px; }
+.page :is(h1, h2, h3, p, dl, dd, figure, blockquote, ul, ol, table) { margin: 0; }
+.page :is(a, button, summary, [tabindex]):focus-visible { outline: 2px solid #174fa4; outline-offset: 5px; }
+.page :is(p, dd, li, td, th) { font-size: 1rem; line-height: 1.65; }
+.page h2 { max-width: 29ch; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.65rem); font-weight: 500; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
+.page h3 { font-size: 1.25rem; font-weight: 500; line-height: 1.3; letter-spacing: -.02em; }
+
+/* Hero: summary on the left, the rebuilt landing screen on the right. The
+   screen is a desktop capture, so it gets a wider column than the phone
+   loops on the other lead studies. */
+.hero { display: grid; grid-template-areas: "eyebrow" "title" "lead" "meta" "visual" "facts" "actions"; align-items: start; gap: 26px; }
+.heroCopy { display: contents; }
+.hero .eyebrow { grid-area: eyebrow; }
+.hero h1 { grid-area: title; }
+.heroLead { grid-area: lead; }
+.heroFacts { grid-area: facts; }
+.hero .meta { grid-area: meta; }
+.hero .actions { grid-area: actions; }
+.eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .8125rem; color: var(--muted); }
+.pill { border-radius: 999px; background: var(--text); color: var(--inverse); padding: 7px 12px; font-size: .75rem; font-weight: 500; }
+.hero h1 { font-size: clamp(2.6rem, 1.7rem + 2.8vw, 4.25rem); line-height: 1.04; font-weight: 500; letter-spacing: -.045em; }
+.hero .heroLead { max-width: 47ch; font-size: clamp(1.1rem, 1rem + .45vw, 1.3rem); line-height: 1.55; }
+.heroFacts { display: grid; gap: 18px; padding: 24px 0; border-block: 1px solid var(--divider); }
+.heroFacts div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 16px; }
+.heroFacts dt, .meta dt, .reasoning dt { font-size: .75rem; line-height: 1.4; text-transform: uppercase; letter-spacing: .065em; font-weight: 500; color: var(--muted); }
+.heroFacts dt { padding-top: 4px; }
+.heroFacts dd { font-size: .9375rem; line-height: 1.55; }
+.meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.meta dd { margin-top: 8px; font-size: .875rem; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.action, .textLink { min-height: 44px; display: inline-flex; justify-content: center; align-items: center; gap: 16px; font-size: .875rem; font-weight: 500; }
+.action { padding: 14px 20px; color: var(--inverse); background: var(--text); }
+.action:hover { background: #3e3e3e; }
+.textLink { text-decoration: underline; text-underline-offset: 5px; }
+.heroVisual { grid-area: visual; min-width: 0; align-self: center; }
+
+.sectionNav { display: flex; flex-wrap: wrap; gap: 4px 30px; border-block: 1px solid var(--divider); padding: 12px 0; }
+.sectionNav a { display: flex; align-items: center; min-height: 44px; font-size: .875rem; }
+.sectionNav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.caseSection { min-width: 0; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 32px; }
+.caseSection + .caseSection { padding-top: 48px; border-top: 1px solid var(--divider); }
+.sectionHeader { max-width: 770px; display: flex; flex-direction: column; gap: 18px; }
+.page .kicker, .page .microLabel { font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
+.microLabel { color: var(--muted); }
+.sectionLead { max-width: 64ch; color: var(--muted); }
+.page .sourceNote { max-width: 90ch; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
+.page .limitNote { max-width: 86ch; font-size: .9375rem; color: var(--muted); }
+
+/* Every capture is a 2x render of a mock-data screen; the border keeps the
+   white frames from floating on the grey. */
+.shot { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--divider); background: #fff; }
+.shot figcaption { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: .8125rem; line-height: 1.6; color: var(--muted); }
+.shot figcaption strong { font-weight: 500; color: var(--text); letter-spacing: .06em; text-transform: uppercase; font-size: .75rem; }
+.compare { display: grid; gap: 28px; align-items: start; }
+
+.observations { display: grid; gap: 24px; }
+.observations article { display: flex; flex-direction: column; gap: 12px; border-top: 2px solid var(--text); padding-top: 20px; }
+.observations p:not(.microLabel) { font-size: .9375rem; color: var(--muted); }
+
+.iterationSteps { display: grid; gap: 28px; padding: 0; list-style: none; }
+.iterationSteps li { display: flex; flex-direction: column; gap: 14px; border-top: 2px solid var(--text); padding-top: 20px; }
+.iterationSteps p:not(.microLabel) { font-size: .9375rem; color: var(--muted); }
+.chartDecisions { display: grid; gap: 24px; }
+.chartDecisions article { display: flex; flex-direction: column; gap: 8px; }
+.chartDecisions h3 { font-size: 1rem; }
+.chartDecisions p { font-size: .875rem; color: var(--muted); }
+
+.reasoning { display: grid; gap: 22px; }
+.reasoning div { border-left: 2px solid var(--divider); padding-left: 18px; }
+.reasoning dt { text-transform: none; letter-spacing: -.01em; font-size: 1.05rem; color: var(--text); }
+.reasoning dd { margin-top: 8px; font-size: .9375rem; color: var(--muted); }
+.decision { display: grid; gap: 28px; align-items: start; }
+.decisionCopy { display: flex; flex-direction: column; gap: 14px; max-width: 62ch; }
+.decisionCopy h3 { font-size: clamp(1.5rem, 1.1rem + 1.2vw, 1.9rem); line-height: 1.2; letter-spacing: -.03em; max-width: 26ch; }
+.decisionCopy p { color: var(--muted); }
+
+.priorityBlock { display: flex; flex-direction: column; gap: 28px; padding-top: 32px; border-top: 1px solid var(--divider); scroll-margin-top: 32px; }
+.tableWrap { overflow-x: auto; }
+.prioTable { width: 100%; min-width: 620px; border-collapse: collapse; }
+.prioTable caption { text-align: left; padding: 0 0 18px; font-size: .8125rem; color: var(--muted); }
+.prioTable th, .prioTable td { text-align: left; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--divider); vertical-align: top; }
+.prioTable th { font-size: .75rem; font-weight: 500; letter-spacing: .065em; text-transform: uppercase; color: var(--muted); }
+.prioTable td { font-size: .9375rem; }
+.prioTable tbody th { font-size: .9375rem; font-weight: 500; color: var(--text); text-transform: none; letter-spacing: 0; }
+.placement { display: inline-block; padding: 4px 10px; border: 1px solid var(--divider); border-radius: 999px; font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; }
+.placement[data-strong="true"] { background: var(--text); color: var(--inverse); border-color: var(--text); }
+
+.statRow { display: grid; gap: 16px; }
+.statRow article { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px; border: 1px solid var(--divider); }
+.statRow strong { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.statRow span { font-size: .875rem; color: var(--muted); }
+.disclosure { padding: 18px 0; border-block: 1px solid var(--divider); scroll-margin-top: 32px; }
+.disclosure summary { min-height: 44px; padding-block: 8px; cursor: pointer; font-size: 1rem; line-height: 1.5; }
+.disclosureBody { display: flex; flex-direction: column; gap: 28px; padding-top: 24px; min-width: 0; }
+
+.reflectionGrid { display: grid; gap: 28px; }
+.reflectionGrid article { display: flex; flex-direction: column; gap: 14px; border-top: 2px solid var(--text); padding-top: 22px; }
+.reflectionGrid p:not(.microLabel) { font-size: .9375rem; color: var(--muted); }
+
+/* Preserve each portfolio track's project navigation. */
+.projectNav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 24px; padding-top: 40px; border-top: 1px solid var(--divider); }
+.projectNavPrev, .projectNavNext { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.projectNavNext { align-items: flex-end; text-align: right; }
+.projectNavLabel { font-size: .75rem; font-weight: 500; line-height: 1.3; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.projectNavName { display: inline-flex; align-items: center; gap: 10px; font-size: clamp(1rem, .8rem + .6vw, 1.5rem); font-weight: 500; line-height: 1.3; }
+.projectNavDot { flex: none; width: 8px; height: 8px; border-radius: 100%; background: #f3c443; }
+.projectNavAll { align-self: center; padding: 12px 18px; border: 1px solid var(--divider); border-radius: 999px; font-size: .8125rem; }
+.projectNavAll:hover { color: var(--inverse); background: var(--text); }
+
+@media (min-width: 700px) {
+  .compare { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+  .statRow { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .observations, .reflectionGrid, .iterationSteps, .chartDecisions { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+}
+
+@media (min-width: 960px) {
+  .content { padding: 40px 32px 104px; gap: 80px; }
+  .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "eyebrow visual" "title visual" "lead visual" "meta visual" "facts visual" "actions visual"; gap: 26px 64px; }
+  .decision { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; }
+}
+
+@media (max-width: 599px) {
+  .content { padding: 24px 20px 64px; gap: 48px; }
+  .hero h1 { font-size: clamp(2.25rem, 9.5vw, 3.3rem); }
+  .heroFacts div { grid-template-columns: 1fr; gap: 6px; }
+  .heroFacts { gap: 18px; }
+  .meta { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .sectionNav { gap: 0 22px; }
+  .caseSection + .caseSection { padding-top: 36px; }
+  .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
+}

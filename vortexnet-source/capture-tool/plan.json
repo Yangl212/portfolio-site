@@ -1,0 +1,14 @@
+[
+ {"name":"legacy-screen","title":"Where it started","pick":"kids[2]"},
+ {"name":"metrics-before","title":"First pass: I fixed the surface","pick":"kids[1].children[0].children[1]"},
+ {"name":"metrics-after","title":"First pass: I fixed the surface","pick":"kids[1].children[1].children[1]"},
+ {"name":"filed-by-type","title":"Feedback pointed at the categories","pick":"kids[2].children[0].children[1]"},
+ {"name":"asked-by-task","title":"Feedback pointed at the categories","pick":"kids[2].children[1].children[1]"},
+ {"name":"priorities","title":"Priorities, agreed with product and data","pick":"kids[1]"},
+ {"name":"nav-before","title":"Navigation regrouped by task","pick":"kids[1].children[0].children[1]"},
+ {"name":"nav-after","title":"Navigation regrouped by task","pick":"kids[1].children[1].children[1]"},
+ {"name":"rebuilt-screen","title":"The rebuilt screen","pick":"kids[2]"},
+ {"name":"region-before","title":"The rebuilt screen","pick":"kids[3].children[1].children[0].children[1]"},
+ {"name":"region-after","title":"The rebuilt screen","pick":"sec.querySelector('[data-vn=metric-study]')"},
+ {"name":"dashboard-detail","title":"The rebuilt screen","pick":"sec.querySelector('[data-vn=detail]')"}
+]

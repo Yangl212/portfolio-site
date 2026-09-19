@@ -13,6 +13,7 @@ const covers = {
   alcohol: 'public/framer-assets/images/de2adde594c13411e1b6edfae73dc2b71177dad0.png',
   graveyard: 'public/framer-assets/images/047a164dabc45a6cc5ce49de9cb5170f6f953d99.png',
   cleared: 'public/cleared/MacBook.png',
+  vortexnet: 'public/vortexnet/cover.png',
 };
 
 // Both the featured cards and the carousel crop to 16:10 with object-fit: cover,
