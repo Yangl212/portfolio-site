@@ -132,7 +132,7 @@
   .impactMap > div + div { border-top: 0; border-left: 1px solid var(--divider); }
   .problemGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .decisionGrid, .evidenceGrid, .reflectionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
-  .researchStats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .researchStats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .lowFiScreens, .systemGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (min-width: 960px) {

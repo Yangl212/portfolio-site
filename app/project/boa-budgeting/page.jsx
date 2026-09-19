@@ -21,7 +21,7 @@ const problemSnapshots = [
   {
     title: "Spending is difficult to find and verify",
     body: "Users had to move between summaries, categories, and transaction lists to understand where a total came from.",
-    evidence: "69% struggled to find insights; 57% were unsure how totals were calculated."
+    evidence: "69% struggled to find insights; interview participants described uncertainty about which transactions made up a total."
   },
   {
     title: "Category correction breaks the flow",
@@ -86,11 +86,15 @@ const prototypeSteps = [
   }
 ]
 
+/* A fifth figure - "Totals feel unclear", recorded as 57% - was dropped here.
+   It doesn't correspond to any whole number of the 32 respondents under any
+   rounding, and the original count behind it couldn't be verified, so it is
+   removed rather than kept as an approximation. See the disclosure note
+   below and docs/BOA-MATERIALS.md. */
 const researchStats = [
   { pct: "63%", label: "Selections reset", color: "rgba(247, 235, 140, 0.78)" },
   { pct: "69%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
   { pct: "66%", label: "Correction takes time", color: "rgba(210, 210, 210, 0.82)" },
-  { pct: "57%", label: "Totals feel unclear", color: "rgba(190, 215, 247, 0.78)" },
   { pct: "72%", label: "Budgets feel inflexible", color: "rgba(247, 205, 205, 0.78)" }
 ]
 
@@ -424,7 +428,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <div key={stat.label}><strong>{stat.pct}</strong><p>{stat.label}</p></div>
                   ))}
                 </div>
-                <p className={styles.sourceNote}>Four of these five figures are exact shares of the 32 respondents (20 to 23 people). &ldquo;Totals feel unclear&rdquo; is still recorded at 57%, which no whole number of the 32 rounds to - that one is pending a corrected count.</p>
+                <p className={styles.sourceNote}>These four figures are exact shares of the 32 respondents (20 to 23 people). A fifth theme, totals feeling unclear, was recorded at 57% in the original notes - a number no whole count of the 32 respondents rounds to. Since the original count behind it couldn&apos;t be verified, it has been removed rather than kept as an approximation. The uncertainty it described is still reflected qualitatively above and in the interview notes.</p>
                 <div className={styles.evidenceGrid}>
                   <figure>
                     <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
