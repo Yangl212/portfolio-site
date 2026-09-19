@@ -60,7 +60,7 @@
 .page .sourceNote { max-width: 90ch; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
 .page .limitNote { max-width: 86ch; font-size: .9375rem; color: var(--muted); }
 
-/* Every capture is a 2x render of a mock-data screen; the border keeps the
+/* Every capture is a 2x render of a rebuilt screen; the border keeps the
    white frames from floating on the grey. */
 .shot { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--divider); background: #fff; }

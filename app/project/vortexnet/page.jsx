@@ -5,11 +5,13 @@ import { trackHome } from "../../../lib/projects"
 import ScreenComparison from "./ScreenComparison"
 import styles from "./page.module.css"
 
-// The dashboard is a portfolio refinement of the internship case, using mock data.
-// Structural counts describe these exhibits, not measured production outcomes.
+// The overview and navigation shipped during the internship at a company of
+// about 30 people. The screens are rebuilt for this case study on the tool's
+// test data; the structural counts describe the delivered structure, not
+// usage analytics.
 export const metadata = {
   title: "VortexNet: Finance Dashboard",
-  description: "Information hierarchy and consolidation for an internal finance dashboard. Today's overview and its task-based navigation were implemented during the internship; the screen shown is a later portfolio refinement."
+  description: "Information hierarchy and consolidation for an internal finance dashboard at a 30-person company. Today's overview and its task-based navigation shipped during the internship; in testing with 10 colleagues, finding the day's work dropped from 20–30 seconds to about 8."
 }
 
 const media = (name) => "/vortexnet/media/" + name + ".webp"
@@ -29,14 +31,35 @@ const priorities = [
 ]
 
 const outcomes = [
-  { value: "14 → 9", label: "Main navigation entries in the reconstructed designs" },
+  { value: "14 → 9", label: "Main navigation entries, before and after" },
   { value: "3 groups", label: "Monitor today · Reconcile · Review over time" },
   { value: "4 metrics", label: "Named summaries alongside context and action queues" }
 ]
 
+/* Task-based sessions with 10 colleagues at the company, original interface
+   against the redesigned dashboard on the same tasks. Times are approximate
+   averages. */
+const testing = {
+  stats: [
+    { value: "20–30 s → ~8 s", label: "To locate and understand one day’s work and its data" },
+    { value: "10 of 10", label: "Participants noticed and used the cash chart first" },
+    { value: "10+ s → ~5 s", label: "To find a requested item in the left-hand list" }
+  ],
+  findings: [
+    {
+      title: "Faster access to daily data.",
+      body: "On the original interface, locating and understanding a single day’s work and its related data took an average of 20–30 seconds. On the redesigned dashboard it took about 8 seconds, roughly 60–70% less. The chart became the strongest entry point: all 10 participants noticed and used it first."
+    },
+    {
+      title: "Faster scanning of the list.",
+      body: "Finding a requested item in the left-hand list took 10 seconds or more on the original design, because entries carried similar visual weight. After regrouping the content into clearer sections with a stronger hierarchy, the same kind of item was found in about 5 seconds. All 10 participants completed the task faster."
+    }
+  ]
+}
+
 const iteration = [
   { label: "01 · Initial hypothesis", title: "Color could make priorities clearer.", body: "The dashboard used similar colors and gave information similar visual weight. I first explored color changes to make the screen easier to scan." },
-  { label: "02 · One user test", title: "Color changes had limited impact.", body: "The improvement I observed was limited, and feedback was mixed. I reconsidered whether the screen communicated what to read first." },
+  { label: "02 · Early test", title: "Color changes had limited impact.", body: "The improvement I observed was limited, and feedback was mixed. I reconsidered whether the screen communicated what to read first." },
   { label: "03 · Revised decision", title: "Build the hierarchy through type and layout.", body: "I shifted to typography, text size and placement to establish clearer priorities. Color became a supporting cue within the hierarchy." }
 ]
 
@@ -66,7 +89,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={styles.heroCopy}>
               <div className={`${styles.eyebrow} ${styles.reveal}`}>
                 <span className={styles.pill}>Work experience</span>
-                <span>Internal tool · Information design · 2025</span>
+                <span>Internal tool · Company of about 30 · 2025</span>
               </div>
               <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>VortexNet:<br />Finance dashboard.</h1>
               <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>Bringing daily finance information into focus through clearer hierarchy and task-based grouping.</p>
@@ -77,8 +100,9 @@ export default function VortexNetPage({ track = "uiux" }) {
               </dl>
               <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>My scope</dt><dd>Information hierarchy and consolidation for Today&apos;s overview and its task-based navigation.</dd></div>
-                <div><dt>Implemented</dt><dd>Today&apos;s overview and the adjacent sidebar navigation during the internship.</dd></div>
-                <div><dt>Shown here</dt><dd>The implemented structure, extended through a later portfolio refinement with mock data.</dd></div>
+                <div><dt>Implemented</dt><dd>Today&apos;s overview and the adjacent sidebar navigation, tested inside the company and shipped during the internship.</dd></div>
+                <div><dt>Shown here</dt><dd>The implemented overview and navigation, refined for this case study on the tool&apos;s test data.</dd></div>
+                <div><dt>Result</dt><dd>In task-based testing with 10 colleagues, locating a day&apos;s work dropped from 20–30 seconds to about 8.</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#result">Compare before & after <span aria-hidden="true">↓</span></a>
@@ -88,12 +112,13 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
               <Shot name="dashboard-detail" priority width={2114} height={1722}
                 alt="Refined dashboard detail with CNY cash totals, cash movement, settlement deadlines and an assigned work queue"
-                caption="Portfolio refinement · Mock data" />
+                caption="Today’s overview · Test data" />
             </div>
           </header>
 
           <nav className={styles.sectionNav} aria-label="Case study sections">
             <a href="#result">Redesign</a>
+            <a href="#testing">Results</a>
             <a href="#start">Problem</a>
             <a href="#iteration">Design decisions</a>
             <a href="#navigation">Navigation</a>
@@ -121,7 +146,7 @@ export default function VortexNetPage({ track = "uiux" }) {
               <article>
                 <p className={styles.microLabel}>Refined afterward</p>
                 <h3>Data clarity and action detail.</h3>
-                <p>For this portfolio version, I later refined the metric definitions, cash chart, settlement schedule, owners and next actions using mock data.</p>
+                <p>For this case study I later refined the metric definitions, cash chart, settlement schedule, owners and next actions, keeping the tool&apos;s test data.</p>
               </article>
             </div>
             <div className={styles.chartDecisions}>
@@ -130,7 +155,24 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={styles.statRow}>
               {outcomes.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
             </div>
-            <p className={styles.sourceNote}>The current screen is a portfolio refinement of the implemented overview and navigation. Its mock-data details are illustrative, not measured production performance.</p>
+            <p className={styles.sourceNote}>VortexNet is a company of about 30 people, and this dashboard is where its operations and finance teams start the day. The overview and navigation were tested with 10 colleagues before they shipped; the results follow below. The figures on screen are the tool&apos;s test data, and the counts above describe the delivered structure rather than usage analytics.</p>
+          </section>
+
+          <section id="testing" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>User testing</p>
+              <h2>Faster to the day&apos;s work, on the same tasks.</h2>
+              <p className={styles.sectionLead}>Task-based sessions with 10 colleagues at the company compared the original interface with the redesigned dashboard on the same tasks.</p>
+            </div>
+            <div className={styles.statRow}>
+              {testing.stats.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
+            </div>
+            <div className={styles.observations}>
+              {testing.findings.map((item, index) => <article key={item.title}>
+                <p className={styles.microLabel}>0{index + 1}</p><h3>{item.title}</h3><p>{item.body}</p>
+              </article>)}
+            </div>
+            <p className={styles.sourceNote}>All 10 participants were colleagues who work with the tool. Times are approximate averages across them. Overall, the redesign made the key information visible immediately and cut the time spent scanning for it.</p>
           </section>
 
           <section id="start" className={styles.caseSection}>
@@ -150,7 +192,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>A decision changed by testing</p>
               <h2>From color contrast to a clearer reading order.</h2>
-              <p className={styles.sectionLead}>A user test changed my explanation of the problem and the direction of the next iteration.</p>
+              <p className={styles.sectionLead}>An early test changed my explanation of the problem and the direction of the next iteration.</p>
             </div>
             <ol className={styles.iterationSteps}>
               {iteration.map((step) => <li key={step.label}>

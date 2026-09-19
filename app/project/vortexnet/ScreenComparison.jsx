@@ -19,7 +19,7 @@ const screens = [
     width: 2480,
     height: 1830,
     alt: "Portfolio dashboard refinement with explicit CNY totals, cumulative collections and payouts, settlement deadlines, and assigned action queues.",
-    caption: "Portfolio refinement · Cash movement, settlement deadlines and assigned queues. Mock data."
+    caption: "Cash movement, settlement deadlines and assigned queues, refined for this case study on the tool’s test data."
   }
 ]
 
