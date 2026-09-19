@@ -423,6 +423,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <div key={stat.label}><strong>{stat.pct}</strong><p>{stat.label}</p></div>
                   ))}
                 </div>
+                <p className={styles.sourceNote}>Figures are as recorded in the original survey summary against 32 respondents overall. How many answered each individual question was not separately preserved, so a figure here can be a share of that question&apos;s own respondents rather than of all 32 - read each as approximate, not as an exact fraction of 32.</p>
                 <div className={styles.evidenceGrid}>
                   <figure>
                     <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
@@ -534,7 +535,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 </article>
               ))}
             </div>
-            <p className={styles.sourceNote}>The assistant comparison uses different recovery paths: navigation in the first round and an assistant in the second. It is exploratory and does not isolate the assistant’s effect.</p>
+            <p className={styles.sourceNote}>The assistant comparison uses different recovery paths: navigation in the first round and an assistant in the second. It is exploratory and does not isolate the assistant’s effect. Whether the same six people took part in both rounds was not recorded, so the before/after counts should be read as directional rather than a controlled repeat with one factor changed.</p>
           </section>
 
           <section id="web" className={styles.caseSection}>
