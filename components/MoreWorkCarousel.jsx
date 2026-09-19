@@ -50,7 +50,7 @@ export function MoreWorkCarousel({ className = "", projects }) {
                        are large. Loading them eagerly fills the connection pool
                        while the reader is still partway up the page, which starves
                        the demo videos of bandwidth. */}
-                    <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+                    <img src={project.image} alt={project.title} width={1600} height={1000} loading="lazy" decoding="async" />
                   </Link>
                   <div className={styles.meta}>
                     <p>{project.category}</p>

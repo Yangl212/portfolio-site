@@ -25,7 +25,7 @@ export default function HomePage() {
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
             <p className={`${styles.heroCopy} ${styles.reveal}`}>
               A product designer focused on UX, AI, and interactive experiences - based in New York,
-              currently at Parsons School of Design.
+              with an MFA in Design and Technology from Parsons School of Design.
             </p>
           </header>
 
@@ -47,7 +47,7 @@ export default function HomePage() {
                   </div>
 
                   <Link href={project.href} className={styles.featuredImageLink}>
-                    <img src={project.image} alt={project.title} />
+                    <img src={project.image} alt={project.title} width={1600} height={1000} decoding="async" loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} />
                   </Link>
                 </article>
               ))}

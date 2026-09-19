@@ -47,7 +47,7 @@ export default function VisualPage() {
                   </div>
 
                   <Link href={project.href} className={styles.featuredImageLink}>
-                    <img src={project.image} alt={project.title} />
+                    <img src={project.image} alt={project.title} width={1600} height={1000} decoding="async" loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} />
                   </Link>
                 </article>
               ))}
