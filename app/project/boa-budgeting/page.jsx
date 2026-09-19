@@ -40,7 +40,8 @@ const designHighlights = [
     label: "01 / Understand",
     title: "See which category needs attention.",
     body: "The spending dial connects the month's total to individual categories. Selecting a category brings its amount and budget context into focus.",
-    reason: "Keep the overview and the selected category together, so the detail still has a clear reference point.",
+    visualChange: "The selected slice lifts out from the dial. A dashed 100% budget ring and the category name, amount, and percentage repeat the status without relying on color alone.",
+    benefit: "People can spot which category is over budget and verify by how much in the same focal area, without matching a slice to a separate legend.",
     tradeoff: "A compact chart leaves less room for labels. Amounts and category names need to carry the meaning alongside color.",
     video: "spending",
     alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights",
@@ -50,7 +51,8 @@ const designHighlights = [
     label: "02 / Investigate",
     title: "Trace the total back to the spending.",
     body: "Inside a category, switch between merchant and monthly breakdowns. The selected category and budget remain the reference while the view changes.",
-    reason: "A total becomes useful when someone can investigate what contributed to it, then continue into transactions to correct a category.",
+    visualChange: "Spending, budget, overage, and average sit in one header. Merchant bars share a budget threshold, while a two-state control switches between merchant and monthly views.",
+    benefit: "People can move from the total to its contributors while keeping the month, category, and budget visible, reducing the need to reconstruct context between screens.",
     tradeoff: "Detail takes another step on mobile. The desktop version can show the overview and breakdown side by side.",
     video: "budget",
     alt: "Category spending view switching between merchant and monthly breakdowns",
@@ -60,7 +62,8 @@ const designHighlights = [
     label: "03 / Adjust",
     title: "Reallocate the budget without restarting setup.",
     body: "Take an amount from one category and give it to another. Preview both revised limits while keeping the overall budget unchanged.",
-    reason: "Separate the adjustment from saving it. The final choice makes clear whether the revised plan is for one month or ongoing.",
+    visualChange: "The form is organized as Take from, Give to, and Amount. A summary previews both revised category limits and keeps the unchanged total directly above the confirmation action.",
+    benefit: "People can check the direction and consequence before confirming, and understand that they are reallocating a plan rather than transferring money.",
     tradeoff: "A review step adds a little effort, but keeps a temporary adjustment from silently becoming the new default.",
     video: "reallocate",
     alt: "Reallocating budget allowances between two categories, with both limits visible",
@@ -244,17 +247,23 @@ const screenNumber = (src) => src.replace(/\D+/g, "")
 
 const testIterations = [
   {
-    metric: "50% → 83% task success",
+    title: "Spending chart",
+    count: "3 of 6 → 5 of 6",
+    change: "Enlarged the selected category, added the dashed 100% budget ring, and repeated status with a name, dollar amount, and percentage.",
     result: "With the dynamic spending dial, five of six participants identified the most overspent category without help, compared with three of six in the first round. Median scan time fell from 41 to 24 seconds.",
-    nextStep: "Test the chart with a broader age range and add non-color cues so category and budget status remain clear for users with low vision or color-vision differences."
+    nextStep: "Test the chart with a broader age range and verify that the ring, category name, amount, and percentage remain legible for users with low vision or color-vision differences."
   },
   {
-    metric: "33% → 83% completion",
+    title: "Budget reallocation",
+    count: "2 of 6 → 5 of 6",
+    change: "Separated the source and destination into Take from and Give to, then previewed both new limits and the unchanged total before confirmation.",
     result: "Five of six participants completed Move Budget independently, up from two of six with the early flow. Average wrong taps dropped from 2.1 to 0.7 after Take from, Give to, and the confirmation summary were separated.",
     nextStep: "Validate the difference between a one-month and ongoing change, then test undo, insufficient-funds, and multi-category edge cases before defining the final interaction rules."
   },
   {
-    metric: "17% → 67% self-recovery",
+    title: "Assistant exploration",
+    count: "1 of 6 → 4 of 6",
+    change: "Placed suggested questions and responses inside the spending view so a follow-up question could begin without leaving the current category context.",
     result: "Four of six participants used the embedded AI assistant to resolve a follow-up spending question without moderator support, compared with one of six who recovered through navigation alone in the first round. Five of six rated the answer as relevant.",
     nextStep: "Make the assistant show which transactions and dates support each answer, add clear handoff to standard controls, and test trust when the AI is uncertain or cannot complete a request."
   }
@@ -333,7 +342,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>01 / The core experience</p>
               <h2>From a spending total to a decision.</h2>
-              <p className={styles.sectionLead}>For people checking where their money went and deciding how to adjust the rest of the month, the flow connects overview, detail and budget controls.</p>
+              <p className={styles.sectionLead}>Each part of the flow pairs a visible interface change with the decision it helps someone make: find the issue, trace its source, then adjust the plan.</p>
             </div>
             <div className={styles.highlightList}>
               {designHighlights.map((item) => (
@@ -342,8 +351,11 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <p className={styles.microLabel}>{item.label}</p>
                     <h3>{item.title}</h3>
                     <p>{item.body}</p>
+                    <dl className={styles.impactMap}>
+                      <div><dt>Visual change</dt><dd>{item.visualChange}</dd></div>
+                      <div><dt>What it helps</dt><dd>{item.benefit}</dd></div>
+                    </dl>
                     <dl className={styles.reasoning}>
-                      <div><dt>Why this approach</dt><dd>{item.reason}</dd></div>
                       <div><dt>The trade-off</dt><dd>{item.tradeoff}</dd></div>
                     </dl>
                   </div>
@@ -505,15 +517,18 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>05 / Testing & iteration</p>
               <h2>What changed across the task rounds.</h2>
-              <p className={styles.sectionLead}>The case study compares two rounds across the spending chart, budget reallocation and an assistant exploration. Each task involved six participants; the small counts matter more than treating the percentages as a general result.</p>
+              <p className={styles.sectionLead}>The comparison below connects each design change to what happened in the next task round. Each task involved six participants, so the counts are shown directly rather than treated as a general result.</p>
             </div>
             <div className={styles.iterationList}>
               {testIterations.map((item, index) => (
-                <article className={styles.iterationItem} key={item.metric}>
+                <article className={styles.iterationItem} key={item.title}>
                   <div>
-                    <p className={styles.microLabel}>0{index + 1} / {["Spending chart", "Budget reallocation", "Assistant exploration"][index]}</p>
-                    <h3>{["3 of 6 → 5 of 6", "2 of 6 → 5 of 6", "1 of 6 → 4 of 6"][index]}</h3>
-                    <p>{item.result}</p>
+                    <p className={styles.microLabel}>0{index + 1} / {item.title}</p>
+                    <h3>{item.count}</h3>
+                    <dl className={styles.iterationEvidence}>
+                      <div><dt>Design change</dt><dd>{item.change}</dd></div>
+                      <div><dt>Observed help</dt><dd>{item.result}</dd></div>
+                    </dl>
                   </div>
                   <div className={styles.nextStep}><p className={styles.microLabel}>Next question</p><p>{item.nextStep}</p></div>
                 </article>

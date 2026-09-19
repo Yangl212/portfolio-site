@@ -49,6 +49,12 @@
 .highlightCard { display: grid; gap: 30px; align-items: center; padding-top: 36px; border-top: 1px solid var(--divider); }
 .highlightCopy { display: flex; flex-direction: column; gap: 20px; max-width: 60ch; }
 .highlightCopy h3 { font-size: clamp(1.6rem, 1.1rem + 1.4vw, 2.1rem); line-height: 1.2; max-width: 25ch; letter-spacing: -.03em; }
+.impactMap { display: grid; border: 1px solid var(--divider); }
+.impactMap > div { display: flex; flex-direction: column; gap: 8px; padding: 18px; }
+.impactMap > div + div { border-top: 1px solid var(--divider); }
+.impactMap dt, .iterationEvidence dt { color: var(--muted); font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .065em; text-transform: uppercase; }
+.impactMap dd, .iterationEvidence dd { font-size: .9375rem; line-height: 1.55; }
+.impactMap > div:last-child { background: rgba(255, 255, 255, .38); }
 .reasoning { display: grid; gap: 20px; }
 .reasoning > div { padding-left: 18px; border-left: 2px solid var(--divider); }
 .reasoning dd { margin-top: 8px; font-size: .9375rem; color: var(--muted); }
@@ -104,6 +110,9 @@
 .iterationItem > div { display: flex; flex-direction: column; gap: 14px; }
 .iterationItem h3 { font-size: 2rem; font-weight: 500; line-height: 1.15; }
 .iterationItem p:not(.microLabel) { font-size: .9375rem; }
+.iterationEvidence { display: grid; gap: 18px; }
+.iterationEvidence > div { padding-left: 18px; border-left: 2px solid var(--divider); }
+.iterationEvidence dd { margin-top: 7px; }
 .nextStep { padding-left: 20px; border-left: 2px solid var(--divider); }
 .nextStep p:last-child { color: var(--muted); }
 .webCarousel { min-width: 0; }
@@ -119,6 +128,8 @@
 .projectNavAll:hover { color: var(--inverse); background: var(--text); }
 
 @media (min-width: 700px) {
+  .impactMap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .impactMap > div + div { border-top: 0; border-left: 1px solid var(--divider); }
   .problemGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .decisionGrid, .evidenceGrid, .reflectionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
   .researchStats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
