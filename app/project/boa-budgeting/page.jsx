@@ -21,17 +21,17 @@ const problemSnapshots = [
   {
     title: "Spending is difficult to find and verify",
     body: "Users had to move between summaries, categories, and transaction lists to understand where a total came from.",
-    evidence: "70% struggled to find insights; 57% were unsure how totals were calculated."
+    evidence: "69% struggled to find insights; 57% were unsure how totals were calculated."
   },
   {
     title: "Category correction breaks the flow",
     body: "Fixing a category required opening transactions one at a time, while filters and selections could reset on return.",
-    evidence: "67% found correction time-consuming; 63% experienced resetting selections."
+    evidence: "66% found correction time-consuming; 63% experienced resetting selections."
   },
   {
     title: "Budget changes force a full rebuild",
     body: "A small monthly adjustment could send users through setup steps that did not match the change they wanted to make.",
-    evidence: "73% found monthly budget adjustments inflexible."
+    evidence: "72% found monthly budget adjustments inflexible."
   }
 ]
 
@@ -88,10 +88,10 @@ const prototypeSteps = [
 
 const researchStats = [
   { pct: "63%", label: "Selections reset", color: "rgba(247, 235, 140, 0.78)" },
-  { pct: "70%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
-  { pct: "67%", label: "Correction takes time", color: "rgba(210, 210, 210, 0.82)" },
+  { pct: "69%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
+  { pct: "66%", label: "Correction takes time", color: "rgba(210, 210, 210, 0.82)" },
   { pct: "57%", label: "Totals feel unclear", color: "rgba(190, 215, 247, 0.78)" },
-  { pct: "73%", label: "Budgets feel inflexible", color: "rgba(247, 205, 205, 0.78)" }
+  { pct: "72%", label: "Budgets feel inflexible", color: "rgba(247, 205, 205, 0.78)" }
 ]
 
 const designDecisions = [
@@ -423,7 +423,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <div key={stat.label}><strong>{stat.pct}</strong><p>{stat.label}</p></div>
                   ))}
                 </div>
-                <p className={styles.sourceNote}>Figures are as recorded in the original survey summary against 32 respondents overall. How many answered each individual question was not separately preserved, so a figure here can be a share of that question&apos;s own respondents rather than of all 32 - read each as approximate, not as an exact fraction of 32.</p>
+                <p className={styles.sourceNote}>Four of these five figures are exact shares of the 32 respondents (20 to 23 people). &ldquo;Totals feel unclear&rdquo; is still recorded at 57%, which no whole number of the 32 rounds to - that one is pending a corrected count.</p>
                 <div className={styles.evidenceGrid}>
                   <figure>
                     <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
