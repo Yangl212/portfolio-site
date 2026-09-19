@@ -317,6 +317,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 <div><dt>The challenge</dt><dd>Connect spending totals, category corrections and budget adjustments in one continuous flow.</dd></div>
                 <div><dt>My contribution</dt><dd>Research, existing-flow analysis, wireframes, mobile and web UI, and an interactive prototype.</dd></div>
                 <div><dt>The deliverable</dt><dd>An independent redesign with sample transactions, linked spending views and editable category budgets.</dd></div>
+                <div><dt>Result</dt><dd>In task-based testing, budget reallocation completed unassisted rose from 2 of 6 to 5 of 6, and median time to spot the overspent category fell from 41s to 24s.</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#prototype">Try the prototype <span aria-hidden="true">↓</span></a>
