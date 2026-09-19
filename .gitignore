@@ -17,3 +17,9 @@ out/
 # reads the WebP copies in public/alcohol/book/pages/ -- these are the originals
 # to re-export from, and they must stay out of public/ so they are not shipped.
 /alcohol-book-source/
+
+# Raw desktop recordings for the Cleared case study (55 MB). The page plays the
+# cropped loops in public/cleared/media/; these are the originals that
+# scripts/cleared-desktop-media-build.cjs re-exports from.
+/public/cleared/video1.mp4
+/public/cleared/video2.mp4

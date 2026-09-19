@@ -21,8 +21,7 @@ export function PrototypePreview() {
     <figure className={styles.prototypeStage}>
       <div className={styles.prototypeIntro}>
         <div>
-          <h3>Try a planning decision.</h3>
-          <p>Open a dashed suggestion, inspect its source, adjust the time and confirm. Try the conflict path and undo, too.</p>
+          <p>Start with Review next. Check the email, choose a time, then try Undo.</p>
         </div>
         <a className={styles.outlineAction} href={PROTOTYPE_SRC} target="_blank" rel="noreferrer">Open desktop prototype <span aria-hidden="true">↗</span></a>
       </div>
@@ -39,7 +38,7 @@ export function PrototypePreview() {
           <img src="/cleared/desktop-preview.png" alt="Desktop Calendar prototype with scheduling suggestions in the week view" width="1440" height="900" loading="lazy" />
         </a>
       )}
-      <figcaption>{desktop ? "Interactive desktop prototype · Simulated email and calendar data" : "Desktop preview · Best explored on a larger screen. The mobile walkthroughs above demonstrate the smaller-screen flow."}</figcaption>
+      <figcaption>{desktop ? "Interactive desktop prototype · Simulated email and calendar data" : "Desktop preview · Open on a larger screen to interact with the prototype."}</figcaption>
     </figure>
   )
 }

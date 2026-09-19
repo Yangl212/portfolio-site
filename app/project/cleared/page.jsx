@@ -6,65 +6,120 @@ import CaseVideo from "./CaseVideo"
 import { PrototypePreview } from "./PrototypePreview"
 import styles from "./page.module.css"
 
+const prototypeUrl = "/cleared/calendar-assistant-prototype.html?v=20260918-review"
+
 const decisions = [
   {
     label: "01 / Context",
-    title: "Put the suggestion where the time decision happens.",
-    body: "Proposed work appears alongside existing events. A dashed outline separates a suggestion from a confirmed booking, and the assistant layer can be hidden.",
-    rationale: "Seeing the surrounding day lets people judge whether a task fits before accepting it. A separate queue would offer more room for triage, but less immediate calendar context.",
-    tradeoff: "Suggestions add visual density to the calendar. The layer toggle gives people a way to clear the view.",
-    video: "collect",
-    alt: "Mobile Calendar demonstration: show and hide the layer of scheduling suggestions"
+    title: "Compare the change before moving the task.",
+    body: "I kept the conflict and proposed time in the week view so people can judge the change against the rest of their day.",
+    tradeoff: "More calendar context adds visual density. The notice focuses on the affected task.",
+    video: "desktop-replan",
+    alt: "Desktop Calendar: review a meeting conflict and confirm moving the quote work to 16:00"
   },
   {
     label: "02 / Evidence",
-    title: "Keep the request one step away.",
-    body: "Opening a suggestion reveals the source email and the phrases behind it. Time and duration sit beside that context so the proposal can be checked before it is accepted.",
-    rationale: "A compact summary keeps the calendar readable; opening the source gives people the detail needed to check the assistant. Both are part of the same review flow.",
-    tradeoff: "Inspecting the source adds a step. It stays available when the wording or recommendation needs a closer look.",
-    video: "check",
-    alt: "Mobile Calendar demonstration: open a suggestion and inspect the email it came from"
+    title: "Keep the email beside the suggestion.",
+    body: "I put the source email beside time and duration so people can check the recommendation without leaving the calendar.",
+    tradeoff: "Opening the full email adds a step, so the key request is shown first.",
+    video: "desktop-source",
+    alt: "Desktop Calendar: open a quote suggestion and inspect the original email"
   },
   {
     label: "03 / Control",
-    title: "Make confirmation an explicit action.",
-    body: "People can adjust time and duration before adding the task. A proposed block becomes a calendar event only after confirmation, with an option to undo the change.",
-    rationale: "An incorrect estimate can occupy real working time. Individual review keeps that decision with the person who knows the task and the rest of their day.",
-    tradeoff: "Reviewing each item takes more effort than automatic scheduling. Whether that effort feels worthwhile is a question for testing.",
-    video: "decide",
-    alt: "Mobile Calendar demonstration: review and adjust a proposed time before adding it"
+    title: "Let people choose the final time.",
+    body: "I kept scheduling under individual review. Choosing an alternative slot adds the event, updates the pending count and exposes Undo.",
+    tradeoff: "Choosing a slot currently confirms it immediately. A separate preview and confirmation is the next variant to test.",
+    video: "desktop-confirm",
+    alt: "Desktop Calendar: choose an alternative time, confirm the event and see the Undo action"
   }
 ]
 
-const screens = [
-  ["phone1.png", "Suggested work stays visually distinct from confirmed events."],
-  ["phone2.png", "Open the email context before accepting a suggestion."],
-  ["phone3.png", "Adjust the proposed date, start time and duration."],
-  ["phone4.png", "See the confirmed event and the option to undo."],
-  ["phone5.png", "Review an overlap before committing to the time."],
-  ["phone6.png", "If the overlap is kept, the conflict remains visible."]
+const additionalDemos = [
+  {
+    video: "desktop-duration",
+    title: "Ask for the missing duration.",
+    body: "Choose a duration, preview the block and confirm it in the calendar.",
+    alt: "Choose a half-day duration for Draft the Q3 outline and add the task to the desktop calendar"
+  },
+  {
+    video: "desktop-preferences",
+    title: "Review a preference before saving it.",
+    body: "Confirm a morning scheduling preference before it becomes a rule. History and percentages use sample data.",
+    alt: "Confirm a morning scheduling preference in the desktop assistant settings"
+  },
+  {
+    video: "desktop-direct",
+    title: "Keep direct calendar editing available.",
+    body: "Drag an existing meeting; its time updates and Undo appears.",
+    alt: "Drag an existing meeting in the desktop week view and see the updated time"
+  }
+]
+
+const mobileScreens = [
+  ["phone1.png", "Distinguish suggestions from bookings."],
+  ["phone2.png", "Check the source email."],
+  ["phone3.png", "Adjust time and duration."],
+  ["phone4.png", "Confirm, with Undo available."],
+  ["phone5.png", "Review a scheduling conflict."],
+  ["phone6.png", "Keep unresolved conflicts visible."]
 ]
 
 const reviewFindings = [
   {
-    title: "Separate the request from the assumption.",
-    finding: "The email says “by end of week.” Presenting Friday at 18:00 as an extracted fact gave an inferred deadline more certainty than the source supported.",
-    status: "Updated in the desktop prototype",
-    response: "The review panel now labels the cutoff as inferred and the two-hour duration as an estimate, with the original email available for comparison."
+    title: "Source clarity",
+    status: "Updated",
+    response: "The desktop prototype separates email facts, inferred deadlines and estimated duration. Mobile labels still need the same update."
   },
   {
-    title: "Keep recovery within reach.",
-    finding: "Confirming an alternative time and immediately undoing it works in the sample flow. The Undo message starts disappearing after 4.2 seconds, leaving a short window for recovery.",
-    status: "Proposed next iteration",
-    response: "Explore a recovery action in event details or a recent-changes view, so the option remains available after the temporary message disappears."
+    title: "Recovery",
+    status: "Next iteration",
+    response: "Undo works, but fades after 4.2 seconds. Add a persistent recovery action in event details."
   },
   {
-    title: "Carry uncertainty across devices.",
-    finding: "The mobile review sheet shows the source email and a two-hour duration, but it does not yet carry the desktop version’s explicit inferred-deadline and estimate labels.",
-    status: "Planned mobile refinement",
-    response: "Bring those labels into the bottom sheet. The layouts can differ while keeping the meaning of a source, an estimate and a confirmation consistent."
+    title: "Command consistency",
+    status: "Needs refinement",
+    response: "“Before Thursday” produces a Friday preview, and the applied time differs. Fix date constraints and preview accuracy before testing this path."
   }
 ]
+
+const usabilityTest = {
+  facts: [
+    ["Planned participants", "6 people coordinating client work by email"],
+    ["Format", "30-minute moderated desktop sessions"],
+    ["Briefing", "Task goals, without interface guidance"],
+    ["Tasks", "Schedule a quote, identify suggestions, resolve a conflict"]
+  ],
+  hypotheses: [
+    {
+      title: "Can people commit without repeated checking?",
+      measure: "Record time to confirm and source-email reopenings.",
+      rule: "If most complete the task but median confirmation exceeds a minute, investigate the hesitation before removing steps."
+    },
+    {
+      title: "Are suggestions mistaken for bookings?",
+      measure: "Ask participants to identify all three pending suggestions without guidance.",
+      rule: "If fewer than five of six identify all three, strengthen the visual distinction."
+    },
+    {
+      title: "Is an inferred deadline read as a fact?",
+      measure: "Ask what time the sender specified. The email gives no exact time.",
+      rule: "Two or more inference errors would make clearer source labels the next priority."
+    },
+    {
+      title: "Does choosing a time confirm too soon?",
+      measure: "Observe whether people expect a preview and find Undo after choosing a slot.",
+      rule: "If immediate confirmation surprises them, compare a separate Add to calendar step."
+    }
+  ]
+}
+
+function DesktopDemo({ name, label, priority = false, className }) {
+  return <CaseVideo className={className}
+    src={`/cleared/media/${name}-loop.mp4`}
+    poster={`/cleared/media/${name}-poster.webp`}
+    width={1468} height={918} label={label} priority={priority} />
+}
 
 export default function ClearedPage({ track = "uiux" }) {
   return (
@@ -83,26 +138,27 @@ export default function ClearedPage({ track = "uiux" }) {
                 Turning email commitments into calendar suggestions people can inspect, adjust and confirm.
               </p>
               <dl className={styles.heroFacts}>
-                <div><dt>The challenge</dt><dd>Connect a request in an email to a realistic place in the working day.</dd></div>
-                <div><dt>My contribution</dt><dd>Product framing, interaction flows, desktop and mobile UI, and an interactive prototype.</dd></div>
-                <div><dt>Current status</dt><dd>Independent design concept with simulated data. Not yet user-tested.</dd></div>
+                <div><dt>The challenge</dt><dd>Fit email commitments around a changing workday.</dd></div>
+                <div><dt>My contribution</dt><dd>Product framing, desktop + mobile UI, and interactive prototyping.</dd></div>
+                <div><dt>Status</dt><dd>Concept · Simulated data · User testing planned</dd></div>
               </dl>
               <dl className={styles.meta}>
                 <div><dt>Role</dt><dd>Product Designer</dd></div>
                 <div><dt>Timeline</dt><dd>8 weeks</dd></div>
-                <div><dt>Platform</dt><dd>Gmail + Calendar</dd></div>
+                <div><dt>Platform</dt><dd>Desktop + mobile</dd></div>
               </dl>
               <div className={styles.actions}>
                 <a className={styles.action} href="#experience">Explore the design <span aria-hidden="true">↓</span></a>
-                <a className={styles.textLink} href="#prototype">Try the prototype <span aria-hidden="true">↗</span></a>
+                <a className={styles.textLink} href={prototypeUrl} target="_blank" rel="noreferrer">Open desktop prototype <span aria-hidden="true">↗</span></a>
               </div>
             </div>
             <figure className={styles.heroVisual}>
               <CaseVideo
                 src="/cleared/media/check-loop.mp4"
                 poster="/cleared/media/check-poster.webp"
-                width={360} height={704}
-                label="Preview: inspect an email-based calendar suggestion"
+                width={360}
+                height={704}
+                label="Preview: inspect the email behind a mobile calendar suggestion"
                 priority
               />
             </figure>
@@ -112,60 +168,55 @@ export default function ClearedPage({ track = "uiux" }) {
             <a href="#context">Context</a>
             <a href="#experience">Design choices</a>
             <a href="#trust">AI & trust</a>
+            <a href="#mobile-ui">Mobile UI</a>
             <a href="#prototype">Prototype</a>
             <a href="#validation">Evaluation</a>
           </nav>
 
           <section id="context" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>The starting point</p>
-              <h2>A request is only the beginning of a plan.</h2>
+              <p className={styles.kicker}>01 / The starting point</p>
+              <h2>An email gives a deadline, not a plan.</h2>
             </div>
             <div className={styles.contextGrid}>
               <div>
                 <p className={styles.microLabel}>Target user hypothesis</p>
-                <p className={styles.bodyLead}>People coordinating client work through email, with several commitments competing for time.</p>
-                <p>This concept asks whether reviewing the request and the calendar together can make those planning decisions easier. The need and the proposed workflow still need validation with users.</p>
+                <p className={styles.bodyLead}>People coordinating client work through email and a busy calendar.</p>
+                <p>I explored a review step between an email request and a calendar booking, where people can check the source, estimate effort and choose a time.</p>
               </div>
               <div className={styles.scenario}>
                 <p className={styles.microLabel}>Illustrative task</p>
                 <blockquote>“Could you send the revised quote by end of week?”</blockquote>
-                <p>The request leaves decisions open: how long the work will take, when to do it and what happens if another meeting moves.</p>
+                <p>How much time does it need, and where will it fit?</p>
               </div>
-            </div>
-            <div className={styles.baseline}>
-              <p><strong>Existing foundation</strong> Google documents event creation and scheduling assistance in Gemini.</p>
-              <p><strong>Focus of this concept</strong> Review proposed work in calendar context, keep the email accessible and confirm each change.</p>
             </div>
             <p className={styles.sourceNote}>
               Product references: <a href="https://support.google.com/mail/answer/14355636" target="_blank" rel="noreferrer">Gemini in Gmail</a> and{" "}
-              <a href="https://support.google.com/calendar/answer/6084018" target="_blank" rel="noreferrer">events from Gmail</a>. Public documentation informs the product baseline; it does not validate this concept.
+              <a href="https://support.google.com/calendar/answer/6084018" target="_blank" rel="noreferrer">events from Gmail</a>.
             </p>
           </section>
 
           <section id="experience" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Three design choices</p>
+              <p className={styles.kicker}>02 / Three design choices</p>
               <h2>Keep context, evidence and control together.</h2>
-              <p className={styles.sectionLead}>The mobile walkthroughs show the current design. Each choice has a benefit, a cost and something to learn in testing.</p>
             </div>
             <div className={styles.decisionList}>
               {decisions.map((decision) => (
                 <article className={styles.decision} key={decision.video}>
                   <div className={styles.decisionCopy}>
-                    <p className={styles.microLabel}>{decision.label}</p>
-                    <h3>{decision.title}</h3>
-                    <p>{decision.body}</p>
+                    <div className={styles.decisionSummary}>
+                      <p className={styles.microLabel}>{decision.label}</p>
+                      <h3>{decision.title}</h3>
+                      <p>{decision.body}</p>
+                    </div>
                     <dl className={styles.reasoning}>
-                      <div><dt>Why this approach</dt><dd>{decision.rationale}</dd></div>
                       <div><dt>The trade-off</dt><dd>{decision.tradeoff}</dd></div>
                     </dl>
                   </div>
-                  <CaseVideo
+                  <DesktopDemo
                     className={styles.decisionVideo}
-                    src={`/cleared/media/${decision.video}-loop.mp4`}
-                    poster={`/cleared/media/${decision.video}-poster.webp`}
-                    width={360} height={704}
+                    name={decision.video}
                     label={decision.alt}
                   />
                 </article>
@@ -175,35 +226,30 @@ export default function ClearedPage({ track = "uiux" }) {
 
           <section id="trust" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>AI & trust</p>
+              <p className={styles.kicker}>03 / AI & trust</p>
               <h2>Make the assumption visible.</h2>
-              <p className={styles.sectionLead}>A deadline mentioned in an email and an exact time inferred by an assistant carry different certainty. The interface needs to preserve that distinction.</p>
+              <p className={styles.sectionLead}>I changed the deadline label after finding that an inferred time looked like a fact from the email.</p>
             </div>
             <div className={styles.trustExample}>
-              <div><span className={styles.microLabel}>01 / Email wording</span><p>“By end of week”</p><span>The original request remains available.</span></div>
-              <div><span className={styles.microLabel}>02 / Assistant assumption</span><p>Friday, 18:00 <small>Inferred</small></p><span>The exact time was not specified in the email.</span></div>
-              <div><span className={styles.microLabel}>03 / Review before acting</span><p>Check the deadline</p><span>Verify the assumption before relying on the proposed slot.</span></div>
+              <div><span className={styles.microLabel}>Email request</span><p>“By end of week”</p><span>No exact time specified.</span></div>
+              <div><span className={styles.microLabel}>Earlier label</span><p>Friday, 18:00</p><span>Presented as extracted from the email.</span></div>
+              <div><span className={styles.microLabel}>Revised desktop label</span><p>Friday, 18:00 <small>Inferred</small></p><span>An assumption to check with the sender.</span></div>
             </div>
-            <p className={styles.sourceNote}>In the desktop prototype, the deadline is labeled as inferred and the duration as an estimate. Bringing the same labels into the mobile review sheet is the next UI refinement.</p>
+            <p className={styles.sourceNote}>Recordings and mobile screens show the earlier wording; the <a href={prototypeUrl} target="_blank" rel="noreferrer">desktop prototype</a> includes the revised labels.</p>
           </section>
 
-          <section id="prototype" className={styles.caseSection}>
+          <section id="mobile-ui" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Across screens</p>
-              <h2>Review one task. Keep the wider day in view.</h2>
-              <p className={styles.sectionLead}>Both versions follow the same sequence: inspect the request, adjust the proposal, then confirm. The layout changes with the available space.</p>
+              <p className={styles.kicker}>04 / Mobile high fidelity</p>
+              <h2>Focus on one scheduling decision at a time.</h2>
+              <p className={styles.sectionLead}>I adapted the desktop week view into a day view and bottom sheet, keeping the current task and surrounding events together.</p>
             </div>
-            <div className={styles.deviceGrid}>
-              <div><h3>Desktop / Plan in context</h3><p>The week view keeps surrounding commitments visible while a popover holds the suggestion and its source.</p></div>
-              <div><h3>Mobile / Focus on one decision</h3><p>A day view and bottom sheet give a single suggestion room to be read and adjusted on a smaller screen.</p></div>
-            </div>
-            <PrototypePreview />
-            <details className={styles.screenDetails}>
-              <summary>Inspect the six mobile screens <span>Review, confirm and handle a conflict</span></summary>
+            <details className={styles.screenDetails} open>
+              <summary>Six mobile screens</summary>
               <div className={styles.screensGrid}>
-                {screens.map(([file, caption], index) => (
+                {mobileScreens.map(([file, caption], index) => (
                   <figure key={file}>
-                    <a href={`/cleared/${file}`} target="_blank" rel="noreferrer" aria-label={`Open screen ${index + 1} at full size: ${caption}`}>
+                    <a href={`/cleared/${file}`} target="_blank" rel="noreferrer" aria-label={`Open mobile screen ${index + 1} at full size: ${caption}`}>
                       <img src={`/cleared/${file}`} alt={caption} width="834" height="1752" loading="lazy" />
                       <span className={styles.imageLink}>Open full size <span aria-hidden="true">↗</span></span>
                     </a>
@@ -214,29 +260,80 @@ export default function ClearedPage({ track = "uiux" }) {
             </details>
           </section>
 
+          <section id="prototype" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>05 / Interactive prototype</p>
+              <h2>Try a planning decision.</h2>
+            </div>
+            <PrototypePreview />
+            <details id="more-interactions" className={styles.moreDetails}>
+              <summary>Explore three more desktop interactions</summary>
+              <div className={styles.additionalDemos}>
+                {additionalDemos.map((demo, index) => (
+                  <article key={demo.video} className={styles.additionalDemo}>
+                    <div className={styles.additionalCopy}>
+                      <p className={styles.microLabel}>Interaction / {String(index + 1).padStart(2, "0")}</p>
+                      <h3>{demo.title}</h3>
+                      <p>{demo.body}</p>
+                    </div>
+                    <DesktopDemo name={demo.video} label={demo.alt} />
+                  </article>
+                ))}
+              </div>
+            </details>
+          </section>
+
           <section id="validation" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Evaluation & iteration</p>
-              <h2>What the prototype review revealed.</h2>
-              <p className={styles.sectionLead}>An AI-assisted prototype walkthrough and browser interaction checks examined source clarity, confirmation and recovery using simulated data. The findings informed one desktop update and two priorities for the next iteration.</p>
+              <p className={styles.kicker}>06 / Evaluation & iteration</p>
+              <h2>What changed. What comes next.</h2>
+              <p className={styles.sectionLead}>Findings from AI-assisted review and browser checks; participant testing is still pending.</p>
             </div>
             <div className={styles.validationGrid}>
-              {reviewFindings.map((item, index) => (
+              {reviewFindings.map((item) => (
                 <article key={item.title}>
-                  <p className={styles.microLabel}>Review finding / 0{index + 1}</p>
+                  <p className={styles.microLabel}>{item.status}</p>
                   <h3>{item.title}</h3>
-                  <p>{item.finding}</p>
-                  <div className={styles.observe}><span>{item.status}</span><p>{item.response}</p></div>
+                  <p>{item.response}</p>
                 </article>
               ))}
             </div>
-            <div className={styles.nextValidation}>
-              <h3>Next: test understanding and recovery with people.</h3>
-              <p>Participant usability testing is still pending. The next round should check whether people can distinguish suggestions from confirmed events, identify the assistant’s assumptions and recover from an unwanted change without guidance.</p>
-            </div>
-            <p className={styles.limitNote}>This review checks the prototype’s behavior and presentation. Live Gmail integration, extraction accuracy and improvements in planning time remain unvalidated.</p>
+            <p className={styles.limitNote}>Live integration, AI accuracy and time savings remain unvalidated.</p>
             <p className={styles.sourceNote}>Independent concept based on public Google Workspace documentation. Not affiliated with Google.</p>
           </section>
+
+          <aside id="testing" className={styles.testing} aria-labelledby="testing-title">
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>Planned user testing</p>
+              <h2 id="testing-title">Can people tell a suggestion from a commitment?</h2>
+              <p className={styles.sectionLead}>Six planned sessions will check suggestion status, inferred deadlines and unintended confirmations. Sessions have not yet run.</p>
+            </div>
+            <details className={styles.moreDetails}>
+              <summary>View the test plan</summary>
+              <div className={styles.testPlan}>
+                <dl className={styles.testFacts}>
+                  {usabilityTest.facts.map(([term, detail]) => (
+                    <div key={term}><dt>{term}</dt><dd>{detail}</dd></div>
+                  ))}
+                </dl>
+                <div className={styles.hypothesisList}>
+                  {usabilityTest.hypotheses.map((item, index) => (
+                    <article className={styles.hypothesis} key={item.title}>
+                      <div className={styles.hypothesisSummary}>
+                        <p className={styles.microLabel}>Question / 0{index + 1}</p>
+                        <h3>{item.title}</h3>
+                        <p>{item.measure}</p>
+                      </div>
+                      <dl className={styles.reasoning}>
+                        <div><dt>Decision rule</dt><dd>{item.rule}</dd></div>
+                      </dl>
+                    </article>
+                  ))}
+                </div>
+                <p className={styles.sourceNote}>These are iteration criteria for a small formative study, not statistical conclusions.</p>
+              </div>
+            </details>
+          </aside>
           <ProjectNav slug="cleared" track={track} styles={styles} />
         </div>
         <SiteFooter />
