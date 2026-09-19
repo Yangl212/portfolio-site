@@ -7,6 +7,12 @@ import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: { absolute: "Lele Yang — Visual & Brand Designer" },
+  description:
+    "Visual and brand design across identity, digital, and visual systems: a tarot brand, a candy board game, and an editorial zine."
+}
+
 /* Both home pages render the same markup over the same eight projects. The
    track decides the order and where the cards link, nothing else. */
 const TRACK = "visual"
@@ -23,10 +29,16 @@ export default function VisualPage() {
         <section className={styles.content}>
           <header className={styles.hero}>
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
-            <p className={`${styles.heroCopy} ${styles.reveal}`}>
-              Visual &amp; Brand Designer working across identity, digital, and visual systems.
-              I care about strong concepts, clear communication, and making things people remember.
-            </p>
+            <div className={`${styles.heroIntro} ${styles.reveal}`} style={{ animationDelay: "100ms" }}>
+              <p className={styles.heroCopy}>
+                Visual &amp; brand designer creating identity systems, digital experiences,
+                and memorable visual worlds.
+              </p>
+              <p className={styles.heroStatus}>
+                Parsons MFA &rsquo;26 <span aria-hidden="true">·</span> Former UI/UX Design Intern at VortexNet
+                <span aria-hidden="true">·</span> <strong>Seeking Visual &amp; Brand Design roles across the U.S.</strong>
+              </p>
+            </div>
           </header>
 
           <section className={styles.selectedWork}>

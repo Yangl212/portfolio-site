@@ -1,4 +1,4 @@
-import BackstagePage from "../../../project/backstage/page"
+import BackstagePage, { metadata as projectMetadata } from "../../../project/backstage/page"
 
 /* Same case study, entered from the visual track. The page content lives once,
    in app/project/backstage - only the track differs, which is what keeps the
@@ -7,6 +7,7 @@ import BackstagePage from "../../../project/backstage/page"
    Canonical points at the UI/UX URL so search engines index one copy; both URLs
    stay fully usable when linked directly. */
 export const metadata = {
+  ...projectMetadata,
   alternates: { canonical: "/project/backstage" }
 }
 

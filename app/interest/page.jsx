@@ -4,6 +4,12 @@ import { trackBase } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Interest",
+  description:
+    "Zines, illustration, and photography from travels in Japan, Thailand, the UK, and beyond - personal work outside client projects."
+}
+
 const travelPhotos = [
   {
     src: "/framer-assets/images/fa185a10f40131e943355fcaa6c679e2850c2578.png",

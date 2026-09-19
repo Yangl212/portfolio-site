@@ -8,6 +8,12 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "BOA: Budgeting Redesign",
+  description:
+    "An independent redesign of Bank of America's spending and budgeting flow: trace a total to its transactions, fix categories in bulk, and adjust a budget without restarting setup."
+}
+
 const img = (hash) => `/framer-assets/images/${hash}`
 const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260915-1526"
 
@@ -287,28 +293,28 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
         <div className={styles.content}>
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
-              <div className={styles.eyebrow}>
+              <div className={`${styles.eyebrow} ${styles.reveal}`}>
                 <span className={styles.pill}>Independent case study</span>
                 <span>Product · UI/UX · 2026</span>
               </div>
-              <h1>BOA: Spending<br />&amp; budgeting.</h1>
-              <p className={styles.heroLead}>Understand the spending. Correct the details. Adjust the plan.</p>
-              <dl className={styles.meta}>
+              <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>BOA: Spending<br />&amp; budgeting.</h1>
+              <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>Understand the spending. Correct the details. Adjust the plan.</p>
+              <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
                 <div><dt>Role</dt><dd>UI/UX Designer</dd></div>
                 <div><dt>Timeline</dt><dd>8 weeks</dd></div>
                 <div><dt>Platform</dt><dd>Mobile + Web</dd></div>
               </dl>
-              <dl className={styles.heroFacts}>
+              <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>The challenge</dt><dd>Connect spending totals, category corrections and budget adjustments in one continuous flow.</dd></div>
                 <div><dt>My contribution</dt><dd>Research, existing-flow analysis, wireframes, mobile and web UI, and an interactive prototype.</dd></div>
                 <div><dt>The deliverable</dt><dd>An independent redesign with sample transactions, linked spending views and editable category budgets.</dd></div>
               </dl>
-              <div className={styles.actions}>
+              <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#prototype">Try the prototype <span aria-hidden="true">↓</span></a>
                 <a className={styles.textLink} href="#experience">See the design choices</a>
               </div>
             </div>
-            <div className={styles.heroVisual}>
+            <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
               <CaseVideo src="/boa/media/reallocate-loop.mp4" poster="/boa/media/reallocate-poster.webp"
                 width={720} height={1408} label="BOA preview: reallocate a category budget" priority />
             </div>
@@ -547,7 +553,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             </div>
             <p className={styles.sourceNote}>Independent redesign concept. Not affiliated with Bank of America.</p>
           </section>
-          <ProjectNav slug="uxcasestudy" track={track} styles={styles} />
+          <ProjectNav slug="boa-budgeting" track={track} styles={styles} />
         </div>
         <SiteFooter />
       </div>

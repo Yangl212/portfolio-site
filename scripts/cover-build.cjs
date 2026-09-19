@@ -5,7 +5,7 @@ const path = require('node:path');
 const sharp = require('sharp');
 
 const covers = {
-  uxcasestudy: 'pic/Cover1.png',
+  'boa-budgeting': 'pic/Cover1.png',
   lastmessage: 'public/framer-assets/images/0e9348c3cf750b5b00ab3ec032f26a2cc73e4197.png',
   backstage: 'public/framer-assets/images/3fe62a4c484c9d96ced4a9fead0c31ab65c741b5.png',
   taroo: 'public/Taroo/Frame 5.png',

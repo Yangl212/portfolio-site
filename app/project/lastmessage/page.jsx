@@ -5,6 +5,12 @@ import { trackHome } from "../../../lib/projects"
 import CaseVideo from "../cleared/CaseVideo"
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Last Message",
+  description:
+    "Designing an open-ended detective game through AI conversations, connected evidence, and branching story paths. Play the live build."
+}
+
 const img = (hash) => "/framer-assets/images/" + hash
 const liveUrl = "https://lastmessage.online/test-intro.html"
 const playtestUrl = "https://www.youtube.com/watch?v=UkSPX1I5Q-U"
@@ -86,29 +92,29 @@ export default function LastMessagePage({ track = "uiux" }) {
         <SiteHeader active={trackHome(track)} track={track} />
         <div className={styles.content}>
           <section className={styles.hero} aria-labelledby="project-title">
-            <div className={styles.eyebrow}>
+            <div className={`${styles.eyebrow} ${styles.reveal}`}>
               <span className={styles.pill}>MFA Thesis Project</span>
               <span>Product Design · AI Interaction · 2026</span>
             </div>
             <div className={styles.heroIntro}>
               <div className={styles.heroCopy}>
-                <h1 id="project-title">Last Message</h1>
-                <p className={styles.heroLead}>A browser-based detective game where players question AI characters and piece together a case in their own order.</p>
-                <p className={styles.heroQuestion}>The design challenge: keep an open-ended investigation understandable when both the player's route and the conversation can change.</p>
-                <div className={styles.actions}>
+                <h1 id="project-title" className={styles.reveal} style={{ animationDelay: "60ms" }}>Last Message</h1>
+                <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>A browser-based detective game where players question AI characters and piece together a case in their own order.</p>
+                <p className={`${styles.heroQuestion} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>The design challenge: keep an open-ended investigation understandable when both the player's route and the conversation can change.</p>
+                <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                   <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">Play the live game <span aria-hidden="true">↗</span></a>
                   <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">Watch the playtest</a>
                 </div>
               </div>
-              <img className={styles.heroImage} src="/lastmessage/cover.png" alt="Last Message detective game title screen on a laptop" fetchPriority="high" />
+              <img className={`${styles.heroImage} ${styles.reveal}`} style={{ animationDelay: "140ms" }} src="/lastmessage/cover.png" alt="Last Message detective game title screen on a laptop" fetchPriority="high" />
             </div>
-            <dl className={styles.meta}>
+            <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
               <div><dt>My role</dt><dd>Product Designer</dd></div>
               <div><dt>My scope</dt><dd>UX / UI, AI behavior &amp; web development</dd></div>
               <div><dt>Context</dt><dd>Parsons · MFA Design &amp; Technology</dd></div>
               <div><dt>Timeline</dt><dd>4 months</dd></div>
             </dl>
-            <div className={styles.contribution}>
+            <div className={`${styles.contribution} ${styles.reveal}`} style={{ animationDelay: "300ms" }}>
               <p className={styles.microLabel}>What I delivered</p>
               <p>A playable website, from investigation structure and interface design to character rules and implementation. Tested with eight players; the hidden route remains an iteration priority.</p>
             </div>

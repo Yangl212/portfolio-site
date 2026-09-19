@@ -7,6 +7,12 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "TAROO",
+  description:
+    "A tarot brand for people drawn to good design rather than fortune telling: 22 Major Arcana cards, packaging, and the visual system behind them."
+}
+
 const img = (hash) => `/framer-assets/images/${hash}`
 
 const brandIdea = [

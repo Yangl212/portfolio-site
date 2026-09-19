@@ -8,8 +8,8 @@ import styles from "./page.module.css"
 // The dashboard is a portfolio refinement of the internship case, using mock data.
 // Structural counts describe these exhibits, not measured production outcomes.
 export const metadata = {
-  title: "VortexNet finance dashboard · Lele Yang",
-  description: "Information hierarchy and consolidation for an internal finance dashboard. A partially shipped internship project with a user-test decision story and a portfolio refinement using mock data."
+  title: "VortexNet: Finance Dashboard",
+  description: "Information hierarchy and consolidation for an internal finance dashboard. Today's overview and its task-based navigation were implemented during the internship; the screen shown is a later portfolio refinement."
 }
 
 const media = (name) => "/vortexnet/media/" + name + ".webp"
@@ -64,28 +64,28 @@ export default function VortexNetPage({ track = "uiux" }) {
         <div className={styles.content}>
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
-              <div className={styles.eyebrow}>
+              <div className={`${styles.eyebrow} ${styles.reveal}`}>
                 <span className={styles.pill}>Work experience</span>
                 <span>Internal tool · Information design · 2025</span>
               </div>
-              <h1>VortexNet:<br />Finance dashboard.</h1>
-              <p className={styles.heroLead}>Bringing daily finance information into focus through clearer hierarchy and task-based grouping.</p>
-              <dl className={styles.meta}>
+              <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>VortexNet:<br />Finance dashboard.</h1>
+              <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>Bringing daily finance information into focus through clearer hierarchy and task-based grouping.</p>
+              <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
                 <div><dt>Role</dt><dd>UI/UX Design Intern</dd></div>
                 <div><dt>Timeline</dt><dd>Jun – Oct 2025</dd></div>
                 <div><dt>Platform</dt><dd>Internal desktop tool</dd></div>
               </dl>
-              <dl className={styles.heroFacts}>
-                <div><dt>My scope</dt><dd>Information hierarchy and consolidation, working with product and data teams.</dd></div>
-                <div><dt>Delivery</dt><dd>Partially shipped.</dd></div>
-                <div><dt>Shown here</dt><dd>A portfolio refinement using mock data.</dd></div>
+              <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
+                <div><dt>My scope</dt><dd>Information hierarchy and consolidation for Today&apos;s overview and its task-based navigation.</dd></div>
+                <div><dt>Implemented</dt><dd>Today&apos;s overview and the adjacent sidebar navigation during the internship.</dd></div>
+                <div><dt>Shown here</dt><dd>The implemented structure, extended through a later portfolio refinement with mock data.</dd></div>
               </dl>
-              <div className={styles.actions}>
+              <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#result">Compare before & after <span aria-hidden="true">↓</span></a>
                 <a className={styles.textLink} href="#iteration">Explore the decisions</a>
               </div>
             </div>
-            <div className={styles.heroVisual}>
+            <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
               <Shot name="dashboard-detail" priority width={2114} height={1722}
                 alt="Refined dashboard detail with CNY cash totals, cash movement, settlement deadlines and an assigned work queue"
                 caption="Portfolio refinement · Mock data" />
@@ -107,13 +107,30 @@ export default function VortexNetPage({ track = "uiux" }) {
               <p className={styles.sectionLead}>The refined dashboard connects a cash summary, settlement progress and a prioritized work queue. Each view supports a different daily decision.</p>
             </div>
             <ScreenComparison />
+            <div className={styles.deliveryScope} aria-label="Delivery scope">
+              <article>
+                <p className={styles.microLabel}>Implemented during the internship</p>
+                <h3>Overview and task-based navigation.</h3>
+                <p>I delivered Today&apos;s overview and the adjacent navigation that groups daily monitoring, reconciliation and reporting tasks.</p>
+              </article>
+              <article>
+                <p className={styles.microLabel}>Outside my implemented scope</p>
+                <h3>Downstream workflows.</h3>
+                <p>The destination pages and their end-to-end workflows are not presented here as work I implemented.</p>
+              </article>
+              <article>
+                <p className={styles.microLabel}>Refined afterward</p>
+                <h3>Data clarity and action detail.</h3>
+                <p>For this portfolio version, I later refined the metric definitions, cash chart, settlement schedule, owners and next actions using mock data.</p>
+              </article>
+            </div>
             <div className={styles.chartDecisions}>
               {chartDecisions.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
             </div>
             <div className={styles.statRow}>
               {outcomes.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
             </div>
-            <p className={styles.sourceNote}>These counts describe the illustrated structure, not measured performance.</p>
+            <p className={styles.sourceNote}>The current screen is a portfolio refinement of the implemented overview and navigation. Its mock-data details are illustrative, not measured production performance.</p>
           </section>
 
           <section id="start" className={styles.caseSection}>
@@ -171,7 +188,7 @@ export default function VortexNetPage({ track = "uiux" }) {
                   <p>The working priority model linked each item to a team and a cadence. It informed the landing view and the navigation groups.</p>
                 </div>
                 <dl className={styles.reasoning}>
-                  <div><dt>The trade-off</dt><dd>Prioritizing monitoring gives periodic reports less prominence. Named reporting and admin groups keep those destinations available.</dd></div>
+                  <div><dt>Design trade-off</dt><dd>Prioritizing monitoring gives periodic reports less prominence. Named reporting and admin groups keep those destinations available.</dd></div>
                 </dl>
               </div>
               <div className={styles.tableWrap} role="region" aria-label="Information priority model" tabIndex={0}>

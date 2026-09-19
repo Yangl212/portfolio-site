@@ -6,6 +6,12 @@ import CaseVideo from "./CaseVideo"
 import { PrototypePreview } from "./PrototypePreview"
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "AI Calendar",
+  description:
+    "Redesigning Google Calendar with an AI layer that reads Gmail for dates and deadlines, then proposes time blocks the user can check against the source email and confirm before anything changes."
+}
+
 const prototypeUrl = "/cleared/calendar-assistant-prototype.html?v=20260918-review"
 
 const decisions = [
@@ -129,30 +135,30 @@ export default function ClearedPage({ track = "uiux" }) {
         <div className={styles.content}>
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
-              <div className={styles.eyebrow}>
+              <div className={`${styles.eyebrow} ${styles.reveal}`}>
                 <span className={styles.pill}>Independent case study</span>
                 <span>Product · UI/UX · 2026</span>
               </div>
-              <h1>Google Calendar:<br />AI-assisted planning.</h1>
-              <p className={styles.heroLead}>
+              <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>Google Calendar:<br />AI-assisted planning.</h1>
+              <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>
                 Turning email commitments into calendar suggestions people can inspect, adjust and confirm.
               </p>
-              <dl className={styles.heroFacts}>
+              <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
                 <div><dt>The challenge</dt><dd>Fit email commitments around a changing workday.</dd></div>
                 <div><dt>My contribution</dt><dd>Product framing, desktop + mobile UI, and interactive prototyping.</dd></div>
                 <div><dt>Status</dt><dd>Concept · Simulated data · User testing planned</dd></div>
               </dl>
-              <dl className={styles.meta}>
+              <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>Role</dt><dd>Product Designer</dd></div>
                 <div><dt>Timeline</dt><dd>8 weeks</dd></div>
                 <div><dt>Platform</dt><dd>Desktop + mobile</dd></div>
               </dl>
-              <div className={styles.actions}>
+              <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#experience">Explore the design <span aria-hidden="true">↓</span></a>
                 <a className={styles.textLink} href={prototypeUrl} target="_blank" rel="noreferrer">Open desktop prototype <span aria-hidden="true">↗</span></a>
               </div>
             </div>
-            <figure className={styles.heroVisual}>
+            <figure className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
               <CaseVideo
                 src="/cleared/media/check-loop.mp4"
                 poster="/cleared/media/check-poster.webp"

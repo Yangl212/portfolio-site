@@ -1,4 +1,4 @@
-import InterestPage from "../../interest/page"
+import InterestPage, { metadata as pageMetadata } from "../../interest/page"
 
 /* Same page, entered from the visual track. The content lives once, in
    app/interest - only the track differs, which keeps the header's Work, Interest,
@@ -7,6 +7,7 @@ import InterestPage from "../../interest/page"
 
    Canonical points at the UI/UX URL so search engines index one copy. */
 export const metadata = {
+  ...pageMetadata,
   alternates: { canonical: "/interest" }
 }
 

@@ -1,4 +1,4 @@
-import ContactPage from "../../contact/page"
+import ContactPage, { metadata as pageMetadata } from "../../contact/page"
 
 /* Same page, entered from the visual track. The content lives once, in
    app/contact - only the track differs, which keeps the header's Work, Interest,
@@ -7,6 +7,7 @@ import ContactPage from "../../contact/page"
 
    Canonical points at the UI/UX URL so search engines index one copy. */
 export const metadata = {
+  ...pageMetadata,
   alternates: { canonical: "/contact" }
 }
 

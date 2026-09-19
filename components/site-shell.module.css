@@ -116,6 +116,29 @@
   max-width: 1420px;
 }
 
+.footerContact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: clamp(32px, 4vw, 56px);
+}
+
+.footerContact a {
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  color: var(--inverse);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color 180ms ease, opacity 180ms ease;
+}
+
+.footerContact a:hover,
+.footerContact a:focus-visible {
+  border-color: transparent;
+  opacity: 0.7;
+}
+
 .footerCopy {
   margin: 0;
   font-size: 20px;

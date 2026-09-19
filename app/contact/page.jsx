@@ -4,6 +4,11 @@ import { trackBase } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Contact",
+  description: "Get in touch with Lele Yang for collaboration, inquiries, or just to say hi."
+}
+
 function InstagramIcon() {
   return (
     <svg

@@ -5,6 +5,12 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Graveyard",
+  description:
+    "An interactive archive that visualizes how censored language adapts, survives, and carries cultural memory."
+}
+
 const prototypeUrl = "https://graveyard.framer.website/?editSite"
 
 export default function GraveyardPage({ track = "uiux" }) {

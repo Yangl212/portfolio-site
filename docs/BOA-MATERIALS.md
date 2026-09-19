@@ -1,6 +1,6 @@
 # BOA 求职案例：本次修改与待补材料
 
-预览：`http://localhost:3000/project/uxcasestudy`
+预览：`http://localhost:3000/project/boa-budgeting`
 
 ## 已完成
 

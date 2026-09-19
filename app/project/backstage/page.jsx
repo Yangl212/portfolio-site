@@ -8,6 +8,11 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Backstage",
+  description: "Helping people turn shared interests and free time into real-life plans."
+}
+
 const prototypeUrl = "https://sagbackstage.framer.website/?editSite"
 
 const img = (hash) => `/framer-assets/images/${hash}`

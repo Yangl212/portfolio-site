@@ -7,6 +7,12 @@ import { featuredProjects, moreProjects } from "../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: { absolute: "Lele Yang — Product Designer" },
+  description:
+    "A product designer focused on UX, AI, and interactive experiences, based in New York. Case studies in fintech, AI scheduling, and an AI detective game."
+}
+
 /* Both home pages render the same markup over the same eight projects. The
    track decides the order and where the cards link, nothing else. */
 const TRACK = "uiux"
@@ -23,10 +29,16 @@ export default function HomePage() {
         <section className={styles.content}>
           <header className={styles.hero}>
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
-            <p className={`${styles.heroCopy} ${styles.reveal}`}>
-              A product designer focused on UX, AI, and interactive experiences - based in New York,
-              with an MFA in Design and Technology from Parsons School of Design.
-            </p>
+            <div className={`${styles.heroIntro} ${styles.reveal}`} style={{ animationDelay: "100ms" }}>
+              <p className={styles.heroCopy}>
+                Product designer creating clear, trustworthy experiences for complex systems,
+                AI, and everyday tools.
+              </p>
+              <p className={styles.heroStatus}>
+                Parsons MFA &rsquo;26 <span aria-hidden="true">·</span> Former UI/UX Design Intern at VortexNet
+                <span aria-hidden="true">·</span> <strong>Seeking Product Design roles across the U.S.</strong>
+              </p>
+            </div>
           </header>
 
           <section className={styles.selectedWork}>

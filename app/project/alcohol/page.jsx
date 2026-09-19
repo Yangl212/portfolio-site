@@ -7,6 +7,12 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Alcohol Directory",
+  description:
+    "A riso zine of the cocktails I drank in New York. One spread per drink: what it was, where I had it, and what it tasted like."
+}
+
 const img = (hash) => `/framer-assets/images/${hash}`
 
 const BOOK_SRC = "/alcohol/embed/flipbook.html"

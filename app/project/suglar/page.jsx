@@ -7,6 +7,12 @@ import { trackHome } from "../../../lib/projects"
 
 import styles from "./page.module.css"
 
+export const metadata = {
+  title: "Suglar",
+  description:
+    "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy."
+}
+
 const img = (hash, ext = "png") => `/framer-assets/images/${hash}.${ext}`
 
 const facts = [
