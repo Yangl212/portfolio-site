@@ -66,10 +66,33 @@
 - 41 个失败转账（18 个可重试）、12 个未匹配记录、5 个审批请求属于各自队列，不合计为一个任务总数。
 - 以上是本次作品集重绘使用的示例数值，不是上线数据或测试结果。
 
+## 三段对比：原版 → 当时交付版 → 后续优化版
+
+招聘方反馈："主要的 After 图是为作品集继续优化后的版本，希望直接看到当时实际交付、接受测试的界面。"
+
+现在 `ScreenComparison` 有三个切换项，默认停在中间那个（当时交付版），测试数据就放在它的图注里。
+
+新增的"当时交付版"（`shipped-screen.webp`）由 `vortexnet-source/capture-tool/shipped-dashboard.cjs` 代码生成，结构与优化版完全相同，只是把页面自己写明的"后续优化了这四项"逐条撤回：
+
+| 项目 | 当时交付版 | 后续优化版 |
+| --- | --- | --- |
+| 指标定义 | 只有名称和数字 | 加了 CNY 币种标注和每项的说明行（"Collections less payouts · today"等） |
+| 现金曲线 | 单条收款曲线 | 加了付款对比虚线、图例、"Cumulative since 00:00"副标题、底部净流入汇总 |
+| 结算面板 | 纯列表（批次、金额、时间） | 加了"4 of 7 settled"进度条、待结算金额、下一个截止时间高亮 |
+| 队列表格 | 队列、开放项、优先级 三列 | 增加 Owner 和 Next action 两列 |
+
+保留不变的部分是测试结果所依赖的：9 项任务分组导航、Today's overview、四个命名总额、以及一条现金曲线（10 人全部先看图表这条结论要求图表当时就存在）。
+
+**这四条差异是我按页面原有那句 "I later refined the metric definitions, cash chart, settlement schedule, owners and next actions" 逐项推回来的，不是独立的记录。** 若你记得当时交付版还有别的不同（例如某个模块当时根本没有、或者布局不一样），告诉我，我改 `shipped-dashboard.cjs` 重新生成。
+
+重新生成这一张：`node vortexnet-source/capture-tool/capture-shipped.mjs`，再 `node scripts/vortexnet-media-build.cjs`。
+
 ## 维护素材
 
 - `vortexnet-source/VortexNet Case Study.html`：维护中的打包展示 HTML；新版仪表盘已写回，旧过程部分仍包含未填完的占位内容。
-- `vortexnet-source/capture-tool/dashboard.cjs`：当前仪表盘的 HTML、样式、图表及模拟数据源。
+- `vortexnet-source/capture-tool/dashboard.cjs`：当前仪表盘（后续优化版）的 HTML、样式、图表及模拟数据源。
+- `vortexnet-source/capture-tool/shipped-dashboard.cjs`：当时交付版的还原，复用上面的样式，只撤回后续优化的四项。
+- `vortexnet-source/capture-tool/capture-shipped.mjs`：把当时交付版渲染成 2x PNG。
 - `vortexnet-source/capture-tool/refine-dashboard.cjs`：将新版仪表盘同步回打包 HTML。
 - `vortexnet-source/captures/`：从源 HTML 生成的当前截图。
 - `public/vortexnet/media/`：页面使用的 WebP 图片。

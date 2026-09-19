@@ -21,7 +21,8 @@
 }
 
 .toggle button {
-  min-width: 88px;
+  min-width: 0;
+  white-space: nowrap;
   min-height: 44px;
   padding: 10px 20px;
   border: 0;
@@ -49,10 +50,21 @@
   outline-offset: 5px;
 }
 
+/* Says which point in the timeline the selected screen is from, so the
+   toggle's short labels do not have to carry that on their own. */
+.stage {
+  margin: 0;
+  color: var(--muted);
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+
+/* No fixed ratio: the three screens are different heights, and pinning the
+   frame to the tallest one leaves an empty band under the other two. The
+   visible image sets the height instead. */
 .viewport {
   position: relative;
   width: 100%;
-  aspect-ratio: 2480 / 1830;
   overflow: hidden;
   border: 1px solid var(--divider, var(--border));
   background: #eef1f4;
@@ -61,9 +73,7 @@
 .screen {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center top;
+  height: auto;
 }
 
 .screen[hidden] {
@@ -86,4 +96,20 @@
   font-weight: 500;
   letter-spacing: .06em;
   text-transform: uppercase;
+}
+
+/* The test numbers sit with the screen they were measured on, on their own
+   line so they are not read as part of the description. */
+.caption .result {
+  flex-basis: 100%;
+  padding-top: 10px;
+  border-top: 1px solid var(--divider, var(--border));
+  color: var(--text);
+  font-size: .8125rem;
+  font-weight: 500;
+}
+
+@media (max-width: 599px) {
+  .toggle { width: 100%; flex-wrap: wrap; border-radius: 12px; }
+  .toggle button { flex: 1 1 auto; padding: 10px 14px; font-size: .8125rem; }
 }

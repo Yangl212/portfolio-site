@@ -112,4 +112,4 @@ function renderDashboard() {
   </div>`
 }
 
-module.exports = { snapshot, totals, styles, renderDashboard, kpis }
+module.exports = { snapshot, totals, amount, icon, item, styles, renderDashboard, kpis }

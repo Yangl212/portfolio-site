@@ -101,7 +101,7 @@ export default function VortexNetPage({ track = "uiux" }) {
               <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>My scope</dt><dd>Information hierarchy and consolidation for Today&apos;s overview and its task-based navigation.</dd></div>
                 <div><dt>Implemented</dt><dd>Today&apos;s overview and the adjacent sidebar navigation, tested inside the company and shipped during the internship.</dd></div>
-                <div><dt>Shown here</dt><dd>The implemented overview and navigation, refined for this case study on the tool&apos;s test data.</dd></div>
+                <div><dt>Shown here</dt><dd>Three stages side by side: the original tool, the build that shipped and was tested, and a later refinement made for this case study.</dd></div>
                 <div><dt>Result</dt><dd>In task-based testing with 10 colleagues, locating a day&apos;s work dropped from 20–30 seconds to about 8.</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
@@ -112,7 +112,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
               <Shot name="dashboard-detail" priority width={2114} height={1722}
                 alt="Refined dashboard detail with CNY cash totals, cash movement, settlement deadlines and an assigned work queue"
-                caption="Today’s overview · Test data" />
+                caption="Today’s overview · Later refinement · Test data" />
             </div>
           </header>
 
@@ -129,7 +129,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>The redesign</p>
               <h2>A starting point for daily decisions.</h2>
-              <p className={styles.sectionLead}>The refined dashboard connects a cash summary, settlement progress and a prioritized work queue. Each view supports a different daily decision.</p>
+              <p className={styles.sectionLead}>The dashboard connects a cash summary, settlement progress and a prioritized work queue. Each view supports a different daily decision. Use the toggle to separate what shipped from what was refined later.</p>
             </div>
             <ScreenComparison />
             <div className={styles.deliveryScope} aria-label="Delivery scope">
@@ -146,7 +146,7 @@ export default function VortexNetPage({ track = "uiux" }) {
               <article>
                 <p className={styles.microLabel}>Refined afterward</p>
                 <h3>Data clarity and action detail.</h3>
-                <p>For this case study I later refined the metric definitions, cash chart, settlement schedule, owners and next actions, keeping the tool&apos;s test data.</p>
+                <p>For this case study I later refined the metric definitions, cash chart, settlement schedule, owners and next actions, keeping the tool&apos;s test data. That version is the third toggle above, and none of it was part of what was tested.</p>
               </article>
             </div>
             <div className={styles.chartDecisions}>
@@ -155,14 +155,14 @@ export default function VortexNetPage({ track = "uiux" }) {
             <div className={styles.statRow}>
               {outcomes.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
             </div>
-            <p className={styles.sourceNote}>VortexNet is a company of about 30 people, and this dashboard is where its operations and finance teams start the day. The overview and navigation were tested with 10 colleagues before they shipped; the results follow below. The figures on screen are the tool&apos;s test data, and the counts above describe the delivered structure rather than usage analytics.</p>
+            <p className={styles.sourceNote}>VortexNet is a company of about 30 people, and this dashboard is where its operations and finance teams start the day. The overview and navigation were tested with 10 colleagues before they shipped; the results follow below. The internal tool itself cannot be shown, so all three screens are reconstructions drawn from recollection and filled with the tool&apos;s test data - the shipped one is the delivered scope as it went live, without the later refinements. The counts above describe the delivered structure rather than usage analytics.</p>
           </section>
 
           <section id="testing" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>User testing</p>
               <h2>Faster to the day&apos;s work, on the same tasks.</h2>
-              <p className={styles.sectionLead}>Task-based sessions with 10 colleagues at the company compared the original interface with the redesigned dashboard on the same tasks.</p>
+              <p className={styles.sectionLead}>Task-based sessions with 10 colleagues at the company compared the original interface with the build that shipped - the second toggle above - on the same tasks.</p>
             </div>
             <div className={styles.statRow}>
               {testing.stats.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
