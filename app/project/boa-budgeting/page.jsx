@@ -572,7 +572,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
           </section>
           <ProjectNav slug="boa-budgeting" track={track} styles={styles} />
         </div>
-        <SiteFooter />
+        <SiteFooter compact />
       </div>
     </main>
   )

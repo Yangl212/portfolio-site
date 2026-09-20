@@ -309,7 +309,7 @@ export default function LastMessagePage({ track = "uiux" }) {
           </section>
           <ProjectNav slug="lastmessage" track={track} styles={styles} />
         </div>
-        <SiteFooter />
+        <SiteFooter compact />
       </div>
     </main>
   )

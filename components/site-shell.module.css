@@ -116,6 +116,22 @@
   max-width: 1420px;
 }
 
+/* Case-study pages: the same footer at the scale of their own headings, and
+   only as tall as its contents. The bottom padding leaves room for the
+   copyright line, which is pinned to the bottom edge. */
+.footerCompact {
+  min-height: 0;
+  padding: 96px 24px 104px;
+}
+
+.footerCompact .footerTitle {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 900px;
+}
+
 .footerContact {
   display: flex;
   flex-wrap: wrap;
@@ -158,6 +174,16 @@
   .footerTitle {
     font-size: 72px;
     max-width: 1000px;
+  }
+
+  .footerCompact {
+    min-height: 0;
+    padding-top: 80px;
+    padding-bottom: 96px;
+  }
+
+  .footerCompact .footerTitle {
+    font-size: 42px;
   }
 }
 
@@ -217,6 +243,16 @@
     min-height: 250px;
     padding-top: 72px;
     padding-bottom: 24px;
+  }
+
+  .footerCompact {
+    min-height: 0;
+    padding-top: 64px;
+    padding-bottom: 84px;
+  }
+
+  .footerCompact .footerTitle {
+    font-size: 34px;
   }
 
   .footerCopy {

@@ -281,7 +281,7 @@ export default function ClearedPage({ track = "uiux" }) {
           </section>
           <ProjectNav slug="cleared" track={track} styles={styles} />
         </div>
-        <SiteFooter />
+        <SiteFooter compact />
       </div>
     </main>
   )

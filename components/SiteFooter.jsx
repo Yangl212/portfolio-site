@@ -1,7 +1,10 @@
 import styles from "./site-shell.module.css"
 
-export function SiteFooter({ className = "" }) {
-  const mergedClassName = className ? `${styles.footer} ${className}` : styles.footer
+/* `compact` is for the case-study pages, whose type scale keeps the closing
+   line at heading size. The default footer is built around the home page's
+   full-width statement and leaves a tall empty block under a smaller title. */
+export function SiteFooter({ className = "", compact = false }) {
+  const mergedClassName = [styles.footer, compact ? styles.footerCompact : "", className].filter(Boolean).join(" ")
 
   return (
     <footer className={mergedClassName}>
@@ -12,7 +15,7 @@ export function SiteFooter({ className = "" }) {
           LinkedIn <span aria-hidden="true">↗</span>
         </a>
       </nav>
-      <p className={styles.footerCopy}>{"\u00A9 Lele Yang"}</p>
+      <p className={styles.footerCopy}>{"© Lele Yang"}</p>
     </footer>
   )
 }

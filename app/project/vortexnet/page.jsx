@@ -287,7 +287,7 @@ export default function VortexNetPage({ track = "uiux" }) {
           </section>
           <ProjectNav slug="vortexnet" track={track} styles={styles} />
         </div>
-        <SiteFooter />
+        <SiteFooter compact />
       </div>
     </main>
   )
