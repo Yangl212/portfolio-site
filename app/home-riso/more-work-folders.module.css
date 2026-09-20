@@ -10,11 +10,12 @@
 .header h2 { font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: 1rem; font-weight: 600; line-height: 1.3; letter-spacing: 0.02em; text-transform: uppercase; }
 .header p { color: var(--muted); font-size: 0.9375rem; line-height: 1.4; }
 
-/* Four to a row. The row gap is wide because the cover rises above the
-   folder on hover. */
+/* Four to a row, each folder capped well under its column so the set sits
+   smaller than Selected Work. The row gap is wide because the cover rises
+   above the folder on hover. */
 .grid {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(64px, 6vw, 96px) clamp(28px, 3.5vw, 56px);
+  gap: clamp(76px, 7vw, 112px) clamp(36px, 4.5vw, 72px);
   padding-top: clamp(72px, 8vw, 120px);
 }
 
@@ -22,7 +23,7 @@
 /* Back panel, cover, front, copy - in that order. Leans a hair and lifts
    when pointed at, so the whole folder moves, not just the paper. */
 .folder {
-  position: relative; display: block; width: 100%; aspect-ratio: 1 / 1.003; min-width: 0;
+  position: relative; display: block; width: 100%; max-width: 252px; aspect-ratio: 1 / 1.003; min-width: 0;
   color: var(--text); text-decoration: none;
   transform: rotate(0deg) translateY(0);
   transition: transform 640ms var(--ease-spring), filter 640ms ease;
@@ -57,22 +58,108 @@
 .folder:hover .sheet, .folder:focus-visible .sheet { transform: translateY(-34%) rotate(-5deg); }
 .sheet img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
+/* ---------- the loose pieces ---------- */
+/* Whatever a project keeps in its folder beside the cover. Every piece
+   moves from its own resting place to its own hover place; the styles
+   below only set those two, so a folder's choreography is six numbers.
+   drop-shadow rather than box-shadow, so the shadow follows the piece's
+   own edge instead of its image box. */
+.fan { position: absolute; inset: 0; pointer-events: none; }
+.fan img {
+  position: absolute; height: auto; display: block;
+  transform: translate(var(--x), var(--y)) rotate(var(--r));
+  transition: transform 720ms var(--ease-spring);
+  filter: drop-shadow(0 1px 1px rgba(34, 34, 34, 0.06)) drop-shadow(0 10px 16px rgba(34, 34, 34, 0.18));
+  will-change: transform;
+}
+
+/* --- deck: a hand of cards held behind the cover --- */
+/* At rest each one is already fanned a little, so its top corner shows
+   past the cover's edge, and its foot runs on below, where the folder's
+   front covers it. Each pivots from its own foot, so on hover it swings
+   further up and out to its own side while the foot stays in. They ride
+   behind the cover throughout. The three are set a touch out of step -
+   angle, height, timing - so the fan reads as laid by hand. */
+.deck { z-index: 2; }
+.deck img { left: 50%; top: 14%; width: 40%; transform-origin: 50% 100%; }
+.deck img:nth-child(1) { --x: -74%; --y: -10%; --r: -10deg; }
+.deck img:nth-child(2) { --x: -50%; --y: -16%; --r: -2deg; transition-delay: 60ms; transition-duration: 760ms; }
+.deck img:nth-child(3) { --x: -26%; --y: -9%; --r: 11deg; transition-delay: 30ms; }
+.folder:hover .deck img:nth-child(1), .folder:focus-visible .deck img:nth-child(1) { --x: -100%; --y: -48%; --r: -20deg; }
+.folder:hover .deck img:nth-child(2), .folder:focus-visible .deck img:nth-child(2) { --x: -50%; --y: -62%; --r: -3deg; }
+.folder:hover .deck img:nth-child(3), .folder:focus-visible .deck img:nth-child(3) { --x: 0%; --y: -46%; --r: 19deg; }
+
+/* --- scatter: loose pieces of the product, not a deck --- */
+/* Split across the cover: the prompts and the cookie card land in front
+   of the screenshot, the library card comes out from behind its right
+   edge, so the set has depth rather than sitting on one plane. At rest
+   the two in front are parked deep in the pocket and the one behind is
+   inside the cover's outline - nothing sticking out of a screen that
+   dark. Each is a different size, goes a different distance and lands on
+   a different beat, which keeps this folder from moving like the decks. */
+.scatter img { transform-origin: 50% 70%; }
+/* Translucent prompts: they only read against the dark screen, so they
+   stay on it. */
+.scatter img:nth-child(1) { left: 6%; top: 47%; width: 52%; z-index: 3; --x: 0%; --y: 0%; --r: -2deg; }
+.scatter img:nth-child(2) { left: 54%; top: 14%; width: 34%; z-index: 1; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 90ms; transition-duration: 800ms; }
+.scatter img:nth-child(3) { left: 34%; top: 50%; width: 32%; z-index: 3; --x: 0%; --y: 0%; --r: -1deg; transition-delay: 45ms; transition-duration: 880ms; }
+.folder:hover .scatter img:nth-child(1), .folder:focus-visible .scatter img:nth-child(1) { --x: 6%; --y: -129%; --r: -6deg; }
+.folder:hover .scatter img:nth-child(2), .folder:focus-visible .scatter img:nth-child(2) { --x: 80%; --y: -48%; --r: 9deg; }
+.folder:hover .scatter img:nth-child(3), .folder:focus-visible .scatter img:nth-child(3) { --x: -125%; --y: -95%; --r: -8deg; }
+
+/* --- windows: whole screens from the prototype, at two depths --- */
+/* The week view stays behind the cover and swings out to the left, so
+   the cover is never buried; the mail and the suggestion the assistant is
+   holding come out in front of it, one high on the right and one through
+   the middle, leaving a lane of cover between them. Three sizes, three
+   heights, three beats. Pale UI on a pale cover, so they carry a deeper
+   shadow than the rest. */
+.windows img {
+  transform-origin: 50% 80%;
+  filter: drop-shadow(0 1px 1px rgba(34, 34, 34, 0.07)) drop-shadow(0 14px 22px rgba(34, 34, 34, 0.24));
+}
+.windows img:nth-child(1) { left: 20%; top: 13%; width: 60%; z-index: 1; --x: 0%; --y: 0%; --r: -2deg; }
+.windows img:nth-child(2) { left: 40%; top: 52%; width: 42%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 120ms; transition-duration: 820ms; }
+.windows img:nth-child(3) { left: 56%; top: 50%; width: 24%; z-index: 3; --x: 0%; --y: 0%; --r: -1deg; transition-delay: 60ms; transition-duration: 880ms; }
+.folder:hover .windows img:nth-child(1), .folder:focus-visible .windows img:nth-child(1) { --x: -53%; --y: -78%; --r: -6deg; }
+.folder:hover .windows img:nth-child(2), .folder:focus-visible .windows img:nth-child(2) { --x: 43%; --y: -175%; --r: 7deg; }
+.folder:hover .windows img:nth-child(3), .folder:focus-visible .windows img:nth-child(3) { --x: -133%; --y: -71%; --r: -4deg; }
+
+/* --- case: the archive's own cabinet, and a record out of it --- */
+/* Two pieces, one each side of the cover: the cabinet leans out from
+   behind its left edge, the record lands in front on the right. */
+.case img { transform-origin: 50% 85%; }
+.case img:nth-child(1) { left: 16%; top: 13%; width: 30%; z-index: 1; --x: 0%; --y: 0%; --r: -3deg; }
+.case img:nth-child(2) { left: 30%; top: 52%; width: 56%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 90ms; transition-duration: 840ms; }
+.folder:hover .case img:nth-child(1), .folder:focus-visible .case img:nth-child(1) { --x: -92%; --y: -56%; --r: -7deg; }
+.folder:hover .case img:nth-child(2), .folder:focus-visible .case img:nth-child(2) { --x: 7%; --y: -137%; --r: 5deg; }
+
+/* --- spreads: two pages of the zine, one each side of the cover --- */
+/* Same two-depth idea as `case`, squarer pieces and a longer throw: the
+   first spread comes out from behind the cover to the left, the second
+   lands in front of it to the right, a beat later and a little lower. */
+.spreads img { transform-origin: 50% 75%; }
+.spreads img:nth-child(1) { left: 20%; top: 14%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: -2deg; }
+.spreads img:nth-child(2) { left: 40%; top: 50%; width: 42%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 100ms; transition-duration: 860ms; }
+.folder:hover .spreads img:nth-child(1), .folder:focus-visible .spreads img:nth-child(1) { --x: -68%; --y: -64%; --r: -7deg; }
+.folder:hover .spreads img:nth-child(2), .folder:focus-visible .spreads img:nth-child(2) { --x: 29%; --y: -90%; --r: 6deg; }
+
 /* ---------- the front ---------- */
 /* The folder's own white front, tab and all, at the foot of the card. */
-.front { position: absolute; left: 0; bottom: 0; z-index: 3; width: 100%; height: auto; display: block; }
+.front { position: absolute; left: 0; bottom: 0; z-index: 4; width: 100%; height: auto; display: block; }
 
 /* The job line and the title, printed on that front. The left edge lines
    up with the left edge of the tab. */
 .copy {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; height: 54%;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; height: 54%;
   display: flex; flex-direction: column; justify-content: space-between;
   padding: 10% 9% 9% 11.3%;
 }
-.meta { display: flex; flex-direction: column; gap: 1px; font-size: clamp(0.875rem, 1.05vw, 1.0625rem); line-height: 1.35; }
+.meta { display: flex; flex-direction: column; gap: 1px; font-size: clamp(0.75rem, 0.82vw, 0.8125rem); line-height: 1.35; }
 .meta span:last-child { color: var(--muted); }
 .title {
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: clamp(1.35rem, 1.95vw, 2.05rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em;
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
@@ -82,17 +169,17 @@
 
 @media (max-width: 809px) {
   .header { padding-top: 18px; }
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px 24px; padding-top: 56px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 60px 32px; padding-top: 56px; }
 }
 
 @media (max-width: 560px) {
   .header { align-items: flex-start; flex-direction: column; gap: 6px; }
-  .grid { gap: 40px 16px; }
-  .meta { font-size: 0.8125rem; }
-  .title { font-size: 1.2rem; }
+  .grid { gap: 44px 20px; }
+  .meta { font-size: 0.75rem; }
+  .title { font-size: 0.95rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .folder, .sheet { transition: none; }
+  .folder, .sheet, .fan img { transition: none; }
   .folder:hover, .folder:focus-visible { transform: none; }
 }

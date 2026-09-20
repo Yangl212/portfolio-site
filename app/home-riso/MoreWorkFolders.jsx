@@ -15,6 +15,9 @@ import styles from "./more-work-folders.module.css"
  * The front is the PNG at its own aspect (821 x 501, the tab the top 11%
  * of it), pinned to the foot of a square card - which puts the top edge
  * of the front at 46% of the card, where the example has it.
+ *
+ * A project may also carry `cards`, and with them a `cardStyle`: "deck"
+ * fans them out from behind the cover, "scatter" throws them up over it.
  */
 export function MoreWorkFolders({ className = "", projects }) {
   return (
@@ -28,6 +31,15 @@ export function MoreWorkFolders({ className = "", projects }) {
         {projects.map((project, index) => (
           <Link key={project.slug} href={project.href} className={styles.folder} style={{ "--i": index }}>
             <span className={styles.back} aria-hidden="true" />
+            {project.cards ? (
+              <span className={`${styles.fan} ${styles[project.cardStyle ?? "deck"]}`} aria-hidden="true">
+                {project.cards.map((src) => (
+                  /* No width/height: the pieces are absolutely placed and
+                     sized in CSS, and they come in every shape. */
+                  <img key={src} src={src} alt="" loading="lazy" decoding="async" />
+                ))}
+              </span>
+            ) : null}
             <span className={styles.sheet} aria-hidden="true">
               <img src={project.image} alt="" width={1600} height={1000} loading="lazy" decoding="async" />
             </span>
