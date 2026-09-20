@@ -27,11 +27,11 @@ const stacks = {
     summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.",
     tint: "pink",
     layers: [
-      { kind: "cut", src: "/boa/screen2.png", x: 4, y: 12, w: 33, r: -12, dx: -30, dy: -22, dr: -18, depth: 0.7, z: 1 },
-      { kind: "cut", src: "/boa/screen3.png", x: 62, y: 10, w: 33, r: 10, dx: 32, dy: -26, dr: 17, depth: 0.7, z: 1 },
-      { kind: "cut", src: "/boa/screen1.png", x: 31, y: 0, w: 38, r: 0, dx: 0, dy: -16, dr: -2, ds: 1.06, depth: 1, z: 3 },
-      { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 3, y: 2, r: -6, dx: -14, dy: -14, dr: -10, depth: 0.5, z: 4 },
-      { kind: "chip", text: "41 s → 24 s", x: 70, y: 76, r: 5, dx: 18, dy: 16, dr: 9, depth: 0.5, z: 4 }
+      { kind: "cut", src: "/boa/screen2.png", x: 1, y: 18, w: 28, r: -9, dx: -18, dy: -14, dr: -13, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/boa/screen3.png", x: 71, y: 16, w: 28, r: 8, dx: 18, dy: -16, dr: 13, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/boa/screen1.png", x: 34, y: 3, w: 32, r: 0, dx: 0, dy: -12, dr: -1, ds: 1.04, depth: 1, z: 3 },
+      { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 1, y: 4, r: -4, dx: -8, dy: -8, dr: -7, depth: 0.5, z: 4 },
+      { kind: "chip", text: "41 s → 24 s", x: 72, y: 68, r: 4, dx: 10, dy: 10, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   vortexnet: {
