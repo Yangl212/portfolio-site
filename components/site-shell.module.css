@@ -65,7 +65,7 @@
 
 .cta:hover,
 .cta:focus-visible {
-  background: #f3c443;
+  background: #ff48b0;
   color: #222222;
   opacity: 1;
   box-shadow: inset 1px 0 0 var(--border), inset -1px 0 0 var(--border);
