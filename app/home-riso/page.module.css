@@ -78,13 +78,21 @@
 }
 
 /* Bigger dots that only show around the cursor: ink spreading on the
-   sheet. The mask follows --mx/--my; off-sheet it is simply invisible. */
+   sheet. A fixed disc that is moved to the cursor, rather than a mask
+   redrawn at a new position every frame - the first is one composited
+   transform, the second repainted the whole hero on every mouse move.
+   The dot grid travels with it; at 7px the shift cannot be read. Off the
+   sheet it is parked far outside and the hero's overflow hides it. */
 .bloom {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.42;
+  --mx: -9999px; --my: -9999px;
+  position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none; opacity: 0.42;
+  width: 620px; height: 620px;
   background-image: radial-gradient(circle at 2px 2px, rgba(34, 34, 34, 0.34) 1.5px, transparent 0);
   background-size: 7px 7px;
-  -webkit-mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
-  mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle 260px at 310px 310px, #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
+  mask-image: radial-gradient(circle 260px at 310px 310px, #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
+  transform: translate3d(calc(var(--mx) - 310px), calc(var(--my) - 310px), 0);
+  will-change: transform;
 }
 
 /* ---------- the cursor ---------- */
@@ -96,7 +104,9 @@
 
 /* The dot sits exactly where the pointer is. */
 .dot {
+  --mx: -9999px; --my: -9999px;
   position: absolute; top: 0; left: 0; z-index: 6; pointer-events: none;
+  will-change: transform;
   width: 6px; height: 6px; border-radius: 50%; background: var(--ink-a);
   opacity: 0; transition: opacity 200ms ease, transform 200ms ease;
   transform: translate(calc(var(--mx) - 3px), calc(var(--my) - 3px));
@@ -107,7 +117,9 @@
    says what a click does. */
 .ring {
   --size: 32px;
+  --cx: -9999px; --cy: -9999px;
   position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none;
+  will-change: transform;
   width: var(--size); height: var(--size);
   border: 1px solid var(--ink-a); border-radius: 50%;
   background: rgba(255, 72, 176, 0);
@@ -134,8 +146,8 @@
 .hero[data-cursor="pull"] .cursorLabel { opacity: 1; transform: translateY(-50%) translateX(0); }
 .hero[data-cursor="pull"] .dot { background: var(--ink-b); }
 
-/* Paper fading in over the halftone along the bottom edge, under the type
-   and the ticket. */
+/* Paper fading in over the halftone along the bottom edge, under the
+   type. */
 .fade {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none;
   height: clamp(200px, 30vh, 300px);
@@ -262,6 +274,10 @@
 .primary:hover, .primary:focus-visible { background: var(--ink-a); color: var(--inverse); gap: 14px; }
 .secondary { border: 1px solid var(--rule-strong); color: var(--text); background: var(--sheet); }
 .secondary:hover, .secondary:focus-visible { border-color: var(--text); gap: 14px; }
+/* Lab fills with the blue ink, the way the primary fills with the pink
+   one - the two inks the sheet is printed in. The label stays dark: white
+   on this blue is too thin to read. */
+.lab:hover, .lab:focus-visible { background: var(--ink-b); border-color: var(--ink-b); color: var(--text); gap: 14px; }
 
 /* margin notes, in the blue ink; they drift with the cursor at a shallower
    depth than the plates */
@@ -300,28 +316,6 @@
 .patch { display: block; }
 .patch i { width: 18px; height: 22px; display: block; }
 
-/* the job ticket along the bottom edge */
-.ticket {
-  position: absolute; left: clamp(24px, 4vw, 56px); right: clamp(24px, 4vw, 56px); bottom: clamp(24px, 4vh, 40px); z-index: 2;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 18px;
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.7rem; letter-spacing: 0.04em; color: var(--muted);
-}
-.ticketLabel { text-transform: uppercase; letter-spacing: 0.1em; }
-.swatch { display: inline-flex; align-items: center; gap: 7px; color: var(--text); }
-.swatch i { width: 11px; height: 11px; display: inline-block; }
-.ticket .swatch + .swatch { margin-left: -10px; }
-.pullCount { color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; padding-left: 18px; border-left: 1px solid var(--rule-strong); }
-.pullButton {
-  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
-  border: 1px solid var(--rule-strong); border-radius: 999px; background: transparent;
-  color: var(--text); font: inherit; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
-}
-.pullButton:hover, .pullButton:focus-visible { background: var(--text); border-color: var(--text); color: var(--inverse); }
-.pullButton span { display: inline-block; transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1); }
-.pullButton:hover span { transform: rotate(180deg); }
-
 /* load: everything rises like the current site; the furniture waits for
    the print to finish */
 .rise { opacity: 0; transform: translateY(24px); animation: rise 900ms var(--ease-out) forwards; }
@@ -356,9 +350,7 @@
   .hero { padding: 84px 24px 136px; cursor: auto; }
   .band { font-size: 2.25rem; }
   .bandTop { top: 18px; }
-  /* The ticket wraps to two lines here; the band stays clear of it. */
   .bandBottom { bottom: 104px; }
-  .ticket { left: 24px; right: 24px; bottom: 22px; }
   .hero + .contentTight { padding-top: 96px; scroll-margin-top: 70px; }
   .contentTight > section + section { margin-top: 96px; }
   .contentTight { padding-bottom: 104px; }
@@ -366,8 +358,6 @@
 
 @media (max-width: 560px) {
   .hero { padding-left: 16px; padding-right: 16px; }
-  .ticket { left: 16px; right: 16px; }
-  .pullCount { padding-left: 0; border-left: 0; }
   .op { font-size: clamp(3.75rem, 21vw, 5.5rem); }
   .opFacts { flex-direction: column; align-items: center; gap: 6px; }
   .opFacts span + span::before { display: none; }

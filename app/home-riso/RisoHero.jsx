@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import styles from "./page.module.css"
@@ -16,7 +17,7 @@ import styles from "./page.module.css"
  *      blue plate down slightly out of register. Then both drift slowly so
  *      the sheet never sits perfectly still.
  *   2. Clicking the name pulls another print: same two sweeps, a fresh
- *      random misregistration, and the pull count on the job ticket goes up.
+ *      random misregistration.
  *   3. With a mouse, the plates pull apart in the direction of the cursor,
  *      the furniture shifts at its own depth, the halftone blooms around the
  *      pointer like ink spreading, the two buttons lean toward it, and a
@@ -158,49 +159,79 @@ export function RisoHero() {
 
     /* --px/--py: the cursor as -1..1 from the hero's centre, eased so the
        plates trail the mouse like something with weight. --mx/--my: the raw
-       position, for the halftone bloom. --cx/--cy: the ring, which lags
-       further behind. */
+       position, for the halftone bloom and the dot. --cx/--cy: the ring,
+       which lags further behind.
+
+       Everything here happens once per frame, never on the pointer event
+       itself: a move only records where the cursor is. Reading a box or
+       writing a style from the event handler meant a layout and a style
+       recalculation for every one of the hundred-odd moves a second a fine
+       pointer reports, which is what made the sheet feel sticky. The boxes
+       are measured once and re-measured only when the page moves under
+       them, and each style is written only when its value has changed. */
+    const bloom = el.querySelector(`.${styles.bloom}`)
+    const dot = el.querySelector(`.${styles.dot}`)
+    const ring = el.querySelector(`.${styles.ring}`)
+
     let targetX = 0, targetY = 0, x = 0, y = 0
     let rawX = -9999, rawY = -9999, ringX = -9999, ringY = -9999
-    let frame = 0
+    let clientX = -9999, clientY = -9999, moveTarget = null
+    let pointerIn = false, moved = false, frame = 0, stale = true
+    let rect = null
     const buttons = [...el.querySelectorAll("[data-magnet]")]
+    /* Base centres, i.e. where each button sits with its magnet offset
+       taken back off - measuring a button that is already leaning would
+       feed its own offset back in. */
+    const centres = buttons.map(() => ({ x: 0, y: 0, w: 0, h: 0 }))
+    const offsets = buttons.map(() => ({ x: 0, y: 0 }))
+    const written = new WeakMap()
 
-    const tick = () => {
-      x += (targetX - x) * 0.09
-      y += (targetY - y) * 0.09
-      if (ringX < -999) { ringX = rawX; ringY = rawY }
-      ringX += (rawX - ringX) * 0.28
-      ringY += (rawY - ringY) * 0.28
-      el.style.setProperty("--px", x.toFixed(4))
-      el.style.setProperty("--py", y.toFixed(4))
-      el.style.setProperty("--cx", `${ringX.toFixed(1)}px`)
-      el.style.setProperty("--cy", `${ringY.toFixed(1)}px`)
-      const settled = Math.abs(targetX - x) < 0.0015 && Math.abs(targetY - y) < 0.0015 &&
-        Math.abs(rawX - ringX) < 0.3 && Math.abs(rawY - ringY) < 0.3
-      frame = settled ? 0 : requestAnimationFrame(tick)
+    const measure = () => {
+      rect = el.getBoundingClientRect()
+      buttons.forEach((button, i) => {
+        const r = button.getBoundingClientRect()
+        centres[i].x = r.left + r.width / 2 - offsets[i].x
+        centres[i].y = r.top + r.height / 2 - offsets[i].y
+        centres[i].w = r.width
+        centres[i].h = r.height
+      })
+      stale = false
+    }
+
+    const write = (node, prop, value) => {
+      if (!node) return
+      let last = written.get(node)
+      if (!last) { last = {}; written.set(node, last) }
+      if (last[prop] === value) return
+      last[prop] = value
+      node.style.setProperty(prop, value)
     }
 
     /* The button nearest the cursor leans toward it a little - a few
        pixels, never enough to reach its neighbour - and settles back when
        the cursor moves on. Only one moves at a time. */
     const clamp = (v, limit) => Math.max(-limit, Math.min(limit, v))
-    const magnetise = (clientX, clientY) => {
-      let nearest = null, nearestDistance = Infinity
-      for (const button of buttons) {
-        const r = button.getBoundingClientRect()
-        const dx = clientX - (r.left + r.width / 2)
-        const dy = clientY - (r.top + r.height / 2)
-        const within = Math.abs(dx) < r.width / 2 + 40 && Math.abs(dy) < r.height / 2 + 40
+    const magnetise = () => {
+      let nearest = -1, nearestDistance = Infinity
+      centres.forEach((c, i) => {
+        const dx = clientX - c.x
+        const dy = clientY - c.y
+        if (Math.abs(dx) > c.w / 2 + 40 || Math.abs(dy) > c.h / 2 + 40) return
         const distance = Math.hypot(dx, dy)
-        if (within && distance < nearestDistance) { nearest = button; nearestDistance = distance }
-      }
-      for (const button of buttons) {
-        if (button !== nearest) { button.style.transform = ""; continue }
-        const r = button.getBoundingClientRect()
-        const dx = clientX - (r.left + r.width / 2)
-        const dy = clientY - (r.top + r.height / 2)
-        button.style.transform = `translate(${clamp(dx * 0.12, 6).toFixed(1)}px, ${clamp(dy * 0.16, 5).toFixed(1)}px)`
-      }
+        if (distance < nearestDistance) { nearest = i; nearestDistance = distance }
+      })
+      buttons.forEach((button, i) => {
+        const offset = offsets[i]
+        let nx = 0, ny = 0
+        if (i === nearest) {
+          nx = clamp((clientX - centres[i].x) * 0.12, 6)
+          ny = clamp((clientY - centres[i].y) * 0.16, 5)
+        }
+        if (Math.abs(nx - offset.x) < 0.1 && Math.abs(ny - offset.y) < 0.1) return
+        offset.x = nx
+        offset.y = ny
+        button.style.transform = nx || ny ? `translate(${nx.toFixed(1)}px, ${ny.toFixed(1)}px)` : ""
+      })
     }
 
     /* What the custom cursor is over: a link or button, the name (which
@@ -211,36 +242,91 @@ export function RisoHero() {
       return hit.tagName === "H1" ? "pull" : "link"
     }
 
+    const tick = () => {
+      frame = 0
+
+      if (moved) {
+        moved = false
+        if (stale || !rect) measure()
+        rawX = clientX - rect.left
+        rawY = clientY - rect.top
+        targetX = Math.max(-1, Math.min(1, (rawX / rect.width - 0.5) * 2))
+        targetY = Math.max(-1, Math.min(1, (rawY / rect.height - 0.5) * 2))
+        const mx = `${rawX.toFixed(1)}px`
+        const my = `${rawY.toFixed(1)}px`
+        write(bloom, "--mx", mx)
+        write(bloom, "--my", my)
+        write(dot, "--mx", mx)
+        write(dot, "--my", my)
+        const state = cursorState(moveTarget)
+        if (el.dataset.pointer !== "in") el.dataset.pointer = "in"
+        if (el.dataset.cursor !== state) el.dataset.cursor = state
+        magnetise()
+      }
+
+      x += (targetX - x) * 0.09
+      y += (targetY - y) * 0.09
+      if (ringX < -999) { ringX = rawX; ringY = rawY }
+      ringX += (rawX - ringX) * 0.28
+      ringY += (rawY - ringY) * 0.28
+      write(el, "--px", x.toFixed(4))
+      write(el, "--py", y.toFixed(4))
+      write(ring, "--cx", `${ringX.toFixed(1)}px`)
+      write(ring, "--cy", `${ringY.toFixed(1)}px`)
+
+      const settled = Math.abs(targetX - x) < 0.0015 && Math.abs(targetY - y) < 0.0015 &&
+        Math.abs(rawX - ringX) < 0.3 && Math.abs(rawY - ringY) < 0.3
+      if (!settled) frame = requestAnimationFrame(tick)
+    }
+
+    const request = () => { if (!frame) frame = requestAnimationFrame(tick) }
+
     const onMove = (event) => {
-      const r = el.getBoundingClientRect()
-      rawX = event.clientX - r.left
-      rawY = event.clientY - r.top
-      targetX = Math.max(-1, Math.min(1, (rawX / r.width - 0.5) * 2))
-      targetY = Math.max(-1, Math.min(1, (rawY / r.height - 0.5) * 2))
-      el.style.setProperty("--mx", `${rawX.toFixed(1)}px`)
-      el.style.setProperty("--my", `${rawY.toFixed(1)}px`)
-      el.dataset.pointer = "in"
-      el.dataset.cursor = cursorState(event.target)
-      magnetise(event.clientX, event.clientY)
-      if (!frame) frame = requestAnimationFrame(tick)
+      clientX = event.clientX
+      clientY = event.clientY
+      moveTarget = event.target
+      pointerIn = true
+      moved = true
+      request()
     }
 
     const onLeave = () => {
+      pointerIn = false
+      moved = false
       targetX = 0
       targetY = 0
-      el.style.setProperty("--mx", "-9999px")
-      el.style.setProperty("--my", "-9999px")
+      rawX = -9999
+      rawY = -9999
+      write(bloom, "--mx", "-9999px")
+      write(bloom, "--my", "-9999px")
+      write(dot, "--mx", "-9999px")
+      write(dot, "--my", "-9999px")
       el.dataset.pointer = "out"
       el.dataset.cursor = "sheet"
-      for (const button of buttons) button.style.transform = ""
-      if (!frame) frame = requestAnimationFrame(tick)
+      buttons.forEach((button, i) => {
+        offsets[i].x = 0
+        offsets[i].y = 0
+        button.style.transform = ""
+      })
+      request()
+    }
+
+    /* The hero moves under the cursor when the page scrolls or resizes, so
+       the cached boxes are thrown away rather than read back every move. */
+    const invalidate = () => {
+      stale = true
+      if (pointerIn) request()
     }
 
     el.addEventListener("pointermove", onMove)
     el.addEventListener("pointerleave", onLeave)
+    window.addEventListener("scroll", invalidate, { passive: true })
+    window.addEventListener("resize", invalidate)
     return () => {
       el.removeEventListener("pointermove", onMove)
       el.removeEventListener("pointerleave", onLeave)
+      window.removeEventListener("scroll", invalidate)
+      window.removeEventListener("resize", invalidate)
       cancelAnimationFrame(frame)
     }
   }, [])
@@ -299,6 +385,7 @@ export function RisoHero() {
 
         <div className={`${styles.opActions} ${styles.rise}`} style={{ animationDelay: "320ms" }}>
           <a className={styles.primary} href="#work" data-magnet="" onClick={scrollToWork}>Selected work <span aria-hidden="true">↓</span></a>
+          <Link className={`${styles.secondary} ${styles.lab}`} href="/lab" data-magnet="" prefetch={false}>Lab <span aria-hidden="true">→</span></Link>
           <a className={styles.secondary} href="/resume.pdf" target="_blank" rel="noreferrer" data-magnet="">Resume <span aria-hidden="true">↗</span></a>
         </div>
 
@@ -312,17 +399,6 @@ export function RisoHero() {
         </div>
       </div>
 
-      {/* The job ticket along the bottom edge: what this page is printed
-          with, and how many pulls so far. The button is the keyboard route
-          to another pull; the name itself is the mouse one. */}
-      <p className={`${styles.ticket} ${styles.rise}`} style={{ animationDelay: "480ms" }}>
-        <span className={styles.ticketLabel}>Three inks</span>
-        <span className={styles.swatch} title="Black"><i style={{ background: "#222222" }} /></span>
-        <span className={styles.swatch} title="Fluorescent pink"><i style={{ background: "var(--ink-a)" }} /></span>
-        <span className={styles.swatch} title="Blue"><i style={{ background: "var(--ink-b)" }} /></span>
-        <span className={styles.pullCount}>Pull {String(pull).padStart(2, "0")}</span>
-        <button type="button" className={styles.pullButton} onClick={pullPrint}>Pull another <span aria-hidden="true">↻</span></button>
-      </p>
     </section>
   )
 }
