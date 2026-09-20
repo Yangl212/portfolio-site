@@ -70,6 +70,12 @@ const strip = [
   ["#222222", 1, "K"]
 ]
 
+/* Three places the handwritten note can be written around the word; the
+   step of two walks all three without repeating. */
+const HINT_SPOTS = 3
+/* Mirrors --t-rest in page.module.css: when the print has settled. */
+const HINT_REST = 2300
+
 /* A fresh misregistration for every pull: around the same few pixels, never
    the same twice. */
 const jitter = (base, spread) => Math.round((base + (Math.random() * 2 - 1) * spread) * 10) / 10
@@ -82,6 +88,9 @@ export function RisoHero() {
   const ref = useRef(null)
   const [pull, setPull] = useState(1)
   const [reg, setReg] = useState({ ax: -5, ay: -4, bx: 5, by: 4 })
+  /* The handwritten note: which of the three places around the word it is
+     written in, and whether it is on the sheet at the moment. */
+  const [hint, setHint] = useState({ spot: 0, on: false })
 
   /* The print is the front door. Do not let browser scroll restoration or
      an old #work URL reopen the page halfway down at Selected Work. */
@@ -113,6 +122,18 @@ export function RisoHero() {
     setPull((n) => n + 1)
     setReg(newRegistration())
   }, [])
+
+  /* The note is taken off the sheet the moment a print starts and written
+     back on once the ink has settled - somewhere else each time, so it is
+     never quite where it was left. HINT_REST mirrors --t-rest in the
+     stylesheet, which is when the print finishes. */
+  useEffect(() => {
+    setHint((current) => (current.on ? { ...current, on: false } : current))
+    const timer = setTimeout(() => {
+      setHint({ spot: (pull * 2 + 1) % HINT_SPOTS, on: true })
+    }, HINT_REST)
+    return () => clearTimeout(timer)
+  }, [pull])
 
   /* Selected work walks the page down rather than cutting to it: the sheet
      slides for about a second on an ease, so the reader keeps their place.
@@ -365,6 +386,16 @@ export function RisoHero() {
             so the transforms never fight. Multiply on the plates makes the
             overlap purple. Re-keyed on every pull so the print runs again. */}
         <h1 id="hero-name" className={styles.op} aria-label="Lele Yang" title="Pull another print" onClick={pullPrint} style={registration}>
+          {/* Pencilled in beside the word once the print has settled: the
+              only handwriting on the sheet, and the only thing that says
+              the word is a thing you can press. It is rubbed out at the
+              start of the next print and written back somewhere else. */}
+          <span className={styles.clickHint} data-on={hint.on} data-spot={hint.spot} aria-hidden="true">
+            <svg className={styles.hintArrow} viewBox="0 0 48 40" fill="none">
+              <path d="M45 32C33 35 17 29 9 11M9 11l12 3M9 11l3 13" />
+            </svg>
+            <span className={styles.hintWord}>click!</span>
+          </span>
           <span key={pull} className={styles.sheet}>
             <span className={`${styles.plate} ${styles.plateA}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkA}`}>Lele</span></span>
             <span className={`${styles.plate} ${styles.plateB}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkB}`}>Lele</span></span>

@@ -1,4 +1,4 @@
-import { DM_Mono } from "next/font/google"
+import { Caveat, DM_Mono } from "next/font/google"
 
 import { Reveal } from "../../components/Reveal"
 import { featuredProjects, moreProjects } from "../../lib/projects"
@@ -32,6 +32,9 @@ export const metadata = {
 
 /* The site sets Satoshi itself; the print-shop annotations want a mono. */
 const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" })
+/* The one handwritten thing on the page: the note pencilled beside the
+   name once it has finished printing. */
+const hand = Caveat({ subsets: ["latin"], weight: ["600"], variable: "--font-hand", display: "swap" })
 
 const TRACK = "uiux"
 
@@ -40,7 +43,7 @@ export default function HomeRisoPage() {
   const more = moreProjects(TRACK)
 
   return (
-    <main className={`${homeStyles.page} ${mono.variable}`}>
+    <main className={`${homeStyles.page} ${mono.variable} ${hand.variable}`}>
       {/* The whole page prints on the same white as the sheet: the panel
           token is overridden here, so the live stylesheet stays untouched. */}
       <div className={`${homeStyles.frame} ${styles.whiteFrame}`}>
