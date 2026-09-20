@@ -31,8 +31,12 @@ async function inspect(nav, floating) {
   })
   assert.equal(state.floating, String(floating))
   assert(state.radii.every(radius => radius === '0px'), 'Every navigation edge is square')
-  assert(Math.abs(state.bar.left - state.slot.left) < 1, 'Floating left edge follows the content gutter')
-  assert(Math.abs(state.bar.width - state.slot.width) < 1, 'Row always spans the content width')
+  const expectedWidth = floating
+    ? (state.viewport <= 700 ? state.viewport - 32 : Math.min(1280, state.viewport - 64))
+    : state.slot.width
+  const expectedLeft = floating ? (state.viewport - expectedWidth) / 2 : state.slot.left
+  assert(Math.abs(state.bar.width - expectedWidth) < 1, 'Navigation row spans the intended page width')
+  assert(Math.abs(state.bar.left - expectedLeft) < 1, 'Navigation row stays aligned with the page')
   assert(state.bar.left >= 0 && state.bar.right <= state.viewport, 'Navigation stays in the viewport')
   assert(state.active.height >= 44, 'Selected link has a full-height hit area')
   assert.equal(state.background, 'rgb(34, 34, 34)', 'Active section has a solid charcoal rectangle')
@@ -103,6 +107,28 @@ async function scrollToSection(page, id) {
     await page.waitForTimeout(600)
     await inspect(page.getByRole('navigation', { name: 'On this project' }), true)
     console.log('PASS resizing a floating row keeps the active item visible')
+
+    await page.setViewportSize({ width: 620, height: 844 })
+    await page.waitForTimeout(250)
+    await page.setViewportSize({ width: 1414, height: 978 })
+    await page.waitForTimeout(600)
+    const restoredNav = page.getByRole('navigation', { name: 'On this project' })
+    await inspect(restoredNav, true)
+    assert.equal(await restoredNav.evaluate(n => n.scrollLeft), 0, 'Desktop row resets horizontal scrolling after a narrow viewport')
+    assert.equal(await restoredNav.evaluate(n => n.scrollWidth), await restoredNav.evaluate(n => n.clientWidth), 'Desktop row never needs horizontal scrolling')
+    console.log('PASS restoring a desktop window shows the complete directory')
+
+    await page.setViewportSize({ width: 620, height: 844 })
+    await page.goto(`${base}/project/boa-budgeting`, { waitUntil: 'load' })
+    await scrollToSection(page, 'prototype')
+    await page.setViewportSize({ width: 1414, height: 978 })
+    await page.waitForTimeout(600)
+    const boaNav = page.getByRole('navigation', { name: 'On this project' })
+    await inspect(boaNav, true)
+    assert.equal(await boaNav.evaluate(n => n.scrollLeft), 0, 'BOA desktop shows the directory from its first item')
+    assert.equal(await boaNav.evaluate(n => n.scrollWidth), await boaNav.evaluate(n => n.clientWidth), 'BOA desktop directory fits without horizontal scrolling')
+    await page.screenshot({ path: path.join(artifacts, 'boa-restored-desktop.png') })
+    console.log('PASS BOA at 1414x978 after resize: complete directory remains visible')
 
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto(`${base}/visual/project/vortexnet`, { waitUntil: 'load' })

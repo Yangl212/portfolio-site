@@ -98,9 +98,6 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
       if (!slot) return
 
       const bounds = slot.getBoundingClientRect()
-      // Keep the floating row aligned with each case study's content gutters.
-      slot.style.setProperty("--nav-left", `${bounds.left}px`)
-      slot.style.setProperty("--nav-width", `${bounds.width}px`)
       const dockTop = window.matchMedia("(max-width: 700px)").matches ? 8 : 12
       setFloating(bounds.top <= dockTop)
 
@@ -124,13 +121,10 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
     }
 
     update()
-    const resizeObserver = new ResizeObserver(schedule)
-    resizeObserver.observe(slotRef.current)
     window.addEventListener("scroll", schedule, { passive: true })
     window.addEventListener("resize", schedule)
 
     return () => {
-      resizeObserver.disconnect()
       window.removeEventListener("scroll", schedule)
       window.removeEventListener("resize", schedule)
       if (frame) window.cancelAnimationFrame(frame)
@@ -146,6 +140,10 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const centerActive = () => {
+      if (!window.matchMedia("(max-width: 700px)").matches) {
+        nav.scrollTo({ left: 0, behavior: "auto" })
+        return
+      }
       const left = item.offsetLeft - (nav.clientWidth - item.offsetWidth) / 2
       nav.scrollTo({ left, behavior: reduced ? "auto" : "smooth" })
     }
