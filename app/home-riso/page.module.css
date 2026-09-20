@@ -134,6 +134,14 @@
 .hero[data-cursor="pull"] .cursorLabel { opacity: 1; transform: translateY(-50%) translateX(0); }
 .hero[data-cursor="pull"] .dot { background: var(--ink-b); }
 
+/* Paper fading in over the halftone along the bottom edge, under the type
+   and the ticket. */
+.fade {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none;
+  height: clamp(200px, 30vh, 300px);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--sheet) 88%, var(--sheet) 100%);
+}
+
 .reg { position: absolute; z-index: 1; width: 18px; height: 18px; color: var(--muted); opacity: 0.55; }
 .regTL { top: clamp(16px, 3vw, 30px); left: clamp(16px, 4vw, 44px); }
 .regTR { top: clamp(16px, 3vw, 30px); right: clamp(16px, 4vw, 44px); }
@@ -325,9 +333,9 @@
 .marg, .stampWrap, .strip { opacity: 0; animation: fadeIn 700ms ease var(--t-rest) forwards; }
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* The sheet runs straight into the Selected Work rule: no blank band. The
-   anchor lands below the docked header. */
-.hero + .contentTight { padding-top: 0; scroll-margin-top: 84px; }
+/* A short run of plain paper between the sheet and the Selected Work rule.
+   The anchor lands below the docked header. */
+.hero + .contentTight { padding-top: clamp(56px, 6vw, 88px); scroll-margin-top: 84px; }
 
 @media (max-width: 1080px) {
   .stampWrap { top: auto; bottom: 18%; right: 4%; }
@@ -345,7 +353,7 @@
   /* The ticket wraps to two lines here; the band stays clear of it. */
   .bandBottom { bottom: 104px; }
   .ticket { left: 24px; right: 24px; bottom: 22px; }
-  .hero + .contentTight { scroll-margin-top: 70px; }
+  .hero + .contentTight { padding-top: 48px; scroll-margin-top: 70px; }
 }
 
 @media (max-width: 560px) {

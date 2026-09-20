@@ -191,6 +191,9 @@ export function RisoHero() {
     <section ref={ref} className={styles.hero} aria-labelledby="hero-name">
       <div className={styles.grain} aria-hidden="true" />
       <div className={styles.bloom} aria-hidden="true" />
+      {/* The halftone thins out into plain paper towards the bottom edge
+          instead of stopping at the section rule. */}
+      <div className={styles.fade} aria-hidden="true" />
       {/* The cursor, once a mouse is on the sheet: an instant dot where the
           pointer really is, a registration ring a beat behind it, and a
           label when the name can be pulled. The system cursor is hidden
