@@ -1,4 +1,5 @@
 .comparison {
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -14,13 +15,29 @@
 }
 
 .toggle {
+  position: relative;
   display: inline-flex;
   padding: 4px;
   border: 1px solid var(--divider, var(--border));
   border-radius: 999px;
 }
 
+/* The black pill is one element that slides under whichever button is
+   pressed. It is positioned from a measurement of that button, so it only
+   exists once the component has measured; until then the pressed button
+   paints its own background and nothing looks different. */
+.pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  background: var(--text);
+  will-change: transform, width;
+}
+
 .toggle button {
+  position: relative;
+  z-index: 1;
   min-width: 0;
   white-space: nowrap;
   min-height: 44px;
@@ -36,8 +53,11 @@
 }
 
 .toggle button[aria-pressed="true"] {
-  background: var(--text);
   color: var(--inverse);
+}
+
+.toggle:not([data-measured]) button[aria-pressed="true"] {
+  background: var(--text);
 }
 
 .toggle button[aria-pressed="false"]:hover {
@@ -59,9 +79,14 @@
   line-height: 1.5;
 }
 
+.stageBody {
+  display: inline-block;
+}
+
 /* No fixed ratio: the three screens are different heights, and pinning the
    frame to the tallest one leaves an empty band under the other two. The
-   visible image sets the height instead. */
+   visible image sets the height instead; the switch animates between the two
+   heights from script. */
 .viewport {
   position: relative;
   width: 100%;
@@ -80,14 +105,27 @@
   display: none;
 }
 
+/* The outgoing screen lies over the incoming one and fades, so the parts the
+   three layouts share (header, sidebar, metric row) crossfade in place. */
+.screen[data-state="leaving"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .caption {
+  color: var(--muted);
+  font-size: .8125rem;
+  line-height: 1.6;
+}
+
+.captionBody {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 4px 10px;
-  color: var(--muted);
-  font-size: .8125rem;
-  line-height: 1.6;
 }
 
 .caption strong {
@@ -107,6 +145,37 @@
   color: var(--text);
   font-size: .8125rem;
   font-weight: 500;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pill {
+    transition: transform 360ms var(--ease), width 360ms var(--ease), height 360ms var(--ease);
+  }
+
+  .toggle button {
+    transition: color 220ms ease, transform 140ms ease;
+  }
+
+  .toggle button:active {
+    transform: scale(.96);
+  }
+
+  .screen[data-state="leaving"] {
+    animation: fadeOut 360ms ease forwards;
+  }
+
+  .stageBody,
+  .captionBody {
+    animation: rise 380ms var(--ease);
+  }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(5px); }
 }
 
 @media (max-width: 599px) {

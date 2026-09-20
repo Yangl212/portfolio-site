@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
 
 import styles from "./ScreenComparison.module.css"
 
@@ -47,52 +47,133 @@ const screens = [
   }
 ]
 
+const EASE = "cubic-bezier(0.2, 0.7, 0.2, 1)"
+const CROSSFADE_MS = 360
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
 export default function ScreenComparison() {
   const [selected, setSelected] = useState(1)
+  /* The screen on its way out. It stays mounted on top of the incoming one
+     for the length of the crossfade, then drops back to hidden. */
+  const [leaving, setLeaving] = useState(null)
+  /* Where the black pill sits: measured from the pressed button so it can
+     slide between buttons instead of appearing on the next one. */
+  const [pill, setPill] = useState(null)
+  const toggleRef = useRef(null)
+  const viewportRef = useRef(null)
+  const heightBefore = useRef(null)
+  const leaveTimer = useRef(null)
   const screenId = useId()
   const activeScreen = screens[selected]
+
+  const select = (index) => {
+    if (index === selected) return
+    const animate = !prefersReducedMotion()
+    heightBefore.current = animate && viewportRef.current ? viewportRef.current.offsetHeight : null
+    if (animate) {
+      clearTimeout(leaveTimer.current)
+      setLeaving(selected)
+      leaveTimer.current = setTimeout(() => setLeaving(null), CROSSFADE_MS)
+    }
+    setSelected(index)
+  }
+
+  useEffect(() => () => clearTimeout(leaveTimer.current), [])
+
+  /* Re-measured whenever the toggle reflows as well: fonts arriving, the
+     viewport changing width, or the buttons wrapping onto two rows. */
+  useLayoutEffect(() => {
+    const toggle = toggleRef.current
+    if (!toggle) return undefined
+    const measure = () => {
+      const button = toggle.querySelectorAll("button")[selected]
+      if (!button) return
+      setPill({ x: button.offsetLeft, y: button.offsetTop, w: button.offsetWidth, h: button.offsetHeight })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(toggle)
+    return () => observer.disconnect()
+  }, [selected])
+
+  /* The frame takes its height from the visible screen, and the three are
+     different heights. Animating from the old height to the new one lets the
+     caption and the section below slide instead of jumping. */
+  useLayoutEffect(() => {
+    const from = heightBefore.current
+    heightBefore.current = null
+    const viewport = viewportRef.current
+    if (from == null || !viewport) return
+    viewport.getAnimations().forEach((animation) => animation.cancel())
+    const to = viewport.offsetHeight
+    if (from === to) return
+    viewport.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: CROSSFADE_MS, easing: EASE })
+  }, [selected])
 
   return (
     <figure className={styles.comparison}>
       <div className={styles.toolbar}>
-        <div className={styles.toggle} role="group" aria-label="Compare dashboard stages">
+        <div
+          ref={toggleRef}
+          className={styles.toggle}
+          role="group"
+          aria-label="Compare dashboard stages"
+          data-measured={pill ? "" : undefined}
+        >
+          {pill && (
+            <span
+              aria-hidden="true"
+              className={styles.pill}
+              style={{ transform: `translate(${pill.x}px, ${pill.y}px)`, width: pill.w, height: pill.h }}
+            />
+          )}
           {screens.map((screen, index) => (
             <button
               key={screen.label}
               type="button"
               aria-pressed={selected === index}
               aria-controls={screenId}
-              onClick={() => setSelected(index)}
+              onClick={() => select(index)}
             >
               {screen.label}
             </button>
           ))}
         </div>
-        <p className={styles.stage} aria-live="polite">{activeScreen.stage}</p>
+        <p className={styles.stage} aria-live="polite">
+          <span key={selected} className={styles.stageBody}>{activeScreen.stage}</span>
+        </p>
       </div>
-      <div className={styles.viewport} id={screenId}>
-        {screens.map((screen, index) => (
-          <img
-            key={screen.label}
-            className={styles.screen}
-            src={screen.src}
-            alt={screen.alt}
-            width={screen.width}
-            height={screen.height}
-            /* All three load up front. A hidden lazy image is never fetched,
-               so the first press of a toggle would otherwise land on an
-               empty frame while it downloads. */
-            loading="eager"
-            fetchPriority={index === 1 ? "high" : "low"}
-            decoding="async"
-            hidden={selected !== index}
-          />
-        ))}
+      <div ref={viewportRef} className={styles.viewport} id={screenId}>
+        {screens.map((screen, index) => {
+          const state = index === selected ? "active" : index === leaving ? "leaving" : "hidden"
+          return (
+            <img
+              key={screen.label}
+              className={styles.screen}
+              data-state={state}
+              src={screen.src}
+              alt={screen.alt}
+              width={screen.width}
+              height={screen.height}
+              /* All three load up front. A hidden lazy image is never fetched,
+                 so the first press of a toggle would otherwise land on an
+                 empty frame while it downloads. */
+              loading="eager"
+              fetchPriority={index === 1 ? "high" : "low"}
+              decoding="async"
+              hidden={state === "hidden"}
+            />
+          )
+        })}
       </div>
       <figcaption className={styles.caption} aria-live="polite" aria-atomic="true">
-        <strong>{activeScreen.label}</strong>
-        <span>{activeScreen.caption}</span>
-        {activeScreen.result ? <span className={styles.result}>{activeScreen.result}</span> : null}
+        <span key={selected} className={styles.captionBody}>
+          <strong>{activeScreen.label}</strong>
+          <span>{activeScreen.caption}</span>
+          {activeScreen.result ? <span className={styles.result}>{activeScreen.result}</span> : null}
+        </span>
       </figcaption>
     </figure>
   )
