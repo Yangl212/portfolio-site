@@ -22,13 +22,16 @@ const artifacts = process.env.LAB_SCREENSHOTS || path.join(os.tmpdir(), 'portfol
 
     await page.goto(`${base}/lab`, { waitUntil: 'networkidle' })
     await page.getByRole('heading', { level: 1, name: "Lele's Lab" }).waitFor()
-    assert.equal(await page.locator('article').count(), 9, 'Six experiments and three principles render')
+    assert.equal(await page.locator('article').count(), 6, 'Six experiments render')
     assert.equal(await page.locator('main img').count(), 6, 'Six experiment images render')
     assert(await page.locator('main img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0)), 'Every experiment image loads')
     assert.equal(await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Lab' }).getAttribute('data-active'), 'true')
     await page.screenshot({ path: path.join(artifacts, 'desktop-lab.png'), fullPage: true })
 
     const viewport = page.getByRole('region', { name: /Draggable canvas/ })
+    const desktopViewport = await viewport.boundingBox()
+    assert(desktopViewport.height >= 900, 'Canvas fills the viewport below the desktop header')
+    assert.equal(await viewport.evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(255, 255, 255)', 'Canvas background is pure white')
     await viewport.scrollIntoViewIfNeeded()
     const initialScroll = await viewport.evaluate(element => [element.scrollLeft, element.scrollTop])
     const box = await viewport.boundingBox()
@@ -39,13 +42,8 @@ const artifacts = process.env.LAB_SCREENSHOTS || path.join(os.tmpdir(), 'portfol
     const draggedScroll = await viewport.evaluate(element => [element.scrollLeft, element.scrollTop])
     assert(draggedScroll[0] > initialScroll[0] && draggedScroll[1] > initialScroll[1], 'Empty-space drag pans the canvas')
 
-    await page.getByRole('button', { name: 'Visual', exact: true }).click()
-    assert.equal(await page.locator('[data-dimmed="true"]').count(), 4, 'Visual filter dims the four build experiments')
-    assert.equal(await page.getByRole('button', { name: 'Visual', exact: true }).getAttribute('aria-pressed'), 'true')
-    await page.getByRole('button', { name: 'All', exact: true }).click()
-    assert.equal(await page.locator('[data-dimmed="true"]').count(), 0)
     await viewport.screenshot({ path: path.join(artifacts, 'desktop-lab-panned.png') })
-    console.log('PASS desktop: content, images, filters, active navigation, and canvas drag')
+    console.log('PASS desktop: full-screen white canvas, images, active navigation, and drag')
 
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto(`${base}/lab`, { waitUntil: 'networkidle' })
