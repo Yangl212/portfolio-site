@@ -68,5 +68,6 @@ MP4 H.264、30fps、静音，手机本体宽至少 720px。重要状态停留约
 | 消费圆环图例 | 圆环里有绿、黄、橙、红多种颜色，图例却只写"绿=预算内、红=超支"，黄和橙没有解释 | 先改成三条规则说明，但在手机上占了三行、太重。最终改成直接的颜色对照：每个分类一个圆点加名称，跟着 `visibleCats` 走，手机上两行装下六个分类。"圆环是占比""红色是超支"这类常识不再单独解释，虚线的含义由圆心那句 "of $2,850 budgeted" 承担。字号 12px，颜色 `--ink` |
 | Categories 分类行 | 只有"Groceries $654.55 + 红条"，预算和超支金额要再点进去才看得到 | 每行加一句状态：`$500 budget · $154.55 over`（超支为红色 `--over-budget`）或 `$400 budget · $89.60 left`（其余为灰）。设计系统的 `CategoryAmountRow` 增加了可选的 `caption` / `captionOver` 两个 prop，不传就和原来完全一样 |
 | 商户图表下方提示 | 手机界面写 "Hover a merchant for detail"，依赖鼠标悬停 | 点击本来就能固定明细（`pinBar`），所以只改文案：**Tap a merchant for details**、**Tap a month for details**、" · tap a merchant for details" |
+| 案例 02 / Investigate 的 Visual change | 页面写 "Merchant bars share a budget threshold"，原型里却明确写着 "No merchant-level budgets"，会让人以为每个商家也有预算阈值 | 只改案例文案，原型不动：商户条只显示各商户占比、没有商户级预算，分类预算和超支金额留在上方头部（原型头部实际显示 `$654.55 · of $500 budgeted · Your avg/mo: $520 · Over $154.55 · 131%`），两态控件切换商户/月度视图 |
 
 `CategoryAmountRow` 的改动在 manifest 里那份 gzip 的设计系统 bundle 内，用 `scripts/boa-ds-caption-patch.mjs` 解压→打补丁→重新压回。**注意：你下次从设计工具重新导出整个原型时，这个补丁会被覆盖**，需要重新跑一次该脚本。

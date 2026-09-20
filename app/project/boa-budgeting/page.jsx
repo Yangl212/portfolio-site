@@ -51,7 +51,7 @@ const designHighlights = [
     label: "02 / Investigate",
     title: "Trace the total back to the spending.",
     body: "Inside a category, switch between merchant and monthly breakdowns. The selected category and budget remain the reference while the view changes.",
-    visualChange: "Spending, budget, overage, and average sit in one header. Merchant bars share a budget threshold, while a two-state control switches between merchant and monthly views.",
+    visualChange: "Spending, budget, overage, and average sit in one header. Merchant bars show each merchant’s contribution, with no merchant-level budgets, while the category budget and overage stay visible above them. A two-state control switches between merchant and monthly views.",
     benefit: "People can move from the total to its contributors while keeping the month, category, and budget visible, reducing the need to reconstruct context between screens.",
     tradeoff: "Detail takes another step on mobile. The desktop version can show the overview and breakdown side by side.",
     video: "budget",
