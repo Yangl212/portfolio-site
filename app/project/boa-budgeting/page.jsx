@@ -2,6 +2,7 @@ import CaseVideo from "../cleared/CaseVideo"
 import { ImageCarousel } from "../../../components/ImageCarousel"
 import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -329,14 +330,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             </div>
           </header>
 
-          <nav className={styles.sectionNav} aria-label="Case study sections">
-            <a href="#experience">Experience</a>
-            <a href="#prototype">Prototype</a>
-            <a href="#research">Research</a>
-            <a href="#task-flows">Task flows</a>
-            <a href="#testing">Evaluation</a>
-            <a href="#web">Web adaptation</a>
-          </nav>
+          <ProjectQuickNav slug="boa-budgeting" track={track} />
 
           <section id="experience" className={styles.caseSection}>
             <div className={styles.sectionHeader}>

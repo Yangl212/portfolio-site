@@ -1,4 +1,5 @@
 import { ProjectHero } from "../../../components/ProjectHero"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -57,8 +58,10 @@ export default function GraveyardPage({ track = "uiux" }) {
             </p>
           </div>
 
+          <ProjectQuickNav slug="graveyard" track={track} />
+
           <div className={styles.bodyContent}>
-            <section className={styles.section}>
+            <section id="problem" className={styles.section}>
               <div className={styles.kickerColumn}>
                 <h3 className={styles.kicker}>Current problem</h3>
                 <div className={styles.figurePortrait}>
@@ -84,7 +87,7 @@ export default function GraveyardPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.section}>
+            <section id="research" className={styles.section}>
               <h3 className={styles.kicker}>Research</h3>
               <h2 className={styles.heading}>What We Can&rsquo;t Say</h2>
               <p className={styles.body}>
@@ -115,7 +118,7 @@ export default function GraveyardPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.section}>
+            <section id="concept" className={styles.section}>
               <h3 className={styles.kicker}>Concept</h3>
               <h2 className={styles.heading}>Introduction</h2>
               <p className={styles.body}>
@@ -147,7 +150,7 @@ export default function GraveyardPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.section}>
+            <section id="experience" className={styles.section}>
               <h3 className={styles.kicker}>Experience</h3>
               <h2 className={styles.heading}>Information Architecture</h2>
               <p className={styles.body}>
@@ -167,7 +170,7 @@ export default function GraveyardPage({ track = "uiux" }) {
               </p>
             </section>
 
-            <section className={styles.section}>
+            <section id="visual-design" className={styles.section}>
               <h3 className={styles.kicker}>Visual design</h3>
               <h2 className={styles.heading}>Design System</h2>
               <p className={styles.body}>

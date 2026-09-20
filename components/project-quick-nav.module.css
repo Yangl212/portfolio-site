@@ -1,0 +1,142 @@
+.slot {
+  position: relative;
+  z-index: 35;
+  width: 100%;
+  min-width: 0;
+  height: 58px;
+}
+
+.bar {
+  width: max-content;
+  max-width: min(100%, calc(100vw - 32px));
+  height: 58px;
+  margin: 0 auto;
+  padding: 6px;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid rgba(34, 34, 34, 0.2);
+  border-radius: 999px;
+  background: rgba(238, 236, 236, 0.9);
+  box-shadow: 0 8px 28px rgba(34, 34, 34, 0.07);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  animation: arrive 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.bar[data-floating="true"] {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  background: rgba(238, 236, 236, 0.94);
+  border-color: rgba(34, 34, 34, 0.28);
+  box-shadow: 0 14px 44px rgba(34, 34, 34, 0.16);
+  animation: dock 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.back {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px 0 12px;
+  border-right: 1px solid rgba(34, 34, 34, 0.16);
+  border-radius: 999px 0 0 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 180ms ease;
+}
+
+.backArrow {
+  font-size: 1rem;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back:hover,
+.back:focus-visible {
+  background: rgba(34, 34, 34, 0.07);
+}
+
+.back:hover .backArrow,
+.back:focus-visible .backArrow {
+  transform: translateX(-3px);
+}
+
+.links {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+
+.links::-webkit-scrollbar { display: none; }
+
+.link {
+  flex: none;
+  min-height: 44px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: rgba(34, 34, 34, 0.64);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  animation: itemIn 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(100ms + var(--nav-index) * 45ms);
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: #222;
+  background: rgba(34, 34, 34, 0.07);
+  transform: translateY(-1px);
+}
+
+.link[data-active="true"] {
+  color: #fff;
+  background: #222;
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes dock {
+  from { opacity: 0.75; transform: translateX(-50%) translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+@keyframes itemIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 700px) {
+  .slot { height: 54px; }
+  .bar { width: 100%; height: 54px; padding: 5px; }
+  .bar[data-floating="true"] { top: 8px; }
+  .back { min-height: 42px; padding-inline: 12px; }
+  .backLabel { display: none; }
+  .link { min-height: 42px; padding-inline: 11px; font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .bar[data-floating="true"],
+  .link { animation: none; opacity: 1; }
+  .backArrow,
+  .link { transition: none; }
+}

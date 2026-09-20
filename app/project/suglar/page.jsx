@@ -1,6 +1,7 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -207,11 +208,13 @@ export default function SuglarPage({ track = "uiux" }) {
             />
           </div>
 
+          <ProjectQuickNav slug="suglar" track={track} />
+
           <div className={styles.bodyContent}>
             {/* Finished object first, the same way the Taroo page opens. This is
                 a physical product, so the box is the fastest answer to "what is
                 it" that the page can give. */}
-            <section className={styles.caseSection}>
+            <section id="product" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Final Product</p>
                 <div>
@@ -249,7 +252,7 @@ export default function SuglarPage({ track = "uiux" }) {
 
             {/* The idea, kept to three answers, then the two references that
                 make the argument for a consumable component. */}
-            <section className={styles.caseSection}>
+            <section id="idea" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>The Idea</p>
                 <div>
@@ -283,7 +286,7 @@ export default function SuglarPage({ track = "uiux" }) {
 
             {/* The section a hiring manager actually reads: three rules, each
                 next to the artefact that carries it. */}
-            <section className={styles.caseSection}>
+            <section id="decisions" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Key Design Decisions</p>
                 <div>
@@ -388,7 +391,7 @@ export default function SuglarPage({ track = "uiux" }) {
 
             {/* How the rules above were earned. Two rounds that each failed for
                 a nameable reason, then what shipped. */}
-            <section className={styles.caseSection}>
+            <section id="iteration" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Iteration</p>
                 <div>
@@ -437,7 +440,7 @@ export default function SuglarPage({ track = "uiux" }) {
             </section>
 
             {/* The visual system, compact: wordmark, type, palette, elements. */}
-            <section className={styles.caseSection}>
+            <section id="visual-system" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Visual System</p>
                 <div>
@@ -563,7 +566,7 @@ export default function SuglarPage({ track = "uiux" }) {
             </section>
 
             {/* What came back from the final session, scores included. */}
-            <section className={styles.caseSection}>
+            <section id="results" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Results</p>
                 <div>

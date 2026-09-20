@@ -2,6 +2,7 @@ import { AutoplayVideo } from "../../../components/AutoplayVideo"
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -287,8 +288,10 @@ export default function BackstagePage({ track = "uiux" }) {
             />
           </div>
 
+          <ProjectQuickNav slug="backstage" track={track} />
+
           <div className={styles.bodyContent}>
-            <section className={styles.caseSection}>
+            <section id="problem" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Problem</p>
                 <div>
@@ -388,7 +391,7 @@ export default function BackstagePage({ track = "uiux" }) {
               </p>
             </section>
 
-            <section className={`${styles.caseSection} ${styles.finalSection}`}>
+            <section id="design" className={`${styles.caseSection} ${styles.finalSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Design Highlights</p>
                 <div>
@@ -414,7 +417,7 @@ export default function BackstagePage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="research" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Research Insights</p>
                 <div>
@@ -460,7 +463,7 @@ export default function BackstagePage({ track = "uiux" }) {
               </p>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="direction" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Product Direction</p>
                 <div>
@@ -518,7 +521,7 @@ export default function BackstagePage({ track = "uiux" }) {
               </figure>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="iteration" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Iteration 01</p>
                 <div>
@@ -632,7 +635,7 @@ export default function BackstagePage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+            <section id="reflection" className={`${styles.caseSection} ${styles.reflectionSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Reflection</p>
                 <h2 className={styles.sectionTitle}>Removing choice is the idea and the risk.</h2>

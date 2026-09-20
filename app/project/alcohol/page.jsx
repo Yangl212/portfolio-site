@@ -1,6 +1,7 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -150,10 +151,12 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
             />
           </div>
 
+          <ProjectQuickNav slug="alcohol" track={track} />
+
           <div className={styles.bodyContent}>
             {/* The book opens the body. It is the strongest thing on the page
                 and should not need a scroll to find. */}
-            <section className={styles.caseSection}>
+            <section id="book" className={styles.caseSection}>
               {/* The kicker sits on its own line so the button can align with the
                   top of the heading rather than with the label above it. */}
               <div className={styles.bookHeader}>
@@ -183,7 +186,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="idea" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>The Idea</p>
                 <div>
@@ -201,7 +204,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="direction" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Direction</p>
                 <div>
@@ -235,7 +238,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
 
             {/* Highlights rather than decisions: the things that are true of the
                 object itself, in the order they matter to someone holding it. */}
-            <section className={styles.caseSection}>
+            <section id="highlights" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Highlights</p>
                 <div>
@@ -403,7 +406,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={styles.caseSection}>
+            <section id="spreads" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Every Spread</p>
                 <div>
@@ -424,7 +427,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
               </div>
             </section>
 
-            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+            <section id="reflection" className={`${styles.caseSection} ${styles.reflectionSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Reflection</p>
                 <h2 className={styles.sectionTitle}>It exists, but it does not scale.</h2>

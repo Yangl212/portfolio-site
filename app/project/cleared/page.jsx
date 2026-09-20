@@ -1,4 +1,5 @@
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -137,14 +138,7 @@ export default function ClearedPage({ track = "uiux" }) {
             </div>
           </header>
 
-          <nav className={styles.sectionNav} aria-label="Case study sections">
-            <a href="#context">Context</a>
-            <a href="#experience">Design choices</a>
-            <a href="#trust">AI & trust</a>
-            <a href="#mobile-ui">Mobile UI</a>
-            <a href="#prototype">Prototype</a>
-            <a href="#validation">Evaluation</a>
-          </nav>
+          <ProjectQuickNav slug="cleared" track={track} />
 
           <section id="context" className={styles.caseSection}>
             <div className={styles.sectionHeader}>

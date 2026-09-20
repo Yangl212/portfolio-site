@@ -1,4 +1,5 @@
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -124,14 +125,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             </div>
           </header>
 
-          <nav className={styles.sectionNav} aria-label="Case study sections">
-            <a href="#result">Redesign</a>
-            <a href="#testing">Results</a>
-            <a href="#start">Problem</a>
-            <a href="#iteration">Design decisions</a>
-            <a href="#navigation">Navigation</a>
-            <a href="#reflection">Trade-offs</a>
-          </nav>
+          <ProjectQuickNav slug="vortexnet" track={track} />
 
           <section id="result" className={styles.caseSection}>
             <div className={styles.sectionHeader}>

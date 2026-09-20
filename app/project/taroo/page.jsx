@@ -1,6 +1,7 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { Reveal } from "../../../components/Reveal"
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -176,11 +177,13 @@ export default function TarooPage({ track = "uiux" }) {
             />
           </div>
 
+          <ProjectQuickNav slug="taroo" track={track} />
+
           <div className={styles.bodyContent}>
             {/* Final product first. This is a visual brand project, so the
                 strongest artwork carries the top of the page and the reasoning
                 follows it rather than delaying it. */}
-            <section className={styles.caseSection}>
+            <section id="product" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Final Product</p>
                 <div>
@@ -202,7 +205,7 @@ export default function TarooPage({ track = "uiux" }) {
             </section>
 
             {/* The idea, kept to three answers. */}
-            <section className={styles.caseSection}>
+            <section id="idea" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>The Idea</p>
                 <div>
@@ -221,7 +224,7 @@ export default function TarooPage({ track = "uiux" }) {
             </section>
 
             {/* Direction: the three words, and what each one had to become. */}
-            <section className={styles.caseSection}>
+            <section id="direction" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Design Direction</p>
                 <div>
@@ -255,7 +258,7 @@ export default function TarooPage({ track = "uiux" }) {
 
             {/* The section a hiring manager actually reads: three decisions,
                 each next to the artefact that proves it. */}
-            <section className={styles.caseSection}>
+            <section id="decisions" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Key Design Decisions</p>
                 <div>
@@ -362,7 +365,7 @@ export default function TarooPage({ track = "uiux" }) {
             </section>
 
             {/* Audience and competitors, compressed to roughly one screen. */}
-            <section className={styles.caseSection}>
+            <section id="positioning" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Audience &amp; Positioning</p>
                 <div>
@@ -414,7 +417,7 @@ export default function TarooPage({ track = "uiux" }) {
             </section>
 
             {/* The system, compact. */}
-            <section className={styles.caseSection}>
+            <section id="brand" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Brand System</p>
                 <div>
@@ -494,7 +497,7 @@ export default function TarooPage({ track = "uiux" }) {
             </section>
 
             {/* Reflection, short. */}
-            <section className={`${styles.caseSection} ${styles.reflectionSection}`}>
+            <section id="reflection" className={`${styles.caseSection} ${styles.reflectionSection}`}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Reflection</p>
                 <h2 className={styles.sectionTitle}>Recognition first, depth second.</h2>

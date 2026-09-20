@@ -1,4 +1,5 @@
 import { ProjectNav } from "../../../components/ProjectNav"
+import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -120,13 +121,7 @@ export default function LastMessagePage({ track = "uiux" }) {
             </div>
           </section>
 
-          <nav className={styles.sectionNav} aria-label="Case study sections">
-            <a href="#experience">The experience</a>
-            <a href="#investigation-flow">Investigation flow</a>
-            <a href="#ai-behavior">AI behavior</a>
-            <a href="#playtesting">Playtesting</a>
-            <a href="#figma-to-build">Figma to build</a>
-          </nav>
+          <ProjectQuickNav slug="lastmessage" track={track} />
 
           <section className={styles.caseSection} id="experience">
             <SectionHeading label="01 / The experience" title="Let players follow a question, wherever it leads.">
