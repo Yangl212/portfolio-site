@@ -51,8 +51,8 @@ const testing = {
       body: "I tested the dashboard with ten colleagues who used the internal tool. I timed lookup tasks in the original and redesigned interfaces, including finding Pending settlement and locating Trend in the left-hand navigation. Participants were asked to locate a specified data item or section. Timing started when I gave the task instruction and ended when the participant opened the correct page. I checked that they had reached the intended destination before marking the task complete."
     },
     {
-      title: "Lookup became faster.",
-      body: "The recorded summaries showed that finding the day’s information took roughly 20–30 seconds in the original interface and about eight seconds in the redesign. Finding a requested item in the left-hand list fell from more than ten seconds to around five. These are approximate task-summary figures."
+      title: "Recorded lookup times improved.",
+      body: "The recorded summaries showed that finding the day’s information took roughly 20–30 seconds in the original interface and about eight seconds in the redesign. Finding a requested item in the left-hand list fell from more than ten seconds to around five. These are approximate task-summary figures; some existing users initially took longer to find relocated items."
     },
     {
       title: "Trend understanding was an observation.",
@@ -130,7 +130,7 @@ export default function VortexNetPage({ track = "uiux" }) {
             <a href="#start">Problem</a>
             <a href="#iteration">Design decisions</a>
             <a href="#navigation">Navigation</a>
-            <a href="#reflection">Takeaways</a>
+            <a href="#reflection">Trade-offs</a>
           </nav>
 
           <section id="result" className={styles.caseSection}>
@@ -235,7 +235,7 @@ export default function VortexNetPage({ track = "uiux" }) {
                 <div className={styles.decisionCopy}>
                   <p className={styles.microLabel}>Placement decision</p>
                   <h3>Daily checks get the landing screen.</h3>
-                  <p>The working priority model linked each item to a team and a cadence. It informed the landing view and the navigation groups.</p>
+                  <p>I asked colleagues what they checked first when starting their daily work. Their feedback shaped the priority model below and the order of information on the dashboard.</p>
                 </div>
                 <dl className={styles.reasoning}>
                   <div><dt>Design trade-off</dt><dd>Prioritizing monitoring gives periodic reports less prominence. Named reporting and admin groups keep those destinations available.</dd></div>
@@ -275,14 +275,15 @@ export default function VortexNetPage({ track = "uiux" }) {
 
           <section id="reflection" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Takeaways</p>
-              <h2>Start with the task, then shape the screen.</h2>
+              <p className={styles.kicker}>Constraints & trade-offs</p>
+              <h2>Designing within operational constraints.</h2>
             </div>
             <div className={styles.reflectionGrid}>
-              <article><p className={styles.microLabel}>What changed my approach</p><h3>Test the diagnosis early.</h3><p>Mixed feedback challenged my initial focus on color. It prompted me to reconsider the order and emphasis of the information itself.</p></article>
-              <article><p className={styles.microLabel}>Working across teams</p><h3>Make priorities explicit.</h3><p>The priority model gave product, data and design a shared way to discuss which information belonged on the landing screen.</p></article>
-              <article><p className={styles.microLabel}>What I would validate next</p><h3>Can people find the right action?</h3><p>Compare how operations and finance identify a settlement issue and open the relevant queue. Observe wrong turns, completion and hesitation.</p></article>
+              <article><p className={styles.microLabel}>Data freshness</p><h3>Show when the data was updated.</h3><p>The dashboard could not refresh continuously. After colleagues explained the update cycle, I added an “As of” timestamp so users could judge how current the figures were.</p></article>
+              <article><p className={styles.microLabel}>Team input</p><h3>Let daily work set the order.</h3><p>I asked users what they checked first each morning, then placed their highest-priority information at the top. The hierarchy reflected their working routine.</p></article>
+              <article><p className={styles.microLabel}>Navigation trade-off</p><h3>Clearer groups, unfamiliar locations.</h3><p>Existing users found top-level categories faster, but some initially took longer to find relocated items. One new hire, with little familiarity with the old menu, found items considerably faster in the redesign. I interpreted this as a possible adjustment cost; one employee cannot establish long-term adoption.</p></article>
             </div>
+            <p className={styles.sectionLead}>Next, I would follow returning users over time and consider familiar terminology or temporary navigation cues to ease the transition.</p>
           </section>
           <ProjectNav slug="vortexnet" track={track} styles={styles} />
         </div>
