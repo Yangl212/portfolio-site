@@ -177,9 +177,8 @@ export default function TarooPage({ track = "uiux" }) {
             />
           </div>
 
-          <ProjectQuickNav slug="taroo" track={track} />
-
           <div className={styles.bodyContent}>
+            <ProjectQuickNav slug="taroo" track={track} />
             {/* Final product first. This is a visual brand project, so the
                 strongest artwork carries the top of the page and the reasoning
                 follows it rather than delaying it. */}

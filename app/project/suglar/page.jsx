@@ -208,9 +208,8 @@ export default function SuglarPage({ track = "uiux" }) {
             />
           </div>
 
-          <ProjectQuickNav slug="suglar" track={track} />
-
           <div className={styles.bodyContent}>
+            <ProjectQuickNav slug="suglar" track={track} />
             {/* Finished object first, the same way the Taroo page opens. This is
                 a physical product, so the box is the fastest answer to "what is
                 it" that the page can give. */}

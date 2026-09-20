@@ -58,9 +58,8 @@ export default function GraveyardPage({ track = "uiux" }) {
             </p>
           </div>
 
-          <ProjectQuickNav slug="graveyard" track={track} />
-
           <div className={styles.bodyContent}>
+            <ProjectQuickNav slug="graveyard" track={track} />
             <section id="problem" className={styles.section}>
               <div className={styles.kickerColumn}>
                 <h3 className={styles.kicker}>Current problem</h3>

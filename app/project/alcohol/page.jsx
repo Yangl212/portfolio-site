@@ -151,9 +151,8 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
             />
           </div>
 
-          <ProjectQuickNav slug="alcohol" track={track} />
-
           <div className={styles.bodyContent}>
+            <ProjectQuickNav slug="alcohol" track={track} />
             {/* The book opens the body. It is the strongest thing on the page
                 and should not need a scroll to find. */}
             <section id="book" className={styles.caseSection}>

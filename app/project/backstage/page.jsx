@@ -288,9 +288,8 @@ export default function BackstagePage({ track = "uiux" }) {
             />
           </div>
 
-          <ProjectQuickNav slug="backstage" track={track} />
-
           <div className={styles.bodyContent}>
+            <ProjectQuickNav slug="backstage" track={track} />
             <section id="problem" className={styles.caseSection}>
               <div className={styles.sectionHeader}>
                 <p className={styles.kicker}>Problem</p>

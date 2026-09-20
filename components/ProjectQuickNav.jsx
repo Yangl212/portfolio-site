@@ -97,7 +97,12 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
       const slot = slotRef.current
       if (!slot) return
 
-      setFloating(slot.getBoundingClientRect().top <= 12)
+      const bounds = slot.getBoundingClientRect()
+      // Keep the floating row aligned with each case study's content gutters.
+      slot.style.setProperty("--nav-left", `${bounds.left}px`)
+      slot.style.setProperty("--nav-width", `${bounds.width}px`)
+      const dockTop = window.matchMedia("(max-width: 700px)").matches ? 8 : 12
+      setFloating(bounds.top <= dockTop)
 
       const marker = Math.min(window.innerHeight * 0.32, 280)
       let next = sections[0][0]
@@ -119,10 +124,13 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
     }
 
     update()
+    const resizeObserver = new ResizeObserver(schedule)
+    resizeObserver.observe(slotRef.current)
     window.addEventListener("scroll", schedule, { passive: true })
     window.addEventListener("resize", schedule)
 
     return () => {
+      resizeObserver.disconnect()
       window.removeEventListener("scroll", schedule)
       window.removeEventListener("resize", schedule)
       if (frame) window.cancelAnimationFrame(frame)
@@ -137,8 +145,14 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
     if (!item) return
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const left = item.offsetLeft - (nav.clientWidth - item.offsetWidth) / 2
-    nav.scrollTo({ left, behavior: reduced ? "auto" : "smooth" })
+    const centerActive = () => {
+      const left = item.offsetLeft - (nav.clientWidth - item.offsetWidth) / 2
+      nav.scrollTo({ left, behavior: reduced ? "auto" : "smooth" })
+    }
+    centerActive()
+    const resizeObserver = new ResizeObserver(centerActive)
+    resizeObserver.observe(nav)
+    return () => resizeObserver.disconnect()
   }, [active])
 
   if (!sections.length) return null
@@ -163,7 +177,7 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
           <span className={styles.backLabel}>Work</span>
         </Link>
         <nav className={styles.links} aria-label="On this project" ref={linksRef}>
-          {sections.map(([id, label], index) => (
+          {sections.map(([id, label]) => (
             <a
               className={styles.link}
               data-active={active === id}
@@ -171,7 +185,6 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
               href={`#${id}`}
               key={id}
               onClick={(event) => goToSection(event, id)}
-              style={{ "--nav-index": index }}
               aria-current={active === id ? "location" : undefined}
             >
               {label}
