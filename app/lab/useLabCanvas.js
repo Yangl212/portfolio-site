@@ -70,10 +70,10 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
       elapsed += dt
       let moving = false
 
-      const edgeZone = Math.min(160, Math.max(96, Math.min(bounds.width, bounds.height) * .16))
+      const edgeZone = Math.min(260, Math.max(140, Math.min(bounds.width, bounds.height) * .25))
       const edgeAxis = (value, length) => {
-        if (value < edgeZone) return Math.pow(1 - value / edgeZone, 1.45)
-        if (value > length - edgeZone) return -Math.pow(1 - (length - value) / edgeZone, 1.45)
+        if (value < edgeZone) return Math.pow(1 - value / edgeZone, 1.35)
+        if (value > length - edgeZone) return -Math.pow(1 - (length - value) / edgeZone, 1.35)
         return 0
       }
       const edgeTarget = !drag && !reduced.matches && fine.matches && pointer.inside

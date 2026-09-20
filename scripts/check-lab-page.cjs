@@ -34,16 +34,16 @@ function signedAxisDistance(from, to, period) {
   return ((to - from + period * 1.5) % period) - period / 2
 }
 
-async function visibleImageIndex(viewport) {
-  return viewport.evaluate(element => {
+async function visibleImageIndex(viewport, inset = 50) {
+  return viewport.evaluate((element, safeInset) => {
     const bounds = element.getBoundingClientRect()
     return [...element.querySelectorAll('figure[data-lab-item]')].findIndex(card => {
       const rect = card.getBoundingClientRect()
       const x = rect.left + rect.width / 2
       const y = rect.top + rect.height / 2
-      return x > bounds.left + 50 && x < bounds.right - 50 && y > bounds.top + 50 && y < bounds.bottom - 50
+      return x > bounds.left + safeInset && x < bounds.right - safeInset && y > bounds.top + safeInset && y < bounds.bottom - safeInset
     })
-  })
+  }, inset)
 }
 
 async function assertVisibleImages(viewport, label) {
@@ -104,7 +104,8 @@ async function assertStill(page) {
 
     // A stationary pointer still produces organic movement; fixed layout
     // anchors prevent movement from feeding back into proximity calculations.
-    const motionIndex = await visibleImageIndex(viewport)
+    const motionIndex = await visibleImageIndex(viewport, 280)
+    assert(motionIndex >= 0, 'A centrally placed image is available for isolated breathing checks')
     const motionCard = viewport.locator(itemSelector).nth(motionIndex)
     const firstBox = await motionCard.boundingBox()
     await page.mouse.move(firstBox.x + firstBox.width * .65, firstBox.y + firstBox.height * .4)
@@ -173,6 +174,12 @@ async function assertStill(page) {
     // pointer is to it, the canvas travels towards the opposite side. Corners
     // combine both axes and returning to the center eases to a stop.
     const edgeBounds = await viewport.boundingBox()
+    await page.mouse.move(edgeBounds.x + edgeBounds.width - 190, edgeBounds.y + edgeBounds.height / 2)
+    const beforeOuterBand = await readPan(canvas)
+    await page.waitForTimeout(700)
+    const afterOuterBand = await readPan(canvas)
+    assert(signedAxisDistance(beforeOuterBand.x, afterOuterBand.x, tileWidth) < -8, 'The expanded edge band begins auto-panning about 190px from the side')
+
     await page.mouse.move(edgeBounds.x + edgeBounds.width - 5, edgeBounds.y + edgeBounds.height / 2)
     const beforeRightEdge = await readPan(canvas)
     await page.waitForTimeout(550)
