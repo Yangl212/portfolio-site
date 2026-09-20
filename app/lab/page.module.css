@@ -6,95 +6,69 @@
 }
 
 .frame {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100svh;
-  overflow: hidden;
+  height: 100%;
   background: #fff;
-  border: 1px solid var(--border);
+}
+
+.frame > header {
+  flex-shrink: 0;
+  background: #fff;
 }
 
 .explorer {
-  width: 100%;
-  height: calc(100svh - 79px);
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  isolation: isolate;
   background: #fff;
+}
+
+.title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .viewport {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   background: #fff;
   cursor: grab;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  touch-action: pan-x pan-y;
-}
-
-.viewport::-webkit-scrollbar {
-  display: none;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 .viewport:focus-visible {
-  outline: 2px solid #397df6;
+  outline: 1px solid #222;
   outline-offset: -4px;
 }
 
 .viewport[data-dragging="true"] {
   cursor: grabbing;
-  user-select: none;
 }
 
-.boardTitle {
+.canvas,
+.tile {
   position: absolute;
-  z-index: 5;
-  top: 24px;
-  left: 24px;
-  pointer-events: none;
-}
-
-.boardTitle h1,
-.boardTitle p {
-  margin: 0;
-}
-
-.boardTitle h1 {
-  font-size: .875rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-.boardTitle p {
-  margin-top: 5px;
-  color: #777;
-  font-size: .6875rem;
-  line-height: 1.3;
-}
-
-.dragHint {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  margin: 0;
-  padding: 9px 12px;
-  border: 1px solid #222;
-  background: #fff;
-  font-size: .6875rem;
-  line-height: 1;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  pointer-events: none;
+  inset: 0;
 }
 
 .canvas {
-  position: relative;
-  width: 2240px;
-  height: 1460px;
-  background: #fff;
+  will-change: transform;
+}
+
+.tile {
+  transform: translate(var(--tile-x), var(--tile-y));
+  pointer-events: none;
 }
 
 .card {
@@ -102,129 +76,111 @@
   left: var(--x);
   top: var(--y);
   width: var(--w);
+  margin: 0;
+  pointer-events: auto;
 }
 
 .cardMotion {
-  transform-origin: 50% 45%;
+  transform-origin: 50% 50%;
 }
 
-.cardImage {
+.card img {
   display: block;
   width: 100%;
-  aspect-ratio: var(--ratio);
-  overflow: hidden;
-  background: #f3f3f3;
+  height: auto;
+  border-radius: 0;
+  pointer-events: none;
 }
 
-.cardImage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.caption {
+.dragHint {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 28px;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-  margin-top: 9px;
-}
-
-.caption h2,
-.caption p {
+  align-items: center;
+  gap: 12px;
+  transform: translateX(-50%);
   margin: 0;
-  font-size: .75rem;
-  line-height: 1.35;
+  color: #666;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-.caption h2 {
-  font-weight: 500;
-}
-
-.caption h2 a:hover,
-.caption h2 a:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.caption p {
-  color: #777;
-  text-align: right;
+.dragHint svg {
+  width: 18px;
+  height: 18px;
 }
 
 @media (max-width: 809px) {
-  .page,
-  .frame {
+  .page {
     height: auto;
     min-height: 100svh;
     overflow: visible;
   }
 
-  .explorer {
+  .frame {
     height: auto;
+  }
+
+  .explorer {
+    flex: none;
+  }
+
+  .title {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 32px 18px;
+    clip-path: none;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -.04em;
   }
 
   .viewport {
-    height: auto;
-    overflow: visible;
-    cursor: default;
-  }
-
-  .boardTitle {
     position: relative;
-    top: auto;
-    left: auto;
-    padding: 40px 16px 48px;
+    overflow: visible;
+    cursor: auto;
+    touch-action: auto;
   }
 
-  .boardTitle h1 {
-    font-size: clamp(2.75rem, 14vw, 4.5rem);
-    font-weight: 400;
-    line-height: .92;
-    letter-spacing: -.055em;
-    text-transform: none;
+  .canvas,
+  .tile {
+    position: relative;
+    transform: none !important;
+    will-change: auto;
   }
 
-  .boardTitle p {
-    margin-top: 16px;
-    max-width: 28ch;
-    font-size: .75rem;
-    line-height: 1.5;
-  }
-
-  .dragHint {
-    display: none;
-  }
-
-  .canvas {
-    width: 100%;
-    height: auto;
+  .tile {
     display: grid;
-    gap: 56px;
-    padding: 0 16px 72px;
+    gap: 24px;
+    padding: 0 18px 32px;
+  }
+
+  .tile[aria-hidden="true"] {
+    display: none;
   }
 
   .card {
     position: relative;
-    left: auto;
     top: auto;
+    left: auto;
     width: 100%;
   }
 
-  .caption {
-    margin-top: 8px;
-  }
-}
-
-@media (max-width: 460px) {
-  .caption {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 2px;
+  .cardMotion {
+    transform: none !important;
   }
 
-  .caption p {
-    text-align: left;
+  .dragHint {
+    display: none;
   }
 }
 

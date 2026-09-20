@@ -1,101 +1,87 @@
 "use client"
 
-import Link from "next/link"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import { useLabMotion } from "./useLabMotion"
+import { LAB_PERIOD } from "./lab-items"
+import { useLabCanvas } from "./useLabCanvas"
 import styles from "./page.module.css"
 
 export function LabBoard({ items }) {
-  const [dragging, setDragging] = useState(false)
   const viewportRef = useRef(null)
   const canvasRef = useRef(null)
-  const dragRef = useRef(null)
+  const [tiles, setTiles] = useState([[0, 0]])
 
-  useLabMotion(viewportRef, canvasRef, dragRef, items)
-
-  const beginDrag = (event) => {
-    if (event.pointerType !== "mouse" || event.button !== 0 || event.target.closest("a, button")) return
-    if (!window.matchMedia("(min-width: 810px)").matches) return
-
+  useEffect(() => {
     const viewport = viewportRef.current
-    if (!viewport) return
-
-    dragRef.current = {
-      x: event.clientX,
-      y: event.clientY,
-      left: viewport.scrollLeft,
-      top: viewport.scrollTop
+    const measure = () => {
+      const next = [[0, 0]]
+      if (window.matchMedia("(min-width: 810px)").matches) {
+        for (let y = -1; y <= Math.ceil(viewport.clientHeight / LAB_PERIOD.height); y++) {
+          for (let x = -1; x <= Math.ceil(viewport.clientWidth / LAB_PERIOD.width); x++) {
+            if (x !== 0 || y !== 0) next.push([x, y])
+          }
+        }
+      }
+      setTiles(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next)
     }
-    viewport.setPointerCapture(event.pointerId)
-    setDragging(true)
-  }
+    const observer = new ResizeObserver(measure)
+    observer.observe(viewport)
+    measure()
+    return () => observer.disconnect()
+  }, [])
 
-  const moveDrag = (event) => {
-    const origin = dragRef.current
-    const viewport = viewportRef.current
-    if (!origin || !viewport) return
-
-    viewport.scrollLeft = origin.left - (event.clientX - origin.x)
-    viewport.scrollTop = origin.top - (event.clientY - origin.y)
-  }
-
-  const endDrag = (event) => {
-    const viewport = viewportRef.current
-    if (viewport?.hasPointerCapture(event.pointerId)) {
-      viewport.releasePointerCapture(event.pointerId)
-    }
-    dragRef.current = null
-    setDragging(false)
-  }
+  useLabCanvas(viewportRef, canvasRef, tiles)
 
   return (
     <section className={styles.explorer} aria-labelledby="lab-title">
+      <h1 id="lab-title" className={styles.title}>Lele&apos;s Lab</h1>
       <div
         className={styles.viewport}
-        data-dragging={dragging}
         ref={viewportRef}
-        tabIndex="0"
+        tabIndex={0}
         role="region"
-        aria-label="Draggable canvas of experiments. Use arrow keys or drag empty space to explore."
-        onPointerDown={beginDrag}
-        onPointerMove={moveDrag}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onLostPointerCapture={endDrag}
+        aria-label="Infinite image canvas. Scroll, drag, or use the arrow keys to explore."
       >
-        <div className={styles.boardTitle}>
-          <h1 id="lab-title">Lele&apos;s Lab</h1>
-          <p>AI builds · coded experiments · visual studies</p>
-        </div>
-
-        <p className={styles.dragHint} aria-hidden="true">Drag to explore&nbsp; ↔</p>
-
-        <div className={styles.canvas} ref={canvasRef}>
-          {items.map((item, index) => (
-            <article
-              className={styles.card}
-              key={item.title}
-              style={{
-                "--x": item.position.x,
-                "--y": item.position.y,
-                "--w": item.position.w,
-                "--ratio": item.position.ratio
-              }}
+        <div className={styles.canvas} ref={canvasRef} data-lab-canvas>
+          {tiles.map(([tileX, tileY]) => (
+            <div
+              className={styles.tile}
+              key={`${tileX}:${tileY}`}
+              data-lab-tile={`${tileX}:${tileY}`}
+              aria-hidden={tileX !== 0 || tileY !== 0 ? true : undefined}
+              style={{ "--tile-x": `${tileX * LAB_PERIOD.width}px`, "--tile-y": `${tileY * LAB_PERIOD.height}px` }}
             >
-              <div className={styles.cardMotion}>
-                <Link className={styles.cardImage} href={item.href} prefetch={false}>
-                  <img src={item.image} alt={item.alt} loading={index < 2 ? "eager" : "lazy"} draggable={false} />
-                </Link>
-                <div className={styles.caption}>
-                  <h2><Link href={item.href} prefetch={false}>{item.title} <span aria-hidden="true">↗</span></Link></h2>
-                  <p>{item.label} · {item.year}</p>
-                </div>
-              </div>
-            </article>
+              {items.map((item, index) => (
+                <figure
+                  className={styles.card}
+                  key={item.image}
+                  data-lab-item={index}
+                  data-x={item.x + tileX * LAB_PERIOD.width}
+                  data-y={item.y + tileY * LAB_PERIOD.height}
+                  style={{ "--x": `${item.x}px`, "--y": `${item.y}px`, "--w": `${item.size}px` }}
+                >
+                  <div className={styles.cardMotion}>
+                    <img
+                      src={item.image}
+                      alt={tileX === 0 && tileY === 0 ? item.alt : ""}
+                      width={item.width}
+                      height={item.height}
+                      draggable={false}
+                      decoding="async"
+                    />
+                  </div>
+                </figure>
+              ))}
+            </div>
           ))}
         </div>
       </div>
+      <p className={styles.dragHint} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+          <path d="M12 2v20M2 12h20M8 6l4-4 4 4M8 18l4 4 4-4M6 8l-4 4 4 4M18 8l4 4-4 4" />
+        </svg>
+        Scroll / drag to explore
+      </p>
     </section>
   )
 }
