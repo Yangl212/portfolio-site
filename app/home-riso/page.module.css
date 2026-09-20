@@ -9,6 +9,18 @@
   initial-value: 0;
 }
 
+/* ---------- the docked header ---------- */
+/* Fixed above the page and parked out of view while the sheet is on
+   screen; RevealHeader.jsx flips data-visible as Selected Work arrives. */
+.headerDock {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  background: var(--panel-bg);
+  transform: translateY(-101%);
+  transition: transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.headerDock[data-visible="true"] { transform: none; }
+
+/* ---------- the hero ---------- */
 .hero {
   /* Riso Fluorescent Pink and a sky blue, matched to the cards the user
      sent; multiply turns their overlap purple, the way the prints do. */
@@ -16,20 +28,27 @@
   --ink-b: #3fb0e6;
   --rule-strong: rgba(34, 34, 34, 0.26);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-ink: cubic-bezier(0.18, 0.9, 0.25, 1);
-  /* Cursor: -1..1 from the centre (eased, for the layers) and the raw
-     position in px (for the halftone bloom). Set from RisoHero.jsx. */
+  --ease-wipe: cubic-bezier(0.45, 0.02, 0.2, 1);
+  /* Cursor: -1..1 from the centre (eased, for the layers), the raw
+     position in px (for the halftone bloom) and the lagging ring.
+     Set from RisoHero.jsx. */
   --px: 0;
   --py: 0;
   --mx: -9999px;
   --my: -9999px;
+  --cx: -9999px;
+  --cy: -9999px;
   --sep: 0;
+  /* The pull timeline: pink prints, then blue, then the furniture. */
+  --t-a: 240ms;
+  --t-b: 1300ms;
+  --t-rest: 2300ms;
 
   position: relative;
-  /* The first screen, and nothing else: header height taken off the
-     viewport so Selected Work only appears once the reader scrolls. */
-  min-height: calc(100vh - 79px);
-  min-height: calc(100svh - 79px);
+  /* The whole first screen: the header is docked above the page and out
+     of view, so nothing is taken off the viewport. */
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,6 +76,18 @@
   -webkit-mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
   mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
 }
+
+/* A registration ring that trails the cursor. */
+.ring {
+  position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none;
+  width: 30px; height: 30px; border: 1px solid var(--ink-a); border-radius: 50%;
+  opacity: 0; transition: opacity 240ms ease;
+  transform: translate(calc(var(--cx) - 15px), calc(var(--cy) - 15px));
+}
+.ring::before, .ring::after { content: ""; position: absolute; background: var(--ink-a); }
+.ring::before { left: 50%; top: -5px; width: 1px; height: 38px; transform: translateX(-0.5px); opacity: 0.55; }
+.ring::after { top: 50%; left: -5px; height: 1px; width: 38px; transform: translateY(-0.5px); opacity: 0.55; }
+.hero[data-pointer="in"] .ring { opacity: 1; }
 
 .reg { position: absolute; z-index: 1; width: 18px; height: 18px; color: var(--muted); opacity: 0.55; }
 .regTL { top: clamp(16px, 3vw, 30px); left: clamp(16px, 4vw, 44px); }
@@ -96,35 +127,62 @@
   background: var(--panel-bg);
 }
 
-/* the overprint */
+/* ---------- the print ---------- */
 .op {
-  position: relative; display: inline-block; isolation: isolate;
+  position: relative; display: inline-block;
   margin: clamp(22px, 3vw, 34px) 0 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-size: clamp(4.25rem, 15vw, 12.5rem); line-height: 0.82; font-weight: 700;
   letter-spacing: -0.045em; text-transform: uppercase; white-space: nowrap;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
   transition: --sep 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .op:hover { --sep: 1; }
 
+/* One sheet per pull; re-keyed, so every animation inside starts over. */
+.sheet { position: relative; display: block; isolation: isolate; }
+
 /* Outer plate: follows the cursor, and pulls further apart on hover. The
-   blend lives here, on the two siblings inside .op's isolated context, so
-   the second plate multiplies over the first and the overlap goes purple;
-   on the inner span it would only blend against its own transparent
-   group. */
+   blend lives here, on the two siblings inside the sheet's isolated
+   context, so the second plate multiplies over the first and the overlap
+   goes purple. */
 .plate { display: block; mix-blend-mode: multiply; }
 .plateA { transform: translate(calc(var(--px) * -13px - var(--sep) * 9px), calc(var(--py) * -9px - var(--sep) * 6px)); }
 .plateB { position: absolute; inset: 0; transform: translate(calc(var(--px) * 13px + var(--sep) * 9px), calc(var(--py) * 9px + var(--sep) * 6px)); }
 
-/* Inner ink: the colour, the blend, the one-time slide into register and
-   the slow drift that follows it. */
+/* Inner ink: colour, this pull's registration (--ax..--by, set per pull),
+   the squeegee wipe that reveals it, and the slow drift afterwards. */
 .ink { display: block; }
-.inkA { color: var(--ink-a); animation: inkA 1100ms var(--ease-ink) 120ms both, driftA 9s ease-in-out 1300ms infinite; }
-.inkB { color: var(--ink-b); animation: inkB 1100ms var(--ease-ink) 120ms both, driftB 11s ease-in-out 1300ms infinite; }
-@keyframes inkA { from { transform: translate(-30px, -18px); } to { transform: translate(-5px, -4px); } }
-@keyframes inkB { from { transform: translate(28px, 17px); } to { transform: translate(5px, 4px); } }
-@keyframes driftA { 0%, 100% { transform: translate(-5px, -4px); } 50% { transform: translate(-8px, -2px); } }
-@keyframes driftB { 0%, 100% { transform: translate(5px, 4px); } 50% { transform: translate(7px, 7px); } }
+.inkA {
+  color: var(--ink-a);
+  transform: translate(var(--ax), var(--ay));
+  clip-path: inset(0 0 0 0);
+  animation: printA 900ms var(--ease-wipe) var(--t-a) both, driftA 9s ease-in-out var(--t-rest) infinite;
+}
+.inkB {
+  color: var(--ink-b);
+  transform: translate(var(--bx), var(--by));
+  clip-path: inset(0 0 0 0);
+  animation: printB 900ms var(--ease-wipe) var(--t-b) both, driftB 11s ease-in-out var(--t-rest) infinite;
+}
+@keyframes printA { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes printB { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes driftA { 0%, 100% { transform: translate(var(--ax), var(--ay)); } 50% { transform: translate(calc(var(--ax) - 3px), calc(var(--ay) + 2px)); } }
+@keyframes driftB { 0%, 100% { transform: translate(var(--bx), var(--by)); } 50% { transform: translate(calc(var(--bx) + 2px), calc(var(--by) + 3px)); } }
+
+/* The squeegee: a blade that crosses the word as each plate prints, the
+   ink appearing behind it. */
+.squeegee {
+  position: absolute; top: -12%; z-index: 3; pointer-events: none;
+  width: 9px; height: 124%; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.55), #222222 45%, rgba(34, 34, 34, 0.7));
+  box-shadow: 0 0 0 1px var(--panel-bg), 10px 0 26px -6px rgba(34, 34, 34, 0.35);
+  opacity: 0;
+}
+.squeegeeA { left: -3%; animation: sweepA 900ms var(--ease-wipe) var(--t-a) both; }
+.squeegeeB { left: 103%; animation: sweepB 900ms var(--ease-wipe) var(--t-b) both; }
+@keyframes sweepA { 0% { left: -3%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@keyframes sweepB { 0% { left: 103%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 0%; opacity: 0; } }
 
 .opSub {
   margin-top: clamp(26px, 4vw, 40px); max-width: 46ch;
@@ -140,10 +198,12 @@
 .opFacts span + span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--rule-strong); }
 
 .opActions { margin-top: clamp(24px, 3vw, 32px); display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
+/* The buttons lean toward a nearby cursor (transform set from script) and
+   ease back when it leaves. */
 .primary, .secondary {
   display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px;
   font-size: 0.9375rem; font-weight: 600; line-height: 1; cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease, gap 180ms ease, border-color 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease, gap 180ms ease, border-color 180ms ease, transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .primary { background: var(--text); color: var(--inverse); }
 .primary:hover, .primary:focus-visible { background: var(--ink-a); color: var(--inverse); gap: 14px; }
@@ -202,15 +262,27 @@
 .swatch { display: inline-flex; align-items: center; gap: 7px; color: var(--text); }
 .swatch i { width: 11px; height: 11px; display: inline-block; }
 .ticketStock { color: var(--muted); }
+.pullCount { color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; padding-left: 18px; border-left: 1px solid var(--rule-strong); }
+.pullButton {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+  border: 1px solid var(--rule-strong); border-radius: 999px; background: transparent;
+  color: var(--text); font: inherit; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.pullButton:hover, .pullButton:focus-visible { background: var(--text); border-color: var(--text); color: var(--inverse); }
+.pullButton span { display: inline-block; transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.pullButton:hover span { transform: rotate(180deg); }
 
-/* load: everything rises like the current site */
+/* load: everything rises like the current site; the furniture waits for
+   the print to finish */
 .rise { opacity: 0; transform: translateY(24px); animation: rise 900ms var(--ease-out) forwards; }
 @keyframes rise { to { opacity: 1; transform: translateY(0); } }
-.marg, .stampWrap, .strip { opacity: 0; animation: fadeIn 700ms ease 900ms forwards; }
+.marg, .stampWrap, .strip { opacity: 0; animation: fadeIn 700ms ease var(--t-rest) forwards; }
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* The sheet runs straight into the Selected Work rule: no blank band. */
-.hero + .contentTight { padding-top: 0; }
+/* The sheet runs straight into the Selected Work rule: no blank band. The
+   anchor lands below the docked header. */
+.hero + .contentTight { padding-top: 0; scroll-margin-top: 84px; }
 
 @media (max-width: 1080px) {
   .stampWrap { top: auto; bottom: 18%; right: 4%; }
@@ -222,17 +294,20 @@
 }
 
 @media (max-width: 809px) {
-  .hero { min-height: calc(100vh - 65px); min-height: calc(100svh - 65px); padding: 84px 24px 128px; cursor: auto; }
+  .hero { padding: 84px 24px 136px; cursor: auto; }
   .band { font-size: 2.25rem; }
   .bandTop { top: 18px; }
-  .bandBottom { bottom: 64px; }
+  /* The ticket wraps to two lines here; the band stays clear of it. */
+  .bandBottom { bottom: 104px; }
   .ticket { left: 24px; right: 24px; bottom: 22px; }
+  .hero + .contentTight { scroll-margin-top: 70px; }
 }
 
 @media (max-width: 560px) {
   .hero { padding-left: 16px; padding-right: 16px; }
   .ticket { left: 16px; right: 16px; }
-  .ticketStock { display: none; }
+  .ticketStock, .ticketLabel { display: none; }
+  .pullCount { padding-left: 0; border-left: 0; }
   .op { font-size: clamp(3.75rem, 21vw, 5.5rem); }
   .opFacts { flex-direction: column; align-items: center; gap: 6px; }
   .opFacts span + span::before { display: none; }
@@ -240,10 +315,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise, .marg, .stampWrap, .strip, .inkA, .inkB, .bandTrack, .stamp { animation: none; opacity: 1; }
+  .headerDock { transition: none; }
+  .rise, .marg, .stampWrap, .strip, .inkA, .inkB, .bandTrack, .stamp, .squeegee { animation: none; opacity: 1; }
+  .squeegee { display: none; }
   .rise { transform: none; }
-  .inkA { transform: translate(-5px, -4px); }
-  .inkB { transform: translate(5px, 4px); }
-  .bloom { display: none; }
+  .inkA { transform: translate(var(--ax), var(--ay)); clip-path: none; }
+  .inkB { transform: translate(var(--bx), var(--by)); clip-path: none; }
+  .bloom, .ring { display: none; }
   .op { transition: none; }
 }

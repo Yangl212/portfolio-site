@@ -3,10 +3,10 @@ import { DM_Mono } from "next/font/google"
 
 import { MoreWorkCarousel } from "../../components/MoreWorkCarousel"
 import { SiteFooter } from "../../components/SiteFooter"
-import { SiteHeader } from "../../components/SiteHeader"
 import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import homeStyles from "../page.module.css"
+import { RevealHeader } from "./RevealHeader"
 import { RisoHero } from "./RisoHero"
 import styles from "./page.module.css"
 
@@ -39,7 +39,9 @@ export default function HomeRisoPage() {
   return (
     <main className={`${homeStyles.page} ${mono.variable}`}>
       <div className={homeStyles.frame}>
-        <SiteHeader active="/" track={TRACK} />
+        {/* Docked above the page and hidden while the sheet is on screen;
+            it slides in as Selected Work arrives. */}
+        <RevealHeader track={TRACK} />
 
         <RisoHero />
 
