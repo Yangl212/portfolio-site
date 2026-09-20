@@ -30,17 +30,15 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
    * neither track advertises the other. The only way across is a link sent
    * directly, which is the point: an application shows one portfolio, not both.
    *
-   * That has to cover Interest and Let's talk as well as Work. Leaving those two
-   * unprefixed was enough to leak a visual visitor back into the UI/UX home in
-   * two clicks.
+   * Contact follows the same rule so a visual visitor cannot leak back into
+   * the UI/UX home in two clicks.
    */
   const base = trackBase(track)
   const homeHref = base || "/"
 
   const navItems = [
     { href: homeHref, label: "Work" },
-    { href: `${base}/lab`, label: "Lab" },
-    { href: `${base}/interest`, label: "Interest" }
+    { href: `${base}/lab`, label: "Lab" }
   ]
 
   const closeMenu = () => {

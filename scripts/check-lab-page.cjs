@@ -97,6 +97,7 @@ async function assertStill(page) {
     const primary = page.getByRole('navigation', { name: 'Primary' })
     assert(await primary.isVisible(), 'The original top navigation remains visible')
     assert.equal(await primary.getByRole('link', { name: 'Lab', exact: true }).getAttribute('data-active'), 'true')
+    assert.equal(await primary.getByRole('link', { name: 'Interest', exact: true }).count(), 0, 'Interest is removed from the shared navigation')
     const desktopViewport = await viewport.boundingBox()
     assert(desktopViewport.height >= 880, 'Canvas fills the desktop below the header')
     assert.equal(await viewport.evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(255, 255, 255)', 'Canvas background is pure white')
@@ -325,7 +326,9 @@ async function assertStill(page) {
 
     await page.setViewportSize({ width: 1440, height: 1000 })
     await page.goto(`${base}/visual/lab`, { waitUntil: 'networkidle' })
-    assert.equal(await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Lab', exact: true }).getAttribute('href'), '/visual/lab')
+    const visualPrimary = page.getByRole('navigation', { name: 'Primary' })
+    assert.equal(await visualPrimary.getByRole('link', { name: 'Lab', exact: true }).getAttribute('href'), '/visual/lab')
+    assert.equal(await visualPrimary.getByRole('link', { name: 'Interest', exact: true }).count(), 0)
     assert.equal(await page.locator('[data-lab-tile="0:0"] figure[data-lab-item]').count(), 12)
     await assertVisibleImages(page.getByRole('region', { name: /^Infinite image canvas/ }), 'Visual-track canvas')
     assert.equal(await page.locator('main a[href*="/project/"]').count(), 0)
