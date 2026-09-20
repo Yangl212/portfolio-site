@@ -1,5 +1,14 @@
 /* The riso hero only. Everything below it uses the live home page's own
    stylesheet (app/page.module.css). */
+
+/* Animatable custom properties, so a hover can ease the misregistration
+   apart instead of snapping. */
+@property --sep {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 .hero {
   /* Riso Fluorescent Pink and a sky blue, matched to the cards the user
      sent; multiply turns their overlap purple, the way the prints do. */
@@ -8,6 +17,13 @@
   --rule-strong: rgba(34, 34, 34, 0.26);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-ink: cubic-bezier(0.18, 0.9, 0.25, 1);
+  /* Cursor: -1..1 from the centre (eased, for the layers) and the raw
+     position in px (for the halftone bloom). Set from RisoHero.jsx. */
+  --px: 0;
+  --py: 0;
+  --mx: -9999px;
+  --my: -9999px;
+  --sep: 0;
 
   position: relative;
   /* The first screen, and nothing else: header height taken off the
@@ -17,9 +33,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(72px, 9vh, 112px) clamp(24px, 4vw, 56px) clamp(88px, 11vh, 128px);
+  padding: clamp(96px, 13vh, 150px) clamp(24px, 4vw, 56px) clamp(120px, 15vh, 170px);
   overflow: hidden;
   isolation: isolate;
+  cursor: crosshair;
 }
 
 .hero :is(h1, p) { margin: 0; }
@@ -31,11 +48,40 @@
   background-size: 4px 4px;
 }
 
+/* Bigger dots that only show around the cursor: ink spreading on the
+   sheet. The mask follows --mx/--my; off-sheet it is simply invisible. */
+.bloom {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.42;
+  background-image: radial-gradient(circle at 2px 2px, rgba(34, 34, 34, 0.34) 1.5px, transparent 0);
+  background-size: 7px 7px;
+  -webkit-mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
+  mask-image: radial-gradient(circle 260px at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 72%);
+}
+
 .reg { position: absolute; z-index: 1; width: 18px; height: 18px; color: var(--muted); opacity: 0.55; }
 .regTL { top: clamp(16px, 3vw, 30px); left: clamp(16px, 4vw, 44px); }
 .regTR { top: clamp(16px, 3vw, 30px); right: clamp(16px, 4vw, 44px); }
 .regBL { bottom: clamp(16px, 3vw, 30px); left: clamp(16px, 4vw, 44px); }
 .regBR { bottom: clamp(16px, 3vw, 30px); right: clamp(16px, 4vw, 44px); }
+
+/* Two bands of outlined type along the edges of the sheet, one in each ink,
+   running opposite ways. Outline only, so they read as press marks behind
+   the print rather than a second headline. */
+.band {
+  position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none; overflow: hidden;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(2.5rem, 5.6vw, 5.25rem); font-weight: 700; line-height: 1;
+  letter-spacing: -0.03em; text-transform: uppercase; white-space: nowrap;
+  color: transparent;
+}
+.bandTop { top: clamp(26px, 5vh, 52px); -webkit-text-stroke: 1px var(--ink-b); opacity: 0.55; transform: translateX(calc(var(--px) * -14px)); }
+.bandBottom { bottom: clamp(74px, 11vh, 118px); -webkit-text-stroke: 1px var(--ink-a); opacity: 0.5; transform: translateX(calc(var(--px) * 14px)); }
+.bandTrack { display: flex; width: max-content; }
+.bandTrack span { display: block; padding-right: 0.6em; }
+.bandTop .bandTrack { animation: bandLeft 90s linear infinite; }
+.bandBottom .bandTrack { animation: bandRight 110s linear infinite; }
+@keyframes bandLeft { to { transform: translateX(-50%); } }
+@keyframes bandRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
 .heroIn {
   position: relative; z-index: 2;
@@ -47,6 +93,7 @@
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted);
   padding: 6px 12px; border: 1px dashed var(--rule-strong); border-radius: 999px;
+  background: var(--panel-bg);
 }
 
 /* the overprint */
@@ -56,10 +103,28 @@
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-size: clamp(4.25rem, 15vw, 12.5rem); line-height: 0.82; font-weight: 700;
   letter-spacing: -0.045em; text-transform: uppercase; white-space: nowrap;
+  transition: --sep 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.op:hover { --sep: 1; }
+
+/* Outer plate: follows the cursor, and pulls further apart on hover. The
+   blend lives here, on the two siblings inside .op's isolated context, so
+   the second plate multiplies over the first and the overlap goes purple;
+   on the inner span it would only blend against its own transparent
+   group. */
 .plate { display: block; mix-blend-mode: multiply; }
-.plateA { color: var(--ink-a); transform: translate(-5px, -4px); }
-.plateB { position: absolute; inset: 0; color: var(--ink-b); transform: translate(5px, 4px); }
+.plateA { transform: translate(calc(var(--px) * -13px - var(--sep) * 9px), calc(var(--py) * -9px - var(--sep) * 6px)); }
+.plateB { position: absolute; inset: 0; transform: translate(calc(var(--px) * 13px + var(--sep) * 9px), calc(var(--py) * 9px + var(--sep) * 6px)); }
+
+/* Inner ink: the colour, the blend, the one-time slide into register and
+   the slow drift that follows it. */
+.ink { display: block; }
+.inkA { color: var(--ink-a); animation: inkA 1100ms var(--ease-ink) 120ms both, driftA 9s ease-in-out 1300ms infinite; }
+.inkB { color: var(--ink-b); animation: inkB 1100ms var(--ease-ink) 120ms both, driftB 11s ease-in-out 1300ms infinite; }
+@keyframes inkA { from { transform: translate(-30px, -18px); } to { transform: translate(-5px, -4px); } }
+@keyframes inkB { from { transform: translate(28px, 17px); } to { transform: translate(5px, 4px); } }
+@keyframes driftA { 0%, 100% { transform: translate(-5px, -4px); } 50% { transform: translate(-8px, -2px); } }
+@keyframes driftB { 0%, 100% { transform: translate(5px, 4px); } 50% { transform: translate(7px, 7px); } }
 
 .opSub {
   margin-top: clamp(26px, 4vw, 40px); max-width: 46ch;
@@ -77,25 +142,54 @@
 .opActions { margin-top: clamp(24px, 3vw, 32px); display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
 .primary, .secondary {
   display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px;
-  font-size: 0.9375rem; font-weight: 600; line-height: 1;
+  font-size: 0.9375rem; font-weight: 600; line-height: 1; cursor: pointer;
   transition: background-color 180ms ease, color 180ms ease, gap 180ms ease, border-color 180ms ease;
 }
 .primary { background: var(--text); color: var(--inverse); }
 .primary:hover, .primary:focus-visible { background: var(--ink-a); color: var(--inverse); gap: 14px; }
-.secondary { border: 1px solid var(--rule-strong); color: var(--text); }
+.secondary { border: 1px solid var(--rule-strong); color: var(--text); background: var(--panel-bg); }
 .secondary:hover, .secondary:focus-visible { border-color: var(--text); gap: 14px; }
 
-/* margin notes, in the blue ink */
+/* margin notes, in the blue ink; they drift with the cursor at a shallower
+   depth than the plates */
 .marg {
   position: absolute; z-index: 3; max-width: 190px;
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.72rem; line-height: 1.45; color: var(--ink-b);
+  transform: translate(calc(var(--px) * 18px), calc(var(--py) * 12px));
 }
 .marg::after { content: ""; position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-b); }
-.marg1 { top: 8%; right: 2%; text-align: left; padding-left: 14px; }
+.marg1 { top: 4%; right: 3%; text-align: left; padding-left: 14px; }
 .marg1::after { left: 0; top: 6px; }
-.marg2 { bottom: 14%; left: 2%; text-align: right; padding-right: 14px; }
+.marg2 { bottom: 12%; left: 2%; text-align: right; padding-right: 14px; }
 .marg2::after { right: 0; top: 6px; }
+
+/* the rotating job stamp, right of the word */
+.stampWrap {
+  position: absolute; z-index: 3; top: 34%; right: 6%;
+  width: clamp(104px, 10vw, 140px); aspect-ratio: 1;
+  color: var(--ink-a);
+  transform: translate(calc(var(--px) * -24px), calc(var(--py) * -16px));
+}
+.stamp { width: 100%; height: 100%; animation: spin 26s linear infinite; }
+.stampText {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; fill: currentColor;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* the colour control strip, left of the word */
+.strip {
+  position: absolute; z-index: 3; top: 38%; left: 3%;
+  display: flex; gap: 6px;
+  transform: translate(calc(var(--px) * 24px), calc(var(--py) * 16px));
+}
+.patch {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.55rem; letter-spacing: 0.06em; color: var(--muted);
+}
+.patch i { width: 18px; height: 22px; display: block; }
 
 /* the job ticket along the bottom edge */
 .ticket {
@@ -109,29 +203,36 @@
 .swatch i { width: 11px; height: 11px; display: inline-block; }
 .ticketStock { color: var(--muted); }
 
-/* load: everything rises like the current site, then the two plates slide
-   into (almost) register once and hold. */
+/* load: everything rises like the current site */
 .rise { opacity: 0; transform: translateY(24px); animation: rise 900ms var(--ease-out) forwards; }
 @keyframes rise { to { opacity: 1; transform: translateY(0); } }
-.plateA { animation: inkA 1100ms var(--ease-ink) 120ms both; }
-.plateB { animation: inkB 1100ms var(--ease-ink) 120ms both; }
-@keyframes inkA { from { transform: translate(-30px, -18px); } to { transform: translate(-5px, -4px); } }
-@keyframes inkB { from { transform: translate(28px, 17px); } to { transform: translate(5px, 4px); } }
-.marg { opacity: 0; animation: note 600ms var(--ease-out) 900ms forwards; }
-@keyframes note { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+.marg, .stampWrap, .strip { opacity: 0; animation: fadeIn 700ms ease 900ms forwards; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* The sheet runs straight into the Selected Work rule: no blank band. */
+.hero + .contentTight { padding-top: 0; }
+
+@media (max-width: 1080px) {
+  .stampWrap { top: auto; bottom: 18%; right: 4%; }
+  .strip { top: auto; bottom: 20%; left: 3%; }
+}
 
 @media (max-width: 860px) {
-  .marg { display: none; }
+  .marg, .stampWrap, .strip { display: none; }
 }
 
 @media (max-width: 809px) {
-  .hero { min-height: calc(100vh - 65px); min-height: calc(100svh - 65px); padding: 56px 24px 104px; }
+  .hero { min-height: calc(100vh - 65px); min-height: calc(100svh - 65px); padding: 84px 24px 128px; cursor: auto; }
+  .band { font-size: 2.25rem; }
+  .bandTop { top: 18px; }
+  .bandBottom { bottom: 64px; }
   .ticket { left: 24px; right: 24px; bottom: 22px; }
 }
 
 @media (max-width: 560px) {
   .hero { padding-left: 16px; padding-right: 16px; }
   .ticket { left: 16px; right: 16px; }
+  .ticketStock { display: none; }
   .op { font-size: clamp(3.75rem, 21vw, 5.5rem); }
   .opFacts { flex-direction: column; align-items: center; gap: 6px; }
   .opFacts span + span::before { display: none; }
@@ -139,8 +240,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise, .marg, .plateA, .plateB { animation: none; opacity: 1; }
+  .rise, .marg, .stampWrap, .strip, .inkA, .inkB, .bandTrack, .stamp { animation: none; opacity: 1; }
   .rise { transform: none; }
-  .plateA { transform: translate(-5px, -4px); }
-  .plateB { transform: translate(5px, 4px); }
+  .inkA { transform: translate(-5px, -4px); }
+  .inkB { transform: translate(5px, 4px); }
+  .bloom { display: none; }
+  .op { transition: none; }
 }
