@@ -3,15 +3,20 @@
 import Link from "next/link"
 import { useRef, useState } from "react"
 
+import { useLabMotion } from "./useLabMotion"
 import styles from "./page.module.css"
 
 export function LabBoard({ items }) {
   const [dragging, setDragging] = useState(false)
   const viewportRef = useRef(null)
+  const canvasRef = useRef(null)
   const dragRef = useRef(null)
 
+  useLabMotion(viewportRef, canvasRef, dragRef, items)
+
   const beginDrag = (event) => {
-    if (event.button !== 0 || event.target.closest("a, button")) return
+    if (event.pointerType !== "mouse" || event.button !== 0 || event.target.closest("a, button")) return
+    if (!window.matchMedia("(min-width: 810px)").matches) return
 
     const viewport = viewportRef.current
     if (!viewport) return
@@ -57,6 +62,7 @@ export function LabBoard({ items }) {
         onPointerMove={moveDrag}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
       >
         <div className={styles.boardTitle}>
           <h1 id="lab-title">Lele&apos;s Lab</h1>
@@ -65,7 +71,7 @@ export function LabBoard({ items }) {
 
         <p className={styles.dragHint} aria-hidden="true">Drag to explore&nbsp; ↔</p>
 
-        <div className={styles.canvas}>
+        <div className={styles.canvas} ref={canvasRef}>
           {items.map((item, index) => (
             <article
               className={styles.card}
@@ -77,12 +83,14 @@ export function LabBoard({ items }) {
                 "--ratio": item.position.ratio
               }}
             >
-              <Link className={styles.cardImage} href={item.href} prefetch={false}>
-                <img src={item.image} alt={item.alt} loading={index < 2 ? "eager" : "lazy"} />
-              </Link>
-              <div className={styles.caption}>
-                <h2><Link href={item.href} prefetch={false}>{item.title} <span aria-hidden="true">↗</span></Link></h2>
-                <p>{item.label} · {item.year}</p>
+              <div className={styles.cardMotion}>
+                <Link className={styles.cardImage} href={item.href} prefetch={false}>
+                  <img src={item.image} alt={item.alt} loading={index < 2 ? "eager" : "lazy"} draggable={false} />
+                </Link>
+                <div className={styles.caption}>
+                  <h2><Link href={item.href} prefetch={false}>{item.title} <span aria-hidden="true">↗</span></Link></h2>
+                  <p>{item.label} · {item.year}</p>
+                </div>
               </div>
             </article>
           ))}
