@@ -69,6 +69,10 @@ export function LabBoard({ items }) {
                       draggable={false}
                       decoding="async"
                     />
+                    <figcaption className={styles.caption}>
+                      <h2>{item.title}</h2>
+                      <p>{item.description}</p>
+                    </figcaption>
                   </div>
                 </figure>
               ))}

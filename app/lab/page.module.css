@@ -92,6 +92,31 @@
   pointer-events: none;
 }
 
+.caption {
+  margin-top: 8px;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.25;
+  pointer-events: none;
+}
+
+.caption h2,
+.caption p {
+  margin: 0;
+  font: inherit;
+}
+
+.caption h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+.caption p {
+  margin-top: 1px;
+  color: #969696;
+  font-weight: 400;
+}
+
 .dragHint {
   position: absolute;
   z-index: 2;

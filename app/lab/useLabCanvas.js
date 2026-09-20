@@ -167,7 +167,9 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
     const start = event => {
       if (!desktop.matches || !event.isPrimary || event.button !== 0) return
       event.preventDefault()
-      viewport.focus({ preventScroll: true })
+      // Pointer navigation does not need keyboard focus. Keeping it here drew
+      // the focus outline beside the header border as an unwanted second line.
+      viewport.blur()
       speed.x = speed.y = 0
       drag = { id: event.pointerId, x: event.clientX, y: event.clientY, time: performance.now() }
       viewport.setPointerCapture(event.pointerId)
