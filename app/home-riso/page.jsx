@@ -6,8 +6,8 @@ import { featuredProjects, moreProjects } from "../../lib/projects"
 import homeStyles from "../page.module.css"
 import { FeaturedStacks } from "./FeaturedStacks"
 import stackStyles from "./featured-stacks.module.css"
-import { MoreWorkTiles } from "./MoreWorkTiles"
-import tileStyles from "./more-work-tiles.module.css"
+import { MoreWorkFolders } from "./MoreWorkFolders"
+import folderStyles from "./more-work-folders.module.css"
 import { RevealHeader } from "./RevealHeader"
 import { RisoFooter } from "./RisoFooter"
 import { RisoHero } from "./RisoHero"
@@ -51,8 +51,8 @@ export default function HomeRisoPage() {
         <RisoHero />
 
         {/* Selected Work as three stages of stacked screens, More Work as
-            a shelf of tiles; the section header is the live home page's own. */}
-        <Reveal fade={`.${stackStyles.card}, .${tileStyles.card}`} />
+            a row of folders; the section header is the live home page's own. */}
+        <Reveal fade={`.${stackStyles.card}, .${folderStyles.folder}`} />
         <section className={`${homeStyles.content} ${styles.contentTight}`} id="work">
           <section className={homeStyles.selectedWork}>
             <div className={`${homeStyles.sectionHeader} ${homeStyles.reveal}`}>
@@ -62,7 +62,7 @@ export default function HomeRisoPage() {
             <FeaturedStacks projects={featured} />
           </section>
 
-          <MoreWorkTiles className={homeStyles.moreWork} projects={more} />
+          <MoreWorkFolders className={homeStyles.moreWork} projects={more} />
         </section>
 
         <RisoFooter />

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import styles from "./page.module.css"
 
@@ -82,6 +82,32 @@ export function RisoHero() {
   const [pull, setPull] = useState(1)
   const [reg, setReg] = useState({ ax: -5, ay: -4, bx: 5, by: 4 })
 
+  /* The print is the front door. Do not let browser scroll restoration or
+     an old #work URL reopen the page halfway down at Selected Work. */
+  useLayoutEffect(() => {
+    const previousRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = "manual"
+
+    if (window.location.hash) {
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${window.location.pathname}${window.location.search}`
+      )
+    }
+
+    const resetToTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+    resetToTop()
+    const frame = requestAnimationFrame(resetToTop)
+    window.addEventListener("pageshow", resetToTop)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("pageshow", resetToTop)
+      window.history.scrollRestoration = previousRestoration
+    }
+  }, [])
+
   const pullPrint = useCallback(() => {
     setPull((n) => n + 1)
     setReg(newRegistration())
@@ -90,7 +116,11 @@ export function RisoHero() {
   /* Selected work walks the page down rather than cutting to it: the sheet
      slides for about a second on an ease, so the reader keeps their place.
      Any scroll of their own takes the wheel back. Reduced motion, a modified
-     click or a missing target all fall back to the plain anchor. */
+     click or a missing target all fall back to the plain anchor.
+
+     The hash is deliberately not written to the address bar: with #work on
+     the URL, a reload - or the page reopened from history - would skip the
+     print and land on Selected Work, and the print is the page. */
   const scrollToWork = useCallback((event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
     const target = document.getElementById("work")
@@ -99,10 +129,8 @@ export function RisoHero() {
     const from = window.scrollY
     const to = Math.max(0, Math.round(from + target.getBoundingClientRect().top - offset))
     event.preventDefault()
-    const land = () => { history.replaceState(null, "", "#work") }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(to - from) < 2) {
       window.scrollTo(0, to)
-      land()
       return
     }
     const duration = Math.min(1150, Math.max(650, Math.abs(to - from) * 0.75))
@@ -115,7 +143,6 @@ export function RisoHero() {
       window.scrollTo(0, from + (to - from) * ease(t))
       if (t < 1) { frame = requestAnimationFrame(step); return }
       stop()
-      land()
     }
     window.addEventListener("wheel", stop, { passive: true })
     window.addEventListener("touchstart", stop, { passive: true })

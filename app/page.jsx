@@ -1,76 +1,8 @@
-import Link from "next/link"
-
-import { MoreWorkCarousel } from "../components/MoreWorkCarousel"
-import { SiteFooter } from "../components/SiteFooter"
-import { SiteHeader } from "../components/SiteHeader"
-import { featuredProjects, moreProjects } from "../lib/projects"
-
-import styles from "./page.module.css"
+export { default } from "./home-riso/page"
 
 export const metadata = {
   title: { absolute: "Lele Yang — Product Designer" },
   description:
-    "A product designer focused on UX, AI, and interactive experiences, based in New York. Case studies in fintech, AI scheduling, and an AI detective game."
-}
-
-/* Both home pages render the same markup over the same eight projects. The
-   track decides the order and where the cards link, nothing else. */
-const TRACK = "uiux"
-
-export default function HomePage() {
-  const featured = featuredProjects(TRACK)
-  const more = moreProjects(TRACK)
-
-  return (
-    <main className={styles.page}>
-      <div className={styles.frame}>
-        <SiteHeader active="/" track={TRACK} />
-
-        <section className={styles.content}>
-          <header className={styles.hero}>
-            <h1 className={`${styles.heroTitle} ${styles.reveal}`}>Hi, I&apos;m Lele</h1>
-            <div className={`${styles.heroIntro} ${styles.reveal}`} style={{ animationDelay: "100ms" }}>
-              <p className={styles.heroCopy}>
-                Product designer creating clear, trustworthy experiences for complex systems,
-                AI, and everyday tools.
-              </p>
-              <p className={styles.heroStatus}>
-                Parsons MFA &rsquo;26 <span aria-hidden="true">·</span> Former UI/UX Design Intern at VortexNet
-                <span aria-hidden="true">·</span> <strong>Seeking Product Design roles across the U.S.</strong>
-              </p>
-            </div>
-          </header>
-
-          <section className={styles.selectedWork}>
-            <div className={`${styles.sectionHeader} ${styles.reveal}`}>
-              <h2>Selected Work</h2>
-            </div>
-
-            <div className={styles.featuredList}>
-              {featured.map((project, index) => (
-                <article className={`${styles.featuredCard} ${styles.reveal}`} key={project.href} style={{ animationDelay: `${140 + index * 90}ms` }}>
-                  <div className={styles.featuredCopy}>
-                    <div className={styles.tagList}>
-                      {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                    </div>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <Link href={project.href} className={styles.caseLink}>View case study <span aria-hidden="true">→</span></Link>
-                  </div>
-
-                  <Link href={project.href} className={styles.featuredImageLink}>
-                    <img src={project.image} alt={project.title} width={1600} height={1000} decoding="async" loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} />
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <MoreWorkCarousel className={styles.moreWork} projects={more} />
-        </section>
-
-        <SiteFooter className={styles.reveal} />
-      </div>
-    </main>
-  )
+    "UI/UX designer with a visual designer's eye, based in New York. Case studies in fintech, AI scheduling, an AI detective game, and print.",
+  alternates: { canonical: "/" }
 }
