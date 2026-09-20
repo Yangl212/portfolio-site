@@ -106,8 +106,8 @@ export function RisoHero() {
       x += (targetX - x) * 0.09
       y += (targetY - y) * 0.09
       if (ringX < -999) { ringX = rawX; ringY = rawY }
-      ringX += (rawX - ringX) * 0.16
-      ringY += (rawY - ringY) * 0.16
+      ringX += (rawX - ringX) * 0.28
+      ringY += (rawY - ringY) * 0.28
       el.style.setProperty("--px", x.toFixed(4))
       el.style.setProperty("--py", y.toFixed(4))
       el.style.setProperty("--cx", `${ringX.toFixed(1)}px`)
@@ -117,16 +117,35 @@ export function RisoHero() {
       frame = settled ? 0 : requestAnimationFrame(tick)
     }
 
-    /* The two buttons lean toward a nearby cursor and settle back when it
-       moves on. */
+    /* The button nearest the cursor leans toward it a little - a few
+       pixels, never enough to reach its neighbour - and settles back when
+       the cursor moves on. Only one moves at a time. */
+    const clamp = (v, limit) => Math.max(-limit, Math.min(limit, v))
     const magnetise = (clientX, clientY) => {
+      let nearest = null, nearestDistance = Infinity
       for (const button of buttons) {
         const r = button.getBoundingClientRect()
         const dx = clientX - (r.left + r.width / 2)
         const dy = clientY - (r.top + r.height / 2)
-        const within = Math.abs(dx) < r.width / 2 + 70 && Math.abs(dy) < r.height / 2 + 60
-        button.style.transform = within ? `translate(${(dx * 0.22).toFixed(1)}px, ${(dy * 0.22).toFixed(1)}px)` : ""
+        const within = Math.abs(dx) < r.width / 2 + 40 && Math.abs(dy) < r.height / 2 + 40
+        const distance = Math.hypot(dx, dy)
+        if (within && distance < nearestDistance) { nearest = button; nearestDistance = distance }
       }
+      for (const button of buttons) {
+        if (button !== nearest) { button.style.transform = ""; continue }
+        const r = button.getBoundingClientRect()
+        const dx = clientX - (r.left + r.width / 2)
+        const dy = clientY - (r.top + r.height / 2)
+        button.style.transform = `translate(${clamp(dx * 0.12, 6).toFixed(1)}px, ${clamp(dy * 0.16, 5).toFixed(1)}px)`
+      }
+    }
+
+    /* What the custom cursor is over: a link or button, the name (which
+       pulls another print), or plain sheet. */
+    const cursorState = (target) => {
+      const hit = target instanceof Element ? target.closest("a, button, h1") : null
+      if (!hit) return "sheet"
+      return hit.tagName === "H1" ? "pull" : "link"
     }
 
     const onMove = (event) => {
@@ -135,9 +154,10 @@ export function RisoHero() {
       rawY = event.clientY - r.top
       targetX = Math.max(-1, Math.min(1, (rawX / r.width - 0.5) * 2))
       targetY = Math.max(-1, Math.min(1, (rawY / r.height - 0.5) * 2))
-      el.style.setProperty("--mx", `${Math.round(rawX)}px`)
-      el.style.setProperty("--my", `${Math.round(rawY)}px`)
+      el.style.setProperty("--mx", `${rawX.toFixed(1)}px`)
+      el.style.setProperty("--my", `${rawY.toFixed(1)}px`)
       el.dataset.pointer = "in"
+      el.dataset.cursor = cursorState(event.target)
       magnetise(event.clientX, event.clientY)
       if (!frame) frame = requestAnimationFrame(tick)
     }
@@ -148,6 +168,7 @@ export function RisoHero() {
       el.style.setProperty("--mx", "-9999px")
       el.style.setProperty("--my", "-9999px")
       el.dataset.pointer = "out"
+      el.dataset.cursor = "sheet"
       for (const button of buttons) button.style.transform = ""
       if (!frame) frame = requestAnimationFrame(tick)
     }
@@ -170,7 +191,12 @@ export function RisoHero() {
     <section ref={ref} className={styles.hero} aria-labelledby="hero-name">
       <div className={styles.grain} aria-hidden="true" />
       <div className={styles.bloom} aria-hidden="true" />
-      <div className={styles.ring} aria-hidden="true" />
+      {/* The cursor, once a mouse is on the sheet: an instant dot where the
+          pointer really is, a registration ring a beat behind it, and a
+          label when the name can be pulled. The system cursor is hidden
+          only while these are showing. */}
+      <div className={styles.dot} aria-hidden="true" />
+      <div className={styles.ring} aria-hidden="true"><span className={styles.cursorLabel}>Pull</span></div>
       <RegMark className={styles.regTL} />
       <RegMark className={styles.regTR} />
       <RegMark className={styles.regBL} />
