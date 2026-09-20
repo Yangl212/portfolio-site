@@ -255,7 +255,7 @@ export function RisoHero() {
         <span className={styles.swatch}><i style={{ background: "#222222" }} />Black</span>
         <span className={styles.swatch}><i style={{ background: "var(--ink-a)" }} />Fluorescent pink</span>
         <span className={styles.swatch}><i style={{ background: "var(--ink-b)" }} />Blue</span>
-        <span className={styles.ticketStock}>on #e4e2e2 stock</span>
+        <span className={styles.ticketStock}>on white stock</span>
         <span className={styles.pullCount}>Pull {String(pull).padStart(2, "0")}</span>
         <button type="button" className={styles.pullButton} onClick={pullPrint}>Pull another <span aria-hidden="true">↻</span></button>
       </p>

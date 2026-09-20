@@ -26,6 +26,8 @@
      sent; multiply turns their overlap purple, the way the prints do. */
   --ink-a: #ff48b0;
   --ink-b: #3fb0e6;
+  /* The stock the sheet prints on. */
+  --sheet: #ffffff;
   --rule-strong: rgba(34, 34, 34, 0.26);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-wipe: cubic-bezier(0.45, 0.02, 0.2, 1);
@@ -56,6 +58,7 @@
   overflow: hidden;
   isolation: isolate;
   cursor: crosshair;
+  background: var(--sheet);
 }
 
 /* :where, not :is - the reset must lose to the margins set on .op, .opSub
@@ -114,7 +117,7 @@
   position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%) translateX(-6px);
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-b);
-  padding: 3px 7px; background: var(--panel-bg); border: 1px solid var(--ink-b); border-radius: 999px;
+  padding: 3px 7px; background: var(--sheet); border: 1px solid var(--ink-b); border-radius: 999px;
   white-space: nowrap; opacity: 0; transition: opacity 200ms ease, transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .hero[data-pointer="in"] .dot, .hero[data-pointer="in"] .ring { opacity: 1; }
@@ -161,7 +164,7 @@
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted);
   padding: 6px 12px; border: 1px dashed var(--rule-strong); border-radius: 999px;
-  background: var(--panel-bg);
+  background: var(--sheet);
 }
 
 /* ---------- the print ---------- */
@@ -213,7 +216,7 @@
   position: absolute; top: -12%; z-index: 3; pointer-events: none;
   width: 9px; height: 124%; border-radius: 2px;
   background: linear-gradient(90deg, rgba(34, 34, 34, 0.55), #222222 45%, rgba(34, 34, 34, 0.7));
-  box-shadow: 0 0 0 1px var(--panel-bg), 10px 0 26px -6px rgba(34, 34, 34, 0.35);
+  box-shadow: 0 0 0 1px var(--sheet), 10px 0 26px -6px rgba(34, 34, 34, 0.35);
   opacity: 0;
 }
 .squeegeeA { left: -3%; animation: sweepA 900ms var(--ease-wipe) var(--t-a) both; }
@@ -244,7 +247,7 @@
 }
 .primary { background: var(--text); color: var(--inverse); }
 .primary:hover, .primary:focus-visible { background: var(--ink-a); color: var(--inverse); gap: 14px; }
-.secondary { border: 1px solid var(--rule-strong); color: var(--text); background: var(--panel-bg); }
+.secondary { border: 1px solid var(--rule-strong); color: var(--text); background: var(--sheet); }
 .secondary:hover, .secondary:focus-visible { border-color: var(--text); gap: 14px; }
 
 /* margin notes, in the blue ink; they drift with the cursor at a shallower
