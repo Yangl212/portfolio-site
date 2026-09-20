@@ -1,12 +1,13 @@
 import { DM_Mono } from "next/font/google"
 
-import { MoreWorkCarousel } from "../../components/MoreWorkCarousel"
 import { Reveal } from "../../components/Reveal"
 import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import homeStyles from "../page.module.css"
 import { FeaturedStacks } from "./FeaturedStacks"
 import stackStyles from "./featured-stacks.module.css"
+import { MoreWorkTiles } from "./MoreWorkTiles"
+import tileStyles from "./more-work-tiles.module.css"
 import { RevealHeader } from "./RevealHeader"
 import { RisoFooter } from "./RisoFooter"
 import { RisoHero } from "./RisoHero"
@@ -49,20 +50,19 @@ export default function HomeRisoPage() {
 
         <RisoHero />
 
-        {/* Selected Work as three stages of stacked screens; the section
-            header, More Work and the footer are the live home page's own. */}
-        <Reveal fade={`.${stackStyles.card}`} />
+        {/* Selected Work as three stages of stacked screens, More Work as
+            a shelf of tiles; the section header is the live home page's own. */}
+        <Reveal fade={`.${stackStyles.card}, .${tileStyles.card}`} />
         <section className={`${homeStyles.content} ${styles.contentTight}`} id="work">
           <section className={homeStyles.selectedWork}>
             <div className={`${homeStyles.sectionHeader} ${homeStyles.reveal}`}>
               <h2>Selected Work</h2>
-              <p>Three case studies, tested with real people</p>
             </div>
 
             <FeaturedStacks projects={featured} />
           </section>
 
-          <MoreWorkCarousel className={homeStyles.moreWork} projects={more} />
+          <MoreWorkTiles className={homeStyles.moreWork} projects={more} />
         </section>
 
         <RisoFooter />

@@ -10,7 +10,7 @@
 
   position: relative; overflow: hidden; isolation: isolate;
   min-height: clamp(520px, 66vh, 720px);
-  padding: clamp(96px, 12vh, 150px) clamp(24px, 4vw, 56px) clamp(40px, 6vh, 64px);
+  padding: clamp(88px, 10vh, 130px) clamp(24px, 4vw, 56px) clamp(88px, 12vh, 140px);
   display: flex; flex-direction: column; justify-content: flex-end;
   background: var(--stock); color: var(--paper);
   cursor: crosshair;
@@ -82,7 +82,7 @@
 @keyframes sweepA { 0% { left: -3%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
 @keyframes sweepB { 0% { left: 103%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 0%; opacity: 0; } }
 
-/* ---------- contact + ticket ---------- */
+/* ---------- contact ---------- */
 .contact { display: flex; flex-wrap: wrap; gap: 10px 12px; }
 .contact a {
   display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px;
@@ -93,14 +93,6 @@
 .contact a:hover, .contact a:focus-visible { background: var(--paper); border-color: var(--paper); color: var(--stock); }
 .contact a:nth-child(2):hover { background: var(--ink-b); border-color: var(--ink-b); }
 .contact a:nth-child(3):hover { background: var(--ink-a); border-color: var(--ink-a); }
-
-.ticket {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px;
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(243, 241, 236, 0.6);
-}
-.hint { color: rgba(243, 241, 236, 0.4); }
-.hint::before { content: ""; display: inline-block; width: 18px; height: 1px; margin-right: 10px; vertical-align: middle; background: rgba(243, 241, 236, 0.3); }
 
 /* ---------- stamps ---------- */
 .stamp {
@@ -121,7 +113,7 @@
 @keyframes thump { from { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rot)) scale(1.5); } 60% { opacity: 1; } to { opacity: 0.92; transform: translate(-50%, -50%) rotate(var(--rot)) scale(1); } }
 
 @media (max-width: 809px) {
-  .footer { min-height: 0; padding: 72px 24px 32px; cursor: auto; }
+  .footer { min-height: 0; padding: 72px 24px 64px; cursor: auto; }
   .op { font-size: clamp(2.5rem, 12vw, 4.5rem); }
   .inner { gap: 32px; }
 }
@@ -129,7 +121,6 @@
 @media (max-width: 560px) {
   .footer { padding-left: 16px; padding-right: 16px; }
   .reg { display: none; }
-  .hint { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

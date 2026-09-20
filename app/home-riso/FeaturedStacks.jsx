@@ -31,7 +31,7 @@ const stacks = {
       { kind: "cut", src: "boa-budget", x: 4, y: 12, w: 33, r: -12, dx: -30, dy: -22, dr: -18, depth: 0.7, z: 1 },
       { kind: "cut", src: "boa-reallocate", x: 62, y: 10, w: 33, r: 10, dx: 32, dy: -26, dr: 17, depth: 0.7, z: 1 },
       { kind: "cut", src: "boa-home", x: 31, y: 0, w: 38, r: 0, dx: 0, dy: -16, dr: -2, ds: 1.06, depth: 1, z: 3 },
-      { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 0, y: 2, r: -6, dx: -14, dy: -14, dr: -10, depth: 0.5, z: 4 },
+      { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 3, y: 2, r: -6, dx: -14, dy: -14, dr: -10, depth: 0.5, z: 4 },
       { kind: "chip", text: "41 s → 24 s", x: 70, y: 76, r: 5, dx: 18, dy: 16, dr: 9, depth: 0.5, z: 4 }
     ]
   },
@@ -45,7 +45,7 @@ const stacks = {
       { kind: "shot", src: "vortexnet-nav", x: -3, y: 38, w: 34, r: -8, dx: -28, dy: 18, dr: -14, depth: 1, z: 3 },
       { kind: "shot", src: "vortexnet-metrics", x: 48, y: 0, w: 50, r: 5, dx: 26, dy: -26, dr: 11, depth: 0.9, z: 3 },
       { kind: "shot", src: "vortexnet-priorities", x: 42, y: 70, w: 58, r: 3, dx: 24, dy: 24, dr: 8, depth: 0.7, z: 2 },
-      { kind: "chip", text: "Daily lookup 20–30 s → ~8 s", x: 0, y: 4, r: -4, dx: -16, dy: -14, dr: -8, depth: 0.5, z: 4 }
+      { kind: "chip", text: "Daily lookup 20–30 s → ~8 s", x: 3, y: 4, r: -4, dx: -16, dy: -14, dr: -8, depth: 0.5, z: 4 }
     ]
   },
   lastmessage: {

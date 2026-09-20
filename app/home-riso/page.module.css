@@ -329,9 +329,19 @@
 .marg, .stampWrap, .strip { opacity: 0; animation: fadeIn 700ms ease var(--t-rest) forwards; }
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* A short run of plain paper between the sheet and the Selected Work rule.
-   The anchor lands below the docked header. */
-.hero + .contentTight { padding-top: clamp(56px, 6vw, 88px); scroll-margin-top: 84px; }
+/* No rule over either section header: on a sheet this white a hairline
+   reads as a seam. The space between the blocks separates them instead,
+   so it is wider than the live page's - each one stands on plain paper.
+   Element selectors, not class names: the sections carry the live page's
+   own hashed classes, which this stylesheet cannot name. */
+.contentTight > section::before { content: none; }
+.contentTight > section + section { margin-top: clamp(112px, 14vw, 216px); }
+.contentTight { padding-bottom: clamp(132px, 13vw, 200px); }
+
+/* The same run of plain paper above Selected Work as between the blocks,
+   so it sits centred between the sheet and More Work rather than riding up
+   against the hero. The anchor lands below the docked header. */
+.hero + .contentTight { padding-top: clamp(112px, 14vw, 216px); scroll-margin-top: 84px; }
 
 @media (max-width: 1080px) {
   .stampWrap { top: auto; bottom: 18%; right: 4%; }
@@ -349,7 +359,9 @@
   /* The ticket wraps to two lines here; the band stays clear of it. */
   .bandBottom { bottom: 104px; }
   .ticket { left: 24px; right: 24px; bottom: 22px; }
-  .hero + .contentTight { padding-top: 48px; scroll-margin-top: 70px; }
+  .hero + .contentTight { padding-top: 96px; scroll-margin-top: 70px; }
+  .contentTight > section + section { margin-top: 96px; }
+  .contentTight { padding-bottom: 104px; }
 }
 
 @media (max-width: 560px) {

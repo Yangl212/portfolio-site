@@ -15,6 +15,10 @@
 /* ---------- the stage ---------- */
 .stage {
   --sx: 0; --sy: 0; --k: 0;
+  /* --fit shrinks every layer a little so the stack keeps clear of the
+     sheet edge; --fan scales the hover fan-out, which is what pushed the
+     outer screens and chips past the page on a narrow column. */
+  --fit: 0.95; --fan: 1;
   position: relative; display: block; aspect-ratio: 1 / 1; max-width: 100%;
   color: var(--text); text-decoration: none;
 }
@@ -41,9 +45,9 @@
 .layer {
   display: block; width: 100%; height: auto;
   transform:
-    translate(calc(var(--k) * var(--dx) + var(--sx) * var(--depth) * 10px), calc(var(--k) * var(--dy) + var(--sy) * var(--depth) * 8px))
-    rotate(calc(var(--r) + var(--k) * (var(--dr) - var(--r))))
-    scale(calc(1 + var(--k) * (var(--ds) - 1)));
+    translate(calc(var(--k) * var(--dx) * var(--fan) + var(--sx) * var(--depth) * 10px), calc(var(--k) * var(--dy) * var(--fan) + var(--sy) * var(--depth) * 8px))
+    rotate(calc(var(--r) + var(--k) * var(--fan) * (var(--dr) - var(--r))))
+    scale(calc(var(--fit) * (1 + var(--k) * (var(--ds) - 1))));
   transition: transform 750ms var(--ease-spring);
   will-change: transform;
 }
@@ -84,20 +88,29 @@
 @keyframes settle { from { opacity: 0; transform: translateY(28px) scale(0.96); } to { opacity: 1; transform: none; } }
 
 /* ---------- the copy ---------- */
-/* The copy lines up with the title card's left edge. */
-.copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 4%; }
+/* The copy lines up with the title card's left edge. The cards in a row
+   are the same height, so the copy fills what is left of one and the role
+   line sits on its floor - the three roles print on one baseline however
+   many lines each summary runs to. */
+.copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 4%; flex: 1; }
 .description { margin: 0; max-width: 40ch; color: var(--muted); font-size: 0.9375rem; line-height: 1.5; }
-.role { margin: 0; font-size: 0.875rem; line-height: 1.4; color: var(--text); }
+.role { margin: auto 0 0; font-size: 0.875rem; line-height: 1.4; color: var(--text); }
 .role span { color: var(--muted); }
+
+@media (max-width: 1240px) {
+  .stage { --fit: 0.93; --fan: 0.7; }
+}
 
 @media (max-width: 1080px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stage { --fit: 0.9; --fan: 0.5; }
 }
 
 @media (max-width: 809px) {
   .grid { grid-template-columns: 1fr; gap: 56px; padding-top: 48px; }
   .stage { max-width: 440px; margin: 0 auto; width: 100%; }
   .copy { max-width: 440px; margin: 0 auto; width: 100%; }
+  .stage { --fit: 0.86; --fan: 0.3; }
   .chip { font-size: 0.62rem; padding: 6px 9px; }
 }
 

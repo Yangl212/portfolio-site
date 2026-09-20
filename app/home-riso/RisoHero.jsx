@@ -87,6 +87,42 @@ export function RisoHero() {
     setReg(newRegistration())
   }, [])
 
+  /* Selected work walks the page down rather than cutting to it: the sheet
+     slides for about a second on an ease, so the reader keeps their place.
+     Any scroll of their own takes the wheel back. Reduced motion, a modified
+     click or a missing target all fall back to the plain anchor. */
+  const scrollToWork = useCallback((event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    const target = document.getElementById("work")
+    if (!target) return
+    const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0
+    const from = window.scrollY
+    const to = Math.max(0, Math.round(from + target.getBoundingClientRect().top - offset))
+    event.preventDefault()
+    const land = () => { history.replaceState(null, "", "#work") }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(to - from) < 2) {
+      window.scrollTo(0, to)
+      land()
+      return
+    }
+    const duration = Math.min(1150, Math.max(650, Math.abs(to - from) * 0.75))
+    const start = performance.now()
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+    let frame = 0
+    const stop = () => { cancelAnimationFrame(frame); window.removeEventListener("wheel", stop); window.removeEventListener("touchstart", stop); window.removeEventListener("keydown", stop) }
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / duration)
+      window.scrollTo(0, from + (to - from) * ease(t))
+      if (t < 1) { frame = requestAnimationFrame(step); return }
+      stop()
+      land()
+    }
+    window.addEventListener("wheel", stop, { passive: true })
+    window.addEventListener("touchstart", stop, { passive: true })
+    window.addEventListener("keydown", stop)
+    frame = requestAnimationFrame(step)
+  }, [])
+
   useEffect(() => {
     const el = ref.current
     if (!el) return undefined
@@ -235,7 +271,7 @@ export function RisoHero() {
         </p>
 
         <div className={`${styles.opActions} ${styles.rise}`} style={{ animationDelay: "320ms" }}>
-          <a className={styles.primary} href="#work" data-magnet="">Selected work <span aria-hidden="true">↓</span></a>
+          <a className={styles.primary} href="#work" data-magnet="" onClick={scrollToWork}>Selected work <span aria-hidden="true">↓</span></a>
           <a className={styles.secondary} href="/resume.pdf" target="_blank" rel="noreferrer" data-magnet="">Resume <span aria-hidden="true">↗</span></a>
         </div>
 

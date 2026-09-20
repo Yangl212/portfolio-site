@@ -111,11 +111,6 @@ export function RisoFooter() {
           <a href="https://www.linkedin.com/in/leleyang1211" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
           <a href="https://www.instagram.com/shanjio17" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
         </nav>
-
-        <p className={styles.ticket}>
-          <span>&copy; Lele Yang</span>
-          <span className={styles.hint}>Click anywhere to stamp the sheet</span>
-        </p>
       </div>
 
       {stamps.map((item) => (
