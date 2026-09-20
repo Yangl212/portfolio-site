@@ -2,6 +2,9 @@
    rhythm, and divider keylines. The spread mockups carry their own grey ground
    and drop shadow, so nothing here frames an image. */
 .page {
+  /* White stock, like the rest of the case studies. */
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
   --divider: rgba(34, 34, 34, 0.14);
   --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);
   --fs-h3: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);

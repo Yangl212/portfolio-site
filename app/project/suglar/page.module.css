@@ -3,6 +3,9 @@
    one template. The order follows Taroo's: the finished object first, the
    reasoning after it, because this is a physical product project. */
 .page {
+  /* White stock, like the rest of the case studies. */
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
   --divider: rgba(34, 34, 34, 0.14);
   --accent: #e15582;
   --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.5rem);

@@ -1,4 +1,7 @@
 .page {
+  /* White stock, like the rest of the case studies. */
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
   min-height: 100vh;
   background: var(--page-bg);
 }
