@@ -9,6 +9,11 @@
   initial-value: 0;
 }
 
+/* The page below the hero, and the docked header, on the same white as
+   the sheet. Everything in the live stylesheet paints from --panel-bg, so
+   overriding the token here is enough. */
+.whiteFrame { --panel-bg: #ffffff; }
+
 /* ---------- the docked header ---------- */
 /* Fixed above the page and parked out of view while the sheet is on
    screen; RevealHeader.jsx flips data-visible as Selected Work arrives. */

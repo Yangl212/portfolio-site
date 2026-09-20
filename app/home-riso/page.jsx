@@ -38,7 +38,9 @@ export default function HomeRisoPage() {
 
   return (
     <main className={`${homeStyles.page} ${mono.variable}`}>
-      <div className={homeStyles.frame}>
+      {/* The whole page prints on the same white as the sheet: the panel
+          token is overridden here, so the live stylesheet stays untouched. */}
+      <div className={`${homeStyles.frame} ${styles.whiteFrame}`}>
         {/* Docked above the page and hidden while the sheet is on screen;
             it slides in as Selected Work arrives. */}
         <RevealHeader track={TRACK} />
