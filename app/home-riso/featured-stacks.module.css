@@ -1,0 +1,116 @@
+/* Selected Work as three stages of stacked screens. */
+.grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 72px) clamp(28px, 4vw, 56px);
+  padding-top: clamp(64px, 8vw, 112px);
+}
+
+.card {
+  --ink-a: #ff48b0;
+  --ink-b: #3fb0e6;
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.32, 1);
+  display: flex; flex-direction: column; gap: 22px; min-width: 0;
+}
+
+/* ---------- the stage ---------- */
+.stage {
+  --sx: 0; --sy: 0; --k: 0;
+  position: relative; display: block; aspect-ratio: 1 / 1; max-width: 100%;
+  color: var(--text); text-decoration: none;
+}
+.stage:hover, .stage:focus-visible { --k: 1; }
+.stage:focus-visible { outline: 2px solid var(--ink-a); outline-offset: 12px; }
+
+/* The tinted sheet the screens lie on. Tilts a touch on hover. */
+.sheet {
+  position: absolute; inset: 6% 4%; border-radius: 22px;
+  background: var(--sheet-tint);
+  transition: transform 700ms var(--ease-spring);
+  transform: rotate(calc(var(--k) * -3deg)) scale(calc(1 + var(--k) * 0.03));
+}
+.stage[data-tint="pink"] { --sheet-tint: rgba(255, 72, 176, 0.10); --chip-ink: var(--ink-a); }
+.stage[data-tint="blue"] { --sheet-tint: rgba(63, 176, 230, 0.13); --chip-ink: var(--ink-b); }
+
+/* Each layer has a slot (its place on the stage, and its scroll-in
+   settle) and the layer itself (the hover fan-out and the pointer lean),
+   so the two motions never fight over one transform. */
+.slot {
+  position: absolute; left: var(--x); top: var(--y); width: var(--w); z-index: var(--z);
+  transform: none; transition: none;
+}
+.layer {
+  display: block; width: 100%; height: auto;
+  transform:
+    translate(calc(var(--k) * var(--dx) + var(--sx) * var(--depth) * 10px), calc(var(--k) * var(--dy) + var(--sy) * var(--depth) * 8px))
+    rotate(calc(var(--r) + var(--k) * (var(--dr) - var(--r))))
+    scale(calc(1 + var(--k) * (var(--ds) - 1)));
+  transition: transform 750ms var(--ease-spring);
+  will-change: transform;
+}
+.cut { filter: drop-shadow(0 18px 26px rgba(34, 34, 34, 0.22)); }
+.shot {
+  border-radius: 10px; border: 1px solid rgba(34, 34, 34, 0.14); background: #ffffff;
+  box-shadow: 0 1px 1px rgba(34, 34, 34, 0.06), 0 22px 34px -18px rgba(34, 34, 34, 0.4);
+}
+.chip {
+  display: inline-block; width: max-content; max-width: none;
+  padding: 7px 11px; border: 1px solid var(--chip-ink); border-radius: 999px; background: #ffffff;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem; letter-spacing: 0.04em; white-space: nowrap; color: var(--chip-ink);
+  box-shadow: 0 10px 18px -12px rgba(34, 34, 34, 0.35);
+}
+
+/* The title card at the foot of the stage, like a label on the print. */
+.plate {
+  position: absolute; left: 4%; bottom: 0; z-index: 6; max-width: 66%;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 14px 18px 16px; border: 1px solid rgba(34, 34, 34, 0.16); border-radius: 14px; background: #ffffff;
+  box-shadow: 0 1px 1px rgba(34, 34, 34, 0.06), 0 18px 28px -16px rgba(34, 34, 34, 0.35);
+  transform: rotate(-2deg) translate(calc(var(--sx) * 4px), calc(var(--k) * 6px));
+  transition: transform 750ms var(--ease-spring);
+}
+.when {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.plate strong { font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: clamp(1.15rem, 1.4vw, 1.35rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+
+/* Scroll-in: the slots settle one after another from a little below,
+   once the card is on screen (Reveal.jsx sets data-reveal="in"). With no
+   script the layers simply sit in place. */
+.card[data-reveal="in"] .slot { animation: settle 720ms var(--ease-spring) both; animation-delay: calc(var(--i) * 80ms + 120ms); }
+@keyframes settle { from { opacity: 0; transform: translateY(28px) scale(0.96); } to { opacity: 1; transform: none; } }
+
+/* ---------- the copy ---------- */
+.copy { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 2%; }
+.description { margin: 0; max-width: 46ch; color: var(--muted); font-size: 0.9375rem; line-height: 1.5; }
+.role { margin: 0; font-size: 0.9375rem; line-height: 1.4; color: var(--text); }
+.role span { color: var(--muted); }
+.caseLink {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding-bottom: 4px;
+  border-bottom: 1px solid currentColor; color: var(--text); font-size: 0.9375rem; font-weight: 600; line-height: 1.3; text-decoration: none;
+  transition: gap 180ms ease, opacity 180ms ease;
+}
+.caseLink:hover, .caseLink:focus-visible { gap: 16px; opacity: 0.68; }
+
+@media (max-width: 1080px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 809px) {
+  .grid { grid-template-columns: 1fr; gap: 56px; padding-top: 48px; }
+  .stage { max-width: 440px; margin: 0 auto; width: 100%; }
+  .copy { max-width: 440px; margin: 0 auto; width: 100%; }
+  .chip { font-size: 0.62rem; padding: 6px 9px; }
+}
+
+@media (hover: none) {
+  /* No hover on touch: the stage rests a little more open, so nothing is
+     hidden under something else. */
+  .stage { --k: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet, .layer, .plate { transition: none; }
+  .card[data-reveal="in"] .slot { animation: none; }
+}

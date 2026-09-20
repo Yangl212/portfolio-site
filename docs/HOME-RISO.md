@@ -4,10 +4,25 @@
 
 原首页 `/` 一个字没动。这个路由是一份独立的副本，看效果用；定稿后再决定是替换 `/` 还是继续并存。
 
-## 范围：只有 hero 是新的
+## 范围
 
-- hero 铺满进入时的整个视口（视口高度减去页头高度），不往下滚看不到 Selected Work，和 adasilv2.framer.website 的首页一样。
-- hero 以下的 Selected Work、More Work、页脚，直接复用现首页 `app/page.jsx` 的标记和 `app/page.module.css` 的样式，没有任何改动。要改下面的部分时另说。
+- hero 铺满进入时的整个视口，不往下滚看不到 Selected Work，和 adasilv2.framer.website 的首页一样。
+- Selected Work（2026-09-20 改）：按参考站 Featured Projects 的做法改成三个"舞台"，见下一节。区块标题、More Work、页脚仍复用现首页 `app/page.jsx` / `app/page.module.css`，没改。
+
+## Selected Work 舞台（`FeaturedStacks.jsx`）
+
+每个案例是一块带色纸的舞台，上面叠着它自己的界面截图和一两枚数据贴纸，底部压一张标题卡（年份 · 时长 + 标题），下面是描述、Role 和 View case study。
+
+- 素材全部来自站内已有文件，由 `scripts/home-riso-stage-build.cjs` 生成到 `public/home-riso/`：
+  - BOA：三张视频海报里的手机（`boa/media/*-poster.webp`，脚本把浅灰底从边缘泛洪抠成透明再裁边）+ 原有透明手机 `boa/home-screen.png`。
+  - VortexNet：交付版全屏 `shipped-screen` + 侧栏、指标、优先级三块裁片。
+  - Last Message：透明笔记本 `lastmessage/cover.png` + chat / routes / boundary 三张场景海报。
+- 贴纸上的数字都是案例页里的：2 of 6 → 5 of 6、41 s → 24 s、20–30 s → ~8 s、2 of 8 found the hidden route。Role 取自各案例页的 Role 行（Last Message 页没有 Role 行，用简历里的"end-to-end UX/UI design"写成 "UX/UI design, end to end"）。
+- 动效：滚进视口时各层从下方依次落位（`Reveal` 给卡片打 `data-reveal="in"`，层用 CSS animation 错开 80ms）；悬停时底纸倾斜 3°、各层向外散开并各自旋转、主体略放大，弹簧缓动；指针在舞台上移动时各层按深度跟着倾斜。触屏没有悬停，舞台常驻在 35% 的散开状态。
+- 每层的位置、大小、旋转和悬停位移都在 `FeaturedStacks.jsx` 顶部的 `stacks` 表里（百分比坐标），要微调直接改数字。
+- 重新导出素材后跑 `node scripts/home-riso-stage-build.cjs`。
+
+可以补的素材（可选）：BOA 三个界面如果有更高清的透明手机 mockup（PNG），VortexNet 如果有带透明底的笔记本 mockup，Last Message 如果有平板/手机框的透明截图，替换后会更精致；现在用的是海报抠图和平面截图。
 
 ## hero 是什么
 

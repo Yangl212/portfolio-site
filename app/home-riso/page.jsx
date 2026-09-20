@@ -1,11 +1,13 @@
-import Link from "next/link"
 import { DM_Mono } from "next/font/google"
 
 import { MoreWorkCarousel } from "../../components/MoreWorkCarousel"
+import { Reveal } from "../../components/Reveal"
 import { SiteFooter } from "../../components/SiteFooter"
 import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import homeStyles from "../page.module.css"
+import { FeaturedStacks } from "./FeaturedStacks"
+import stackStyles from "./featured-stacks.module.css"
 import { RevealHeader } from "./RevealHeader"
 import { RisoHero } from "./RisoHero"
 import styles from "./page.module.css"
@@ -47,33 +49,17 @@ export default function HomeRisoPage() {
 
         <RisoHero />
 
-        {/* From here down: the live home page, verbatim (app/page.jsx). The
-            only difference is the top padding, so the sheet runs straight
-            into the Selected Work rule instead of leaving a blank band. */}
+        {/* Selected Work as three stages of stacked screens; the section
+            header, More Work and the footer are the live home page's own. */}
+        <Reveal fade={`.${stackStyles.card}`} />
         <section className={`${homeStyles.content} ${styles.contentTight}`} id="work">
           <section className={homeStyles.selectedWork}>
             <div className={`${homeStyles.sectionHeader} ${homeStyles.reveal}`}>
               <h2>Selected Work</h2>
+              <p>Three case studies, tested with real people</p>
             </div>
 
-            <div className={homeStyles.featuredList}>
-              {featured.map((project, index) => (
-                <article className={`${homeStyles.featuredCard} ${homeStyles.reveal}`} key={project.href} style={{ animationDelay: `${140 + index * 90}ms` }}>
-                  <div className={homeStyles.featuredCopy}>
-                    <div className={homeStyles.tagList}>
-                      {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                    </div>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <Link href={project.href} className={homeStyles.caseLink}>View case study <span aria-hidden="true">→</span></Link>
-                  </div>
-
-                  <Link href={project.href} className={homeStyles.featuredImageLink}>
-                    <img src={project.image} alt={project.title} width={1600} height={1000} decoding="async" loading="lazy" />
-                  </Link>
-                </article>
-              ))}
-            </div>
+            <FeaturedStacks projects={featured} />
           </section>
 
           <MoreWorkCarousel className={homeStyles.moreWork} projects={more} />
