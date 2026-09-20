@@ -67,9 +67,49 @@
 .prototypeSteps li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 16px; }
 .prototypeSteps li > span { padding-top: 2px; font-size: .8125rem; color: var(--muted); }
 .prototypeSteps p { font-size: .9375rem; color: var(--muted); margin-top: 8px; }
-.prototypeStage { width: 100%; min-width: 0; }
+.prototypeStage { position: relative; width: 100%; min-width: 0; display: flex; justify-content: center; }
 .prototypeViewport { width: 100%; position: relative; margin: 0 auto; overflow: hidden; }
 .prototypeFrame { position: absolute; inset: 0 auto auto 0; width: 510px; height: 1000px; border: 0; transform-origin: top left; }
+.tryMe {
+  position: absolute;
+  z-index: 2;
+  top: 8%;
+  left: -28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #315f94;
+  pointer-events: none;
+  transform: rotate(-7deg);
+  animation: tryMeFloat 2.8s ease-in-out infinite;
+}
+.tryMe span {
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: clamp(1.1rem, 1rem + .45vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+.tryMe svg { width: 76px; height: 52px; margin: 4px 0 0 28px; overflow: visible; }
+.tryMe path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes tryMeFloat {
+  0%, 100% { transform: rotate(-7deg) translateY(0); }
+  50% { transform: rotate(-5deg) translateY(-7px); }
+}
+
+/* Related items enter as small sequences rather than one simultaneous block. */
+.prototypeSteps li[data-reveal]:nth-child(2),
+.methodGrid > div[data-reveal]:nth-child(2),
+.problemGrid article[data-reveal]:nth-child(2),
+.decisionGrid article[data-reveal]:nth-child(2),
+.systemGrid figure[data-reveal]:nth-child(2),
+.reflectionGrid article[data-reveal]:nth-child(2) { transition-delay: 80ms; }
+.prototypeSteps li[data-reveal]:nth-child(3),
+.methodGrid > div[data-reveal]:nth-child(3),
+.problemGrid article[data-reveal]:nth-child(3),
+.systemGrid figure[data-reveal]:nth-child(3) { transition-delay: 160ms; }
+.prototypeSteps li[data-reveal]:nth-child(4),
+.decisionGrid article[data-reveal]:nth-child(4) { transition-delay: 240ms; }
 .methodGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding: 24px 0; border-block: 1px solid var(--divider); }
 .methodGrid > div { display: flex; flex-direction: column; gap: 10px; }
 .methodGrid strong { font-size: clamp(1.3rem, 1rem + 1.5vw, 2rem); font-weight: 500; line-height: 1.2; }
@@ -150,8 +190,15 @@
   .heroFacts > div { grid-template-columns: 1fr; gap: 6px; }
   .heroVisual { width: min(100%, 310px); }
   .meta { gap: 12px; }
+  .prototypeStage { padding-top: 30px; }
+  .tryMe { top: -10px; left: 12px; transform: rotate(-5deg); }
+  .tryMe svg { width: 62px; height: 42px; margin-top: 1px; }
   .sectionNav { gap: 0 22px; }
   .caseSection + .caseSection { padding-top: 36px; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tryMe { animation: none; }
 }

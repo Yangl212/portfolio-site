@@ -3,6 +3,7 @@ import { ImageCarousel } from "../../../components/ImageCarousel"
 import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -300,6 +301,24 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
       <div className={styles.frame}>
         <SiteHeader active={trackHome(track)} track={track} />
         <div className={styles.content}>
+          <Reveal fade={[
+            `.${styles.sectionHeader}`,
+            `.${styles.highlightCard}`,
+            `.${styles.prototypeSteps} li`,
+            `.${styles.prototypeGuide} > .${styles.outlineAction}`,
+            `.${styles.prototypeGuide} > .${styles.sourceNote}`,
+            `.${styles.prototypeStage}`,
+            `.${styles.methodGrid} > div`,
+            `.${styles.problemGrid} article`,
+            `.${styles.decisionGrid} article`,
+            `.${styles.disclosure}`,
+            `.${styles.flowCase}`,
+            `.${styles.lowFiArc}`,
+            `.${styles.iterationItem}`,
+            `.${styles.webCarousel}`,
+            `.${styles.systemGrid} figure`,
+            `.${styles.reflectionGrid} article`
+          ].join(", ")} />
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
               <div className={`${styles.eyebrow} ${styles.reveal}`}>
@@ -382,6 +401,13 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 <p className={styles.sourceNote}>The optional assistant demonstrates suggested questions and responses based on sample data. Free-text questions and live AI are outside this prototype.</p>
               </div>
               <div className={styles.prototypeStage}>
+                <div className={styles.tryMe} aria-hidden="true">
+                  <span>Try me</span>
+                  <svg viewBox="0 0 76 52">
+                    <path d="M4 8c25-5 29 27 61 30" />
+                    <path d="m55 30 11 8-13 6" />
+                  </svg>
+                </div>
                 <ScaledIframe className={styles.prototypeViewport} frameClassName={styles.prototypeFrame}
                   src={PROTOTYPE_SRC} title="BOA spending and budgeting interactive prototype"
                   width={510} height={1000} maxDisplayWidth={440} transparent />
