@@ -161,7 +161,9 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
 
     event.preventDefault()
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const top = target.getBoundingClientRect().top + window.scrollY - 86
+    const dockTop = window.matchMedia("(max-width: 700px)").matches ? 8 : 12
+    const barHeight = slotRef.current?.firstElementChild?.getBoundingClientRect().height || 64
+    const top = target.getBoundingClientRect().top + window.scrollY - dockTop - barHeight - 18
     window.history.replaceState(null, "", `#${id}`)
     window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" })
     setActive(id)
@@ -175,7 +177,7 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
           <span className={styles.backLabel}>Work</span>
         </Link>
         <nav className={styles.links} aria-label="On this project" ref={linksRef}>
-          {sections.map(([id, label]) => (
+          {sections.map(([id, label], index) => (
             <a
               className={styles.link}
               data-active={active === id}
@@ -185,7 +187,10 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
               onClick={(event) => goToSection(event, id)}
               aria-current={active === id ? "location" : undefined}
             >
-              {label}
+              <span className={styles.linkIndex} aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className={styles.linkLabel}>{label}</span>
             </a>
           ))}
         </nav>
