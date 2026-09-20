@@ -10,7 +10,7 @@ import styles from "./page.module.css"
 export const metadata = {
   title: "AI Calendar",
   description:
-    "Redesigning Google Calendar with an AI layer that reads Gmail for dates and deadlines, then proposes time blocks the user can check against the source email and confirm before anything changes."
+    "An AI-assisted Calendar concept tested with simulated data. Participants understood the scheduling actions, while four returned to the source email to verify the AI's interpretation."
 }
 
 const prototypeUrl = "/cleared/calendar-assistant-prototype.html?v=20260918-review"
@@ -74,52 +74,21 @@ const mobileScreens = [
 
 const reviewFindings = [
   {
-    title: "Source clarity",
-    status: "Updated",
-    response: "The desktop prototype separates email facts, inferred deadlines and estimated duration. Mobile labels still need the same update."
+    title: "Actions and states were clear",
+    status: "Observed in usability testing",
+    response: "Participants understood how to add a suggestion to the calendar and could distinguish pending suggestions from confirmed events."
   },
   {
-    title: "Recovery",
+    title: "Source verification remained necessary",
+    status: "Observed behavior",
+    response: "Four participants returned to the source email to read it carefully and check whether the AI had understood the request correctly."
+  },
+  {
+    title: "Make the evidence easier to inspect",
     status: "Next iteration",
-    response: "Undo works, but fades after 4.2 seconds. Add a persistent recovery action in event details."
-  },
-  {
-    title: "Command consistency",
-    status: "Updated",
-    response: "“Before Thursday” now previews the first open slot in that window - Tuesday 16:00, not Friday - and books exactly what it previewed. If the calendar changes before you confirm, it re-previews instead of silently moving the event."
+    response: "The next iteration will make the existing source evidence easier to inspect, give inferred deadlines and estimated durations clearer labels, and keep editing and email access close to the suggestion. These refinements still need to be tested."
   }
 ]
-
-const usabilityTest = {
-  facts: [
-    ["Planned participants", "6 people coordinating client work by email"],
-    ["Format", "30-minute moderated desktop sessions"],
-    ["Briefing", "Task goals, without interface guidance"],
-    ["Tasks", "Schedule a quote, identify suggestions, resolve a conflict"]
-  ],
-  hypotheses: [
-    {
-      title: "Can people commit without repeated checking?",
-      measure: "Record time to confirm and source-email reopenings.",
-      rule: "If most complete the task but median confirmation exceeds a minute, investigate the hesitation before removing steps."
-    },
-    {
-      title: "Are suggestions mistaken for bookings?",
-      measure: "Ask participants to identify all three pending suggestions without guidance.",
-      rule: "If fewer than five of six identify all three, strengthen the visual distinction."
-    },
-    {
-      title: "Is an inferred deadline read as a fact?",
-      measure: "Ask what time the sender specified. The email gives no exact time.",
-      rule: "Two or more inference errors would make clearer source labels the next priority."
-    },
-    {
-      title: "Does choosing a time confirm too soon?",
-      measure: "Observe whether people expect a preview and find Undo after choosing a slot.",
-      rule: "If immediate confirmation surprises them, compare a separate Add to calendar step."
-    }
-  ]
-}
 
 function DesktopDemo({ name, label, priority = false, className }) {
   return <CaseVideo className={className}
@@ -147,7 +116,8 @@ export default function ClearedPage({ track = "uiux" }) {
               <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
                 <div><dt>The challenge</dt><dd>Fit email commitments around a changing workday.</dd></div>
                 <div><dt>My contribution</dt><dd>Product framing, desktop + mobile UI, and interactive prototyping.</dd></div>
-                <div><dt>Status</dt><dd>Concept · Simulated data · User testing planned</dd></div>
+                <div><dt>Status</dt><dd>Concept · Usability tested · Simulated data</dd></div>
+                <div><dt>Result</dt><dd>Participants understood the scheduling action; four returned to the source email to verify the AI&apos;s interpretation.</dd></div>
               </dl>
               <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>Role</dt><dd>Product Designer</dd></div>
@@ -289,8 +259,8 @@ export default function ClearedPage({ track = "uiux" }) {
           <section id="validation" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>06 / Evaluation & iteration</p>
-              <h2>What changed. What comes next.</h2>
-              <p className={styles.sectionLead}>Findings from AI-assisted review and browser checks; participant testing is still pending.</p>
+              <h2>Clear actions, with a need to verify the AI&apos;s interpretation.</h2>
+              <p className={styles.sectionLead}>Understanding the scheduling action did not automatically create confidence in the AI&apos;s interpretation.</p>
             </div>
             <div className={styles.validationGrid}>
               {reviewFindings.map((item) => (
@@ -301,42 +271,10 @@ export default function ClearedPage({ track = "uiux" }) {
                 </article>
               ))}
             </div>
-            <p className={styles.limitNote}>Live integration, AI accuracy and time savings remain unvalidated.</p>
+            <p className={styles.limitNote}>I interpreted the return to the source email as a need for more visible evidence before relying on the recommendation. The goal is to help people verify the recommendation when needed, not to eliminate source checking.</p>
+            <p className={styles.limitNote}>The prototype uses simulated data and is not connected to live email or calendars. This usability test did not validate backend AI accuracy or real-world time savings.</p>
             <p className={styles.sourceNote}>Independent concept based on public Google Workspace documentation. Not affiliated with Google.</p>
           </section>
-
-          <aside id="testing" className={styles.testing} aria-labelledby="testing-title">
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>Planned user testing</p>
-              <h2 id="testing-title">Can people tell a suggestion from a commitment?</h2>
-              <p className={styles.sectionLead}>Six planned sessions will check suggestion status, inferred deadlines and unintended confirmations. Sessions have not yet run.</p>
-            </div>
-            <details className={styles.moreDetails}>
-              <summary>View the test plan</summary>
-              <div className={styles.testPlan}>
-                <dl className={styles.testFacts}>
-                  {usabilityTest.facts.map(([term, detail]) => (
-                    <div key={term}><dt>{term}</dt><dd>{detail}</dd></div>
-                  ))}
-                </dl>
-                <div className={styles.hypothesisList}>
-                  {usabilityTest.hypotheses.map((item, index) => (
-                    <article className={styles.hypothesis} key={item.title}>
-                      <div className={styles.hypothesisSummary}>
-                        <p className={styles.microLabel}>Question / 0{index + 1}</p>
-                        <h3>{item.title}</h3>
-                        <p>{item.measure}</p>
-                      </div>
-                      <dl className={styles.reasoning}>
-                        <div><dt>Decision rule</dt><dd>{item.rule}</dd></div>
-                      </dl>
-                    </article>
-                  ))}
-                </div>
-                <p className={styles.sourceNote}>These are iteration criteria for a small formative study, not statistical conclusions.</p>
-              </div>
-            </details>
-          </aside>
           <ProjectNav slug="cleared" track={track} styles={styles} />
         </div>
         <SiteFooter />

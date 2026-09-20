@@ -86,11 +86,6 @@ const prototypeSteps = [
   }
 ]
 
-/* A fifth figure - "Totals feel unclear", recorded as 57% - was dropped here.
-   It doesn't correspond to any whole number of the 32 respondents under any
-   rounding, and the original count behind it couldn't be verified, so it is
-   removed rather than kept as an approximation. See the disclosure note
-   below and docs/BOA-MATERIALS.md. */
 const researchStats = [
   { pct: "63%", label: "Selections reset", color: "rgba(247, 235, 140, 0.78)" },
   { pct: "69%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
@@ -261,14 +256,14 @@ const testIterations = [
     title: "Budget reallocation",
     count: "2 of 6 → 5 of 6",
     change: "Separated the source and destination into Take from and Give to, then previewed both new limits and the unchanged total before confirmation.",
-    result: "Five of six participants completed Move Budget independently, up from two of six with the early flow. Average wrong taps dropped from 2.1 to 0.7 after Take from, Give to, and the confirmation summary were separated.",
+    result: "Five of six participants completed budget reallocation without help in the redesigned flow, compared with two of six in the earlier task round.",
     nextStep: "Validate the difference between a one-month and ongoing change, then test undo, insufficient-funds, and multi-category edge cases before defining the final interaction rules."
   },
   {
     title: "Assistant exploration",
     count: "1 of 6 → 4 of 6",
     change: "Placed suggested questions and responses inside the spending view so a follow-up question could begin without leaving the current category context.",
-    result: "Four of six participants used the embedded AI assistant to resolve a follow-up spending question without moderator support, compared with one of six who recovered through navigation alone in the first round. Five of six rated the answer as relevant.",
+    result: "Four of six participants resolved a follow-up spending question using the prototype assistant without researcher prompts, compared with one of six using navigation in the comparison round. These were different ways of finding an answer.",
     nextStep: "Make the assistant show which transactions and dates support each answer, add clear handoff to standard controls, and test trust when the AI is uncertain or cannot complete a request."
   }
 ]
@@ -411,6 +406,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               <div><strong>2</strong><span>User interviews</span></div>
               <div><strong>Reddit</strong><span>Supporting public posts</span></div>
             </div>
+            <p className={styles.sourceNote}>The only recruitment requirement was previous use of Bank of America. Experience with its budgeting feature was not required, and some participants had never used it. The research covered different levels of familiarity with the feature.</p>
             <div className={styles.problemGrid}>
               {problemSnapshots.map((item, index) => (
                 <article key={item.title}>
@@ -428,7 +424,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <div key={stat.label}><strong>{stat.pct}</strong><p>{stat.label}</p></div>
                   ))}
                 </div>
-                <p className={styles.sourceNote}>These four figures are exact shares of the 32 respondents (20 to 23 people). A fifth theme, totals feeling unclear, was recorded at 57% in the original notes - a number no whole count of the 32 respondents rounds to. Since the original count behind it couldn&apos;t be verified, it has been removed rather than kept as an approximation. The uncertainty it described is still reflected qualitatively above and in the interview notes.</p>
+                <p className={styles.sourceNote}>These four recorded survey findings are preserved from the research notes. Uncertainty about how totals connect to transactions is retained as a qualitative theme rather than shown with an unverified percentage.</p>
                 <div className={styles.evidenceGrid}>
                   <figure>
                     <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
@@ -523,7 +519,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>05 / Testing & iteration</p>
               <h2>What changed across the task rounds.</h2>
-              <p className={styles.sectionLead}>The comparison below connects each design change to what happened in the next task round. Each task involved six participants, so the counts are shown directly rather than treated as a general result.</p>
+              <p className={styles.sectionLead}>The same six participants took part in both rounds. Tasks covered identifying an overspent category, reallocating category budgets, and answering a follow-up spending question.</p>
             </div>
             <div className={styles.iterationList}>
               {testIterations.map((item, index) => (
@@ -540,7 +536,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 </article>
               ))}
             </div>
-            <p className={styles.sourceNote}>The assistant comparison uses different recovery paths: navigation in the first round and an assistant in the second. It is exploratory and does not isolate the assistant’s effect. Whether the same six people took part in both rounds was not recorded, so the before/after counts should be read as directional rather than a controlled repeat with one factor changed.</p>
+            <p className={styles.sourceNote}>These small-sample results suggest improvement. The two rounds used substantially different interfaces, and returning participants may also have benefited from familiarity with the tasks. The comparison therefore does not isolate the effect of individual changes. The assistant result is exploratory because it compares navigation in one round with the prototype assistant in the other.</p>
           </section>
 
           <section id="web" className={styles.caseSection}>

@@ -37,22 +37,26 @@ const outcomes = [
 ]
 
 /* Task-based sessions with 10 colleagues at the company, original interface
-   against the redesigned dashboard on the same tasks. Times are approximate
-   averages. */
+   against the redesigned dashboard. Times are approximate recorded summaries
+   and are not assigned to individual subtasks. */
 const testing = {
   stats: [
-    { value: "20–30 s → ~8 s", label: "To locate and understand one day’s work and its data" },
-    { value: "10 of 10", label: "Participants noticed and used the cash chart first" },
-    { value: "10+ s → ~5 s", label: "To find a requested item in the left-hand list" }
+    { value: "20–30 s → ~8 s", label: "Daily information lookup, approximate task summary" },
+    { value: "10+ s → ~5 s", label: "Requested item in the left-hand list, approximate task summary" },
+    { value: "Qualitative", label: "Participants appeared to grasp the overall data trend more quickly" }
   ],
   findings: [
     {
-      title: "Faster access to daily data.",
-      body: "On the original interface, locating and understanding a single day’s work and its related data took an average of 20–30 seconds. On the redesigned dashboard it took about 8 seconds, roughly 60–70% less. The chart became the strongest entry point: all 10 participants noticed and used it first."
+      title: "Testing everyday lookup tasks.",
+      body: "I tested the dashboard with ten colleagues who used the internal tool. I timed lookup tasks in the original and redesigned interfaces, including finding Pending settlement and locating Trend in the left-hand navigation."
     },
     {
-      title: "Faster scanning of the list.",
-      body: "Finding a requested item in the left-hand list took 10 seconds or more on the original design, because entries carried similar visual weight. After regrouping the content into clearer sections with a stronger hierarchy, the same kind of item was found in about 5 seconds. All 10 participants completed the task faster."
+      title: "Lookup became faster.",
+      body: "The recorded summaries showed that finding the day’s information took roughly 20–30 seconds in the original interface and about eight seconds in the redesign. Finding a requested item in the left-hand list fell from more than ten seconds to around five. These are approximate task-summary figures."
+    },
+    {
+      title: "Trend understanding was an observation.",
+      body: "I also observed that participants appeared to grasp the overall data trend more quickly. This was a qualitative observation, separate from the timed lookup results."
     }
   ]
 }
@@ -176,7 +180,7 @@ export default function VortexNetPage({ track = "uiux" }) {
                 <p className={styles.microLabel}>0{index + 1}</p><h3>{item.title}</h3><p>{item.body}</p>
               </article>)}
             </div>
-            <p className={styles.sourceNote}>All 10 participants were colleagues who work with the tool. Times are approximate averages across them. Overall, the redesign made the key information visible immediately and cut the time spent scanning for it.</p>
+            <p className={styles.sourceNote}>The findings supported clearer labels, stronger typography and task-based grouping, with color as a supporting cue. Because these changes were introduced together, the results reflect the combined redesign rather than any single visual change.</p>
           </section>
 
           <section id="start" className={styles.caseSection}>

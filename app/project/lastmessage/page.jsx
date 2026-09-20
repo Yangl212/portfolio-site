@@ -8,7 +8,7 @@ import styles from "./page.module.css"
 export const metadata = {
   title: "Last Message",
   description:
-    "Designing an open-ended detective game through AI conversations, connected evidence, and branching story paths. Play the live build."
+    "An open-ended detective game with a readable main investigation and an optional, more demanding hidden route. Two of eight players reached the hidden ending in the playtest."
 }
 
 const img = (hash) => "/framer-assets/images/" + hash
@@ -21,7 +21,7 @@ const investigation = [
   { title: "Question & inspect", body: "Choose between conversations, member files, calls, and diaries." },
   { title: "Connect the evidence", body: "Cross-reference records and follow clues onto the web." },
   { title: "Open another route", body: "Use discoveries to access more records and revisit characters." },
-  { title: "Reach an ending", body: "Different paths resolve the case differently; a hidden layer remains." }
+  { title: "Reach an ending", body: "Different paths resolve the case differently; closer attention to connected clues can open an optional hidden route." }
 ]
 
 const aiRules = [
@@ -63,12 +63,12 @@ const iterations = [
   },
   {
     label: "03 / Discovery",
-    title: "Make the hidden route discoverable without giving it away.",
-    problem: "Only two of the eight players reached the secret ending. The playtest alone does not explain whether others missed its clues or chose not to pursue them.",
-    changeLabel: "Proposed next iteration",
-    change: "Test clearer progress through each record set and more visible traces leading into the hidden layer.",
-    outcomeLabel: "Not yet retested",
-    outcome: "Observe where players stop, what they think remains, and whether an additional cue helps them choose a next step without revealing the answer."
+    title: "Evaluate the optional route on its own terms.",
+    problem: "Two of the eight players reached the hidden ending. This is an observation of discovery in this group, not proof that the difficulty is right or wrong.",
+    changeLabel: "Next evaluation",
+    change: "I would examine where players stop, what they believe remains to be discovered, and whether the interface gives them enough feedback to choose a next step.",
+    outcomeLabel: "Design intent",
+    outcome: "Clear navigation and record states should support the investigation while preserving the effort required to solve the mystery."
   }
 ]
 
@@ -116,7 +116,7 @@ export default function LastMessagePage({ track = "uiux" }) {
             </dl>
             <div className={`${styles.contribution} ${styles.reveal}`} style={{ animationDelay: "300ms" }}>
               <p className={styles.microLabel}>What I delivered</p>
-              <p>A playable website, from investigation structure and interface design to character rules and implementation. Tested with eight players; the hidden route remains an iteration priority.</p>
+              <p>A playable website, from investigation structure and interface design to character rules and implementation. The main investigation is designed to be readable; the hidden ending is an optional, more demanding route.</p>
             </div>
           </section>
 
@@ -248,15 +248,15 @@ export default function LastMessagePage({ track = "uiux" }) {
           </section>
 
           <section className={styles.caseSection} id="playtesting">
-            <SectionHeading label="04 / Playtesting & iteration" title="The main case was legible. The hidden layer needed more work.">
-              Testing ran from an early chatroom proof of concept to an eight-player test of the working build. Most players followed the main story and found the main suspect; fewer discovered the secret ending.
+            <SectionHeading label="04 / Playtesting & iteration" title="A readable main investigation, with an optional hidden route.">
+              The hidden ending asks players to pay closer attention to clues and connections across the story. Discovering this layer is part of the challenge; universal completion was never the goal.
             </SectionHeading>
             <div className={styles.statRow}>
               <article><strong>8</strong><span>players in the working-build test</span></article>
               <article><strong>~35 min</strong><span>reported time to identify the main suspect</span></article>
               <article><strong>2 of 8</strong><span>players reached the secret ending</span></article>
             </div>
-            <p className={styles.sourceNote}>These are observations from a small playtest, rather than a measured improvement against an earlier version.</p>
+            <p className={styles.sourceNote}>Two of the eight players reached the hidden ending. I treat this as an observation of discovery in this group. It provides a starting point for examining how players explore the optional layer, but does not establish the ideal level of difficulty or determine the game&apos;s overall usability.</p>
             <div className={styles.iterationList}>
               {iterations.map(item => <article className={styles.iterationItem} key={item.label}>
                 <div><p className={styles.microLabel}>{item.label}</p><h3>{item.title}</h3><p>{item.problem}</p></div>
@@ -299,8 +299,8 @@ export default function LastMessagePage({ track = "uiux" }) {
           </section>
 
           <section className={[styles.caseSection, styles.reflection].join(" ")}>
-            <SectionHeading label="What I take forward" title="An open-ended experience still needs clear feedback.">
-              The hardest part was keeping the player's place in the investigation visible while leaving interpretation open. Next, I would test hidden-route cues and whether players understand a character's warning before it costs them access.
+            <SectionHeading label="What I take forward" title="Preserve the mystery, then test whether the challenge is fair.">
+              My next evaluation would examine whether the main investigation remains understandable, whether hidden-route clues can be reasoned through, and whether navigation and record states provide enough feedback without revealing the answer.
             </SectionHeading>
             <div className={styles.actions}>
               <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">Explore Last Message <span aria-hidden="true">↗</span></a>

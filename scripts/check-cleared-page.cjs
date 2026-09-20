@@ -74,12 +74,9 @@ const artifacts = process.env.CLEARED_SCREENSHOTS || path.join(os.tmpdir(), 'cle
     await page.waitForFunction(() => [...document.querySelectorAll('details video')].every(v => v.paused))
     assert(await page.locator('details video').evaluateAll(items => items.every(v => v.paused)), 'Collapsed recordings should pause')
 
-    const testPlan = page.locator('#testing details')
-    assert.equal(await testPlan.evaluate(el => el.open), false, 'The supplementary test plan starts collapsed')
-    await testPlan.locator('summary').click()
-    await page.getByText('Planned participants', { exact: true }).waitFor()
-    assert(await testPlan.getByRole('heading', { name: 'Does choosing a time confirm too soon?' }).isVisible())
-    await testPlan.locator('summary').click()
+    await page.getByText('Concept · Usability tested · Simulated data', { exact: true }).waitFor()
+    assert(await page.getByRole('heading', { name: "Clear actions, with a need to verify the AI's interpretation." }).isVisible())
+    assert(await page.getByText('Four participants returned to the source email', { exact: false }).isVisible())
 
     for (const width of [320, 390, 768]) {
       await page.setViewportSize({ width, height: 844 })
@@ -95,8 +92,8 @@ const artifacts = process.env.CLEARED_SCREENSHOTS || path.join(os.tmpdir(), 'cle
       await page.screenshot({ path: path.join(artifacts, `prototype-${width}.png`) })
       await page.getByText('Explore three more desktop interactions', { exact: true }).click()
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Expanded demos fit at ${width}`)
-      await page.locator('#testing summary').click()
-      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Expanded test plan fits at ${width}`)
+      await page.locator('#validation').scrollIntoViewIfNeeded()
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Evaluation fits at ${width}`)
     }
 
     await page.goto(`${base}/visual/project/cleared`)
@@ -115,7 +112,7 @@ const artifacts = process.env.CLEARED_SCREENSHOTS || path.join(os.tmpdir(), 'cle
     assert(await still.evaluate(v => v.paused))
     assert.deepEqual(errors, [], 'No runtime errors')
     assert.deepEqual(failures, [], 'No failed local assets')
-    console.log('PASS: mobile hero walkthrough, six mobile screens, six desktop feature loops, embedded prototype, reduced motion, responsive widths and both portfolio routes.')
+    console.log('PASS: tested status and findings, mobile hero walkthrough, six mobile screens, six desktop feature loops, embedded prototype, reduced motion, responsive widths and both portfolio routes.')
     console.log(`Screenshots: ${artifacts}`)
   } finally {
     await browser.close()

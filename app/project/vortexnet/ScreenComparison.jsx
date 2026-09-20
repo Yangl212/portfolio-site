@@ -33,7 +33,7 @@ const screens = [
     height: 1632,
     alt: "The delivered build: nine navigation entries grouped into Monitor today, Reconcile and Review over time, with Today's overview showing four named totals, a cash movement chart, a settlement list and a queue of open work.",
     caption: "The regrouped navigation and Today's overview as they went live. This is the build the 10 colleagues tested.",
-    result: "Locating a day's work: 20–30s → ~8s · Finding an item in the list: 10+s → ~5s · 10 of 10 went to the chart first"
+    result: "Daily information lookup: 20–30s → ~8s · Requested item in the left-hand list: 10+s → ~5s · Approximate task summaries"
   },
   {
     label: "Later refinement",
