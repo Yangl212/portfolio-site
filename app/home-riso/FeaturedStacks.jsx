@@ -11,15 +11,14 @@ import styles from "./featured-stacks.module.css"
  * sheet with a stat chip or two. They settle into place as the section
  * scrolls in, fan out when the pointer is over them, and lean with it.
  *
- * Every image is one the site already ships (built into /home-riso by
- * scripts/home-riso-stage-build.cjs), and every chip is a number from the
- * case study it sits on.
+ * Every image is one the site already ships, and every chip is a number from
+ * the case study it sits on.
  *
  * Layer geometry is in percent of the stage: x/y the top-left, w the width;
  * r the resting rotation. dx/dy/dr/ds are the hover move, spin and scale.
  * depth is how far the layer leans with the pointer.
  */
-const media = (name) => `/home-riso/${name}.webp`
+const media = (name) => name.startsWith("/") ? name : `/home-riso/${name}.webp`
 
 const stacks = {
   "boa-budgeting": {
@@ -28,9 +27,9 @@ const stacks = {
     summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.",
     tint: "pink",
     layers: [
-      { kind: "cut", src: "boa-budget", x: 4, y: 12, w: 33, r: -12, dx: -30, dy: -22, dr: -18, depth: 0.7, z: 1 },
-      { kind: "cut", src: "boa-reallocate", x: 62, y: 10, w: 33, r: 10, dx: 32, dy: -26, dr: 17, depth: 0.7, z: 1 },
-      { kind: "cut", src: "boa-home", x: 31, y: 0, w: 38, r: 0, dx: 0, dy: -16, dr: -2, ds: 1.06, depth: 1, z: 3 },
+      { kind: "cut", src: "/boa/screen2.png", x: 4, y: 12, w: 33, r: -12, dx: -30, dy: -22, dr: -18, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/boa/screen3.png", x: 62, y: 10, w: 33, r: 10, dx: 32, dy: -26, dr: 17, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/boa/screen1.png", x: 31, y: 0, w: 38, r: 0, dx: 0, dy: -16, dr: -2, ds: 1.06, depth: 1, z: 3 },
       { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 3, y: 2, r: -6, dx: -14, dy: -14, dr: -10, depth: 0.5, z: 4 },
       { kind: "chip", text: "41 s → 24 s", x: 70, y: 76, r: 5, dx: 18, dy: 16, dr: 9, depth: 0.5, z: 4 }
     ]
