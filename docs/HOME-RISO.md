@@ -17,7 +17,7 @@
   - BOA：三张视频海报里的手机（`boa/media/*-poster.webp`，脚本把浅灰底从边缘泛洪抠成透明再裁边）+ 原有透明手机 `boa/home-screen.png`。
   - VortexNet：交付版全屏 `shipped-screen` + 侧栏、指标、优先级三块裁片。
   - Last Message：透明笔记本 `lastmessage/cover.png` + chat / routes / boundary 三张场景海报。
-- 贴纸上的数字都是案例页里的：2 of 6 → 5 of 6、41 s → 24 s、20–30 s → ~8 s、2 of 8 found the hidden route。Role 取自各案例页的 Role 行（Last Message 页没有 Role 行，用简历里的"end-to-end UX/UI design"写成 "UX/UI design, end to end"）。
+- 贴纸上的数字都是案例页里的：2 of 6 → 5 of 6、41 s → 24 s、20–30 s → ~8 s、Hidden route: 2 of 8。Role 取自各案例页的 Role 行（Last Message 页没有 Role 行，用简历里的"end-to-end UX/UI design"写成 "UX/UI design, end to end"）。
 - 动效：滚进视口时各层从下方依次落位（`Reveal` 给卡片打 `data-reveal="in"`，层用 CSS animation 错开 80ms）；悬停时底纸倾斜 3°、各层向外散开并各自旋转、主体略放大，弹簧缓动；指针在舞台上移动时各层按深度跟着倾斜。触屏没有悬停，舞台常驻在 35% 的散开状态。
 - 每层的位置、大小、旋转和悬停位移都在 `FeaturedStacks.jsx` 顶部的 `stacks` 表里（百分比坐标），要微调直接改数字。
 - 重新导出素材后跑 `node scripts/home-riso-stage-build.cjs`。

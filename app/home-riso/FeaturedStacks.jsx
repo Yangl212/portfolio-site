@@ -55,7 +55,7 @@ const stacks = {
       { kind: "shot", src: "lastmessage-chat", x: -2, y: 4, w: 46, r: -9, dx: -30, dy: -24, dr: -16, depth: 1, z: 3 },
       { kind: "shot", src: "lastmessage-routes", x: 56, y: 0, w: 46, r: 8, dx: 30, dy: -26, dr: 14, depth: 0.9, z: 3 },
       { kind: "shot", src: "lastmessage-boundary", x: 56, y: 60, w: 42, r: 4, dx: 28, dy: 24, dr: 9, depth: 0.7, z: 1 },
-      { kind: "chip", text: "2 of 8 found the hidden route", x: 42, y: 88, r: -5, dx: 16, dy: 18, dr: -9, depth: 0.5, z: 4 }
+      { kind: "chip", text: "Hidden route: 2 of 8", x: 52, y: 88, r: -5, dx: 16, dy: 18, dr: -9, depth: 0.5, z: 4 }
     ]
   }
 }
