@@ -17,6 +17,7 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)")
     const pointer = { x: 0, y: 0, inside: false }
     const speed = { x: 0, y: 0 }
+    const edgeSpeed = { x: 0, y: 0 }
     let drag = null
     let frame = 0
     let lastTime = 0
@@ -69,7 +70,28 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
       elapsed += dt
       let moving = false
 
-      if (!drag && !reduced.matches && (Math.abs(speed.x) > 2 || Math.abs(speed.y) > 2)) {
+      const edgeZone = Math.min(160, Math.max(96, Math.min(bounds.width, bounds.height) * .16))
+      const edgeAxis = (value, length) => {
+        if (value < edgeZone) return Math.pow(1 - value / edgeZone, 1.45)
+        if (value > length - edgeZone) return -Math.pow(1 - (length - value) / edgeZone, 1.45)
+        return 0
+      }
+      const edgeTarget = !drag && !reduced.matches && fine.matches && pointer.inside
+        ? { x: edgeAxis(pointer.x, bounds.width) * 260, y: edgeAxis(pointer.y, bounds.height) * 260 }
+        : { x: 0, y: 0 }
+      const edgeEase = 1 - Math.exp(-7 * dt)
+      edgeSpeed.x += (edgeTarget.x - edgeSpeed.x) * edgeEase
+      edgeSpeed.y += (edgeTarget.y - edgeSpeed.y) * edgeEase
+      const edgeMoving = Math.abs(edgeSpeed.x) > .35 || Math.abs(edgeSpeed.y) > .35
+
+      if (edgeTarget.x || edgeTarget.y) speed.x = speed.y = 0
+      if (!drag && edgeMoving) {
+        position.current.x += edgeSpeed.x * dt
+        position.current.y += edgeSpeed.y * dt
+        moving = true
+      }
+
+      if (!drag && !edgeMoving && !reduced.matches && (Math.abs(speed.x) > 2 || Math.abs(speed.y) > 2)) {
         position.current.x += speed.x * dt
         position.current.y += speed.y * dt
         const friction = Math.exp(-5.5 * dt)
@@ -188,6 +210,7 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
     const pause = () => {
       pointer.inside = false
       speed.x = speed.y = 0
+      edgeSpeed.x = edgeSpeed.y = 0
       if (drag) end({ type: "cancel" })
       cancelAnimationFrame(frame)
       frame = 0

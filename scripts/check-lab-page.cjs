@@ -30,6 +30,10 @@ function panDistance(a, b) {
   return Math.min(dx, tileWidth - dx) + Math.min(dy, tileHeight - dy)
 }
 
+function signedAxisDistance(from, to, period) {
+  return ((to - from + period * 1.5) % period) - period / 2
+}
+
 async function visibleImageIndex(viewport) {
   return viewport.evaluate(element => {
     const bounds = element.getBoundingClientRect()
@@ -164,6 +168,33 @@ async function assertStill(page) {
     await page.mouse.move(30, 30)
     await assertStill(page)
     console.log('PASS motion: stationary-pointer drift, rotation, breathing, stable anchors, and soft reset')
+
+    // The edge behaves like a continuous spatial control: the closer the
+    // pointer is to it, the canvas travels towards the opposite side. Corners
+    // combine both axes and returning to the center eases to a stop.
+    const edgeBounds = await viewport.boundingBox()
+    await page.mouse.move(edgeBounds.x + edgeBounds.width - 5, edgeBounds.y + edgeBounds.height / 2)
+    const beforeRightEdge = await readPan(canvas)
+    await page.waitForTimeout(550)
+    const afterRightEdge = await readPan(canvas)
+    assert(signedAxisDistance(beforeRightEdge.x, afterRightEdge.x, tileWidth) < -45, 'Right edge automatically pans the image field left')
+    assert(Math.abs(signedAxisDistance(beforeRightEdge.y, afterRightEdge.y, tileHeight)) < 3, 'Right edge does not introduce vertical drift')
+
+    await page.mouse.move(edgeBounds.x + 5, edgeBounds.y + 5)
+    const beforeCorner = await readPan(canvas)
+    await page.waitForTimeout(550)
+    const afterCorner = await readPan(canvas)
+    assert(signedAxisDistance(beforeCorner.x, afterCorner.x, tileWidth) > 35, 'Left edge automatically pans the image field right')
+    assert(signedAxisDistance(beforeCorner.y, afterCorner.y, tileHeight) > 35, 'Top edge automatically pans the image field down')
+    await assertVisibleImages(viewport, 'During corner auto-pan')
+
+    await page.mouse.move(edgeBounds.x + edgeBounds.width / 2, edgeBounds.y + edgeBounds.height / 2)
+    await page.waitForTimeout(650)
+    const centerSettled = await readPan(canvas)
+    await page.waitForTimeout(300)
+    const centerStill = await readPan(canvas)
+    assert(panDistance(centerSettled, centerStill) < 1, 'Returning to the center smoothly stops edge auto-pan')
+    console.log('PASS edge navigation: all directions, diagonal corners, continuous movement, and soft stop')
 
     // Start on a photo, not an empty margin. Release must preserve momentum
     // without navigating away or triggering the browser's native image drag.

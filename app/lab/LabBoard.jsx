@@ -40,7 +40,7 @@ export function LabBoard({ items }) {
         ref={viewportRef}
         tabIndex={0}
         role="region"
-        aria-label="Infinite image canvas. Scroll, drag, or use the arrow keys to explore."
+        aria-label="Infinite image canvas. Move the pointer to an edge, scroll, drag, or use the arrow keys to explore."
       >
         <div className={styles.canvas} ref={canvasRef} data-lab-canvas>
           {tiles.map(([tileX, tileY]) => (
@@ -80,7 +80,7 @@ export function LabBoard({ items }) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
           <path d="M12 2v20M2 12h20M8 6l4-4 4 4M8 18l4 4 4-4M6 8l-4 4 4 4M18 8l4 4-4 4" />
         </svg>
-        Scroll / drag to explore
+        Drag / move to edges
       </p>
     </section>
   )
