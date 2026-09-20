@@ -25,6 +25,7 @@ const stacks = {
   "boa-budgeting": {
     when: "2026 · 8 weeks",
     role: "UI/UX Designer",
+    summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.",
     tint: "pink",
     layers: [
       { kind: "cut", src: "boa-budget", x: 4, y: 12, w: 33, r: -12, dx: -30, dy: -22, dr: -18, depth: 0.7, z: 1 },
@@ -37,6 +38,7 @@ const stacks = {
   vortexnet: {
     when: "2025 · Jun – Oct",
     role: "UI/UX Design Intern",
+    summary: "Task-based information hierarchy for a 30-person company’s finance dashboard, shipped during the internship.",
     tint: "blue",
     layers: [
       { kind: "shot", src: "vortexnet-screen", x: 8, y: 16, w: 84, r: 0, dx: 0, dy: 4, dr: -2, ds: 1.04, depth: 0.4, z: 1 },
@@ -49,6 +51,7 @@ const stacks = {
   lastmessage: {
     when: "2026 · 4 months",
     role: "UX/UI design, end to end",
+    summary: "An open-ended AI detective game with a readable main investigation and a hidden route.",
     tint: "pink",
     layers: [
       { kind: "cut", src: "lastmessage-laptop", x: 6, y: 30, w: 88, r: 0, dx: 0, dy: 8, dr: 2, ds: 1.05, depth: 0.5, z: 2 },
@@ -108,7 +111,7 @@ function Stage({ project, stack }) {
       ))}
       <span className={styles.plate}>
         <span className={styles.when}>{stack.when}</span>
-        <strong>{project.title}</strong>
+        <strong>{project.title} <span className={styles.arrow} aria-hidden="true">→</span></strong>
       </span>
     </Link>
   )
@@ -124,9 +127,8 @@ export function FeaturedStacks({ projects }) {
           <article key={project.slug} className={styles.card}>
             <Stage project={project} stack={stack} />
             <div className={styles.copy}>
-              <p className={styles.description}>{project.description}</p>
+              <p className={styles.description}>{stack.summary}</p>
               <p className={styles.role}><span>Role</span> — {stack.role}</p>
-              <Link href={project.href} className={styles.caseLink}>View case study <span aria-hidden="true">→</span></Link>
             </div>
           </article>
         )

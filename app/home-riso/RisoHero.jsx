@@ -225,13 +225,13 @@ export function RisoHero() {
         </h1>
 
         <p className={`${styles.opSub} ${styles.rise}`} style={{ animationDelay: "160ms" }}>
-          UI/UX designer with a visual designer&apos;s eye. Clear, trustworthy interfaces for complex systems and AI, plus the data visualization, brand and print work around them.
+          UI/UX designer with a visual designer&apos;s eye: interfaces people can trust, and the data, brand and print work around them.
         </p>
 
         <p className={`${styles.opFacts} ${styles.rise}`} style={{ animationDelay: "240ms" }}>
           <span>Parsons MFA &rsquo;26</span>
-          <span>Previously UI/UX at VortexNet</span>
-          <span>Open to product design roles across the U.S.</span>
+          <span>Previously at VortexNet</span>
+          <span>Open to roles across the U.S.</span>
         </p>
 
         <div className={`${styles.opActions} ${styles.rise}`} style={{ animationDelay: "320ms" }}>
@@ -240,12 +240,11 @@ export function RisoHero() {
         </div>
 
         {/* The sheet's furniture, each at its own depth. */}
-        <aside className={`${styles.marg} ${styles.marg1}`}>two inks, a few pixels<br />out of register —<br />on purpose</aside>
-        <aside className={`${styles.marg} ${styles.marg2}`}>Lele · say it<br />like &ldquo;luh-luh&rdquo;</aside>
+        <aside className={`${styles.marg} ${styles.marg1}`}>two inks, slightly<br />out of register —<br />on purpose</aside>
         <div className={styles.stampWrap} aria-hidden="true"><Stamp /></div>
         <div className={styles.strip} aria-hidden="true">
           {strip.map(([color, alpha, label]) => (
-            <span key={label} className={styles.patch}><i style={{ background: color, opacity: alpha }} />{label}</span>
+            <span key={label} className={styles.patch}><i style={{ background: color, opacity: alpha }} /></span>
           ))}
         </div>
       </div>
@@ -254,11 +253,10 @@ export function RisoHero() {
           with, and how many pulls so far. The button is the keyboard route
           to another pull; the name itself is the mouse one. */}
       <p className={`${styles.ticket} ${styles.rise}`} style={{ animationDelay: "480ms" }}>
-        <span className={styles.ticketLabel}>Printed in three inks</span>
-        <span className={styles.swatch}><i style={{ background: "#222222" }} />Black</span>
-        <span className={styles.swatch}><i style={{ background: "var(--ink-a)" }} />Fluorescent pink</span>
-        <span className={styles.swatch}><i style={{ background: "var(--ink-b)" }} />Blue</span>
-        <span className={styles.ticketStock}>on white stock</span>
+        <span className={styles.ticketLabel}>Three inks</span>
+        <span className={styles.swatch} title="Black"><i style={{ background: "#222222" }} /></span>
+        <span className={styles.swatch} title="Fluorescent pink"><i style={{ background: "var(--ink-a)" }} /></span>
+        <span className={styles.swatch} title="Blue"><i style={{ background: "var(--ink-b)" }} /></span>
         <span className={styles.pullCount}>Pull {String(pull).padStart(2, "0")}</span>
         <button type="button" className={styles.pullButton} onClick={pullPrint}>Pull another <span aria-hidden="true">↻</span></button>
       </p>

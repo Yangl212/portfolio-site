@@ -74,6 +74,8 @@
   font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
 }
 .plate strong { font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: clamp(1.15rem, 1.4vw, 1.35rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+.arrow { display: inline-block; margin-left: 2px; transition: transform 320ms var(--ease-spring); }
+.stage:hover .arrow, .stage:focus-visible .arrow { transform: translateX(6px); }
 
 /* Scroll-in: the slots settle one after another from a little below,
    once the card is on screen (Reveal.jsx sets data-reveal="in"). With no
@@ -82,16 +84,11 @@
 @keyframes settle { from { opacity: 0; transform: translateY(28px) scale(0.96); } to { opacity: 1; transform: none; } }
 
 /* ---------- the copy ---------- */
-.copy { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 2%; }
-.description { margin: 0; max-width: 46ch; color: var(--muted); font-size: 0.9375rem; line-height: 1.5; }
-.role { margin: 0; font-size: 0.9375rem; line-height: 1.4; color: var(--text); }
+/* The copy lines up with the title card's left edge. */
+.copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 4%; }
+.description { margin: 0; max-width: 40ch; color: var(--muted); font-size: 0.9375rem; line-height: 1.5; }
+.role { margin: 0; font-size: 0.875rem; line-height: 1.4; color: var(--text); }
 .role span { color: var(--muted); }
-.caseLink {
-  display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding-bottom: 4px;
-  border-bottom: 1px solid currentColor; color: var(--text); font-size: 0.9375rem; font-weight: 600; line-height: 1.3; text-decoration: none;
-  transition: gap 180ms ease, opacity 180ms ease;
-}
-.caseLink:hover, .caseLink:focus-visible { gap: 16px; opacity: 0.68; }
 
 @media (max-width: 1080px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

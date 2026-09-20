@@ -24,6 +24,21 @@
 
 可以补的素材（可选）：BOA 三个界面如果有更高清的透明手机 mockup（PNG），VortexNet 如果有带透明底的笔记本 mockup，Last Message 如果有平板/手机框的透明截图，替换后会更精致；现在用的是海报抠图和平面截图。
 
+## 文字精简与对齐（2026-09-20）
+
+- hero 正文缩成两行；事实行缩成 "Parsons MFA ’26 · Previously at VortexNet · Open to roles across the U.S."；工单只剩三个色块、Pull 计数和按钮；去掉了读音批注和控制条的小字标签。
+- 案例卡：描述换成一句话（`FeaturedStacks.jsx` 里的 `summary`，不带数字，数字在贴纸上），去掉单独的 "View case study" 链接，标题卡里的标题带箭头、整块舞台就是链接；描述和 Role 与标题卡左边对齐。
+
+## 页脚（`RisoFooter.jsx`）
+
+"纸的背面"：黑色纸面，淡淡的白色网点，四角套准线。STAY CURIOUS, STAY KIND. 用粉蓝两版套印，`mix-blend-mode: screen`（黑底上等价于白底的 multiply），重叠处发白。
+
+- 滚到页脚时刮板先刮出粉版、再刮出蓝版（和 hero 同一套机制，用 IntersectionObserver 触发；页脚在首屏内或无脚本时直接是印好的状态）。
+- 两版跟着鼠标反向错位，光标附近网点变大。
+- **盖章**：在纸面任意处点击（链接除外）会在那里盖一枚圆形印章（Lele Yang · New York · Two inks），随机粉/蓝/纸白三色和 ±24° 旋转，落下时有一下"顿"的动画，最多留 14 枚，刷新即清。底部工单写着提示。
+- 联系方式是三枚描边胶囊：邮箱、LinkedIn（悬停变蓝）、Instagram（悬停变粉）。
+- 只在这个路由用；其他页面仍是 `SiteFooter`。
+
 ## hero 是什么
 
 - hero studies 里第三个"套印"方向：居中、两版油墨错位叠印出 LELE，`mix-blend-mode: multiply` 让重叠处变深；四角套准线；整块 hero 铺一层网点；两条蓝色页边批注；底部一行"印刷工单"列出页面用到的三个颜色。

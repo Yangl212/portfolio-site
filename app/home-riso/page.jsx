@@ -2,13 +2,13 @@ import { DM_Mono } from "next/font/google"
 
 import { MoreWorkCarousel } from "../../components/MoreWorkCarousel"
 import { Reveal } from "../../components/Reveal"
-import { SiteFooter } from "../../components/SiteFooter"
 import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import homeStyles from "../page.module.css"
 import { FeaturedStacks } from "./FeaturedStacks"
 import stackStyles from "./featured-stacks.module.css"
 import { RevealHeader } from "./RevealHeader"
+import { RisoFooter } from "./RisoFooter"
 import { RisoHero } from "./RisoHero"
 import styles from "./page.module.css"
 
@@ -65,7 +65,7 @@ export default function HomeRisoPage() {
           <MoreWorkCarousel className={homeStyles.moreWork} projects={more} />
         </section>
 
-        <SiteFooter className={homeStyles.reveal} />
+        <RisoFooter />
       </div>
     </main>
   )
