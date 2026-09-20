@@ -39,6 +39,7 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
 
   const navItems = [
     { href: homeHref, label: "Work" },
+    { href: `${base}/lab`, label: "Lab" },
     { href: `${base}/interest`, label: "Interest" }
   ]
 
