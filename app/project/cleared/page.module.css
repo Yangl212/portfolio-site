@@ -111,6 +111,7 @@
 .imageLink { display: flex; justify-content: space-between; align-items: center; min-height: 44px; font-size: .8125rem; border-bottom: 1px solid var(--divider); }
 .screensGrid figcaption { display: flex; gap: 12px; font-size: .9375rem; line-height: 1.5; }
 .screensGrid figcaption > span { flex: none; color: var(--muted); }
+.participants { display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
 .validationGrid { display: grid; gap: 28px; }
 .validationGrid article { display: flex; flex-direction: column; gap: 18px; border-top: 2px solid var(--text); padding-top: 24px; }
 .testing { display: flex; flex-direction: column; gap: 24px; padding-top: 32px; border-top: 1px solid var(--divider); scroll-margin-top: 32px; }

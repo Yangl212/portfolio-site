@@ -48,7 +48,7 @@ const testing = {
   findings: [
     {
       title: "Testing everyday lookup tasks.",
-      body: "I tested the dashboard with ten colleagues who used the internal tool. I timed lookup tasks in the original and redesigned interfaces, including finding Pending settlement and locating Trend in the left-hand navigation."
+      body: "I tested the dashboard with ten colleagues who used the internal tool. I timed lookup tasks in the original and redesigned interfaces, including finding Pending settlement and locating Trend in the left-hand navigation. Participants were asked to locate a specified data item or section. Timing started when I gave the task instruction and ended when the participant opened the correct page. I checked that they had reached the intended destination before marking the task complete."
     },
     {
       title: "Lookup became faster.",

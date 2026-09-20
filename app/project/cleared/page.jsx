@@ -262,6 +262,10 @@ export default function ClearedPage({ track = "uiux" }) {
               <h2>Clear actions, with a need to verify the AI&apos;s interpretation.</h2>
               <p className={styles.sectionLead}>Understanding the scheduling action did not automatically create confidence in the AI&apos;s interpretation.</p>
             </div>
+            <div className={styles.participants}>
+              <p className={styles.microLabel}>Participants</p>
+              <p>I invited students and working professionals who frequently used calendar and task-planning apps. Participants had an established habit of recording events and planning daily tasks, with experience across Google Calendar and other planning tools.</p>
+            </div>
             <div className={styles.validationGrid}>
               {reviewFindings.map((item) => (
                 <article key={item.title}>
