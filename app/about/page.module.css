@@ -37,29 +37,13 @@
   background: #ffffff;
   animation: sheetRise 980ms cubic-bezier(0.22, 1, 0.28, 1) both;
   /* A hairline rather than the system's bar: this is a sheet of paper,
-     and a grey slab down its edge reads as part of the furniture. */
+     and a grey slab down its edge reads as part of the furniture. The
+     standard scrollbar-width/scrollbar-color properties are asked for
+     directly rather than faked with a padded ::-webkit-scrollbar-thumb -
+     that trick paints as a solid block on some Chromium builds, which is
+     the ugly wide bar this replaced. */
   scrollbar-width: thin;
-  scrollbar-color: rgba(34, 34, 34, 0.22) transparent;
-}
-
-.sheet::-webkit-scrollbar {
-  width: 8px;
-}
-
-.sheet::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sheet::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: 999px;
-  background: rgba(34, 34, 34, 0.22);
-  background-clip: content-box;
-}
-
-.sheet:hover::-webkit-scrollbar-thumb {
-  background: rgba(34, 34, 34, 0.34);
-  background-clip: content-box;
+  scrollbar-color: rgba(34, 34, 34, 0.28) transparent;
 }
 
 @keyframes sheetRise {
