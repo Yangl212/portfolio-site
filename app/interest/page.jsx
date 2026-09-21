@@ -116,12 +116,6 @@ export default function InterestPage({ track = "uiux" }) {
               </p>
 
               <div className={styles.materialPair}>
-                <div className={styles.materialWide}>
-                  <img
-                    src="/framer-assets/images/529e7ef2fe55a5738deeea6b824d53dc4d528fac.jpg"
-                    alt="Paper and texture exploration"
-                  />
-                </div>
                 <div className={styles.materialNarrow}>
                   <img
                     src="/framer-assets/images/c580c92a1210c7a44eef8a03396abe44a2d26259.jpg"
