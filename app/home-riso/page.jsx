@@ -14,14 +14,12 @@ import { RisoHero } from "./RisoHero"
 import styles from "./page.module.css"
 
 /*
- * A second home page, kept beside the live one so the two can be compared.
- *
- * Only the hero is new (RisoHero): the name printed in two misregistered
- * riso inks, filling the first screen so nothing below shows until the
- * reader scrolls. Everything under it is the live home page's own markup and
- * stylesheet, untouched, so the comparison is about the hero alone.
- *
- * Not indexed while it is a preview.
+ * The riso-print home page: the name pulled as a two-colour screen print
+ * (RisoHero) over the site's usual Selected Work / More Work markup.
+ * Shared by both tracks - app/page.jsx renders it for "/" and
+ * app/visual/page.jsx for "/visual" - with its own metadata and canonical
+ * URL, so this file's own `metadata` below is only ever a fallback for
+ * whichever of the two forgets to set its own.
  */
 export const metadata = {
   title: { absolute: "Lele Yang — Product Designer" },
@@ -35,11 +33,9 @@ export const metadata = {
    name once it has finished printing. */
 const hand = Caveat({ subsets: ["latin"], weight: ["600"], variable: "--font-hand", display: "swap" })
 
-const TRACK = "uiux"
-
-export default function HomeRisoPage() {
-  const featured = featuredProjects(TRACK)
-  const more = moreProjects(TRACK)
+export default function HomeRisoPage({ track = "uiux" }) {
+  const featured = featuredProjects(track)
+  const more = moreProjects(track)
 
   return (
     <main className={`${homeStyles.page} ${hand.variable}`}>
@@ -48,9 +44,9 @@ export default function HomeRisoPage() {
       <div className={`${homeStyles.frame} ${styles.whiteFrame}`}>
         {/* Docked above the page and hidden while the sheet is on screen;
             it slides in as Selected Work arrives. */}
-        <RevealHeader track={TRACK} />
+        <RevealHeader track={track} />
 
-        <RisoHero />
+        <RisoHero track={track} />
 
         {/* Selected Work as three stages of stacked screens, More Work as
             a row of folders; the section header is the live home page's own. */}

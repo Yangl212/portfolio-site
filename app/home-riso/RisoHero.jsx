@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
+import { aboutReady, trackBase } from "../../lib/projects"
+
 import styles from "./page.module.css"
 
 /*
@@ -33,17 +35,35 @@ function RegMark({ className }) {
   )
 }
 
-const bandText = "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
-
-function Band({ className }) {
+function Band({ className, text }) {
   return (
     <div className={`${styles.band} ${className}`} aria-hidden="true">
       <div className={styles.bandTrack}>
-        <span>{bandText}{bandText}</span>
-        <span>{bandText}{bandText}</span>
+        <span>{text}{text}</span>
+        <span>{text}{text}</span>
       </div>
     </div>
   )
+}
+
+/* Everything about the hero that reads as a claim about who is applying,
+   rather than about the print itself (the stamp, the ink strip, the
+   registration marks stay the same either way) - one lookup, the way the
+   header's own resumeByTrack is one lookup, so a page only has to pass
+   its track through and never repeat this copy. */
+const HERO_COPY = {
+  uiux: {
+    eyebrow: "UI/UX & Visual Designer · New York",
+    subline: "UI/UX designer with a visual designer’s eye: interfaces people can trust, and the data, brand and print work around them.",
+    facts: ["Parsons MFA ’26", "Previously at VortexNet", "Open to roles across the U.S."],
+    band: "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
+  },
+  visual: {
+    eyebrow: "Visual & Brand Designer · New York",
+    subline: "Visual & brand designer with an eye for systems: identity, illustration, and print work built to hold together.",
+    facts: ["Parsons MFA ’26", "Former UI/UX Design Intern at VortexNet", "Seeking Visual & Brand Design roles"],
+    band: "Brand identity · Illustration · Game & board design · Riso zines · Print · New York · "
+  }
 }
 
 function Stamp() {
@@ -88,7 +108,9 @@ const newRegistration = () => ({
   bx: jitter(5, 3), by: jitter(4, 2)
 })
 
-export function RisoHero() {
+export function RisoHero({ track = "uiux" }) {
+  const base = trackBase(track)
+  const copy = HERO_COPY[track] || HERO_COPY.uiux
   const ref = useRef(null)
   const [pull, setPull] = useState(1)
   const [reg, setReg] = useState({ ax: -5, ay: -4, bx: 5, by: 4 })
@@ -122,23 +144,28 @@ export function RisoHero() {
     }
   }, [])
 
-  /* Pressing the name pulls another print, and when the print is finished
-     About rises over it from the foot of the screen. The route is
-     prefetched on mount so the rise never waits on a fetch. */
+  /* Pressing the name pulls another print, and where About is written,
+     it rises over the print once the ink has settled - the route is
+     prefetched on mount so the rise never waits on a fetch. Where it is
+     not, the press is just the print: nothing to open, nothing to
+     prefetch. */
   const router = useRouter()
   const openTimer = useRef(0)
+  const canOpenAbout = aboutReady(track)
 
   useEffect(() => {
-    router.prefetch("/about")
+    if (!canOpenAbout) return undefined
+    router.prefetch(`${base}/about`)
     return () => clearTimeout(openTimer.current)
-  }, [router])
+  }, [router, base, canOpenAbout])
 
   const pullPrint = useCallback(() => {
     setPull((n) => n + 1)
     setReg(newRegistration())
+    if (!canOpenAbout) return
     clearTimeout(openTimer.current)
-    openTimer.current = setTimeout(() => router.push("/about"), ABOUT_DELAY)
-  }, [router])
+    openTimer.current = setTimeout(() => router.push(`${base}/about`), ABOUT_DELAY)
+  }, [router, base, canOpenAbout])
 
   /* The note is taken off the sheet the moment a print starts and written
      back on once the ink has settled - somewhere else each time, so it is
@@ -386,17 +413,17 @@ export function RisoHero() {
           label when the name can be pulled. The system cursor is hidden
           only while these are showing. */}
       <div className={styles.dot} aria-hidden="true" />
-      <div className={styles.ring} aria-hidden="true"><span className={styles.cursorLabel}>Know more about me</span></div>
+      <div className={styles.ring} aria-hidden="true"><span className={styles.cursorLabel}>{canOpenAbout ? "Know more about me" : "Pull"}</span></div>
       <RegMark className={styles.regTL} />
       <RegMark className={styles.regTR} />
       <RegMark className={styles.regBL} />
       <RegMark className={styles.regBR} />
 
-      <Band className={styles.bandTop} />
-      <Band className={styles.bandBottom} />
+      <Band className={styles.bandTop} text={copy.band} />
+      <Band className={styles.bandBottom} text={copy.band} />
 
       <div className={styles.heroIn}>
-        <p className={`${styles.eyebrow} ${styles.rise}`}>UI/UX &amp; Visual Designer · New York</p>
+        <p className={`${styles.eyebrow} ${styles.rise}`}>{copy.eyebrow}</p>
 
         {/* Two plates of the same word. The outer span follows the cursor,
             the inner one carries the ink, the squeegee wipe and the drift,
@@ -422,19 +449,17 @@ export function RisoHero() {
         </h1>
 
         <p className={`${styles.opSub} ${styles.rise}`} style={{ animationDelay: "160ms" }}>
-          UI/UX designer with a visual designer&apos;s eye: interfaces people can trust, and the data, brand and print work around them.
+          {copy.subline}
         </p>
 
         <p className={`${styles.opFacts} ${styles.rise}`} style={{ animationDelay: "240ms" }}>
-          <span>Parsons MFA &rsquo;26</span>
-          <span>Previously at VortexNet</span>
-          <span>Open to roles across the U.S.</span>
+          {copy.facts.map((fact) => <span key={fact}>{fact}</span>)}
         </p>
 
         <div className={`${styles.opActions} ${styles.rise}`} style={{ animationDelay: "320ms" }}>
           <a className={styles.primary} href="#work" data-magnet="" onClick={scrollToWork}>Selected work <span aria-hidden="true">↓</span></a>
-          <Link className={`${styles.secondary} ${styles.lab}`} href="/lab" data-magnet="" prefetch={false}>Lab <span aria-hidden="true">→</span></Link>
-          <a className={styles.secondary} href="/resume.pdf" target="_blank" rel="noreferrer" data-magnet="">Resume <span aria-hidden="true">↗</span></a>
+          <Link className={`${styles.secondary} ${styles.lab}`} href={`${base}/lab`} data-magnet="" prefetch={false}>Lab <span aria-hidden="true">→</span></Link>
+          <Link className={styles.secondary} href={`${base}/resume`} data-magnet="" prefetch={false}>Resume <span aria-hidden="true">→</span></Link>
         </div>
 
         {/* The sheet's furniture, each at its own depth. */}

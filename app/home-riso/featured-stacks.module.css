@@ -14,7 +14,7 @@
 
 /* ---------- the stage ---------- */
 .stage {
-  --sx: 0; --sy: 0; --k: 0; --cursor-x: 50%; --cursor-y: 50%;
+  --sx: 0; --sy: 0; --k: 0;
   /* --fit shrinks every layer a little so the stack keeps clear of the
      sheet edge; --fan scales the hover fan-out, which is what pushed the
      outer screens and chips past the page on a narrow column. */
@@ -25,43 +25,10 @@
 .stage:hover, .stage:focus-visible { --k: 1; }
 .stage:focus-visible { outline: 2px solid var(--ink-a); outline-offset: 12px; }
 
-/* A project-status cursor replaces the system pointer over each featured
-   stage. Its position is written by the same pointer listener that gives the
-   image stack its lean, so both interactions stay in sync. */
-.stage::after {
-  content: "CONCEPT";
-  position: absolute;
-  left: var(--cursor-x);
-  top: var(--cursor-y);
-  z-index: 12;
-  display: grid;
-  place-items: center;
-  width: 76px;
-  height: 76px;
-  border: 1px solid #58a9e6;
-  border-radius: 50%;
-  color: #58a9e6;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 10px 28px -18px rgba(34, 34, 34, 0.38);
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.055em;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.72);
-  transition: opacity 160ms ease, transform 260ms var(--ease-spring);
-  pointer-events: none;
-}
-.stage[href$="/project/vortexnet"]::after,
-.stage[href$="/project/lastmessage"]::after { content: "SHIPPED"; }
-
-@media (hover: hover) and (pointer: fine) {
-  .stage:hover { cursor: none; }
-  .stage:hover::after, .stage:focus-visible::after {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
+/* The system cursor gives way to the header's own dot-and-label mark
+   (see usePressCursor/PressRing) once it is actually on screen, so a
+   failed script never leaves a reader without a pointer. */
+.stage[data-tracking="true"] { cursor: none; }
 
 /* The tinted sheet the screens lie on. Tilts a touch on hover. */
 .sheet {

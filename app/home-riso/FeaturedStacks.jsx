@@ -3,6 +3,9 @@
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 
+import { PressRing } from "../../components/PressRing"
+import { usePressCursor } from "../../components/usePressCursor"
+
 import styles from "./featured-stacks.module.css"
 
 /*
@@ -60,6 +63,43 @@ const stacks = {
       { kind: "chip", text: "Playable AI conversations", x: 1, y: 5, r: -5, dx: -12, dy: -12, dr: -9, depth: 0.5, z: 4 },
       { kind: "chip", text: "UX/UI · AI behavior · web development", x: 31, y: 69, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
+  },
+  /* TAROO and Suglar lead the visual track's Selected Work, so they need
+     a stack too - the same three cards already cut for their More Work
+     folder in lib/projects.js, laid out here as a fanned hand instead of
+     a folder's worth of paper. `when` is the year alone rather than a
+     duration: unlike the three case studies above, no task-tested weeks
+     figure exists for either project to report. */
+  taroo: {
+    when: "2025",
+    role: "Brand & Illustration Design",
+    summary: "A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them.",
+    tint: "pink",
+    layers: [
+      { kind: "cut", src: "/Taroo/card1.png", x: 6, y: 20, w: 28, r: -10, dx: -16, dy: -12, dr: -15, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/Taroo/card3.png", x: 64, y: 20, w: 28, r: 9, dx: 16, dy: -12, dr: 14, depth: 0.7, z: 1 },
+      { kind: "cut", src: "/Taroo/card2.png", x: 35, y: 4, w: 30, r: 0, dx: 0, dy: -14, dr: -1, ds: 1.05, depth: 1, z: 3 },
+      { kind: "chip", text: "22 Major Arcana · one visual system", x: 2, y: 4, r: -4, dx: -10, dy: -10, dr: -8, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Packaging + card system", x: 30, y: 68, r: 4, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
+    ]
+  },
+  suglar: {
+    when: "2024",
+    role: "Visual & Game Design",
+    summary: "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy.",
+    tint: "blue",
+    layers: [
+      /* The box's own background is close to opaque edge to edge, so
+         anything behind it only reads if it sits past the box's own
+         footprint rather than under the middle of it - card1 moves out
+         past the left edge for exactly that reason, the same way card3
+         already clears the right edge. Both stay behind the box now. */
+      { kind: "cut", src: "/suglar/box.png", x: 0, y: 2, w: 100, r: 2, dx: 4, dy: -8, dr: 3, ds: 1.02, depth: 0.6, z: 2 },
+      { kind: "cut", src: "/suglar/card3.png", x: 80, y: 20, w: 16, r: 13, dx: 16, dy: 10, dr: 18, depth: 0.6, z: 1 },
+      { kind: "cut", src: "/suglar/card1.png", x: 2, y: 42, w: 19, r: -15, dx: -16, dy: -8, dr: -20, depth: 0.7, z: 1 },
+      { kind: "chip", text: "Color & texture → game rules", x: 1, y: 5, r: -5, dx: -12, dy: -12, dr: -9, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Sweetness becomes strategy", x: 40, y: 78, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
+    ]
   }
 }
 
@@ -79,8 +119,14 @@ function layerStyle(layer, index) {
   }
 }
 
+/* boa-budgeting is the one tested concept on the board; every other
+   featured project is a real, finished product. */
+const SHIPPED = new Set(["vortexnet", "lastmessage", "taroo", "suglar"])
+
 function Stage({ project, stack }) {
   const ref = useRef(null)
+  const { tracking, ringRef, trackingProps } = usePressCursor()
+  const status = SHIPPED.has(project.slug) ? "Shipped" : "Concept"
 
   /* The layers lean toward the pointer, each by its own depth. */
   useEffect(() => {
@@ -92,14 +138,10 @@ function Stage({ project, stack }) {
       const r = el.getBoundingClientRect()
       el.style.setProperty("--sx", (((event.clientX - r.left) / r.width - 0.5) * 2).toFixed(3))
       el.style.setProperty("--sy", (((event.clientY - r.top) / r.height - 0.5) * 2).toFixed(3))
-      el.style.setProperty("--cursor-x", `${(event.clientX - r.left).toFixed(1)}px`)
-      el.style.setProperty("--cursor-y", `${(event.clientY - r.top).toFixed(1)}px`)
     }
     const onLeave = () => {
       el.style.setProperty("--sx", "0")
       el.style.setProperty("--sy", "0")
-      el.style.removeProperty("--cursor-x")
-      el.style.removeProperty("--cursor-y")
     }
     el.addEventListener("pointermove", onMove)
     el.addEventListener("pointerleave", onLeave)
@@ -107,20 +149,34 @@ function Stage({ project, stack }) {
   }, [])
 
   return (
-    <Link ref={ref} href={project.href} className={styles.stage} data-tint={stack.tint} aria-label={`${project.title}: view case study`}>
-      <span className={styles.sheet} aria-hidden="true" />
-      {stack.layers.map((layer, index) => (
-        <span key={layer.src || layer.text} className={styles.slot} style={layerStyle(layer, index)} aria-hidden="true">
-          {layer.kind === "chip"
-            ? <span className={`${styles.layer} ${styles.chip}`}>{layer.text}</span>
-            : <img className={`${styles.layer} ${layer.kind === "shot" ? styles.shot : styles.cut}`} src={media(layer.src)} alt="" loading="lazy" decoding="async" />}
+    <>
+      <Link
+        ref={ref}
+        href={project.href}
+        className={styles.stage}
+        data-tint={stack.tint}
+        aria-label={`${project.title}: view case study`}
+        {...trackingProps}
+      >
+        <span className={styles.sheet} aria-hidden="true" />
+        {stack.layers.map((layer, index) => (
+          <span key={layer.src || layer.text} className={styles.slot} style={layerStyle(layer, index)} aria-hidden="true">
+            {layer.kind === "chip"
+              ? <span className={`${styles.layer} ${styles.chip}`}>{layer.text}</span>
+              : <img className={`${styles.layer} ${layer.kind === "shot" ? styles.shot : styles.cut}`} src={media(layer.src)} alt="" loading="lazy" decoding="async" />}
+          </span>
+        ))}
+        <span className={styles.plate}>
+          <span className={styles.when}>{stack.when}</span>
+          <strong>{project.title} <span className={styles.arrow} aria-hidden="true">→</span></strong>
         </span>
-      ))}
-      <span className={styles.plate}>
-        <span className={styles.when}>{stack.when}</span>
-        <strong>{project.title} <span className={styles.arrow} aria-hidden="true">→</span></strong>
-      </span>
-    </Link>
+      </Link>
+
+      {/* The same dot-and-label mark the header's own logo carries,
+          naming the one thing about the project a reader could not
+          otherwise tell from three photos: whether it shipped. */}
+      {tracking ? <PressRing ringRef={ringRef} label={status} /> : null}
+    </>
   )
 }
 

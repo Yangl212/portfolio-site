@@ -1,0 +1,514 @@
+/* One column read top to bottom, but each block within it splits into a
+   narrow label and a wide body - a label sits once at the top of its
+   section rather than repeating per entry, and every entry in that
+   section stacks under it. Compact rather than the case-study voice: a
+   line of title, a line of dates, at most a couple of small photos - no
+   paragraphs of bullets to scan through job by job. The site's own
+   header and footer bracket it; nothing here replaces them. */
+.page {
+  /* The header paints from these two tokens; left at the global grey
+     default they clash with the white page underneath, the same fix
+     every other white-stock page in the site already carries. */
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.frame {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  background: #ffffff;
+}
+
+.content {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 32px) clamp(80px, 10vw, 120px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(44px, 6vw, 64px);
+}
+
+/* ---------- entrance ---------- */
+/* The intro sits above the fold, so it can't wait on a scroll event the way
+   Reveal's sections do - it plays once, on mount, each line arriving a beat
+   after the last. Below the fold, <Reveal> (components/Reveal.jsx) takes
+   over and fades entries in as the reader scrolls to them. */
+@keyframes resumeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro > * {
+    opacity: 0;
+    animation: resumeIn 620ms cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+  }
+
+  .intro > *:nth-child(1) { animation-delay: 0ms; }
+  .intro > *:nth-child(2) { animation-delay: 90ms; }
+  .intro > *:nth-child(3) { animation-delay: 160ms; }
+  .intro > *:nth-child(4) { animation-delay: 220ms; }
+  .intro > *:nth-child(5) { animation-delay: 280ms; }
+
+  /* Education sits in the same first screenful as the intro, so it can't
+     wait on a scroll event either (<Reveal> would just find it already
+     on screen at mount and leave it finished, unanimated) - it continues
+     the same entrance, one beat after the intro's last line. */
+  .educationSection .degree {
+    opacity: 0;
+    animation: resumeIn 620ms cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+  }
+
+  .educationSection .degree:nth-child(1) { animation-delay: 340ms; }
+  .educationSection .degree:nth-child(2) { animation-delay: 400ms; }
+  .educationSection .degree:nth-child(3) { animation-delay: 460ms; }
+}
+
+/* ---------- the intro ---------- */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* A slot for a headshot: a plain dashed circle until there is a photo to
+   fill it with, the same placeholder convention as everywhere else on
+   the site that is still waiting on an image. */
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(63, 176, 230, 0.06);
+  border: 1px dashed rgba(63, 176, 230, 0.55);
+  color: var(--muted);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name {
+  margin: 0;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.role {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.contactRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.contactRow a {
+  color: var(--muted);
+  border-bottom: 1px solid rgba(34, 34, 34, 0.28);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.contactRow a:hover,
+.contactRow a:focus-visible {
+  color: #ff48b0;
+  border-color: #ff48b0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.download,
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.download {
+  background: var(--text);
+  color: var(--inverse);
+}
+
+.download:hover,
+.download:focus-visible {
+  background: #ff48b0;
+}
+
+.back {
+  border: 1px solid rgba(34, 34, 34, 0.26);
+  color: var(--text);
+}
+
+.back:hover,
+.back:focus-visible {
+  border-color: #3fb0e6;
+  background: #3fb0e6;
+}
+
+/* ---------- a section: a label, and everything under it ---------- */
+.section {
+  display: grid;
+  grid-template-columns: minmax(88px, 128px) minmax(0, 1fr);
+  gap: 4px clamp(20px, 4vw, 40px);
+  padding-top: clamp(28px, 3.4vw, 40px);
+  border-top: 1px solid var(--border);
+}
+
+.label {
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ---------- education: no icon, just the two lines ---------- */
+.degree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.degree + .degree {
+  margin-top: 4px;
+}
+
+.degreeTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.degreeTitle strong {
+  font-weight: 700;
+}
+
+.degreeSchool {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.degreeDates {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+/* ---------- an experience / project row: icon, then title + meta ---------- */
+.entry {
+  display: flex;
+  gap: 14px;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--text);
+  color: var(--inverse);
+  display: grid;
+  place-items: center;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  transform: translateX(-4px);
+  transition: transform 420ms cubic-bezier(0.16, 0.84, 0.28, 1);
+}
+
+/* A real company mark carries its own white card and needs no dark
+   backdrop behind it - only a shadow to lift it off the page, in place
+   of the flat-fill square the fallback initial uses. */
+.iconImage {
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(20, 20, 20, 0.16);
+}
+
+.icon[data-open="true"] {
+  transform: translateX(-4px) rotate(-14deg);
+}
+
+.icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.entryBody {
+  min-width: 0;
+  flex: 1;
+}
+
+.entryTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.entryTitle a {
+  border-bottom: 1px solid rgba(34, 34, 34, 0.3);
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.entryTitle a:hover,
+.entryTitle a:focus-visible {
+  border-color: #ff48b0;
+  color: #ff48b0;
+}
+
+.entryTitle strong {
+  font-weight: 700;
+}
+
+.entryMeta {
+  margin: 1px 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+/* ---------- an experience entry that opens ---------- */
+/* A button standing in for <summary>, and the summary paragraph sitting
+   in a grid-rows track that animates between 0fr and 1fr - the row's
+   own height is never known ahead of time, and grid-template-rows is
+   the one CSS property that transitions to "however tall the content
+   turns out to be" without JS measuring anything. overflow: hidden on
+   the inner wrapper keeps the collapsed text from ever painting. */
+.experienceEntry {
+  width: 100%;
+}
+
+.summary {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: 10px;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.summaryBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.plus {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border: 1px solid rgba(34, 34, 34, 0.28);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1;
+  transition: transform 220ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.plus[data-open="true"] {
+  transform: rotate(45deg);
+  border-color: #ff48b0;
+  color: #ff48b0;
+}
+
+.detailsCollapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 420ms cubic-bezier(0.16, 0.84, 0.28, 1);
+}
+
+.detailsCollapse[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.detailsInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.detailText {
+  margin: 10px 0 0 62px;
+  max-width: 56ch;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.detailsCollapse[data-open="true"] .detailText {
+  opacity: 1;
+  transform: none;
+  transition-delay: 120ms;
+}
+
+/* A reserved spot for photos from the job itself - dashed placeholders
+   until real ones are dropped in, same convention as .avatar. */
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 0 62px;
+}
+
+.photo {
+  width: 132px;
+  height: 96px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(63, 176, 230, 0.05);
+  border: 1px dashed rgba(63, 176, 230, 0.55);
+}
+
+/* A real photo needs none of the placeholder's dashed hint. */
+.photoFilled {
+  border: none;
+  background: none;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- skills, as a row of tool marks rather than sentences ---------- */
+.skillGroup + .skillGroup {
+  margin-top: 22px;
+}
+
+.skillLabel {
+  margin: 0 0 12px;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.skillIcons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skillIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 64px;
+}
+
+.skillMark {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.skillMark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.skillMarkEmpty {
+  border: 1px dashed rgba(63, 176, 230, 0.55);
+  background: rgba(63, 176, 230, 0.05);
+}
+
+/* A real app icon gets a lift off the page instead of the placeholder's
+   dashed outline - the shadow has to sit on this element rather than
+   the empty variant's overflow: hidden, or it would just get clipped. */
+.skillMarkFilled {
+  box-shadow: 0 8px 16px rgba(20, 20, 20, 0.16);
+}
+
+.skillName {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Concepts and methods aren't software - no logo to show, so they just
+   read as text rather than sitting in an empty icon box. */
+.skillWords {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .label {
+    font-weight: 600;
+    color: var(--text);
+  }
+}

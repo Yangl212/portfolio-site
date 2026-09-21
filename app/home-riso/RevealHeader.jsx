@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { SiteHeader } from "../../components/SiteHeader"
+import { trackHome } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
@@ -35,7 +36,7 @@ export function RevealHeader({ track }) {
 
   return (
     <div className={styles.headerDock} data-visible={visible}>
-      <SiteHeader active="/" track={track} />
+      <SiteHeader active={trackHome(track)} track={track} />
     </div>
   )
 }

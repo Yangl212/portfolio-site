@@ -92,15 +92,15 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
               {item.label}
             </Link>
           ))}
-          <a
+          <Link
             className={styles.link}
-            href={resumeUrlFor(track)}
-            target="_blank"
-            rel="noreferrer"
+            data-active={active === `${base}/resume`}
+            href={`${base}/resume`}
             onClick={closeMenu}
+            prefetch={false}
           >
-            Resume <span aria-hidden="true">&#8599;</span>
-          </a>
+            Resume <span aria-hidden="true">&#8594;</span>
+          </Link>
         </nav>
       </div>
     </header>
