@@ -21,6 +21,11 @@
   --fit: 0.95; --fan: 1;
   position: relative; display: block; aspect-ratio: 1 / 1; max-width: 100%;
   color: var(--text); text-decoration: none;
+  /* The chips measure themselves against this, not the viewport - see
+     .chip below. The stage takes its width from its grid column, never
+     from its contents, so containing the inline size changes nothing
+     about the layout. */
+  container-type: inline-size;
 }
 .stage:hover, .stage:focus-visible { --k: 1; }
 .stage:focus-visible { outline: 2px solid var(--ink-a); outline-offset: 12px; }
@@ -61,11 +66,18 @@
   border-radius: 10px; border: 1px solid rgba(34, 34, 34, 0.14); background: #ffffff;
   box-shadow: 0 1px 1px rgba(34, 34, 34, 0.06), 0 22px 34px -18px rgba(34, 34, 34, 0.4);
 }
+/* A chip is one unbreakable line sitting at a percentage across the
+   stage, so its width has to stay a fixed share of the stage or it walks
+   off the edge as the column narrows - which is what it did: the longest
+   chip ran ~40px past its own stage at almost every width, and on the
+   rightmost card that came out past the window. Sizing it in cqw (a share
+   of the stage, not of the viewport) holds that share still. The padding
+   goes with it, or the text shrinks inside a fixed pill. */
 .chip {
   display: inline-block; width: max-content; max-width: none;
-  padding: 7px 11px; border: 1px solid var(--chip-ink); border-radius: 999px; background: #ffffff;
+  padding: 0.6em 0.95em; border: 1px solid var(--chip-ink); border-radius: 999px; background: #ffffff;
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.72rem; letter-spacing: 0.04em; white-space: nowrap; color: var(--chip-ink);
+  font-size: clamp(0.54rem, 2.45cqw, 0.72rem); letter-spacing: 0.04em; white-space: nowrap; color: var(--chip-ink);
   box-shadow: 0 10px 18px -12px rgba(34, 34, 34, 0.35);
 }
 
@@ -116,7 +128,6 @@
   .stage { max-width: 440px; margin: 0 auto; width: 100%; }
   .copy { max-width: 440px; margin: 0 auto; width: 100%; }
   .stage { --fit: 0.86; --fan: 0.3; }
-  .chip { font-size: 0.62rem; padding: 6px 9px; }
 }
 
 @media (hover: none) {

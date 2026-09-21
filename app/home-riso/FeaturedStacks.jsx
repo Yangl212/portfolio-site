@@ -34,7 +34,9 @@ const stacks = {
       { kind: "cut", src: "/boa/screen3.png", x: 71, y: 16, w: 28, r: 8, dx: 18, dy: -16, dr: 13, depth: 0.7, z: 1 },
       { kind: "cut", src: "/boa/screen1.png", x: 34, y: 3, w: 32, r: 0, dx: 0, dy: -12, dr: -1, ds: 1.04, depth: 1, z: 3 },
       { kind: "chip", text: "Budget reallocation · unassisted 2/6 → 5/6", x: 0, y: 4, r: -4, dx: -8, dy: -8, dr: -7, depth: 0.5, z: 4 },
-      { kind: "chip", text: "Spot overspending · median 41 s → 24 s", x: 34, y: 66, r: 4, dx: 10, dy: 10, dr: 7, depth: 0.5, z: 4 }
+      /* The longest chip on the board: starts far enough left that even
+         its hover drift stays inside the stage. */
+      { kind: "chip", text: "Spot overspending · median 41 s → 24 s", x: 30, y: 66, r: 4, dx: 10, dy: 10, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   vortexnet: {
