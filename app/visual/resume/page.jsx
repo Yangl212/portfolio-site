@@ -29,6 +29,7 @@ const experience = [
     title: "Data Visualization",
     place: "Covina, CA",
     dates: "Jun. 2025 – Oct. 2025",
+    photos: ["/resume/vortexnet-photo.jpg"],
     summary:
       "Redesigned financial dashboards and spend-analysis experiences, translating dense financial data into clear visual hierarchies and responsive chart layouts. Built reusable data-visualization systems and patterns in Figma with product and data stakeholders, contributing to a 15% increase in task success."
   },

@@ -28,6 +28,7 @@ const experience = [
     title: "UI/UX Designer — Data Visualization",
     place: "Covina, CA",
     dates: "Jun. 2025 – Oct. 2025",
+    photos: ["/resume/vortexnet-photo.jpg"],
     summary:
       "Redesigned the landing overview and navigation of the internal finance dashboard a ~30-person team uses daily, cutting the time to locate a day's work from 20–30s to about 8s after testing with 10 colleagues. Regrouped a flat 14-entry menu into task-based sections and built a priority model with product and data stakeholders to decide what belongs on the landing screen."
   },
