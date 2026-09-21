@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 import { trackBase } from "../lib/projects"
+import { requestScrollToWork } from "../lib/scrollIntent"
 
 import { BrandMark } from "./BrandMark"
 
@@ -43,8 +44,13 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
   const logoHref = isHomepage ? `${base}/about` : homeHref
   const logoLabel = isHomepage ? "Know more about me" : "Home page"
 
+  /* Work always points at Selected Work, not just the home route: from
+     any other page it should land past the print, not back at the top
+     of it. On the home page itself the hash is a same-page anchor and
+     Next's default scroll-into-view handles it, so the flag below is
+     only set when the click is actually leaving the current page. */
   const navItems = [
-    { href: homeHref, label: "Work" },
+    { href: `${homeHref}#work`, activeHref: homeHref, label: "Work", onClick: isHomepage ? undefined : requestScrollToWork },
     { href: `${base}/lab`, label: "Lab" }
   ]
 
@@ -84,9 +90,12 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
             <Link
               key={item.href}
               className={styles.link}
-              data-active={active === item.href}
+              data-active={active === (item.activeHref ?? item.href)}
               href={item.href}
-              onClick={closeMenu}
+              onClick={(event) => {
+                item.onClick?.(event)
+                closeMenu()
+              }}
               prefetch={false}
             >
               {item.label}

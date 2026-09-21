@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { aboutReady, trackBase } from "../../lib/projects"
+import { consumeScrollToWork } from "../../lib/scrollIntent"
 
 import styles from "./page.module.css"
 
@@ -118,11 +119,17 @@ export function RisoHero({ track = "uiux" }) {
      written in, and whether it is on the sheet at the moment. */
   const [hint, setHint] = useState({ spot: 0, on: false })
 
-  /* The print is the front door. Do not let browser scroll restoration or
-     an old #work URL reopen the page halfway down at Selected Work. */
+  /* The print is the front door - on a reload, or the page reopened from
+     history, browser scroll restoration and an old #work URL are both
+     ignored and the reader lands on the print. The one exception is a
+     reader who just clicked Work from somewhere else on the site: that
+     sets the flag below before this page even mounts, so they land on
+     Selected Work instead of the print they didn't ask to see again. */
   useLayoutEffect(() => {
     const previousRestoration = window.history.scrollRestoration
     window.history.scrollRestoration = "manual"
+
+    const openOnWork = consumeScrollToWork()
 
     if (window.location.hash) {
       window.history.replaceState(
@@ -132,14 +139,26 @@ export function RisoHero({ track = "uiux" }) {
       )
     }
 
-    const resetToTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" })
-    resetToTop()
-    const frame = requestAnimationFrame(resetToTop)
-    window.addEventListener("pageshow", resetToTop)
+    const target = openOnWork ? document.getElementById("work") : null
+    const settle = () => {
+      if (!target) {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+        return
+      }
+      const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0
+      window.scrollTo({
+        top: Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - offset)),
+        left: 0,
+        behavior: "auto"
+      })
+    }
+    settle()
+    const frame = requestAnimationFrame(settle)
+    window.addEventListener("pageshow", settle)
 
     return () => {
       cancelAnimationFrame(frame)
-      window.removeEventListener("pageshow", resetToTop)
+      window.removeEventListener("pageshow", settle)
       window.history.scrollRestoration = previousRestoration
     }
   }, [])
