@@ -76,9 +76,7 @@ const skillGroups = [
       { name: "Figma", icon: "/resume/skill-figma-v2.png" },
       { name: "Photoshop", icon: "/resume/skill-photoshop.png" },
       { name: "Illustrator" },
-      { name: "InDesign" },
-      { name: "After Effects" },
-      { name: "Premiere Pro" },
+      { name: "InDesign", icon: "/resume/skill-indesign.png" },
       { name: "Framer", icon: "/resume/skill-framer.png" },
       { name: "Procreate", icon: "/resume/skill-procreate.png" }
     ]

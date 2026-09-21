@@ -98,7 +98,7 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
               <span>(917) 767-2493</span>
               <span aria-hidden="true">·</span>
               <a href="https://www.linkedin.com/in/leleyang1211" target="_blank" rel="noreferrer">
-                linkedin.com/in/leleyang1211
+                LinkedIn
               </a>
             </p>
             <div className={styles.actions}>
