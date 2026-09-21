@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { useState } from "react"
 
-import { Reveal } from "../../components/Reveal"
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
 import { aboutReady, trackBase, trackHome } from "../../lib/projects"
@@ -29,12 +28,12 @@ function Icon({ src, alt, initial, open }) {
 /* A button standing in for <summary>, driving a grid-rows collapse (see
    resume.module.css) instead of native <details> - the native element's
    open/close is instant with no animatable middle state. */
-function ExperienceEntry({ entry }) {
+function ExperienceEntry({ entry, index }) {
   const [open, setOpen] = useState(false)
   const bodyId = `experience-${entry.company}-${entry.title}`.replace(/[^a-z0-9]+/gi, "-")
 
   return (
-    <div className={styles.experienceEntry}>
+    <div className={styles.experienceEntry} style={{ "--i": index }}>
       <button
         type="button"
         className={styles.summary}
@@ -85,7 +84,6 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
     <main className={styles.page}>
       <div className={styles.frame}>
         <SiteHeader active={`${base}/resume`} track={track} />
-        <Reveal fade={`.${styles.experienceEntry}, .${styles.skillGroup}`} />
 
         <article className={styles.content}>
           <div className={styles.intro}>
@@ -130,8 +128,8 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
           <section className={styles.section}>
             <h2 className={styles.label}>Experience</h2>
             <div className={styles.entries}>
-              {experience.map((entry) => (
-                <ExperienceEntry entry={entry} key={`${entry.company}-${entry.title}`} />
+              {experience.map((entry, index) => (
+                <ExperienceEntry entry={entry} index={index} key={`${entry.company}-${entry.title}`} />
               ))}
             </div>
           </section>
@@ -139,8 +137,8 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
           <section className={styles.section}>
             <h2 className={styles.label}>Skills</h2>
             <div>
-              {skillGroups.map((group) => (
-                <div className={styles.skillGroup} key={group.label}>
+              {skillGroups.map((group, index) => (
+                <div className={styles.skillGroup} key={group.label} style={{ "--i": index }}>
                   <p className={styles.skillLabel}>{group.label}</p>
                   {group.mode === "text" ? (
                     <p className={styles.skillWords}>
