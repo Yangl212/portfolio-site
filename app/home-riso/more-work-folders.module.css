@@ -146,9 +146,13 @@
    page's own side padding (24-56px) to work with before a wide
    sideways throw runs the piece past the edge of the window. */
 .flung img { transform-origin: 50% 50%; }
-.flung img:nth-child(1) { left: 18%; top: 12%; width: 46%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
-.flung img:nth-child(2) { left: 38%; top: 10%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 80ms; transition-duration: 820ms; }
-.flung img:nth-child(3) { left: 50%; top: 46%; width: 40%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 160ms; transition-duration: 900ms; }
+/* Rest positions are checked against the cover's own box (11-89% left,
+   12-60.6% top given its 16/10 crop) with a margin on every edge, not
+   flush against it - flush was still catching a sliver of a corner on
+   real screens. */
+.flung img:nth-child(1) { left: 18%; top: 13%; width: 46%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
+.flung img:nth-child(2) { left: 36%; top: 13%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 80ms; transition-duration: 820ms; }
+.flung img:nth-child(3) { left: 46%; top: 32%; width: 40%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 160ms; transition-duration: 900ms; }
 .folder:hover .flung img:nth-child(1), .folder:focus-visible .flung img:nth-child(1) { --x: -45%; --y: -95%; --r: -14deg; }
 .folder:hover .flung img:nth-child(2), .folder:focus-visible .flung img:nth-child(2) { --x: 5%; --y: -125%; --r: 6deg; }
 .folder:hover .flung img:nth-child(3), .folder:focus-visible .flung img:nth-child(3) { --x: 40%; --y: -50%; --r: 14deg; }
