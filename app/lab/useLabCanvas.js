@@ -70,7 +70,7 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
       elapsed += dt
       let moving = false
 
-      const edgeZone = Math.min(260, Math.max(140, Math.min(bounds.width, bounds.height) * .25))
+      const edgeZone = Math.min(380, Math.max(200, Math.min(bounds.width, bounds.height) * .34))
       const edgeAxis = (value, length) => {
         if (value < edgeZone) return Math.pow(1 - value / edgeZone, 1.35)
         if (value > length - edgeZone) return -Math.pow(1 - (length - value) / edgeZone, 1.35)
@@ -186,15 +186,26 @@ export function useLabCanvas(viewportRef, canvasRef, tiles) {
       wake()
     }
     const leave = () => { pointer.inside = false; wake() }
+    // A wheel notch used to move the canvas by exactly its delta, in one
+    // step - correct, but every notch landed as a small hard jump next to
+    // drag's own eased momentum. This feeds the same speed/friction the
+    // pointer-release fling already rides in tick() instead: each event
+    // adds an impulse, so a run of notches builds speed the way flicking
+    // the canvas does, and it coasts to a stop rather than snapping still
+    // between notches.
     const wheel = event => {
       if (!desktop.matches || event.ctrlKey) return
       event.preventDefault()
       const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? bounds.height : 1
       const dx = event.shiftKey && !event.deltaX ? event.deltaY : event.deltaX
       const dy = event.shiftKey && !event.deltaX ? 0 : event.deltaY
-      position.current.x -= dx * unit
-      position.current.y -= dy * unit
-      speed.x = speed.y = 0
+      if (reduced.matches) {
+        position.current.x -= dx * unit
+        position.current.y -= dy * unit
+      } else {
+        speed.x = clamp(speed.x - dx * unit * 5.5, -2200, 2200)
+        speed.y = clamp(speed.y - dy * unit * 5.5, -2200, 2200)
+      }
       wake()
     }
     const keyboard = event => {
