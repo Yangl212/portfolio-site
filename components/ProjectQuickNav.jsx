@@ -12,7 +12,6 @@ const projectSections = {
     ["experience", "Experience"],
     ["prototype", "Prototype"],
     ["research", "Research"],
-    ["decisions", "Decisions"],
     ["testing", "Evaluation"],
     ["web", "Web"]
   ],

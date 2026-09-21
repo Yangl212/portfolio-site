@@ -41,35 +41,23 @@ const designHighlights = [
   {
     label: "01 / Understand",
     title: "See which category needs attention.",
-    body: "The spending dial connects the month's total to individual categories. Selecting a category brings its amount and budget context into focus.",
-    visualChange: "The selected slice lifts out from the dial. A dashed 100% budget ring and the category name, amount, and percentage repeat the status without relying on color alone.",
-    benefit: "People can spot which category is over budget and verify by how much in the same focal area, without matching a slice to a separate legend.",
-    tradeoff: "A compact chart leaves less room for labels. Amounts and category names need to carry the meaning alongside color.",
+    body: "Select a category to see its amount, budget, and status in one place.",
     video: "spending",
-    alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights",
-    tone: "spending"
+    alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights"
   },
   {
     label: "02 / Investigate",
     title: "Trace the total back to the spending.",
-    body: "Inside a category, switch between merchant and monthly breakdowns. The selected category and budget remain the reference while the view changes.",
-    visualChange: "Spending, budget, overage, and average sit in one header. Merchant bars show each merchant’s contribution, with no merchant-level budgets, while the category budget and overage stay visible above them. A two-state control switches between merchant and monthly views.",
-    benefit: "People can move from the total to its contributors while keeping the month, category, and budget visible, reducing the need to reconstruct context between screens.",
-    tradeoff: "Detail takes another step on mobile. The desktop version can show the overview and breakdown side by side.",
+    body: "Switch between merchant and monthly breakdowns without losing the active month, category, or budget.",
     video: "budget",
-    alt: "Category spending view switching between merchant and monthly breakdowns",
-    tone: "budget"
+    alt: "Category spending view switching between merchant and monthly breakdowns"
   },
   {
     label: "03 / Adjust",
     title: "Reallocate the budget without restarting setup.",
-    body: "Take an amount from one category and give it to another. Preview both revised limits while keeping the overall budget unchanged.",
-    visualChange: "The form is organized as Take from, Give to, and Amount. A summary previews both revised category limits and keeps the unchanged total directly above the confirmation action.",
-    benefit: "People can check the direction and consequence before confirming, and understand that they are reallocating a plan rather than transferring money.",
-    tradeoff: "A review step adds a little effort, but keeps a temporary adjustment from silently becoming the new default.",
+    body: "Move an amount between categories, preview both limits, then choose whether the change is temporary or ongoing.",
     video: "reallocate",
-    alt: "Reallocating budget allowances between two categories, with both limits visible",
-    tone: "reallocation"
+    alt: "Reallocating budget allowances between two categories, with both limits visible"
   }
 ]
 
@@ -93,37 +81,6 @@ const researchStats = [
   { pct: "69%", label: "Insights hard to find", color: "rgba(212, 180, 240, 0.72)" },
   { pct: "66%", label: "Correction takes time", color: "rgba(210, 210, 210, 0.82)" },
   { pct: "72%", label: "Budgets feel inflexible", color: "rgba(247, 205, 205, 0.78)" }
-]
-
-const designDecisions = [
-  {
-    label: "Access",
-    title: "Start from the account users already check",
-    evidence: "The spending tool was buried behind several screens.",
-    decision: "Surface monthly spending and budget progress on the checking account card.",
-    tradeoff: "Use a concise entry point so the account overview does not become a second analytics dashboard."
-  },
-  {
-    label: "Continuity",
-    title: "Treat month and category as persistent context",
-    evidence: "Selections could reset after opening a transaction and going back.",
-    decision: "Keep the active month and category visible across overview, category, and transaction views.",
-    tradeoff: "Persistent context uses screen space, but makes it easier to tell which total the details belong to."
-  },
-  {
-    label: "Control",
-    title: "Move category correction into the list",
-    evidence: "Users had to correct transactions one at a time through detail screens.",
-    decision: "Support multi-select and recategorization without leaving the transaction list.",
-    tradeoff: "Bulk changes need a visible selection count and a clear destination category before confirmation."
-  },
-  {
-    label: "Flexibility",
-    title: "Separate temporary and ongoing changes",
-    evidence: "A monthly adjustment could force users back through budget setup.",
-    decision: "Allow direct edits or reallocation, then ask whether the change applies once or going forward.",
-    tradeoff: "Keep the save decision explicit even though it adds a step to a small adjustment."
-  }
 ]
 
 const flowComparisons = [
@@ -248,25 +205,21 @@ const screenNumber = (src) => src.replace(/\D+/g, "")
 
 const testIterations = [
   {
-    title: "Spending chart",
-    count: "3 of 6 → 5 of 6",
-    change: "Enlarged the selected category, added the dashed 100% budget ring, and repeated status with a name, dollar amount, and percentage.",
-    result: "With the dynamic spending dial, five of six participants identified the most overspent category without help, compared with three of six in the first round. Median scan time fell from 41 to 24 seconds.",
-    nextStep: "Test the chart with a broader age range and verify that the ring, category name, amount, and percentage remain legible for users with low vision or color-vision differences."
-  },
-  {
     title: "Budget reallocation",
-    count: "2 of 6 → 5 of 6",
+    count: "2 of 6 → 5 of 6 unassisted",
     change: "Separated the source and destination into Take from and Give to, then previewed both new limits and the unchanged total before confirmation.",
     result: "Five of six participants completed budget reallocation without help in the redesigned flow, compared with two of six in the earlier task round.",
-    nextStep: "Validate the difference between a one-month and ongoing change, then test undo, insufficient-funds, and multi-category edge cases before defining the final interaction rules."
+    nextStep: "Next, test one-month versus ongoing changes, undo, and insufficient-funds cases."
+  },
+  {
+    title: "Spending chart",
+    count: "41 s → 24 s median",
+    result: "Five of six participants identified the most overspent category without help after the selected category, budget ring, and text status were made more explicit."
   },
   {
     title: "Assistant exploration",
     count: "1 of 6 → 4 of 6",
-    change: "Placed suggested questions and responses inside the spending view so a follow-up question could begin without leaving the current category context.",
-    result: "Four of six participants resolved a follow-up spending question using the prototype assistant without researcher prompts, compared with one of six using navigation in the comparison round. These were different ways of finding an answer.",
-    nextStep: "Make the assistant show which transactions and dates support each answer, add clear handoff to standard controls, and test trust when the AI is uncertain or cannot complete a request."
+    result: "Four of six participants resolved a follow-up question in the prototype assistant, compared with one of six using navigation in the comparison round."
   }
 ]
 
@@ -296,6 +249,8 @@ const systemAssets = [
 ]
 
 export default function UxCaseStudyPage({ track = "uiux" }) {
+  const [featuredIteration, ...supportingIterations] = testIterations
+
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
@@ -310,14 +265,13 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
             `.${styles.prototypeStage}`,
             `.${styles.methodGrid} > div`,
             `.${styles.problemGrid} article`,
-            `.${styles.decisionGrid} article`,
             `.${styles.disclosure}`,
             `.${styles.flowCase}`,
             `.${styles.lowFiArc}`,
             `.${styles.iterationItem}`,
+            `.${styles.supportingResult}`,
             `.${styles.webCarousel}`,
-            `.${styles.systemGrid} figure`,
-            `.${styles.reflectionGrid} article`
+            `.${styles.systemGrid} figure`
           ].join(", ")} />
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
@@ -334,13 +288,12 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               </dl>
               <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>The challenge</dt><dd>Connect spending totals, category corrections and budget adjustments in one continuous flow.</dd></div>
-                <div><dt>My contribution</dt><dd>Research, existing-flow analysis, wireframes, mobile and web UI, and an interactive prototype.</dd></div>
-                <div><dt>The deliverable</dt><dd>An independent redesign with sample transactions, linked spending views and editable category budgets.</dd></div>
-                <div><dt>Result</dt><dd>In task-based testing, budget reallocation completed unassisted rose from 2 of 6 to 5 of 6, and median time to spot the overspent category fell from 41s to 24s.</dd></div>
+                <div><dt>My scope</dt><dd>Research, flow analysis, wireframes, mobile and web UI, and an interactive prototype.</dd></div>
+                <div><dt>Outcome</dt><dd>Budget reallocation rose from 2 of 6 to 5 of 6 unassisted; median time to spot overspending fell from 41 to 24 seconds.</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
                 <a className={styles.action} href="#prototype">Try the prototype <span aria-hidden="true">↓</span></a>
-                <a className={styles.textLink} href="#experience">See the design choices</a>
+                <a className={styles.textLink} href="#experience">See the core flow</a>
               </div>
             </div>
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
@@ -364,13 +317,6 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                     <p className={styles.microLabel}>{item.label}</p>
                     <h3>{item.title}</h3>
                     <p>{item.body}</p>
-                    <dl className={styles.impactMap}>
-                      <div><dt>Visual change</dt><dd>{item.visualChange}</dd></div>
-                      <div><dt>What it helps</dt><dd>{item.benefit}</dd></div>
-                    </dl>
-                    <dl className={styles.reasoning}>
-                      <div><dt>The trade-off</dt><dd>{item.tradeoff}</dd></div>
-                    </dl>
                   </div>
                   <CaseVideo className={styles.highlightVideo}
                     src={"/boa/media/" + item.video + "-loop.mp4"}
@@ -426,7 +372,7 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
               <div><strong>2</strong><span>User interviews</span></div>
               <div><strong>Reddit</strong><span>Supporting public posts</span></div>
             </div>
-            <p className={styles.sourceNote}>The only recruitment requirement was previous use of Bank of America. Experience with its budgeting feature was not required, and some participants had never used it. The research covered different levels of familiarity with the feature.</p>
+            <p className={styles.sourceNote}>Participants had used Bank of America, but not necessarily its budgeting feature. This was a small, directional study rather than a representative sample.</p>
             <div className={styles.problemGrid}>
               {problemSnapshots.map((item, index) => (
                 <article key={item.title}>
@@ -461,34 +407,14 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 </div>
               </div>
             </details>
-            <p className={styles.sourceNote}>A small, directional study. These findings describe the sample rather than all Bank of America customers.</p>
-          </section>
-
-          <section id="decisions" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>04 / Interaction structure</p>
-              <h2>Keep the context. Make the change explicit.</h2>
-              <p className={styles.sectionLead}>Four decisions connect the research themes to the interaction model, including the category-correction flow behind the spending views.</p>
-            </div>
-            <div className={styles.decisionGrid}>
-              {designDecisions.map((item) => (
-                <article key={item.label}>
-                  <p className={styles.microLabel}>{item.label}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.decision}</p>
-                  <dl className={styles.reasoning}>
-                    <div><dt>Starting friction</dt><dd>{item.evidence}</dd></div>
-                    <div><dt>The trade-off</dt><dd>{item.tradeoff}</dd></div>
-                  </dl>
-                </article>
-              ))}
-            </div>
-            <div id="task-flows" className={styles.flowComparisons}>
-              <div className={styles.flowIntro}>
-                <p className={styles.microLabel}>Task flow comparison</p>
-                <h3>Two tasks, before and after.</h3>
-                <p>Compare the full paths for tracking spending and adjusting a budget: where the original flow breaks context, and how the redesign connects the steps.</p>
-              </div>
+            <details className={styles.disclosure}>
+              <summary>View before-and-after flows and all 15 wireframes</summary>
+              <div className={styles.disclosureBody}>
+                <div id="task-flows" className={styles.flowComparisons}>
+                  <div className={styles.flowIntro}>
+                    <p className={styles.microLabel}>Task flow comparison</p>
+                    <h3>Two tasks, before and after.</h3>
+                  </div>
               <div className={styles.flowList}>
                 {flowComparisons.map((flow) => (
                   <article className={styles.flowCase} key={flow.title}>
@@ -513,9 +439,6 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
                 ))}
               </div>
             </div>
-            <details className={styles.disclosure}>
-              <summary>Explore all 15 wireframes by task</summary>
-              <div className={styles.disclosureBody}>
                 {lowFiArcs.map((arc) => (
                   <article className={styles.lowFiArc} key={arc.label}>
                     <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p><h3>{arc.title}</h3><p>{arc.body}</p></div>
@@ -537,31 +460,40 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
 
           <section id="testing" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>05 / Testing & iteration</p>
-              <h2>What changed across the task rounds.</h2>
-              <p className={styles.sectionLead}>The same six participants took part in both rounds. Tasks covered identifying an overspent category, reallocating category budgets, and answering a follow-up spending question.</p>
+              <p className={styles.kicker}>04 / Testing & iteration</p>
+              <h2>The clearest improvement came from budget reallocation.</h2>
+              <p className={styles.sectionLead}>The same six participants completed both task rounds.</p>
             </div>
             <div className={styles.iterationList}>
-              {testIterations.map((item, index) => (
-                <article className={styles.iterationItem} key={item.title}>
-                  <div>
-                    <p className={styles.microLabel}>0{index + 1} / {item.title}</p>
-                    <h3>{item.count}</h3>
-                    <dl className={styles.iterationEvidence}>
-                      <div><dt>Design change</dt><dd>{item.change}</dd></div>
-                      <div><dt>Observed help</dt><dd>{item.result}</dd></div>
-                    </dl>
-                  </div>
-                  <div className={styles.nextStep}><p className={styles.microLabel}>Next question</p><p>{item.nextStep}</p></div>
-                </article>
-              ))}
+              <article className={`${styles.iterationItem} ${styles.iterationFeatured}`}>
+                <div>
+                  <p className={styles.microLabel}>Key iteration / {featuredIteration.title}</p>
+                  <h3>{featuredIteration.count}</h3>
+                  <dl className={styles.iterationEvidence}>
+                    <div><dt>Design change</dt><dd>{featuredIteration.change}</dd></div>
+                    <div><dt>Observed result</dt><dd>{featuredIteration.result}</dd></div>
+                  </dl>
+                </div>
+                <div className={styles.nextStep}><p className={styles.microLabel}>Next question</p><p>{featuredIteration.nextStep}</p></div>
+              </article>
+              <div className={styles.supportingResults}>
+                {supportingIterations.map((item) => (
+                  <article className={styles.supportingResult} key={item.title}>
+                    <div>
+                      <p className={styles.microLabel}>{item.title}</p>
+                      <h3>{item.count}</h3>
+                      <p>{item.result}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
-            <p className={styles.sourceNote}>These small-sample results suggest improvement. The two rounds used substantially different interfaces, and returning participants may also have benefited from familiarity with the tasks. The comparison therefore does not isolate the effect of individual changes. The assistant result is exploratory because it compares navigation in one round with the prototype assistant in the other.</p>
+            <p className={styles.sourceNote}>Directional evidence only: returning participants saw substantially different interfaces, so practice effects and multiple design changes may have influenced the results. The assistant comparison is exploratory.</p>
           </section>
 
           <section id="web" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>06 / Web adaptation</p>
+              <p className={styles.kicker}>05 / Web adaptation</p>
               <h2>Use the width to keep overview and detail together.</h2>
               <p className={styles.sectionLead}>Mobile reveals details one view at a time. Desktop keeps the category overview beside merchant and monthly breakdowns, with the assistant available in a side panel.</p>
             </div>
@@ -582,11 +514,8 @@ export default function UxCaseStudyPage({ track = "uiux" }) {
           <section className={styles.caseSection}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>Reflection</p>
-              <h2>Reduce detours, keep the decisions visible.</h2>
-            </div>
-            <div className={styles.reflectionGrid}>
-              <article><h3>The main trade-off</h3><p>Fewer navigation steps do not mean removing every confirmation. Category changes and one-month versus ongoing budgets still need explicit review.</p></article>
-              <article><h3>What remains to validate</h3><p>Broader usability and accessibility checks, error recovery, and the scope of budget changes. The prototype uses sample data and has no live banking integration.</p></article>
+              <h2>Next, isolate what caused the improvement.</h2>
+              <p className={styles.sectionLead}>A broader study should separate the effects of persistent context, the revised chart, and the reallocation preview, while testing accessibility and error recovery.</p>
             </div>
             <p className={styles.sourceNote}>Independent redesign concept. Not affiliated with Bank of America.</p>
           </section>
