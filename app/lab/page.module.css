@@ -11,6 +11,13 @@
   width: 100%;
   height: 100%;
   background: #fff;
+  /* The sheet itself comes up first, before anything is laid on it. */
+  animation: labSheet 360ms ease both;
+}
+
+@keyframes labSheet {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .frame > header {
@@ -84,6 +91,27 @@
   transform-origin: 50% 50%;
 }
 
+/* Arrival. The board used to be simply there; now the pictures are laid
+   down on it, one after another, each dropping the last few pixels into
+   place. The canvas script writes its own transform on .cardMotion every
+   frame, so the arrival is animated on .card instead and the two never
+   write to the same property. */
+@keyframes labDrop {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+.card {
+  animation: labDrop 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 52ms);
+}
+
+/* The hint waits until there is something to be hinted about. */
+@keyframes labHint {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translateX(-50%); }
+}
+
 .card img {
   display: block;
   width: 100%;
@@ -135,6 +163,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
+  animation: labHint 620ms ease 780ms both;
 }
 
 .dragHint svg {
@@ -213,4 +242,9 @@
   .cardMotion {
     transform: none !important;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame, .card, .dragHint { animation: none; opacity: 1; transform: none; }
+  .dragHint { transform: translateX(-50%); }
 }

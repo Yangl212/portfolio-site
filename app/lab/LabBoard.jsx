@@ -58,7 +58,7 @@ export function LabBoard({ items }) {
                   data-lab-item={index}
                   data-x={item.x + tileX * LAB_PERIOD.width}
                   data-y={item.y + tileY * LAB_PERIOD.height}
-                  style={{ "--x": `${item.x}px`, "--y": `${item.y}px`, "--w": `${item.size}px` }}
+                  style={{ "--x": `${item.x}px`, "--y": `${item.y}px`, "--w": `${item.size}px`, "--i": index }}
                 >
                   <div className={styles.cardMotion}>
                     <img
