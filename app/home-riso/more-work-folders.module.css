@@ -118,8 +118,8 @@
 .scatter img:nth-child(2) { left: 54%; top: 14%; width: 34%; z-index: 1; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 90ms; transition-duration: 800ms; }
 .scatter img:nth-child(3) { left: 34%; top: 50%; width: 32%; z-index: 3; --x: 0%; --y: 0%; --r: -1deg; transition-delay: 45ms; transition-duration: 880ms; }
 .folder:hover .scatter img:nth-child(1), .folder:focus-visible .scatter img:nth-child(1) { --x: 6%; --y: -129%; --r: -6deg; }
-.folder:hover .scatter img:nth-child(2), .folder:focus-visible .scatter img:nth-child(2) { --x: 80%; --y: -48%; --r: 9deg; }
-.folder:hover .scatter img:nth-child(3), .folder:focus-visible .scatter img:nth-child(3) { --x: -125%; --y: -95%; --r: -8deg; }
+.folder:hover .scatter img:nth-child(2), .folder:focus-visible .scatter img:nth-child(2) { --x: 48%; --y: -72%; --r: 9deg; }
+.folder:hover .scatter img:nth-child(3), .folder:focus-visible .scatter img:nth-child(3) { --x: -50%; --y: -122%; --r: -8deg; }
 
 /* --- panels: three screens, all clear of the cover once opened --- */
 /* Same three-screen idea as `windows`, but none of them are meant to
@@ -171,9 +171,9 @@
 .windows img:nth-child(1) { left: 20%; top: 13%; width: 60%; z-index: 1; --x: 0%; --y: 0%; --r: -2deg; }
 .windows img:nth-child(2) { left: 40%; top: 52%; width: 42%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 120ms; transition-duration: 820ms; }
 .windows img:nth-child(3) { left: 56%; top: 50%; width: 24%; z-index: 3; --x: 0%; --y: 0%; --r: -1deg; transition-delay: 60ms; transition-duration: 880ms; }
-.folder:hover .windows img:nth-child(1), .folder:focus-visible .windows img:nth-child(1) { --x: -53%; --y: -78%; --r: -6deg; }
-.folder:hover .windows img:nth-child(2), .folder:focus-visible .windows img:nth-child(2) { --x: 43%; --y: -175%; --r: 7deg; }
-.folder:hover .windows img:nth-child(3), .folder:focus-visible .windows img:nth-child(3) { --x: -133%; --y: -71%; --r: -4deg; }
+.folder:hover .windows img:nth-child(1), .folder:focus-visible .windows img:nth-child(1) { --x: -28%; --y: -98%; --r: -6deg; }
+.folder:hover .windows img:nth-child(2), .folder:focus-visible .windows img:nth-child(2) { --x: 36%; --y: -190%; --r: 7deg; }
+.folder:hover .windows img:nth-child(3), .folder:focus-visible .windows img:nth-child(3) { --x: -68%; --y: -100%; --r: -4deg; }
 
 /* --- case: the archive's own cabinet, and a record out of it --- */
 /* Two pieces, one each side of the cover: the cabinet leans out from
@@ -181,7 +181,7 @@
 .case img { transform-origin: 50% 85%; }
 .case img:nth-child(1) { left: 16%; top: 13%; width: 30%; z-index: 1; --x: 0%; --y: 0%; --r: -3deg; }
 .case img:nth-child(2) { left: 30%; top: 52%; width: 56%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 90ms; transition-duration: 840ms; }
-.folder:hover .case img:nth-child(1), .folder:focus-visible .case img:nth-child(1) { --x: -92%; --y: -56%; --r: -7deg; }
+.folder:hover .case img:nth-child(1), .folder:focus-visible .case img:nth-child(1) { --x: -55%; --y: -85%; --r: -7deg; }
 .folder:hover .case img:nth-child(2), .folder:focus-visible .case img:nth-child(2) { --x: 7%; --y: -137%; --r: 5deg; }
 
 /* --- spreads: two pages of the zine, one each side of the cover --- */
@@ -191,7 +191,7 @@
 .spreads img { transform-origin: 50% 75%; }
 .spreads img:nth-child(1) { left: 20%; top: 14%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: -2deg; }
 .spreads img:nth-child(2) { left: 40%; top: 50%; width: 42%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 100ms; transition-duration: 860ms; }
-.folder:hover .spreads img:nth-child(1), .folder:focus-visible .spreads img:nth-child(1) { --x: -68%; --y: -64%; --r: -7deg; }
+.folder:hover .spreads img:nth-child(1), .folder:focus-visible .spreads img:nth-child(1) { --x: -38%; --y: -95%; --r: -7deg; }
 .folder:hover .spreads img:nth-child(2), .folder:focus-visible .spreads img:nth-child(2) { --x: 29%; --y: -90%; --r: 6deg; }
 
 /* ---------- the front ---------- */
