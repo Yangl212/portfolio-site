@@ -60,10 +60,10 @@ const HERO_COPY = {
     band: "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
   },
   visual: {
-    eyebrow: "Visual & Brand Designer · New York",
-    subline: "Visual & brand designer with an eye for systems: identity, illustration, and print work built to hold together.",
-    facts: ["Parsons MFA ’26", "Former UI/UX Design Intern at VortexNet", "Seeking Visual & Brand Design roles"],
-    band: "Brand identity · Illustration · Game & board design · Riso zines · Print · New York · "
+    eyebrow: "Data Visualization Designer · New York",
+    subline: "A visual designer who turns dense data into charts, dashboards and systems people can actually read.",
+    facts: ["Parsons MFA ’26", "Former UI/UX Design Intern at VortexNet", "Seeking Data Visualization & Visual Design roles"],
+    band: "Data visualization · Chart & dashboard design · Brand identity · Illustration · Print · New York · "
   }
 }
 
