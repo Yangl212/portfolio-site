@@ -140,16 +140,18 @@
 
 /* --- flung: three stills, held behind the cover --- */
 /* The cover stays the crisp thing in front - these sit behind it
-   (z-index 1, same as `toss`) both at rest and thrown, but land bigger
-   and further out than `toss` does, so each still clears the cover's
-   edge instead of stopping under it. */
+   (z-index 1, same as `toss`) both at rest and thrown. Thrown mostly
+   upward, into the row gap above, rather than sideways: this folder can
+   land in the grid's first or last column, where there is only the
+   page's own side padding (24-56px) to work with before a wide
+   sideways throw runs the piece past the edge of the window. */
 .flung img { transform-origin: 50% 50%; }
 .flung img:nth-child(1) { left: 18%; top: 12%; width: 46%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
 .flung img:nth-child(2) { left: 38%; top: 10%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 80ms; transition-duration: 820ms; }
 .flung img:nth-child(3) { left: 50%; top: 46%; width: 40%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 160ms; transition-duration: 900ms; }
-.folder:hover .flung img:nth-child(1), .folder:focus-visible .flung img:nth-child(1) { --x: -108%; --y: -72%; --r: -16deg; }
-.folder:hover .flung img:nth-child(2), .folder:focus-visible .flung img:nth-child(2) { --x: -8%; --y: -108%; --r: 6deg; }
-.folder:hover .flung img:nth-child(3), .folder:focus-visible .flung img:nth-child(3) { --x: 58%; --y: -58%; --r: 15deg; }
+.folder:hover .flung img:nth-child(1), .folder:focus-visible .flung img:nth-child(1) { --x: -45%; --y: -95%; --r: -14deg; }
+.folder:hover .flung img:nth-child(2), .folder:focus-visible .flung img:nth-child(2) { --x: 5%; --y: -125%; --r: 6deg; }
+.folder:hover .flung img:nth-child(3), .folder:focus-visible .flung img:nth-child(3) { --x: 40%; --y: -50%; --r: 14deg; }
 
 /* --- windows: whole screens from the prototype, at two depths --- */
 /* The week view stays behind the cover and swings out to the left, so
