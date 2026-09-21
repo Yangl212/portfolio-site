@@ -11,8 +11,8 @@ import styles from "./featured-stacks.module.css"
  * sheet with a stat chip or two. They settle into place as the section
  * scrolls in, fan out when the pointer is over them, and lean with it.
  *
- * Every image is one the site already ships, and every chip is a number from
- * the case study it sits on.
+ * Every image is one the site already ships. Chips either scope a test result
+ * to its task or state the capability the project demonstrates.
  *
  * Layer geometry is in percent of the stage: x/y the top-left, w the width;
  * r the resting rotation. dx/dy/dr/ds are the hover move, spin and scale.
@@ -30,8 +30,8 @@ const stacks = {
       { kind: "cut", src: "/boa/screen2.png", x: 1, y: 18, w: 28, r: -9, dx: -18, dy: -14, dr: -13, depth: 0.7, z: 1 },
       { kind: "cut", src: "/boa/screen3.png", x: 71, y: 16, w: 28, r: 8, dx: 18, dy: -16, dr: 13, depth: 0.7, z: 1 },
       { kind: "cut", src: "/boa/screen1.png", x: 34, y: 3, w: 32, r: 0, dx: 0, dy: -12, dr: -1, ds: 1.04, depth: 1, z: 3 },
-      { kind: "chip", text: "2 of 6 → 5 of 6 unassisted", x: 1, y: 4, r: -4, dx: -8, dy: -8, dr: -7, depth: 0.5, z: 4 },
-      { kind: "chip", text: "41 s → 24 s", x: 72, y: 68, r: 4, dx: 10, dy: 10, dr: 7, depth: 0.5, z: 4 }
+      { kind: "chip", text: "Budget reallocation · unassisted 2/6 → 5/6", x: 0, y: 4, r: -4, dx: -8, dy: -8, dr: -7, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Spot overspending · median 41 s → 24 s", x: 34, y: 66, r: 4, dx: 10, dy: 10, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   vortexnet: {
@@ -49,15 +49,16 @@ const stacks = {
   },
   lastmessage: {
     when: "2026 · 4 months",
-    role: "UX/UI design, end to end",
-    summary: "An open-ended AI detective game with a readable main investigation and a hidden route.",
+    role: "Product design · AI behavior · Web development",
+    summary: "A playable browser-based AI detective game, designed and developed end to end across the investigation, character behavior, and interface.",
     tint: "pink",
     layers: [
       { kind: "cut", src: "lastmessage-laptop", x: 6, y: 30, w: 88, r: 0, dx: 0, dy: 8, dr: 2, ds: 1.05, depth: 0.5, z: 2 },
       { kind: "shot", src: "lastmessage-chat", x: -2, y: 4, w: 46, r: -9, dx: -30, dy: -24, dr: -16, depth: 1, z: 3 },
       { kind: "shot", src: "lastmessage-routes", x: 56, y: 0, w: 46, r: 8, dx: 30, dy: -26, dr: 14, depth: 0.9, z: 3 },
       { kind: "shot", src: "lastmessage-boundary", x: 56, y: 60, w: 42, r: 4, dx: 28, dy: 24, dr: 9, depth: 0.7, z: 1 },
-      { kind: "chip", text: "Hidden route: 2 of 8", x: 52, y: 88, r: -5, dx: 16, dy: 18, dr: -9, depth: 0.5, z: 4 }
+      { kind: "chip", text: "Playable AI conversations", x: 1, y: 5, r: -5, dx: -12, dy: -12, dr: -9, depth: 0.5, z: 4 },
+      { kind: "chip", text: "UX/UI · AI behavior · web development", x: 31, y: 69, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
   }
 }
