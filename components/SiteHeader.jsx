@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 import { trackBase } from "../lib/projects"
@@ -24,6 +25,7 @@ export function resumeUrlFor(track) {
 
 export function SiteHeader({ active = "/", track = "uiux" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   /*
    * The site is applied for on two self-contained tracks: "/" for UI/UX roles
@@ -37,6 +39,9 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
    */
   const base = trackBase(track)
   const homeHref = base || "/"
+  const isHomepage = pathname === homeHref
+  const logoHref = isHomepage ? `${base}/about` : homeHref
+  const logoLabel = isHomepage ? "Know more about me" : "Home page"
 
   const navItems = [
     { href: homeHref, label: "Work" },
@@ -50,9 +55,7 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        {/* On interior pages the mark is the shortest route back to the
-            current track's homepage. */}
-        <BrandMark href={homeHref} label="Homepage" onNavigate={closeMenu} />
+        <BrandMark href={logoHref} label={logoLabel} onNavigate={closeMenu} />
 
         <button
           type="button"
