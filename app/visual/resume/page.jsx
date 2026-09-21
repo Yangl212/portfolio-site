@@ -75,7 +75,7 @@ const skillGroups = [
     items: [
       { name: "Figma", icon: "/resume/skill-figma-v2.png" },
       { name: "Photoshop", icon: "/resume/skill-photoshop.png" },
-      { name: "Illustrator" },
+      { name: "Illustrator", icon: "/resume/skill-illustrator.png" },
       { name: "InDesign", icon: "/resume/skill-indesign.png" },
       { name: "Framer", icon: "/resume/skill-framer.png" },
       { name: "Procreate", icon: "/resume/skill-procreate.png" }
