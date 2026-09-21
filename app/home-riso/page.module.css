@@ -382,8 +382,21 @@
 
 /* The same run of plain paper above Selected Work as between the blocks,
    so it sits centred between the sheet and More Work rather than riding up
-   against the hero. The anchor lands below the docked header. */
-.hero + .contentTight { padding-top: clamp(112px, 14vw, 216px); scroll-margin-top: 84px; }
+   against the hero.
+
+   The Selected-work jump lands well into that paper rather than at the
+   top of it: the full run reads fine to a reader arriving at their own
+   pace, but is too much bare page for one who just asked to be taken
+   there. --lead-in is the same run named once, so padding-top and
+   scroll-margin-top move together; the negative margin at wide widths is
+   deliberate, carrying the landing spot up into the section's own
+   padding so the heading always settles about 160px under the docked
+   header regardless of how tall that padding is at the given width. */
+.hero + .contentTight {
+  --lead-in: clamp(112px, 14vw, 216px);
+  padding-top: var(--lead-in);
+  scroll-margin-top: calc(160px - var(--lead-in));
+}
 
 @media (max-width: 1080px) {
   .stampWrap { top: auto; bottom: 18%; right: 4%; }
@@ -404,7 +417,7 @@
   .band { font-size: 2.25rem; }
   .bandTop { top: 18px; }
   .bandBottom { bottom: 26px; }
-  .hero + .contentTight { padding-top: 96px; scroll-margin-top: 70px; }
+  .hero + .contentTight { padding-top: 96px; scroll-margin-top: 14px; }
   .contentTight > section + section { margin-top: 96px; }
   .contentTight { padding-bottom: 104px; }
 }

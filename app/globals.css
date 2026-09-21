@@ -93,6 +93,41 @@ body {
   font-family: "Satoshi", "Satoshi Variable", "Inter", sans-serif;
 }
 
+/* The window's own scrollbar, made quiet. It runs the full height of the
+   window whatever the page does, so it cannot be kept clear of the bar at
+   the top - what it can be is a hairline the colour of a pencil line
+   instead of a grey slab with arrows on it. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 34, 34, 0.22) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(34, 34, 34, 0.22);
+  background-clip: content-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 34, 34, 0.36);
+  background-clip: content-box;
+}
+
+/* No arrow buttons at either end. */
+html::-webkit-scrollbar-button {
+  display: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
