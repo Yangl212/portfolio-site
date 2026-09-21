@@ -47,8 +47,9 @@
 .page .kicker, .page .microLabel { font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
 .microLabel { color: var(--muted); }
 .page .sourceNote { max-width: 88ch; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
-.highlightList { display: flex; flex-direction: column; gap: 40px; }
-.highlightCard { display: grid; gap: 30px; align-items: center; padding-top: 36px; border-top: 1px solid var(--divider); }
+.highlightList { display: flex; flex-direction: column; }
+.highlightCard { display: grid; gap: 30px; align-items: center; padding: 36px 0; border-top: 1px solid var(--divider); }
+.highlightCard:last-child { border-bottom: 1px solid var(--divider); }
 .highlightCopy { display: flex; flex-direction: column; gap: 14px; max-width: 60ch; }
 .highlightCopy h3 { font-size: clamp(1.6rem, 1.1rem + 1.4vw, 2.1rem); line-height: 1.2; max-width: 25ch; letter-spacing: -.03em; }
 .iterationEvidence dt { color: var(--muted); font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .065em; text-transform: uppercase; }
@@ -56,7 +57,18 @@
 .reasoning { display: grid; gap: 20px; }
 .reasoning > div { padding-left: 18px; border-left: 2px solid var(--divider); }
 .reasoning dd { margin-top: 8px; font-size: .9375rem; color: var(--muted); }
-.highlightCard .highlightVideo { width: min(100%, 310px); justify-self: center; }
+.highlightCard .highlightVideo {
+  width: min(100%, 340px);
+  justify-self: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.highlightCard .highlightVideo video {
+  background: transparent;
+  filter: contrast(1.08);
+}
 .prototypeLayout { display: grid; align-items: center; gap: 36px; min-width: 0; }
 .prototypeGuide { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
 .prototypeSteps { display: grid; gap: 24px; list-style: none; margin: 0; padding: 0; }
@@ -176,10 +188,9 @@
 @media (min-width: 960px) {
   .content { padding: 40px 32px 104px; gap: 80px; }
   .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "eyebrow visual" "title visual" "lead visual" "meta visual" "facts visual" "actions visual"; gap: 26px 64px; }
-  .highlightList { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: start; }
-  .highlightCard { display: flex; flex-direction: column; align-items: stretch; gap: 24px; padding-top: 24px; }
-  .highlightCopy h3 { font-size: clamp(1.45rem, 1.1rem + .8vw, 1.9rem); }
-  .highlightCard .highlightVideo { width: min(100%, 270px); }
+  .highlightCard { grid-template-columns: minmax(0, 1fr) minmax(320px, 430px); gap: clamp(48px, 7vw, 96px); padding: 48px 0; }
+  .highlightCopy { max-width: 560px; }
+  .highlightCard .highlightVideo { width: min(100%, 390px); }
   .prototypeLayout { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; }
   .iterationItem { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px; }
 }
