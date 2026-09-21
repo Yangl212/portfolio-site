@@ -212,6 +212,11 @@
   transition: transform 180ms ease, opacity 180ms ease;
 }
 
+/* The back of the sheet, at whatever size the calling page asks for. The
+   size rules below (min-height, padding, the title's own type scale) are
+   untouched from before this footer started printing on two plates - only
+   the black stock's own texture and the way the closing line and the
+   contact links are drawn have changed. */
 .footer {
   display: flex;
   flex-direction: column;
@@ -221,9 +226,27 @@
   background: var(--footer-bg);
   color: var(--inverse);
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* A faint field of paper-white dots on the black stock - the same
+   halftone the hero and About print on, held still rather than blooming
+   under a cursor: a footer a reader lands on ten different times does
+   not need to notice them move. */
+.footerGrain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 0.9px, transparent 0);
+  background-size: 4px 4px;
 }
 
 .footerTitle {
+  position: relative;
+  z-index: 1;
   margin: 0;
   font-family: "Satoshi", "Satoshi Variable", sans-serif;
   font-weight: 400;
@@ -234,9 +257,36 @@
   max-width: 1420px;
 }
 
+/* Two plates of the same line, a couple of pixels out of register and
+   screened together rather than set as one flat colour - screen, not
+   multiply, because the stock under them is black rather than white: the
+   overlap goes light where both inks land instead of dark. */
+.footerSheet {
+  position: relative;
+  display: block;
+  isolation: isolate;
+}
+
+.footerPlate {
+  display: block;
+  mix-blend-mode: screen;
+}
+
+.footerPlateA {
+  color: #ff48b0;
+  transform: translate(-2px, -1px);
+}
+
+.footerPlateB {
+  position: absolute;
+  inset: 0;
+  color: #3fb0e6;
+  transform: translate(2px, 1px);
+}
+
 /* Case-study pages: the same footer at the scale of their own headings, and
-   only as tall as its contents. The bottom padding leaves room for the
-   copyright line, which is pinned to the bottom edge. */
+   only as tall as its contents. The bottom padding leaves the same room it
+   always did, even though nothing is pinned to the bottom edge any more. */
 .footerCompact {
   min-height: 0;
   padding: 96px 24px 104px;
@@ -250,37 +300,52 @@
   max-width: 900px;
 }
 
+/* The contact links as the hairline pills every other row of small print
+   on the site is set in, filling with a different ink each on hover - the
+   same order the home page's own footer fills them in. */
 .footerContact {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 28px;
+  gap: 10px 12px;
   margin-top: clamp(32px, 4vw, 56px);
 }
 
 .footerContact a {
-  padding-bottom: 3px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
   color: var(--inverse);
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-size: 0.9375rem;
   line-height: 1.35;
   text-decoration: none;
-  transition: border-color 180ms ease, opacity 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .footerContact a:hover,
 .footerContact a:focus-visible {
-  border-color: transparent;
-  opacity: 0.7;
+  background: var(--inverse);
+  border-color: var(--inverse);
+  color: #0b0b0b;
 }
 
-.footerCopy {
-  margin: 0;
-  font-size: 20px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 1);
-  position: absolute;
-  left: 24px;
-  bottom: 34px;
+.footerContact a:nth-child(2):hover,
+.footerContact a:nth-child(2):focus-visible {
+  background: #3fb0e6;
+  border-color: #3fb0e6;
+  color: var(--inverse);
+}
+
+.footerContact a:nth-child(3):hover,
+.footerContact a:nth-child(3):focus-visible {
+  background: #ff48b0;
+  border-color: #ff48b0;
+  color: var(--inverse);
 }
 
 @media (max-width: 1199px) {
@@ -364,10 +429,6 @@
   .footerCompact .footerTitle {
     font-size: 34px;
   }
-
-  .footerCopy {
-    bottom: 24px;
-  }
 }
 
 @media (max-width: 640px) {
@@ -378,9 +439,5 @@
 
   .nav {
     gap: 16px;
-  }
-
-  .footerCopy {
-    left: 16px;
   }
 }
