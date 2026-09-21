@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { aboutReady, trackBase } from "../../lib/projects"
-import { consumeScrollToWork } from "../../lib/scrollIntent"
+import { clearScrollToWork, peekScrollToWork } from "../../lib/scrollIntent"
 
 import styles from "./page.module.css"
 
@@ -129,7 +129,11 @@ export function RisoHero({ track = "uiux" }) {
     const previousRestoration = window.history.scrollRestoration
     window.history.scrollRestoration = "manual"
 
-    const openOnWork = consumeScrollToWork()
+    const openOnWork = peekScrollToWork()
+    // Deferred so Strict Mode's throwaway mount/cleanup pass (which runs
+    // synchronously, before any timeout can fire) cancels its own clear
+    // and leaves the flag for the pass that actually sticks around.
+    const clearTimer = openOnWork ? setTimeout(clearScrollToWork, 0) : null
 
     if (window.location.hash) {
       window.history.replaceState(
@@ -160,6 +164,7 @@ export function RisoHero({ track = "uiux" }) {
       cancelAnimationFrame(frame)
       window.removeEventListener("pageshow", settle)
       window.history.scrollRestoration = previousRestoration
+      if (clearTimer) clearTimeout(clearTimer)
     }
   }, [])
 
