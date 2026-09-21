@@ -87,24 +87,22 @@ body {
   min-height: 100%;
 }
 
+/* The classic Windows scrollbar takes real width out of the viewport
+   rather than floating over it, and only once the page has enough to
+   scroll. A fixed header sized to that viewport shifts left by the
+   scrollbar's width the instant the page grows past one screen - on the
+   home page, exactly when Selected Work scrolls the header into view -
+   which is what read as the header sliding a few pixels under the
+   scrollbar's own arrow button. Reserving the gutter up front keeps the
+   viewport width constant whether or not there is anything to scroll. */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--page-bg);
   color: var(--text);
   font-family: "Satoshi", "Satoshi Variable", "Inter", sans-serif;
-}
-
-/* The window's own scrollbar, made quiet: a hairline the colour of a
-   pencil line instead of a grey slab with arrows on it. The old-style
-   ::-webkit-scrollbar-thumb padding trick (a transparent border plus
-   background-clip: content-box, to fake a thin thumb inside a wider
-   track) renders inconsistently across Chromium builds - on some it
-   paints the full track anyway, which is the "ugly wide bar" this
-   replaced. scrollbar-width and scrollbar-color are the standard
-   properties now and Chromium has supported them naturally since 121,
-   so the thumb is asked for directly rather than faked. */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(34, 34, 34, 0.28) transparent;
 }
 
 a {
