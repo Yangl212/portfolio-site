@@ -119,12 +119,46 @@ export function RisoHero({ track = "uiux" }) {
      written in, and whether it is on the sheet at the moment. */
   const [hint, setHint] = useState({ spot: 0, on: false })
 
+  /* The walk from wherever the reader is down to Selected Work: the sheet
+     slides on an ease rather than cutting there, so Reveal (which only
+     animates cards it finds off-screen at the moment it checks) still
+     catches the featured cards and folders below the fold and fades them
+     in as the scroll passes over them, the same as scrolling there by
+     hand would. Any scroll of the reader's own takes the wheel back.
+     Reduced motion or a missing target fall back to the plain jump. */
+  const runScrollToWork = useCallback((from) => {
+    const target = document.getElementById("work")
+    if (!target) return
+    const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0
+    const to = Math.max(0, Math.round(from + target.getBoundingClientRect().top - offset))
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(to - from) < 2) {
+      window.scrollTo(0, to)
+      return
+    }
+    const duration = Math.min(1150, Math.max(650, Math.abs(to - from) * 0.75))
+    const start = performance.now()
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+    let frame = 0
+    const stop = () => { cancelAnimationFrame(frame); window.removeEventListener("wheel", stop); window.removeEventListener("touchstart", stop); window.removeEventListener("keydown", stop) }
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / duration)
+      window.scrollTo(0, from + (to - from) * ease(t))
+      if (t < 1) { frame = requestAnimationFrame(step); return }
+      stop()
+    }
+    window.addEventListener("wheel", stop, { passive: true })
+    window.addEventListener("touchstart", stop, { passive: true })
+    window.addEventListener("keydown", stop)
+    frame = requestAnimationFrame(step)
+  }, [])
+
   /* The print is the front door - on a reload, or the page reopened from
      history, browser scroll restoration and an old #work URL are both
      ignored and the reader lands on the print. The one exception is a
      reader who just clicked Work from somewhere else on the site: that
-     sets the flag below before this page even mounts, so they land on
-     Selected Work instead of the print they didn't ask to see again. */
+     sets the flag below before this page even mounts, so instead of
+     resetting to the print they didn't ask to see again, it walks straight
+     down to Selected Work once scroll restoration has had its say. */
   useLayoutEffect(() => {
     const previousRestoration = window.history.scrollRestoration
     window.history.scrollRestoration = "manual"
@@ -143,30 +177,25 @@ export function RisoHero({ track = "uiux" }) {
       )
     }
 
-    const target = openOnWork ? document.getElementById("work") : null
-    const settle = () => {
-      if (!target) {
-        window.scrollTo({ top: 0, left: 0, behavior: "auto" })
-        return
-      }
-      const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0
-      window.scrollTo({
-        top: Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - offset)),
-        left: 0,
-        behavior: "auto"
-      })
-    }
-    settle()
-    const frame = requestAnimationFrame(settle)
-    window.addEventListener("pageshow", settle)
+    const resetToTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+    resetToTop()
+    // A second assertion one frame later, matching the reset-only case
+    // below, in case something (browser scroll restoration, a late
+    // hashchange) tries to move the page between the two - only once
+    // that's settled does the walk to Selected Work begin.
+    const frame = requestAnimationFrame(() => {
+      resetToTop()
+      if (openOnWork) runScrollToWork(0)
+    })
+    window.addEventListener("pageshow", resetToTop)
 
     return () => {
       cancelAnimationFrame(frame)
-      window.removeEventListener("pageshow", settle)
+      window.removeEventListener("pageshow", resetToTop)
       window.history.scrollRestoration = previousRestoration
       if (clearTimer) clearTimeout(clearTimer)
     }
-  }, [])
+  }, [runScrollToWork])
 
   /* Pressing the name pulls another print, and where About is written,
      it rises over the print once the ink has settled - the route is
@@ -203,42 +232,15 @@ export function RisoHero({ track = "uiux" }) {
     return () => clearTimeout(timer)
   }, [pull])
 
-  /* Selected work walks the page down rather than cutting to it: the sheet
-     slides for about a second on an ease, so the reader keeps their place.
-     Any scroll of their own takes the wheel back. Reduced motion, a modified
-     click or a missing target all fall back to the plain anchor.
-
-     The hash is deliberately not written to the address bar: with #work on
+  /* The hash is deliberately not written to the address bar: with #work on
      the URL, a reload - or the page reopened from history - would skip the
-     print and land on Selected Work, and the print is the page. */
+     print and land on Selected Work, and the print is the page. A modified
+     click (new tab, etc.) is left alone. */
   const scrollToWork = useCallback((event) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
-    const target = document.getElementById("work")
-    if (!target) return
-    const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0
-    const from = window.scrollY
-    const to = Math.max(0, Math.round(from + target.getBoundingClientRect().top - offset))
     event.preventDefault()
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(to - from) < 2) {
-      window.scrollTo(0, to)
-      return
-    }
-    const duration = Math.min(1150, Math.max(650, Math.abs(to - from) * 0.75))
-    const start = performance.now()
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
-    let frame = 0
-    const stop = () => { cancelAnimationFrame(frame); window.removeEventListener("wheel", stop); window.removeEventListener("touchstart", stop); window.removeEventListener("keydown", stop) }
-    const step = (now) => {
-      const t = Math.min(1, (now - start) / duration)
-      window.scrollTo(0, from + (to - from) * ease(t))
-      if (t < 1) { frame = requestAnimationFrame(step); return }
-      stop()
-    }
-    window.addEventListener("wheel", stop, { passive: true })
-    window.addEventListener("touchstart", stop, { passive: true })
-    window.addEventListener("keydown", stop)
-    frame = requestAnimationFrame(step)
-  }, [])
+    runScrollToWork(window.scrollY)
+  }, [runScrollToWork])
 
   useEffect(() => {
     const el = ref.current
