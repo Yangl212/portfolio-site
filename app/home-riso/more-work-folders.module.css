@@ -138,18 +138,18 @@
 .folder:hover .panels img:nth-child(2), .folder:focus-visible .panels img:nth-child(2) { z-index: 4; --x: 43%; --y: -175%; --r: 7deg; }
 .folder:hover .panels img:nth-child(3), .folder:focus-visible .panels img:nth-child(3) { z-index: 4; --x: -133%; --y: -71%; --r: -4deg; }
 
-/* --- flung: three stills, thrown clear of the cover once opened --- */
-/* Same throw as `toss`, but nothing is meant to stay visible behind the
-   cover once thrown - two behind reads fine for a hand of game cards,
-   not for stills a reader is meant to actually make out. z-index only
-   lifts on hover/focus, same reasoning as `panels`. */
+/* --- flung: three stills, held behind the cover --- */
+/* The cover stays the crisp thing in front - these sit behind it
+   (z-index 1, same as `toss`) both at rest and thrown, but land bigger
+   and further out than `toss` does, so each still clears the cover's
+   edge instead of stopping under it. */
 .flung img { transform-origin: 50% 50%; }
-.flung img:nth-child(1) { left: 22%; top: 16%; width: 34%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
-.flung img:nth-child(2) { left: 40%; top: 14%; width: 34%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 80ms; transition-duration: 820ms; }
-.flung img:nth-child(3) { left: 52%; top: 50%; width: 30%; z-index: 3; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 160ms; transition-duration: 900ms; }
-.folder:hover .flung img:nth-child(1), .folder:focus-visible .flung img:nth-child(1) { z-index: 3; --x: -94%; --y: -60%; --r: -18deg; }
-.folder:hover .flung img:nth-child(2), .folder:focus-visible .flung img:nth-child(2) { z-index: 4; --x: -18%; --y: -75%; --r: 5deg; }
-.folder:hover .flung img:nth-child(3), .folder:focus-visible .flung img:nth-child(3) { z-index: 5; --x: 33%; --y: -76%; --r: 14deg; }
+.flung img:nth-child(1) { left: 18%; top: 12%; width: 46%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
+.flung img:nth-child(2) { left: 38%; top: 10%; width: 44%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 80ms; transition-duration: 820ms; }
+.flung img:nth-child(3) { left: 50%; top: 46%; width: 40%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 160ms; transition-duration: 900ms; }
+.folder:hover .flung img:nth-child(1), .folder:focus-visible .flung img:nth-child(1) { --x: -108%; --y: -72%; --r: -16deg; }
+.folder:hover .flung img:nth-child(2), .folder:focus-visible .flung img:nth-child(2) { --x: -8%; --y: -108%; --r: 6deg; }
+.folder:hover .flung img:nth-child(3), .folder:focus-visible .flung img:nth-child(3) { --x: 58%; --y: -58%; --r: 15deg; }
 
 /* --- windows: whole screens from the prototype, at two depths --- */
 /* The week view stays behind the cover and swings out to the left, so
