@@ -50,9 +50,9 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        {/* The mark is the way into About, the way the home page's own
-            name is. Work, next to it, is the way back to the home page. */}
-        <BrandMark href={`${base}/about`} label="Know more about me" onNavigate={closeMenu} />
+        {/* On interior pages the mark is the shortest route back to the
+            current track's homepage. */}
+        <BrandMark href={homeHref} label="Homepage" onNavigate={closeMenu} />
 
         <button
           type="button"
