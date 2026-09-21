@@ -25,6 +25,32 @@
 .stage:hover, .stage:focus-visible { --k: 1; }
 .stage:focus-visible { outline: 2px solid var(--ink-a); outline-offset: 12px; }
 
+/* Product status stays out of the resting composition, then appears as a
+   small proof label when the card is explored. VortexNet is the shipped
+   client work; the remaining featured projects are concepts. */
+.stage::after {
+  content: "CONCEPT";
+  position: absolute;
+  right: 4%;
+  bottom: 2%;
+  z-index: 8;
+  padding: 6px 12px;
+  border: 1px solid #58a9e6;
+  border-radius: 999px;
+  color: #58a9e6;
+  background: #ffffff;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.07em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 420ms var(--ease-spring);
+  pointer-events: none;
+}
+.stage[href$="/project/vortexnet"]::after { content: "SHIPPED"; }
+.card:hover .stage::after, .stage:focus-visible::after { opacity: 1; transform: translateY(0); }
+
 /* The tinted sheet the screens lie on. Tilts a touch on hover. */
 .sheet {
   position: absolute; inset: 6% 4%; border-radius: 22px;
@@ -118,9 +144,10 @@
   /* No hover on touch: the stage rests a little more open, so nothing is
      hidden under something else. */
   .stage { --k: 0.35; }
+  .stage::after { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .layer, .plate { transition: none; }
+  .sheet, .layer, .plate, .stage::after { transition: none; }
   .card[data-reveal="in"] .slot { animation: none; }
 }
