@@ -1,0 +1,550 @@
+/* About as a sheet that rises from the foot of the screen, and then as
+   one narrow column of writing with pictures out in the margins.
+
+   The sheet is fixed and scrolls inside itself rather than growing the
+   document: a page translated up from 100% would leave a screen of empty
+   document below it while it travels, and the reader could scroll into
+   it. Fixed, the rise is one transform over nothing. */
+.page {
+  /* White stock, like the case studies: the header paints from these
+     tokens, and on the global grey it came out as a grey strip over a
+     white page. */
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* dvh, not inset: 0 - on a phone the fixed viewport sits under the URL
+     bar, and the sheet would run beneath it. */
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.sheet {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* clip, not hidden: hidden still leaves the sheet scrollable sideways
+     by script or by a focus jump, and a picture that hangs past the edge
+     was enough to shift the whole page a few pixels left. */
+  overflow-x: clip;
+  overscroll-behavior: contain;
+  background: #ffffff;
+  animation: sheetRise 980ms cubic-bezier(0.22, 1, 0.28, 1) both;
+  /* A hairline rather than the system's bar: this is a sheet of paper,
+     and a grey slab down its edge reads as part of the furniture. */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 34, 34, 0.22) transparent;
+}
+
+.sheet::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sheet::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sheet::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(34, 34, 34, 0.22);
+  background-clip: content-box;
+}
+
+.sheet:hover::-webkit-scrollbar-thumb {
+  background: rgba(34, 34, 34, 0.34);
+  background-clip: content-box;
+}
+
+@keyframes sheetRise {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+/* Everything on the sheet arrives after it has landed, in reading order. */
+.rise {
+  opacity: 0;
+  animation: riseIn 620ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+.content {
+  /* Measured off the page this one is modelled on: a 520px column of
+     writing, 99px between its sections, 42px between its paragraphs, all
+     of it set in one size and one weight. */
+  --measure: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 7vw, 99px);
+  padding: clamp(88px, 12vw, 164px) clamp(24px, 5vw, 72px) clamp(80px, 9vw, 120px);
+  font-family: var(--font-sans), "Satoshi", sans-serif;
+}
+
+/* ---------- the column, and the margins either side of it ---------- */
+/* One measure of text down the middle at every width; the pictures live
+   in the space left over on each side and never push it around. */
+.column,
+.opening {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.opening,
+.chapter,
+.outro {
+  position: relative;
+}
+
+/* A title at the head of the sheet, and under it the first sentence of
+   the piece - which is set like every other sentence on the page. The
+   word struck out of it is all the emphasis it needs. */
+.title {
+  margin: 0 0 clamp(28px, 3.4vw, 46px);
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.statement {
+  margin: 0;
+  font-size: clamp(1rem, 1.85vw, 1.5625rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+
+.column p {
+  margin: 0 0 clamp(28px, 3.2vw, 42px);
+  font-size: clamp(1rem, 1.85vw, 1.5625rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+
+.column p:last-child {
+  margin-bottom: 0;
+}
+
+/* Words said in another voice: written by hand rather than set. Five
+   different hands, nothing like each other. Each runs small for its size
+   in its own way, so each is set larger than the type around it by its
+   own amount and nudged back onto the baseline; the line-height is
+   pinned so a written word never opens up the line. */
+.handA,
+.handB,
+.handC,
+.handD,
+.handE {
+  /* All five written heavy. Only the first ships a bold of its own; the
+     others are single-weight faces, so the browser thickens them. */
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* A fast slanted script. */
+.handA {
+  font-family: var(--font-hand-a), "Segoe Script", cursive;
+  font-size: 1.34em;
+  vertical-align: -0.04em;
+}
+
+/* A looped cursive, written large and low. */
+.handB {
+  font-family: var(--font-hand-b), "Segoe Script", cursive;
+  font-size: 0.92em;
+  vertical-align: -0.02em;
+}
+
+/* A round print hand. */
+.handC {
+  font-family: var(--font-hand-c), "Segoe Script", cursive;
+  font-size: 1.14em;
+  vertical-align: -0.03em;
+}
+
+/* A narrow drafting hand. */
+.handD {
+  font-family: var(--font-hand-d), "Segoe Script", cursive;
+  font-size: 1.08em;
+  vertical-align: -0.02em;
+}
+
+/* A loose scrawl, all ascender and very little body. */
+.handE {
+  font-family: var(--font-hand-e), "Segoe Script", cursive;
+  font-size: 1.5em;
+  vertical-align: -0.07em;
+}
+
+/* ---------- the hand marks ---------- */
+/* Cut out of the two sheets of real marks in /public/about/marks and
+   drawn over the words themselves: a highlighter behind the word, a
+   circle around it, a line under or through it. Each one is a background
+   stretched to the width of the word it is on, so it fits whatever it is
+   put over and no two land the same way.
+
+   They are set on the inline span itself. Vertical padding on an inline
+   box does not push the lines apart, which is what lets a circle sit
+   outside the word without opening up the paragraph. nowrap keeps a
+   marked phrase on one line - broken over two, the mark would be drawn
+   at both ends. */
+.hl,
+.hlLong,
+.circle,
+.circleRound,
+.underline,
+.underlineDouble {
+  background-repeat: no-repeat;
+  white-space: nowrap;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Highlighter: behind the word, over the x-height, a touch wider than the
+   word so the stroke runs past it at both ends. */
+.hl,
+.hlLong {
+  padding: 0 0.16em;
+  margin: 0 -0.16em;
+  background-position: 50% 62%;
+  background-size: 100% 1.02em;
+}
+
+.hl { background-image: url("/about/marks/hl-word.webp"); }
+.hlLong { background-image: url("/about/marks/hl-phrase.webp"); }
+
+/* Circled: the loop has to clear the word, so the box is padded out and
+   the margin pulls the padding back off the line. */
+.circle,
+.circleRound {
+  padding: 0.34em 0.5em;
+  margin: -0.34em -0.5em;
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+
+.circle { background-image: url("/about/marks/circle.webp"); }
+
+.circleRound {
+  padding: 0.42em 0.66em;
+  margin: -0.42em -0.66em;
+  background-image: url("/about/marks/circle-round.webp");
+}
+
+/* Under and through: thin strokes, sitting where a hand would put them. */
+.underline,
+.underlineDouble {
+  padding-bottom: 0.3em;
+  background-position: 50% 100%;
+  background-size: 100% 0.42em;
+}
+
+.underline { background-image: url("/about/marks/underline.webp"); }
+.underlineDouble { background-image: url("/about/marks/underline-double.webp"); }
+
+
+/* ---------- the pictures ---------- */
+/* Pinned to the margin beside the column rather than set into it, so the
+   reading measure never changes. --lift walks each one down its chapter,
+   which is what keeps them from lining up into a second column. */
+.picture {
+  position: absolute;
+  top: var(--lift, 0);
+  width: var(--pic-w, clamp(90px, 11vw, 190px));
+  margin: 0;
+}
+
+/* A picture set to the edge is measured off the window rather than off
+   the column: it takes the whole margin, less the page's own gutter, and
+   is held back from the column by 2rem so the two never touch. */
+.edge {
+  width: min(var(--pic-w, 400px), calc((100vw - var(--measure)) / 2 - 3.5rem));
+}
+
+.edge.left {
+  right: auto;
+  left: clamp(16px, 2vw, 40px);
+}
+
+.edge.right {
+  left: auto;
+  right: clamp(16px, 2vw, 40px);
+}
+
+/* Clear of the column on either side. The left-hand ones stand further
+   off than the right: they lean toward the text, and at the same gap the
+   lean read as crowding it. */
+.left {
+  right: calc(50% + var(--measure) / 2 + 4rem);
+}
+
+.right {
+  left: calc(50% + var(--measure) / 2 + 1.75rem);
+}
+
+/* The angle sits on the picture rather than the figure: the figure's own
+   transform belongs to the arrival. Pointed at, a picture straightens up,
+   lifts and comes forward a little. */
+.picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Not the stack - its prints each have a place of their own to move to,
+   and this would pull all three back into one pile - and not the icons,
+   which simply sit there. */
+.picture:not(.stack):not(.icon):hover img {
+  transform: rotate(calc(var(--tilt, 0deg) * -0.45)) translateY(-10px) scale(1.035);
+}
+
+/* The note under it, in one of the hands. */
+.note {
+  position: absolute;
+  left: 2%;
+  top: calc(100% + 0.2em);
+  font-size: 1.05rem;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px) rotate(-3deg);
+  transition: opacity 320ms ease, transform 460ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.right .note {
+  left: auto;
+  right: 2%;
+}
+
+.picture:hover .note {
+  opacity: 1;
+  transform: rotate(-3deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picture img,
+  .note {
+    transition: none;
+  }
+}
+
+/* ---------- the stack of photographs ---------- */
+/* Three prints dropped one on top of another, each in its own white
+   border. At rest they sit almost square on each other, the way a stack
+   on a desk does; pointed at, they slide apart into a hand. The first
+   one is in the flow and gives the stack its height; the other two are
+   laid over it. */
+.stack {
+  position: absolute;
+}
+
+.stack img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 6px solid #ffffff;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 22px -8px rgba(34, 34, 34, 0.38);
+  transform: rotate(var(--r, 0deg)) translate(var(--x, 0), var(--y, 0));
+  transition: transform 640ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.stack img + img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* The fan opens away from the column, never across it: the print on top
+   is the one on the left and barely moves, and the two under it slide out
+   to the right from behind it. */
+.stack img:nth-child(1) { --r: 5deg; --x: 4%; --y: -2%; }
+.stack img:nth-child(2) { --r: 2deg; --x: 6%; --y: 2%; transition-delay: 40ms; }
+.stack img:nth-child(3) { --r: -3deg; --x: 0%; --y: 0%; transition-delay: 80ms; }
+
+.stack:hover img:nth-child(1) { --r: 17deg; --x: 64%; --y: 7%; }
+.stack:hover img:nth-child(2) { --r: 5deg; --x: 31%; --y: -15%; }
+.stack:hover img:nth-child(3) { --r: -11deg; --x: -4%; --y: 7%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stack img {
+    transition: none;
+  }
+}
+
+/* ---------- the book ---------- */
+/* A real book rather than a photograph of one: a cover on a hinge with a
+   block of pages behind it. At rest it stands turned a little away from
+   the reader; pointed at, it lifts and the cover swings open on its
+   spine. All of it is transform, so it costs a compositor pass and no
+   layout. */
+/* Further out into the margin than the pictures, and higher up the
+   chapter: it sits beside the first line rather than next to the middle
+   of the paragraph. */
+.book {
+  right: calc(50% + var(--measure) / 2 + 5.5rem);
+  perspective: 1000px;
+}
+
+.bookBody {
+  position: relative;
+  aspect-ratio: 640 / 861;
+  transform-style: preserve-3d;
+  /* Put down at an angle, the way a book gets left on a desk. */
+  transform: rotate(-7deg) rotateY(-13deg);
+  transition: transform 640ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.book:hover .bookBody,
+.book:focus-within .bookBody {
+  transform: rotate(-4deg) rotateY(-19deg) translateY(-8px);
+}
+
+/* The block of pages, a shade off white and ruled by the edges of the
+   sheets themselves. */
+.bookPages {
+  position: absolute;
+  inset: 1.5% 0 1.5% 2.5%;
+  border-radius: 1px 3px 3px 1px;
+  background:
+    repeating-linear-gradient(90deg, #fbfaf7 0 2px, #e9e5dd 2px 3px),
+    #fbfaf7;
+  box-shadow: inset -4px 0 7px -4px rgba(34, 34, 34, 0.35);
+}
+
+.bookCover {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 50%;
+  transform: rotateY(0deg);
+  transition: transform 720ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 720ms ease;
+  border-radius: 1px 3px 3px 1px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 2px 5px 14px rgba(34, 34, 34, 0.2);
+}
+
+.book:hover .bookCover,
+.book:focus-within .bookCover {
+  transform: rotateY(-22deg);
+  box-shadow: 8px 10px 22px rgba(34, 34, 34, 0.22);
+}
+
+.bookCover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The shadow the spine casts on its own cover. */
+.bookHinge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 9%;
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.4), rgba(34, 34, 34, 0.06) 55%, rgba(34, 34, 34, 0));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bookBody,
+  .bookCover {
+    transition: none;
+  }
+}
+
+/* An app icon rather than a picture: no frame, and a shadow that follows
+   its own rounded corner instead of a box around it. They also stand
+   further out into the margin than the pictures do - small marks that
+   close to the text would read as part of it. */
+/* Each one stands at its own distance from the column, so the four
+   zig-zag out as well as down. */
+.icon.left {
+  right: calc(50% + var(--measure) / 2 + var(--out, 7rem));
+}
+
+.icon.right {
+  left: calc(50% + var(--measure) / 2 + var(--out, 5rem));
+}
+
+.icon img {
+  filter: drop-shadow(0 10px 18px rgba(34, 34, 34, 0.16)) drop-shadow(0 2px 3px rgba(34, 34, 34, 0.08));
+}
+
+/* A slot with nothing in it yet: the frame at the size the picture will
+   be, drawn in the blue ink so it cannot be mistaken for artwork. */
+.empty {
+  aspect-ratio: var(--ratio, 1 / 1);
+  border: 1px dashed rgba(63, 176, 230, 0.55);
+  background: rgba(63, 176, 230, 0.05);
+}
+
+/* Not enough margin left to hang a picture in: they fall in with the
+   text instead, at part width, one after the other. */
+@media (max-width: 1260px) {
+  .chapter {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .picture,
+  .book {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: min(62%, 300px);
+    margin: clamp(28px, 4vw, 44px) auto 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet,
+  .rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- arriving ---------- */
+/* The page this one is modelled on brings each line up seven pixels as it
+   is scrolled to, rather than showing the whole sheet at once. The script
+   only sets data-shown; everything about the movement is here. */
+.sheet [data-reveal] {
+  opacity: 0;
+  transform: translateY(7px);
+  transition: opacity 620ms ease, transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sheet [data-reveal][data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

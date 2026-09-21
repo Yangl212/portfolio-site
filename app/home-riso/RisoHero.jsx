@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import styles from "./page.module.css"
@@ -75,6 +76,9 @@ const strip = [
 const HINT_SPOTS = 3
 /* Mirrors --t-rest in page.module.css: when the print has settled. */
 const HINT_REST = 2300
+/* About opens only once the print is finished - both plates down and the
+   sheet at rest - and then rises slowly. */
+const ABOUT_DELAY = 2400
 
 /* A fresh misregistration for every pull: around the same few pixels, never
    the same twice. */
@@ -118,10 +122,23 @@ export function RisoHero() {
     }
   }, [])
 
+  /* Pressing the name pulls another print, and when the print is finished
+     About rises over it from the foot of the screen. The route is
+     prefetched on mount so the rise never waits on a fetch. */
+  const router = useRouter()
+  const openTimer = useRef(0)
+
+  useEffect(() => {
+    router.prefetch("/about")
+    return () => clearTimeout(openTimer.current)
+  }, [router])
+
   const pullPrint = useCallback(() => {
     setPull((n) => n + 1)
     setReg(newRegistration())
-  }, [])
+    clearTimeout(openTimer.current)
+    openTimer.current = setTimeout(() => router.push("/about"), ABOUT_DELAY)
+  }, [router])
 
   /* The note is taken off the sheet the moment a print starts and written
      back on once the ink has settled - somewhere else each time, so it is
@@ -369,7 +386,7 @@ export function RisoHero() {
           label when the name can be pulled. The system cursor is hidden
           only while these are showing. */}
       <div className={styles.dot} aria-hidden="true" />
-      <div className={styles.ring} aria-hidden="true"><span className={styles.cursorLabel}>Pull</span></div>
+      <div className={styles.ring} aria-hidden="true"><span className={styles.cursorLabel}>Know more about me</span></div>
       <RegMark className={styles.regTL} />
       <RegMark className={styles.regTR} />
       <RegMark className={styles.regBL} />
@@ -385,7 +402,7 @@ export function RisoHero() {
             the inner one carries the ink, the squeegee wipe and the drift,
             so the transforms never fight. Multiply on the plates makes the
             overlap purple. Re-keyed on every pull so the print runs again. */}
-        <h1 id="hero-name" className={styles.op} aria-label="Lele Yang" title="Pull another print" onClick={pullPrint} style={registration}>
+        <h1 id="hero-name" className={styles.op} aria-label="Lele Yang" onClick={pullPrint} style={registration}>
           {/* Pencilled in beside the word once the print has settled: the
               only handwriting on the sheet, and the only thing that says
               the word is a thing you can press. It is rubbed out at the
