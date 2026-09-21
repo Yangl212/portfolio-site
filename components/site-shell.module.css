@@ -1,7 +1,13 @@
+/* No rule under the bar: a hard black line across the top of a white
+   sheet read as a seam. The bar is separated by sitting slightly above
+   the page instead - a soft shadow falling onto what it covers, and the
+   paper's own tint behind it so it still reads as a strip laid on top
+   rather than part of the page. */
 .header {
   position: relative;
   z-index: 10;
-  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+  box-shadow: 0 10px 22px -18px rgba(34, 34, 34, 0.55);
 }
 
 .headerInner {
@@ -12,67 +18,176 @@
   /* Fluid rather than fixed: on a narrow window a 78px bar ate too much of
      the page, so the bar shrinks with the viewport. */
   min-height: clamp(54px, 5.4vw, 66px);
-  padding: 0 0 0 24px;
+  padding: 0 24px;
 }
 
 .brand {
   position: relative;
   z-index: 2;
   align-self: center;
-  font-size: clamp(15px, 1.35vw, 17px);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* The name, printed in the two inks the rest of the site is printed in.
+   The plates sit a pixel out of register; pointed at, they pull further
+   apart, the way the home page's own name does. */
+.brandType {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: clamp(19px, 2vw, 25px);
   font-weight: 700;
-  letter-spacing: 1px;
-  line-height: 2;
+  letter-spacing: -0.02em;
+  line-height: 1;
   text-transform: uppercase;
+}
+
+.brandInkA,
+.brandInkB {
+  display: block;
+  mix-blend-mode: multiply;
+  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.brandInkA {
+  color: #ff48b0;
+  transform: translate(-1px, -1px);
+}
+
+.brandInkB {
+  position: absolute;
+  inset: 0;
+  color: #3fb0e6;
+  transform: translate(1px, 1px);
+}
+
+.brand:hover .brandInkA,
+.brand:focus-visible .brandInkA {
+  transform: translate(-4px, -3px);
+}
+
+.brand:hover .brandInkB,
+.brand:focus-visible .brandInkB {
+  transform: translate(4px, 3px);
+}
+
+/* Over the mark, the reader's own cursor gives way to the press mark -
+   but only once ours is actually on screen, so a failed script never
+   leaves them without a pointer. The three nav links keep the reader's
+   own cursor: a tooltip on each of them ran off the edge of the window
+   for the rightmost one, and was more to track than three short, already
+   self-explanatory words needed. */
+.brand[data-tracking="true"],
+.brand[data-tracking="true"] * {
+  cursor: none;
+}
+
+/* One fixed layer, moved to the pointer by a single transform. */
+.pressCursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* A small solid dot, not a ring: at this size an outline reads as a
+   smudge rather than a mark. */
+.pressDot {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ff48b0;
+}
+
+.pressLabel {
+  position: absolute;
+  left: 18px;
+  top: -11px;
+  padding: 4px 10px;
+  border: 1px solid #3fb0e6;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #3fb0e6;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .nav {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-end;
-  gap: 0;
+  gap: 8px;
   flex-wrap: nowrap;
 }
 
+/* The links are the site's small print: the same hairline pills the
+   footer sets its contact in and the hero sets its eyebrow in, in the
+   same mono. Plain words in the running face read as leftovers next to
+   everything else on the sheet. Pointed at, each takes an ink - the ink
+   the footer's pills take, in the same order. */
 .link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 14px;
-  font-size: clamp(14px, 1.2vw, 16px);
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 15px;
+  border: 1px solid rgba(34, 34, 34, 0.28);
+  border-radius: 999px;
+  color: var(--text);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
   font-weight: 500;
-  line-height: 1.4;
-  transition: opacity 180ms ease;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
-.link:hover {
-  opacity: 0.62;
+.link span {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-size: 0.9em;
+  letter-spacing: 0;
 }
 
-.cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  min-width: clamp(96px, 9vw, 120px);
-  padding: 0 20px;
-  margin-left: 10px;
-  font-size: clamp(14px, 1.2vw, 16px);
-  background: #222222;
+.link:hover,
+.link:focus-visible {
+  background: var(--text);
+  border-color: var(--text);
   color: var(--inverse);
-  font-weight: 700;
-  border-radius: 0;
-  transition: background-color 180ms ease, color 180ms ease, opacity 180ms ease,
-    box-shadow 180ms ease;
 }
 
-.cta:hover,
-.cta:focus-visible {
-  background: #ff48b0;
-  color: #ffffff;
-  opacity: 1;
-  box-shadow: inset 1px 0 0 rgba(34, 34, 34, 0.16), inset -1px 0 0 rgba(34, 34, 34, 0.16);
+.link:nth-child(2):hover,
+.link:nth-child(2):focus-visible {
+  background: #3fb0e6;
+  border-color: #3fb0e6;
+  color: var(--text);
 }
+
+.link:nth-child(3):hover,
+.link:nth-child(3):focus-visible {
+  background: #ff48b0;
+  border-color: #ff48b0;
+  color: var(--inverse);
+}
+
+/* The page you are on: the hairline drawn in full ink. */
+.link[data-active="true"] {
+  border-color: var(--text);
+}
+
+
 
 .menuButton {
   display: none;
@@ -203,19 +318,20 @@
     flex: none;
   }
 
+  /* The menu drops down as a short stack of the same pills, each on its
+     own line and sized to its own word, under the bar's shadow. */
   .nav {
     position: absolute;
-    top: calc(100% + 1px);
-    left: -1px;
-    right: -1px;
+    top: 100%;
+    left: 0;
+    right: 0;
     display: none;
     flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 0;
-    border: 1px solid var(--border);
-    border-top: 0;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 16px 16px;
     background: var(--panel-bg);
+    box-shadow: 0 14px 24px -18px rgba(34, 34, 34, 0.5);
   }
 
   .nav[data-open="true"] {
@@ -223,19 +339,10 @@
   }
 
   .link {
-    justify-content: flex-start;
-    min-height: 52px;
+    min-height: 40px;
     padding: 0 16px;
-    border-bottom: 1px solid rgba(34, 34, 34, 0.16);
   }
 
-  .cta {
-    width: 100%;
-    min-width: 0;
-    min-height: 58px;
-    margin-left: 0;
-    justify-content: center;
-  }
 
   .footerTitle {
     font-size: 36px;

@@ -5,6 +5,8 @@ import { useState } from "react"
 
 import { trackBase } from "../lib/projects"
 
+import { BrandMark } from "./BrandMark"
+
 import styles from "./site-shell.module.css"
 
 /* One resume per track: the UI/UX track hands out the product resume, the
@@ -48,14 +50,9 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        {/* prefetch is off on both routes the header points at. Next.js
-           prefetches a static route in full, and React preloads the images
-           in it, so leaving it on pulls several MB of home-page covers into
-           every case study at hydration - starving the demo videos of
-           bandwidth before the reader has scrolled anywhere near them. */}
-        <Link href={homeHref} className={styles.brand} onClick={closeMenu} prefetch={false}>
-          {"Lele Yang\u00AE"}
-        </Link>
+        {/* The mark is the way into About, the way the home page's own
+            name is. Work, next to it, is the way back to the home page. */}
+        <BrandMark href={`${base}/about`} label="Know more about me" onNavigate={closeMenu} />
 
         <button
           type="button"
@@ -76,6 +73,10 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
           data-open={isMenuOpen}
           aria-label="Primary"
         >
+          {/* prefetch is off on the routes this header points at: Next.js
+             prefetches a static route in full, and React preloads the
+             images in it, which would pull several MB of home-page covers
+             into every case study at hydration. */}
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -95,11 +96,8 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
             rel="noreferrer"
             onClick={closeMenu}
           >
-            Resume
+            Resume <span aria-hidden="true">&#8599;</span>
           </a>
-          <Link className={styles.cta} href={`${base}/contact`} onClick={closeMenu}>
-            Let&apos;s talk
-          </Link>
         </nav>
       </div>
     </header>

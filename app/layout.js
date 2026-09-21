@@ -1,8 +1,15 @@
+import { DM_Mono } from "next/font/google"
+
 import "./globals.css"
 import { BackToTop } from "../components/BackToTop"
 import { getSiteOrigin } from "../lib/site"
 
 const SITE_NAME = "Lele Yang"
+
+/* The site's small print - the header's links, the eyebrows, the cursor
+   labels - is set in this mono on every page, so it is loaded once here
+   rather than page by page. */
+const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" })
 
 /*
  * Every page below sets its own `title` and `description`. The template here
@@ -42,7 +49,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={mono.variable}>
         {children}
         {/* Every route is a long scroll, so the way back up lives here rather
             than being re-mounted page by page. It shows itself only once there
