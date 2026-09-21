@@ -92,8 +92,15 @@ function Stage({ project, stack }) {
       const r = el.getBoundingClientRect()
       el.style.setProperty("--sx", (((event.clientX - r.left) / r.width - 0.5) * 2).toFixed(3))
       el.style.setProperty("--sy", (((event.clientY - r.top) / r.height - 0.5) * 2).toFixed(3))
+      el.style.setProperty("--cursor-x", `${(event.clientX - r.left).toFixed(1)}px`)
+      el.style.setProperty("--cursor-y", `${(event.clientY - r.top).toFixed(1)}px`)
     }
-    const onLeave = () => { el.style.setProperty("--sx", "0"); el.style.setProperty("--sy", "0") }
+    const onLeave = () => {
+      el.style.setProperty("--sx", "0")
+      el.style.setProperty("--sy", "0")
+      el.style.removeProperty("--cursor-x")
+      el.style.removeProperty("--cursor-y")
+    }
     el.addEventListener("pointermove", onMove)
     el.addEventListener("pointerleave", onLeave)
     return () => { el.removeEventListener("pointermove", onMove); el.removeEventListener("pointerleave", onLeave) }
