@@ -97,8 +97,8 @@
    frame, so the arrival is animated on .card instead and the two never
    write to the same property. */
 @keyframes labDrop {
-  from { opacity: 0; transform: translateY(24px) scale(0.96) rotate(var(--r, 0deg)); }
-  to { opacity: 1; transform: rotate(var(--r, 0deg)); }
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: none; }
 }
 
 .card {
@@ -227,7 +227,6 @@
     top: auto;
     left: auto;
     width: 100%;
-    transform: none !important;
   }
 
   .cardMotion {
@@ -246,7 +245,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .frame, .dragHint { animation: none; opacity: 1; transform: none; }
-  .card { animation: none; opacity: 1; transform: rotate(var(--r, 0deg)); }
+  .frame, .card, .dragHint { animation: none; opacity: 1; transform: none; }
   .dragHint { transform: translateX(-50%); }
 }
