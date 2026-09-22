@@ -177,23 +177,12 @@
   transform-origin: 50% 80%;
   filter: drop-shadow(0 1px 1px rgba(34, 34, 34, 0.07)) drop-shadow(0 14px 22px rgba(34, 34, 34, 0.24));
 }
-/* Depth here is ordered on hover, not at rest: at rest everything is
-   tucked under the cover (z 2) or the folder's own front (z 4-5) like
-   every other set. On hover the week view lifts over the cover so the
-   suggestion card has something to hide behind - behind the cover it
-   would simply be invisible, since the cover fills 11-89% of the
-   folder. */
 .windows img:nth-child(1) { left: 20%; top: 13%; width: 60%; z-index: 1; --x: 0%; --y: 0%; --r: -2deg; }
-.windows img:nth-child(2) { left: 40%; top: 52%; width: 42%; z-index: 4; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 120ms; transition-duration: 820ms; }
+.windows img:nth-child(2) { left: 40%; top: 52%; width: 42%; z-index: 3; --x: 0%; --y: 0%; --r: 2deg; transition-delay: 120ms; transition-duration: 820ms; }
 .windows img:nth-child(3) { left: 56%; top: 50%; width: 24%; z-index: 3; --x: 0%; --y: 0%; --r: -1deg; transition-delay: 60ms; transition-duration: 880ms; }
-.folder:hover .windows img:nth-child(1), .folder:focus-visible .windows img:nth-child(1) { z-index: 4; --x: -28%; --y: -98%; --r: -6deg; }
-.folder:hover .windows img:nth-child(2), .folder:focus-visible .windows img:nth-child(2) { z-index: 5; --x: 36%; --y: -190%; --r: 7deg; }
-/* The tall narrow suggestion card. Thrown into the middle it stood
-   upright across the laptop and hung down past where the other two stop;
-   thrown right it crowded the mail. It goes down the left instead, most
-   of it behind the week view, only its foot showing past the bottom
-   edge - a card in the stack rather than a third thing in the air. */
-.folder:hover .windows img:nth-child(3), .folder:focus-visible .windows img:nth-child(3) { --x: -233%; --y: -118%; --r: -4deg; }
+.folder:hover .windows img:nth-child(1), .folder:focus-visible .windows img:nth-child(1) { --x: -28%; --y: -98%; --r: -6deg; }
+.folder:hover .windows img:nth-child(2), .folder:focus-visible .windows img:nth-child(2) { --x: 36%; --y: -190%; --r: 7deg; }
+.folder:hover .windows img:nth-child(3), .folder:focus-visible .windows img:nth-child(3) { --x: -68%; --y: -100%; --r: -4deg; }
 
 /* --- case: the archive's own cabinet, and a record out of it --- */
 /* Two pieces, one each side of the cover: the cabinet leans out from
@@ -239,7 +228,7 @@
 
 @media (max-width: 809px) {
   .header { padding-top: 18px; }
-  .grid { grid-template-columns: repeat(2, minmax(0, 300px)); gap: 104px 32px; padding-top: 112px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 300px)); gap: 104px 32px; padding-top: 96px; }
 }
 
 @media (max-width: 560px) {
