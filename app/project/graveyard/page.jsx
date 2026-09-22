@@ -1,5 +1,6 @@
 import { ProjectHero } from "../../../components/ProjectHero"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
@@ -20,6 +21,11 @@ export default function GraveyardPage({ track = "uiux" }) {
       <div className={styles.frame}>
         <div className={styles.headerMask}>
           <SiteHeader active={trackHome(track)} track={track} />
+          {/* The hero animates itself on load (.reveal below); everything
+              past it waits until it is scrolled to, so a reader meets each
+              section as they reach it rather than finding it already
+              played out. */}
+          <Reveal fade={`.${styles.section}`} />
         </div>
 
         <section className={styles.content}>

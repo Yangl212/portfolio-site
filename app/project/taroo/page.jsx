@@ -517,7 +517,7 @@ export default function TarooPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.productGallery} figure, .${styles.keywordBoard}, .${styles.decisionVisual}, .${styles.swatch}, .${styles.competitorImage}, .${styles.brandBoard}`}
+          fade={`.${styles.productGallery} figure, .${styles.keywordBoard}, .${styles.decisionVisual}, .${styles.swatch}, .${styles.competitorImage}, .${styles.brandBoard}, .${styles.caseSection}`}
         />
 
         <SiteFooter />

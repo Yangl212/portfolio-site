@@ -643,7 +643,7 @@ export default function SuglarPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.productGallery} figure, .${styles.referenceImage}, .${styles.decisionVisual}, .${styles.roundVisual}, .${styles.wordmarkRow} > div, .${styles.swatch}, .${styles.systemFigure}, .${styles.buildGallery} figure`}
+          fade={`.${styles.productGallery} figure, .${styles.referenceImage}, .${styles.decisionVisual}, .${styles.roundVisual}, .${styles.wordmarkRow} > div, .${styles.swatch}, .${styles.systemFigure}, .${styles.buildGallery} figure, .${styles.caseSection}`}
         />
 
         <SiteFooter />

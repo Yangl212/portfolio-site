@@ -1,4 +1,5 @@
 import { ProjectHero } from "../../../components/ProjectHero"
+import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 
@@ -193,6 +194,11 @@ export default function TotnurtureProjectPage() {
       <div className={styles.frame}>
         <div className={styles.headerMask}>
           <SiteHeader active="/" />
+          {/* The hero animates itself on load (.reveal below); everything
+              past it waits until it is scrolled to, so a reader meets each
+              section as they reach it rather than finding it already
+              played out. */}
+          <Reveal fade={`.${styles.section}`} />
         </div>
 
         <section className={styles.content}>

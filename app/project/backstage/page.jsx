@@ -655,7 +655,7 @@ export default function BackstagePage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.wideFigure}, .${styles.systemLead}, .${styles.media}, .${styles.flowPair} figure, .${styles.systemGrid} figure`}
+          fade={`.${styles.wideFigure}, .${styles.systemLead}, .${styles.media}, .${styles.flowPair} figure, .${styles.systemGrid} figure, .${styles.caseSection}`}
           bars={`.${styles.rankFill}, .${styles.surveyBar}, .${styles.modeBar}`}
         />
 

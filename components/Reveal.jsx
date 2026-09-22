@@ -30,26 +30,40 @@ export function Reveal({ fade = "", bars = "", barsUp = "" }) {
 
     let pending = []
 
-    for (const [selector, attr] of groups) {
-      if (!selector) continue
+    function tag() {
+      for (const [selector, attr] of groups) {
+        if (!selector) continue
 
-      for (const el of document.querySelectorAll(selector)) {
-        // Already on screen at mount - leave it finished.
-        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) continue
+        for (const el of document.querySelectorAll(selector)) {
+          // Already tagged by an earlier pass, or already revealed.
+          if (el.hasAttribute(attr)) continue
 
-        // Bars in one row arrive in sequence rather than all at once.
-        if (attr !== "data-reveal") {
-          const siblings = el.parentElement ? [...el.parentElement.children] : []
-          const index = Math.max(0, siblings.indexOf(el))
-          el.style.transitionDelay = `${Math.min(index * 70, 280)}ms`
+          // Already on screen - leave it finished.
+          if (el.getBoundingClientRect().top < window.innerHeight * 0.92) continue
+
+          // Bars in one row arrive in sequence rather than all at once.
+          if (attr !== "data-reveal") {
+            const siblings = el.parentElement ? [...el.parentElement.children] : []
+            const index = Math.max(0, siblings.indexOf(el))
+            el.style.transitionDelay = `${Math.min(index * 70, 280)}ms`
+          }
+
+          el.setAttribute(attr, "")
+          pending.push({ el, attr })
         }
-
-        el.setAttribute(attr, "")
-        pending.push({ el, attr })
       }
     }
 
-    if (!pending.length) return
+    tag()
+
+    /* A page whose images carry no width and height is only a screen or
+       two tall until they load, so the pass above finds every section
+       "already on screen" and leaves the whole page unanimated. Tagging
+       again once loading has finished catches whatever the finished
+       layout has pushed below the fold - and only that, so nothing the
+       reader can already see is hidden back out from under them. */
+    const retag = () => { tag(); if (pending.length) start() }
+    if (document.readyState !== "complete") window.addEventListener("load", retag)
 
     // Runs straight off the scroll event, not through rAF. The list is small
     // and only ever shrinks, and the listeners come off as soon as it empties,
@@ -77,12 +91,18 @@ export function Reveal({ fade = "", bars = "", barsUp = "" }) {
       window.removeEventListener("resize", check)
     }
 
-    window.addEventListener("scroll", check, { passive: true })
-    window.addEventListener("resize", check)
-    check()
+    function start() {
+      stop()
+      window.addEventListener("scroll", check, { passive: true })
+      window.addEventListener("resize", check)
+      check()
+    }
+
+    if (pending.length) start()
 
     return () => {
       stop()
+      window.removeEventListener("load", retag)
       // Never leave anything stuck in the hidden start state.
       for (const { el, attr } of pending) {
         el.removeAttribute(attr)

@@ -447,7 +447,7 @@ export default function AlcoholProjectPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.moodboard}, .${styles.highlightVisual}, .${styles.references}, .${styles.posterPair} figure, .${styles.bookGrids} figure`}
+          fade={`.${styles.moodboard}, .${styles.highlightVisual}, .${styles.references}, .${styles.posterPair} figure, .${styles.bookGrids} figure, .${styles.caseSection}`}
         />
 
         <SiteFooter />
