@@ -174,10 +174,12 @@ function Stage({ project, stack }) {
         </span>
       </Link>
 
-      {/* The same dot-and-label mark the header's own logo carries,
-          naming the one thing about the project a reader could not
-          otherwise tell from three photos: whether it shipped. */}
-      {tracking ? <PressRing ringRef={ringRef} label={status} /> : null}
+      {/* The label the header's own logo carries, naming the one thing
+          about the project a reader could not otherwise tell from three
+          photos: whether it shipped. Without the mark's own dot, though -
+          a stage is something you click, so the reader keeps the pointer
+          that says so and the label just follows it. */}
+      {tracking ? <PressRing ringRef={ringRef} label={status} dot={false} /> : null}
     </>
   )
 }

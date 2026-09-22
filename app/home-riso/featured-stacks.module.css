@@ -30,10 +30,10 @@
 .stage:hover, .stage:focus-visible { --k: 1; }
 .stage:focus-visible { outline: 2px solid var(--ink-a); outline-offset: 12px; }
 
-/* The system cursor gives way to the header's own dot-and-label mark
-   (see usePressCursor/PressRing) once it is actually on screen, so a
-   failed script never leaves a reader without a pointer. */
-.stage[data-tracking="true"] { cursor: none; }
+/* Unlike the header's mark, a stage keeps the reader's own pointer - it
+   is a link, and the hand says that better than a dot of ours does. Only
+   the label follows the cursor here (see PressRing's `dot`). */
+.stage { cursor: pointer; }
 
 /* The tinted sheet the screens lie on. Tilts a touch on hover. */
 .sheet {

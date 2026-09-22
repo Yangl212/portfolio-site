@@ -123,6 +123,14 @@
   white-space: nowrap;
 }
 
+/* With no dot of ours in front of it, the label clears the reader's own
+   pointer instead: a hand cursor hangs down and to the right of its
+   hotspot, so the label sits past its corner rather than under it. */
+.pressLabelAlone {
+  left: 24px;
+  top: 6px;
+}
+
 .nav {
   display: flex;
   align-items: center;
