@@ -17,6 +17,11 @@ import styles from "./featured-stacks.module.css"
  * Every image is one the site already ships. Chips either scope a test result
  * to its task or state the capability the project demonstrates.
  *
+ * `facets` is the one line a recruiter scans before the summary: what the
+ * thing runs on, who paid for it (B2B or B2C), and the field it sits in.
+ * Three short tags, always in that order, so the three cards read as one
+ * table rather than three blurbs.
+ *
  * Layer geometry is in percent of the stage: x/y the top-left, w the width;
  * r the resting rotation. dx/dy/dr/ds are the hover move, spin and scale.
  * depth is how far the layer leans with the pointer.
@@ -28,6 +33,7 @@ const stacks = {
     when: "2026 · 8 weeks",
     role: "UI/UX Designer",
     summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.",
+    facets: ["Mobile + Web", "B2C", "Banking"],
     tint: "pink",
     layers: [
       { kind: "cut", src: "/boa/screen2.png", x: 1, y: 18, w: 28, r: -9, dx: -18, dy: -14, dr: -13, depth: 0.7, z: 1 },
@@ -43,6 +49,7 @@ const stacks = {
     when: "2025 · Jun – Oct",
     role: "UI/UX Design Intern",
     summary: "Task-based information hierarchy for a 30-person company’s finance dashboard, shipped during the internship.",
+    facets: ["Web app", "B2B internal", "Fintech"],
     tint: "blue",
     layers: [
       { kind: "shot", src: "vortexnet-screen", x: 8, y: 16, w: 84, r: 0, dx: 0, dy: 4, dr: -2, ds: 1.04, depth: 0.4, z: 1 },
@@ -54,8 +61,9 @@ const stacks = {
   },
   lastmessage: {
     when: "2026 · 4 months",
-    role: "Product design · AI behavior · Web development",
+    role: "Product Design & Development",
     summary: "A playable browser-based AI detective game, designed and developed end to end across the investigation, character behavior, and interface.",
+    facets: ["Browser game", "B2C", "AI · Narrative"],
     tint: "pink",
     layers: [
       { kind: "cut", src: "lastmessage-laptop", x: 6, y: 30, w: 88, r: 0, dx: 0, dy: 8, dr: 2, ds: 1.05, depth: 0.5, z: 2 },
@@ -76,6 +84,7 @@ const stacks = {
     when: "2025",
     role: "Brand & Illustration Design",
     summary: "A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them.",
+    facets: ["Print + Packaging", "B2C", "Brand"],
     tint: "pink",
     layers: [
       { kind: "cut", src: "/Taroo/card1.png", x: 6, y: 20, w: 28, r: -10, dx: -16, dy: -12, dr: -15, depth: 0.7, z: 1 },
@@ -89,6 +98,7 @@ const stacks = {
     when: "2024",
     role: "Visual & Game Design",
     summary: "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy.",
+    facets: ["Board game", "B2C", "Game · Visual"],
     tint: "blue",
     layers: [
       /* The box's own background is close to opaque edge to edge, so
@@ -194,6 +204,9 @@ export function FeaturedStacks({ projects }) {
           <article key={project.slug} className={styles.card}>
             <Stage project={project} stack={stack} />
             <div className={styles.copy}>
+              <ul className={styles.facets} data-tint={stack.tint}>
+                {stack.facets.map((facet) => <li key={facet} className={styles.facet}>{facet}</li>)}
+              </ul>
               <p className={styles.description}>{stack.summary}</p>
               <p className={styles.role}><span>Role</span> — {stack.role}</p>
             </div>

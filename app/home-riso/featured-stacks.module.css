@@ -110,6 +110,25 @@
    line sits on its floor - the three roles print on one baseline however
    many lines each summary runs to. */
 .copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 4%; flex: 1; }
+
+/* Platform, market, field - the three things about a project a reader
+   sorts by before they read a word of the summary. Set as quiet outlines
+   so they classify the work without competing with the chips lying on
+   the stage above, which carry the numbers. The middle one names the
+   market, so it takes the card's own ink and reads first. */
+.facets { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.facet {
+  padding: 0.3em 0.7em; border: 1px solid rgba(34, 34, 34, 0.18); border-radius: 999px;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  color: var(--muted);
+  transition: border-color 320ms var(--ease-spring), color 320ms var(--ease-spring);
+}
+.facets[data-tint="pink"] { --facet-ink: var(--ink-a); }
+.facets[data-tint="blue"] { --facet-ink: var(--ink-b); }
+.facet:nth-child(2) { border-color: var(--facet-ink); color: var(--facet-ink); }
+.card:hover .facet, .card:focus-within .facet { border-color: var(--facet-ink); }
+
 .description { margin: 0; max-width: 40ch; color: var(--muted); font-size: 0.9375rem; line-height: 1.5; }
 .role { margin: auto 0 0; font-size: 0.875rem; line-height: 1.4; color: var(--text); }
 .role span { color: var(--muted); }
@@ -137,6 +156,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .layer, .plate, .stage::after { transition: none; }
+  .sheet, .layer, .plate, .stage::after, .facet { transition: none; }
   .card[data-reveal="in"] .slot { animation: none; }
 }
