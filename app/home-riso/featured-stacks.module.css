@@ -9,7 +9,10 @@
   --ink-a: #ff48b0;
   --ink-b: #3fb0e6;
   --ease-spring: cubic-bezier(0.22, 1.2, 0.32, 1);
-  display: flex; flex-direction: column; gap: 22px; min-width: 0;
+  /* The title card sits on the stage's bottom edge and throws its shadow
+     past it, so the copy below has to clear the shadow, not the stage:
+     at the old 22px the tag row sat inside the last of it. */
+  display: flex; flex-direction: column; gap: 34px; min-width: 0;
 }
 
 /* ---------- the stage ---------- */

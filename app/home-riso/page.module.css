@@ -384,25 +384,24 @@
    Element selectors, not class names: the sections carry the live page's
    own hashed classes, which this stylesheet cannot name. */
 .contentTight > section::before { content: none; }
-.contentTight > section + section { margin-top: clamp(112px, 14vw, 216px); }
-.contentTight { padding-bottom: clamp(132px, 13vw, 200px); }
 
-/* The same run of plain paper above Selected Work as between the blocks,
-   so it sits centred between the sheet and More Work rather than riding up
-   against the hero.
+/* One run of plain paper, above Selected Work and again before More Work,
+   so the two blocks are spaced by the same measure rather than each by its
+   own. It used to be half a screen at desktop widths - enough white that
+   the sheet and the work read as unrelated pages. --run is that measure
+   named once; changing it moves both gaps together. */
+.contentTight { --run: clamp(76px, 9vw, 140px); padding-bottom: clamp(132px, 13vw, 200px); }
+.contentTight > section + section { margin-top: var(--run); }
 
-   The Selected-work jump lands well into that paper rather than at the
-   top of it: the full run reads fine to a reader arriving at their own
-   pace, but is too much bare page for one who just asked to be taken
-   there. --lead-in is the same run named once, so padding-top and
-   scroll-margin-top move together; the negative margin at wide widths is
-   deliberate, carrying the landing spot up into the section's own
-   padding so the heading always settles about 160px under the docked
-   header regardless of how tall that padding is at the given width. */
+/* The Selected-work jump lands well into that paper rather than at the top
+   of it: the full run reads fine to a reader arriving at their own pace,
+   but is too much bare page for one who just asked to be taken there. The
+   padding and the landing are set from the same --run, so the pair always
+   puts the heading about 160px under the docked header, whatever the run
+   measures at this width. */
 .hero + .contentTight {
-  --lead-in: clamp(112px, 14vw, 216px);
-  padding-top: var(--lead-in);
-  scroll-margin-top: calc(160px - var(--lead-in));
+  padding-top: var(--run);
+  scroll-margin-top: calc(160px - var(--run));
 }
 
 @media (max-width: 1080px) {
@@ -424,8 +423,10 @@
   .band { font-size: 2.25rem; }
   .bandTop { top: 18px; }
   .bandBottom { bottom: 26px; }
-  .hero + .contentTight { padding-top: 96px; scroll-margin-top: 14px; }
-  .contentTight > section + section { margin-top: 96px; }
+  .contentTight { --run: 96px; }
+  /* The docked header is shorter here, so the landing sits nearer the top
+     than the 160px the desktop rule keeps. */
+  .hero + .contentTight { scroll-margin-top: 14px; }
   .contentTight { padding-bottom: 104px; }
 }
 
