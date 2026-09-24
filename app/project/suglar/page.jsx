@@ -6,6 +6,7 @@ import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 
+import { ColorBoard } from "./ColorBoard"
 import styles from "./page.module.css"
 
 export const metadata = {
@@ -501,34 +502,7 @@ export default function SuglarPage({ track = "uiux" }) {
                     Bubblegum on sensory cards, Lemon on ability cards, the rest inside the illustration.
                   </p>
                 </div>
-                <div className={styles.paletteTiers}>
-                  <div className={styles.paletteTier}>
-                    <p className={styles.paletteTierLabel}>Core &#183; On every component</p>
-                    <div className={styles.paletteGrid} data-tier="core">
-                      {corePalette.map((color) => (
-                        <div className={styles.swatch} key={color.hex}>
-                          <div className={styles.swatchChip} style={{ background: color.hex }} />
-                          <p className={styles.swatchName}>{color.name}</p>
-                          <p className={styles.swatchRole}>{color.role}</p>
-                          <p className={styles.swatchHex}>{color.hex}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={styles.paletteTier}>
-                    <p className={styles.paletteTierLabel}>Supporting &#183; Card fills and candy accents</p>
-                    <div className={styles.paletteGrid} data-tier="support">
-                      {supportPalette.map((color) => (
-                        <div className={styles.swatch} key={color.hex}>
-                          <div className={styles.swatchChip} style={{ background: color.hex }} />
-                          <p className={styles.swatchName}>{color.name}</p>
-                          <p className={styles.swatchHex}>{color.hex}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <ColorBoard core={corePalette} support={supportPalette} />
               </div>
 
               <div className={styles.systemBlock} data-wide="">
@@ -643,7 +617,7 @@ export default function SuglarPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.productGallery} figure, .${styles.referenceImage}, .${styles.decisionVisual}, .${styles.roundVisual}, .${styles.wordmarkRow} > div, .${styles.swatch}, .${styles.systemFigure}, .${styles.buildGallery} figure, .${styles.caseSection}`}
+          fade={`.${styles.productGallery} figure, .${styles.referenceImage}, .${styles.decisionVisual}, .${styles.roundVisual}, .${styles.wordmarkRow} > div, .${styles.colorBoard}, .${styles.systemFigure}, .${styles.buildGallery} figure, .${styles.caseSection}`}
         />
 
         <SiteFooter />
