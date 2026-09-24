@@ -86,12 +86,22 @@ const stacks = {
     summary: "A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them.",
     facets: ["Print + Packaging", "B2C", "Brand"],
     tint: "pink",
+    /* Five arcana rather than three, fanned in two depths: High Priestess
+       and Sun stand at the rear corners, which takes the hand from the
+       dark end of the palette to the warm one - navy, purple, mint, pink,
+       orange - and the three pastel cards sit in front. On hover the back
+       row spreads wider than the front, so the fan opens in two stages. */
     layers: [
-      { kind: "cut", src: "/Taroo/card1.png", x: 6, y: 20, w: 28, r: -10, dx: -16, dy: -12, dr: -15, depth: 0.7, z: 1 },
-      { kind: "cut", src: "/Taroo/card3.png", x: 64, y: 20, w: 28, r: 9, dx: 16, dy: -12, dr: 14, depth: 0.7, z: 1 },
-      { kind: "cut", src: "/Taroo/card2.png", x: 35, y: 4, w: 30, r: 0, dx: 0, dy: -14, dr: -1, ds: 1.05, depth: 1, z: 3 },
-      { kind: "chip", text: "22 Major Arcana · one visual system", x: 2, y: 4, r: -4, dx: -10, dy: -10, dr: -8, depth: 0.5, z: 4 },
-      { kind: "chip", text: "Packaging + card system", x: 30, y: 68, r: 4, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
+      /* x sits further in than the visible edge suggests: a card this
+         tall gains about 4% of the stage on each side once it is turned,
+         so 7 and 62 are what keep the two rear corners inside it. */
+      { kind: "cut", src: "/Taroo/card6.png", x: 7, y: 6, w: 32, r: -7, dx: -12, dy: -12, dr: -13, depth: 0.55, z: 1 },
+      { kind: "cut", src: "/Taroo/card7.png", x: 62, y: 8, w: 32, r: 8, dx: 12, dy: -12, dr: 14, depth: 0.55, z: 1 },
+      { kind: "cut", src: "/Taroo/card1.png", x: 20, y: 26, w: 26, r: -7, dx: -10, dy: 6, dr: -13, depth: 0.8, z: 2 },
+      { kind: "cut", src: "/Taroo/card3.png", x: 54, y: 26, w: 26, r: 7, dx: 10, dy: 6, dr: 13, depth: 0.8, z: 2 },
+      { kind: "cut", src: "/Taroo/card2.png", x: 36, y: 16, w: 28, r: 0, dx: 0, dy: -10, dr: -1, ds: 1.05, depth: 1, z: 3 },
+      { kind: "chip", text: "22 Major Arcana · one visual system", x: 2, y: 2, r: -4, dx: -10, dy: -10, dr: -8, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Packaging + card system", x: 44, y: 80, r: 4, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   suglar: {
@@ -125,13 +135,13 @@ const stacks = {
     facets: ["iOS app", "B2C", "Health · Social"],
     tint: "pink",
     layers: [
-      { kind: "cut", src: "/bubu/book.webp", x: 32, y: 11, w: 67, r: 0, dx: 16, dy: -4, dr: 3, depth: 0.5, z: 1 },
-      { kind: "cut", src: "/bubu/polaroid-salad.webp", x: 57, y: 3, w: 14, r: 0, dx: -6, dy: -20, dr: -8, ds: 1.06, depth: 1, z: 2 },
-      { kind: "cut", src: "/bubu/polaroid-coffee.webp", x: 67, y: 11, w: 15, r: 0, dx: 14, dy: -16, dr: 8, ds: 1.06, depth: 1.1, z: 2 },
-      { kind: "cut", src: "/bubu/phone.webp", x: 4, y: 8, w: 44, r: 0, dx: -14, dy: -6, dr: -4, ds: 1.02, depth: 0.8, z: 3 },
-      { kind: "app", src: "/bubu/icon.webp", x: 62, y: 64, w: 22, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
-      { kind: "chip", text: "Home · a race for two", x: 3, y: 2, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
-      { kind: "chip", text: "Weekly journal · me & my buddy", x: 40, y: 88, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
+      { kind: "cut", src: "/bubu/book.webp", x: 29, y: 7, w: 70, r: 0, dx: 16, dy: -4, dr: 3, depth: 0.5, z: 1 },
+      { kind: "cut", src: "/bubu/polaroid-salad.webp", x: 55, y: 0, w: 16, r: 0, dx: -6, dy: -20, dr: -8, ds: 1.06, depth: 1, z: 2 },
+      { kind: "cut", src: "/bubu/polaroid-coffee.webp", x: 66, y: 8, w: 17, r: 0, dx: 14, dy: -16, dr: 8, ds: 1.06, depth: 1.1, z: 2 },
+      { kind: "cut", src: "/bubu/phone.webp", x: 1, y: 3, w: 48, r: 0, dx: -14, dy: -6, dr: -4, ds: 1.02, depth: 0.8, z: 3 },
+      { kind: "app", src: "/bubu/icon.webp", x: 60, y: 70, w: 21, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
+      { kind: "chip", text: "Home · a race for two", x: 2, y: 0, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Weekly journal · me & my buddy", x: 38, y: 91, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
     ]
   }
 }
