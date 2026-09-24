@@ -206,7 +206,7 @@ function Stage({ project, stack }) {
         ))}
         <span className={styles.plate}>
           <span className={styles.when}>{stack.when}</span>
-          <strong>{project.title}{project.href ? <> <span className={styles.arrow} aria-hidden="true">→</span></> : null}</strong>
+          <strong>{project.title} <span className={styles.arrow} aria-hidden="true">→</span></strong>
         </span>
       </Tag>
 
