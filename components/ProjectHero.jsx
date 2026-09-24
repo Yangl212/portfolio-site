@@ -7,6 +7,7 @@ export function ProjectHero({
   image,
   imageAlt,
   imageFit = "cover",
+  layout = "split",
   mobileImage,
   summary,
   problem,
@@ -26,7 +27,7 @@ export function ProjectHero({
         <span>{discipline}</span>
       </div>
 
-      <header className={styles.hero}>
+      <header className={`${styles.hero} ${layout === "wide" ? styles.wide : ""}`}>
         <h1 className={styles.title}>{title}</h1>
         <div className={`${styles.image} ${imageFit === "contain" ? styles.imageContain : ""}`}>
           <img className={mobileImage ? styles.desktopImage : ""} src={image} alt={imageAlt} />

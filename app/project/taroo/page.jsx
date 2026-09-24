@@ -6,6 +6,9 @@ import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 
+import { HueWheel } from "./HueWheel"
+import { WordmarkAnatomy } from "./WordmarkAnatomy"
+
 import styles from "./page.module.css"
 
 export const metadata = {
@@ -49,8 +52,8 @@ const directions = [
   }
 ]
 
-/* Sampled from the finished deck artwork, so the swatches on this page are the
-   exact field colors printed on the cards. */
+/* Sampled from the finished deck artwork, so the wheel on this page is built
+   from the exact field colors printed on the cards. */
 const arcanaColors = [
   { no: "00", name: "Fool", hex: "#C2DEFF", band: "pale" },
   { no: "01", name: "Magician", hex: "#8E72D6", band: "saturated" },
@@ -106,26 +109,6 @@ const audienceTraits = [
   "Curious and playful; collects small beautiful objects"
 ]
 
-/* Sampled off the wordmark itself: the seven shapes that make T-A-R-O-O, in
-   drawing order. */
-const brandBase = [
-  { hex: "#E36D6D", label: "Coral", part: "T crossbar" },
-  { hex: "#D96DE3", label: "Orchid", part: "T stem" },
-  { hex: "#7B88FA", label: "Periwinkle", part: "A" },
-  { hex: "#BFE0F3", label: "Mist", part: "R bowl" },
-  { hex: "#F154A5", label: "Pink", part: "R leg" },
-  { hex: "#FBBF37", label: "Amber", part: "First O" },
-  { hex: "#4BADF4", label: "Sky", part: "Second O" }
-]
-
-/* The three places two shapes cross in the wordmark, and the color the
-   crossing prints. These are read off the artwork, not blend-mode guesses. */
-const brandOverlap = [
-  { a: "#E36D6D", b: "#D96DE3", hex: "#BD0051", label: "Coral × orchid", part: "The T" },
-  { a: "#BFE0F3", b: "#F154A5", hex: "#B13599", label: "Mist × pink", part: "The R" },
-  { a: "#FBBF37", b: "#4BADF4", hex: "#456D2B", label: "Amber × sky", part: "The double O" }
-]
-
 const deliverables = [
   "22 Major Arcana cards",
   "Gradient card back",
@@ -164,8 +147,9 @@ export default function TarooPage({ track = "uiux" }) {
               label="Student Work"
               discipline={"Brand Design · 2025"}
               title="Taroo"
-              image={img("55ef7d1e82d0b3730f6aa708d084518b94eca511.png")}
-              imageAlt="All twenty-two Taroo Major Arcana cards laid out in a grid beside the gradient card back"
+              image={img("0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png")}
+              imageAlt="Taroo wordmark beside a fan of five cards from the deck"
+              layout="wide"
               summary="A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them."
               problem="Tarot's visual language is dense, occult, and slow to read, which keeps design-minded newcomers out."
               contribution="Positioning, brand identity, 22 card illustrations, packaging, and the full visual system."
@@ -193,12 +177,12 @@ export default function TarooPage({ track = "uiux" }) {
               <div className={styles.productGallery}>
                 <figure className={styles.productBand}>
                   <img
-                    src={img("0c4d57f9f7b2bd0585d9304ff82ad4664160d290.png")}
-                    alt="Taroo wordmark beside a fan of five cards from the deck"
-                    width="1400"
-                    height="661"
+                    src={img("55ef7d1e82d0b3730f6aa708d084518b94eca511.png")}
+                    alt="All twenty-two Taroo Major Arcana cards laid out in a grid beside the gradient card back"
+                    width="988"
+                    height="1053"
                   />
-                  <figcaption>Wordmark and deck</figcaption>
+                  <figcaption>All 22 Major Arcana and the card back</figcaption>
                 </figure>
               </div>
             </section>
@@ -286,29 +270,21 @@ export default function TarooPage({ track = "uiux" }) {
                   <ul className={styles.bandKey}>
                     <li>
                       <span data-band="pale" aria-hidden="true" />
-                      Pale &middot; beginnings and balance
+                      Outer orbit &middot; Pale &middot; beginnings and balance
                     </li>
                     <li>
                       <span data-band="saturated" aria-hidden="true" />
-                      Saturated &middot; action
+                      Middle orbit &middot; Saturated &middot; action
                     </li>
                     <li>
                       <span data-band="deep" aria-hidden="true" />
-                      Deep &middot; High Priestess, Hermit, Devil
+                      Inner orbit &middot; Deep &middot; High Priestess, Hermit, Devil
                     </li>
                   </ul>
                 </div>
 
-                <div className={styles.paletteGrid}>
-                  {arcanaColors.map((card) => (
-                    <div className={styles.swatch} key={card.no} data-band={card.band}>
-                      <div className={styles.swatchChip} style={{ background: card.hex }}>
-                        <span>{card.no}</span>
-                      </div>
-                      <p className={styles.swatchName}>{card.name}</p>
-                      <p className={styles.swatchHex}>{card.hex}</p>
-                    </div>
-                  ))}
+                <div className={styles.decisionVisual}>
+                  <HueWheel cards={arcanaColors} />
                 </div>
               </article>
 
@@ -423,46 +399,13 @@ export default function TarooPage({ track = "uiux" }) {
                   <h2 className={styles.sectionTitle}>The wordmark is the same kit, overlapped.</h2>
                   <p className={styles.sectionLead}>
                     T, A, R, O, O are cut from the shape library rather than set in a typeface. Seven shapes make the
-                    five letters, and the three places two of them cross are where the rest of the palette comes from.
+                    five letters, and the three places two of them cross print colors of their own. Point at a shape
+                    to find it in the mark.
                   </p>
                 </div>
               </div>
 
-              <div className={styles.paletteBlock}>
-                <p className={styles.microLabel}>Seven shapes</p>
-                <div className={styles.chipRow}>
-                  {brandBase.map((color) => (
-                    <div className={styles.brandChip} key={color.hex}>
-                      <span style={{ background: color.hex }} />
-                      <strong>{color.label}</strong>
-                      <em>{color.hex}</em>
-                      <em>{color.part}</em>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.paletteBlock}>
-                <p className={styles.microLabel}>Three crossings</p>
-                <div className={styles.mixRow}>
-                  {brandOverlap.map((mix) => (
-                    <div className={styles.mix} key={mix.hex}>
-                      {/* Two blocks overlapping by a quarter, with the middle
-                          band painted the color the artwork actually prints
-                          there - not a CSS multiply, which lands a few points
-                          off the hand-picked value. */}
-                      <div className={styles.mixFigure} aria-hidden="true">
-                        <span style={{ background: mix.a }} />
-                        <span style={{ background: mix.b }} />
-                        <span style={{ background: mix.hex }} />
-                      </div>
-                      <strong>{mix.hex}</strong>
-                      <em>{mix.label}</em>
-                      <em>{mix.part}</em>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <WordmarkAnatomy />
             </section>
 
             {/* Close on the artwork again. */}
@@ -517,7 +460,7 @@ export default function TarooPage({ track = "uiux" }) {
         </section>
 
         <Reveal
-          fade={`.${styles.productGallery} figure, .${styles.keywordBoard}, .${styles.decisionVisual}, .${styles.swatch}, .${styles.competitorImage}, .${styles.brandBoard}, .${styles.caseSection}`}
+          fade={`.${styles.productGallery} figure, .${styles.keywordBoard}, .${styles.decisionVisual}, .${styles.hueWheel}, .${styles.competitorImage}, .${styles.brandBoard}, .${styles.caseSection}`}
         />
 
         <SiteFooter />

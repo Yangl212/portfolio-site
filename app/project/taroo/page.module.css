@@ -79,7 +79,6 @@
 .kicker,
 .microLabel,
 .directionLabel,
-.swatchHex,
 .competitorKeywords,
 .productGallery figcaption,
 .decisionVisual figcaption,
@@ -304,64 +303,103 @@
   background: #0f1252;
 }
 
-/* 22 swatches, drawn card-shaped so the exhibit reads as the deck rather than
-   as a generic palette strip. The numbered chip sits where the arcana number
-   sits on the printed card. */
-.paletteGrid {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(94px, 1fr));
-  gap: 20px 14px;
+/* The colour system as one figure rather than a swatch table: the 22 card
+   colours fanned in a full circle on three dashed orbits, one per value band,
+   around a disc of the pastel base. Each card's slot is pushed out from the
+   centre by its orbit radius (--r) plus a lift the pointer adds. */
+.hueWheel {
+  --spring: cubic-bezier(0.22, 1.2, 0.32, 1);
+  --lift: 0px;
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
 }
 
-.swatch {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.orbit {
+  fill: none;
+  stroke: rgba(34, 34, 34, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  vector-effect: non-scaling-stroke;
 }
 
-.swatchChip {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  border-radius: 4px;
-  /* The pale end of the palette would otherwise vanish into the panel. */
-  box-shadow: inset 0 0 0 1px rgba(34, 34, 34, 0.08);
+.base {
+  fill: #f3efe6;
+  stroke: rgba(34, 34, 34, 0.1);
+  vector-effect: non-scaling-stroke;
 }
 
-.swatchChip span {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  padding: 2px 5px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.72);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.625rem;
+.baseText text {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-anchor: middle;
+  fill: var(--muted);
+}
+
+.baseLabel {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.baseNo {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.baseName {
+  font-family: "Satoshi", "Satoshi Variable", sans-serif !important;
+  font-size: 12px;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0.04em;
-  color: #222222;
+  fill: var(--text) !important;
 }
 
-.swatch[data-band="deep"] .swatchChip span {
-  background: rgba(255, 255, 255, 0.9);
+.hueSlot {
+  transform-origin: 200px 200px;
+  transform: translateY(calc(-1 * var(--r) - var(--lift)));
+  transition: transform 640ms var(--spring);
+  cursor: default;
 }
 
-/* Two lines reserved, because "High Priestess" and "Wheel of Fortune" wrap in
-   a 96px column and the hex line under them would otherwise stagger. */
-.swatchName {
-  margin: 0;
-  min-height: calc(2 * 1.3 * 0.75rem);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text);
+/* The pale end of the ring would otherwise vanish into the page. */
+.hueCard {
+  stroke: rgba(34, 34, 34, 0.1);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 520ms var(--spring), opacity 320ms ease;
 }
 
-.swatchHex {
-  letter-spacing: 0.06em;
+/* Under the pointer the whole ring breathes out a little and the orbits
+   start to turn; the card pointed at lifts further, grows, and the rest
+   step back so it reads as the one being named. */
+.hueWheel:hover { --lift: 4px; }
+.hueSlot[data-on] { --lift: 14px; }
+.hueSlot[data-on] .hueCard { transform: scale(1.22); }
+.hueWheel[data-on] .hueSlot:not([data-on]) .hueCard { opacity: 0.6; }
+
+@keyframes orbitTurn { to { stroke-dashoffset: -70; } }
+@keyframes hueLabel { from { opacity: 0; transform: translateY(3px); } }
+@keyframes deal { from { opacity: 0; transform: translateY(0) scale(0.4); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hueWheel:hover .orbit { animation: orbitTurn 12s linear infinite; }
+  .baseText { animation: hueLabel 360ms ease both; }
+
+  /* Scroll-in: the wheel itself never hides (this overrides the shared
+     fade), so the cards can deal themselves out from the centre disc one
+     after another while the orbits and the disc come up under them.
+     `backwards` rather than `both`, so once dealt the slot is back on its
+     ordinary transform and the hover lift still moves it. */
+  .hueWheel[data-reveal] { opacity: 1; transform: none; transition: none; }
+  .hueWheel[data-reveal] .hueSlot { opacity: 0; }
+  .hueWheel[data-reveal="in"] .hueSlot { opacity: 1; animation: deal 900ms var(--spring) backwards; animation-delay: calc(var(--i) * 40ms + 80ms); }
+  .hueWheel[data-reveal] .orbit, .hueWheel[data-reveal] .base, .hueWheel[data-reveal] .baseText { opacity: 0; transition: opacity 900ms ease 700ms; }
+  .hueWheel[data-reveal="in"] .orbit, .hueWheel[data-reveal="in"] .base, .hueWheel[data-reveal="in"] .baseText { opacity: 1; }
 }
 
 /* --- Audience & positioning -------------------------------------------- */
@@ -454,98 +492,6 @@
   font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--muted);
-}
-
-/* --- Brand system ------------------------------------------------------- */
-
-.paletteBlock {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  border-top: 1px solid var(--divider);
-}
-
-/* Seven fixed tracks, so the row reads as the seven pieces of the wordmark in
-   drawing order rather than as a wrapping swatch grid. It collapses to four
-   and then two on narrow screens. */
-.chipRow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px 14px;
-}
-
-.brandChip,
-.mix {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.brandChip span {
-  height: 64px;
-  margin-bottom: 4px;
-  border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(34, 34, 34, 0.08);
-}
-
-.brandChip strong,
-.mix strong {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  line-height: 1.3;
-  color: var(--text);
-}
-
-.brandChip em,
-.mix em {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
-  font-size: 0.6875rem;
-  font-style: normal;
-  letter-spacing: 0.04em;
-  line-height: 1.35;
-  color: var(--muted);
-}
-
-.mixRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px 20px;
-}
-
-/* Two blocks overlapping by a quarter of their width. The middle band is a
-   third element rather than a blend mode, because the printed crossing colors
-   were picked by hand and sit a few points off a true multiply. */
-.mixFigure {
-  position: relative;
-  height: 64px;
-  margin-bottom: 8px;
-}
-
-.mixFigure span {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  border-radius: 4px;
-}
-
-.mixFigure span:nth-child(1) {
-  left: 0;
-  width: 62%;
-}
-
-.mixFigure span:nth-child(2) {
-  right: 0;
-  width: 62%;
-}
-
-.mixFigure span:nth-child(3) {
-  left: 38%;
-  width: 24%;
-  border-radius: 0;
 }
 
 /* --- Product details ---------------------------------------------------- */
@@ -715,14 +661,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px 40px;
   }
-
-  .chipRow {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .mixRow {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (min-width: 810px) {
@@ -765,19 +703,8 @@
     grid-row: 1;
   }
 
-  /* The palette is 22 items and needs the room; it sits full width under its
-     own argument instead of squeezing into half the grid. */
-  .decision:nth-of-type(1) {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 34px;
-  }
-
   .competitorImage {
     height: 220px;
-  }
-
-  .chipRow {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 
   .projectNav {
@@ -819,11 +746,6 @@
 
   .decision {
     column-gap: 64px;
-  }
-
-  .paletteGrid {
-    grid-template-columns: repeat(11, minmax(0, 1fr));
-    gap: 22px 16px;
   }
 
   .competitorImage {

@@ -47,3 +47,21 @@
   .image.imageContain { aspect-ratio: 3302 / 1920; }
   .image.imageContain .mobileImage { object-fit: cover; }
 }
+
+/* layout="wide": for a hero image that is itself a wide banner - a
+   wordmark and its product side by side - which the split layout could
+   only crop or shrink into a tall column. Title and summary share the
+   top line, the image runs the full width under them uncropped, and the
+   facts and meta lie across the foot in rows. */
+@media (min-width: 810px) {
+  .hero.wide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "title summary" "image image" "details details"; row-gap: 40px; align-items: end; }
+  .hero.wide .image { height: auto; }
+  .hero.wide .image img { height: auto; object-fit: initial; }
+  .hero.wide .summary { align-self: end; justify-self: end; max-width: 46ch; }
+  .hero.wide .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero.wide .meta { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .hero.wide .title { font-size: clamp(4rem, 2rem + 4.5vw, 6.5rem); line-height: 0.95; }
+  .hero.wide { row-gap: 48px; }
+}
