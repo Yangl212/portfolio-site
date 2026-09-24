@@ -124,8 +124,11 @@ img {
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 640ms ease, transform 640ms cubic-bezier(0.16, 0.84, 0.28, 1);
+    transform: translateY(26px);
+    /* Slow enough to be seen as a rise rather than a pop: the opacity
+       arrives ahead of the movement, so the text is readable while it is
+       still settling into place. */
+    transition: opacity 1000ms ease-out, transform 1400ms cubic-bezier(0.16, 0.84, 0.28, 1);
   }
 
   [data-reveal="in"] {
