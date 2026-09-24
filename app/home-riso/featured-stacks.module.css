@@ -65,6 +65,12 @@
   will-change: transform;
 }
 .cut { filter: drop-shadow(0 18px 26px rgba(34, 34, 34, 0.22)); }
+/* Line art drawn straight onto the sheet: no paper under it, so no shadow. */
+.ink { filter: none; }
+/* An app icon as a home screen draws one: the squircle is in the image
+   itself, and the shadow sits close under it rather than floating it
+   off the sheet like a loose sheet of paper. */
+.app { filter: drop-shadow(0 1px 1.5px rgba(34, 34, 34, 0.18)) drop-shadow(0 6px 10px rgba(34, 34, 34, 0.16)); }
 .shot {
   border-radius: 10px; border: 1px solid rgba(34, 34, 34, 0.14); background: #ffffff;
   box-shadow: 0 1px 1px rgba(34, 34, 34, 0.06), 0 22px 34px -18px rgba(34, 34, 34, 0.4);
@@ -162,3 +168,7 @@
   .sheet, .layer, .plate, .stage::after, .facet { transition: none; }
   .card[data-reveal="in"] .slot { animation: none; }
 }
+
+/* A stage with no case study behind it yet still fans out and leans,
+   but keeps the plain pointer - there is nothing to click through to. */
+.stage[data-static] { cursor: default; }

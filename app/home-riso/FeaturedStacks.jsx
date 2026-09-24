@@ -112,6 +112,27 @@ const stacks = {
       { kind: "chip", text: "Color & texture → game rules", x: 1, y: 5, r: -5, dx: -12, dy: -12, dr: -9, depth: 0.5, z: 4 },
       { kind: "chip", text: "Sweetness becomes strategy", x: 40, y: 78, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
+  },
+  /* The app in hand, and the book it keeps: the home screen on a phone
+     at the front, and behind it the weekly journal lying open - me on
+     the left page, the buddy on the right - with two of the week's
+     polaroids come loose off its top edge and the app icon set down
+     in the corner. */
+  bubu: {
+    when: "2026",
+    role: "Product Design",
+    summary: "A weight-loss app for two: buddies log meals as receipts, race each other to a shared goal, and fill one food journal together.",
+    facets: ["iOS app", "B2C", "Health · Social"],
+    tint: "pink",
+    layers: [
+      { kind: "cut", src: "/bubu/book.webp", x: 32, y: 11, w: 67, r: 0, dx: 16, dy: -4, dr: 3, depth: 0.5, z: 1 },
+      { kind: "cut", src: "/bubu/polaroid-salad.webp", x: 57, y: 3, w: 14, r: 0, dx: -6, dy: -20, dr: -8, ds: 1.06, depth: 1, z: 2 },
+      { kind: "cut", src: "/bubu/polaroid-coffee.webp", x: 67, y: 11, w: 15, r: 0, dx: 14, dy: -16, dr: 8, ds: 1.06, depth: 1.1, z: 2 },
+      { kind: "cut", src: "/bubu/phone.webp", x: 4, y: 8, w: 44, r: 0, dx: -14, dy: -6, dr: -4, ds: 1.02, depth: 0.8, z: 3 },
+      { kind: "app", src: "/bubu/icon.webp", x: 62, y: 64, w: 22, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
+      { kind: "chip", text: "Home · a race for two", x: 3, y: 2, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
+      { kind: "chip", text: "Weekly journal · me & my buddy", x: 40, y: 88, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
+    ]
   }
 }
 
@@ -132,13 +153,18 @@ function layerStyle(layer, index) {
 }
 
 /* boa-budgeting is the one tested concept on the board; every other
-   featured project is a real, finished product. */
+   featured project is a real, finished product - bar BUBU, still being
+   built, whose stage has no case study to open yet. */
 const SHIPPED = new Set(["vortexnet", "lastmessage", "taroo", "suglar"])
+const IN_PROGRESS = new Set(["bubu"])
 
 function Stage({ project, stack }) {
   const ref = useRef(null)
   const { tracking, ringRef, trackingProps } = usePressCursor()
-  const status = SHIPPED.has(project.slug) ? "Shipped" : "Concept"
+  const status = SHIPPED.has(project.slug) ? "Shipped" : IN_PROGRESS.has(project.slug) ? "In progress" : "Concept"
+  /* No case study yet: the same stage, but nothing to follow. */
+  const Tag = project.href ? Link : "div"
+  const linkProps = project.href ? { href: project.href, "aria-label": `${project.title}: view case study` } : { "aria-label": project.title }
 
   /* The layers lean toward the pointer, each by its own depth. */
   useEffect(() => {
@@ -162,12 +188,12 @@ function Stage({ project, stack }) {
 
   return (
     <>
-      <Link
+      <Tag
         ref={ref}
-        href={project.href}
         className={styles.stage}
         data-tint={stack.tint}
-        aria-label={`${project.title}: view case study`}
+        data-static={project.href ? undefined : ""}
+        {...linkProps}
         {...trackingProps}
       >
         <span className={styles.sheet} aria-hidden="true" />
@@ -175,14 +201,14 @@ function Stage({ project, stack }) {
           <span key={layer.src || layer.text} className={styles.slot} style={layerStyle(layer, index)} aria-hidden="true">
             {layer.kind === "chip"
               ? <span className={`${styles.layer} ${styles.chip}`}>{layer.text}</span>
-              : <img className={`${styles.layer} ${layer.kind === "shot" ? styles.shot : styles.cut}`} src={media(layer.src)} alt="" loading="lazy" decoding="async" />}
+              : <img className={`${styles.layer} ${styles[layer.kind]}`} src={media(layer.src)} alt="" loading="lazy" decoding="async" />}
           </span>
         ))}
         <span className={styles.plate}>
           <span className={styles.when}>{stack.when}</span>
-          <strong>{project.title} <span className={styles.arrow} aria-hidden="true">→</span></strong>
+          <strong>{project.title}{project.href ? <> <span className={styles.arrow} aria-hidden="true">→</span></> : null}</strong>
         </span>
-      </Link>
+      </Tag>
 
       {/* The label the header's own logo carries, naming the one thing
           about the project a reader could not otherwise tell from three
