@@ -187,6 +187,11 @@ export function FlowMap({ locale = "en", copy }) {
   const dimmed = (id) => (active && id && active !== id ? "" : undefined)
   const lit = (id) => (active && active === id ? "" : undefined)
 
+  /* How far a column sits from the one being followed, so the rest of
+     the board can recede as a ripple outward instead of all at once. */
+  const activeCol = branches.findIndex((b) => b.id === active)
+  const away = (col) => (activeCol < 0 ? 0 : Math.abs(col - activeCol))
+
   return (
     <figure className={styles.wrap} ref={ref}>
       <div className={styles.controls} role="group" aria-label={copy.filterLabel}>
@@ -244,7 +249,7 @@ export function FlowMap({ locale = "en", copy }) {
                 d={colD(col)}
                 pathLength="1"
                 data-dim={dimmed(branch.id)}
-                style={{ "--t": colStart(col), "--dur": 560 }}
+                style={{ "--t": colStart(col), "--dur": 560, "--away": away(col) }}
               />
             ))}
             <path
@@ -276,7 +281,7 @@ export function FlowMap({ locale = "en", copy }) {
                 cy={ROW_Y[0] - 3}
                 r="3"
                 data-dim={dimmed(branch.id)}
-                style={{ "--t": colStart(col) + 60 }}
+                style={{ "--t": colStart(col) + 60, "--away": away(col) }}
               />
             ))}
           </svg>
@@ -302,7 +307,7 @@ export function FlowMap({ locale = "en", copy }) {
                 data-head={row === 0 ? "" : undefined}
                 data-dim={dimmed(branch.id)}
                 data-lit={lit(branch.id)}
-                style={{ "--x": COL_X[col], "--y": ROW_Y[row], "--t": colStart(col) + 120 + row * 95, "--row": row }}
+                style={{ "--x": COL_X[col], "--y": ROW_Y[row], "--t": colStart(col) + 120 + row * 95, "--away": away(col) }}
                 onMouseEnter={() => hover(branch.id)}
                 onMouseLeave={clearHover}
               >

@@ -63,15 +63,18 @@
 .cap { fill: var(--app-ink); opacity: .5; transition: opacity 420ms ease; }
 
 /* ---------- the current ---------- */
-/* A second, heavier stroke along the same paths. At rest it is fully
-   offset - nothing showing. Following a branch lets each leg run in
-   turn: the spine, then the bar out to that column, then the column
-   itself. Letting go pulls them all back at once, quickly, so a hover
-   that moves between columns feels like the current jumping tracks
-   rather than three separate lines being erased. */
+/* A second stroke along the same paths, at the same weight as the line
+   under it - the path inks in rather than getting fat. On a board drawn
+   entirely in hairlines, thickening one route reads as a different
+   material; going from half-ink to full ink reads as attention.
+
+   At rest it is fully offset, so nothing shows. Following a branch lets
+   each leg run in turn: the spine, then the bar out to that column, then
+   the column itself. Letting go pulls them all back at once, quickly, so
+   a hover moving between columns feels like the current jumping tracks
+   rather than three lines being erased one by one. */
 .pulse {
-  fill: none; stroke: var(--app-ink); stroke-width: 2; vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
+  fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
   stroke-dasharray: 1; stroke-dashoffset: 1;
   opacity: 0;
   transition: stroke-dashoffset 240ms ease-in, opacity 160ms ease 80ms;
@@ -94,12 +97,7 @@
   border: 1px solid var(--app-ink);
   background: #ffffff;
   text-align: center;
-  transform-origin: 50% 0;
-  transition:
-    opacity 420ms ease,
-    transform 480ms var(--ease-out),
-    box-shadow 480ms var(--ease-out),
-    border-color 420ms ease;
+  transition: opacity 420ms ease;
 }
 .node[data-root] { background: var(--app-ink); color: #ffffff; }
 .node[data-root] .label { color: #ffffff; }
@@ -116,19 +114,21 @@
   letter-spacing: -.03em;
 }
 
-/* Focus. The rest of the board steps back a beat after the current
-   starts, so the eye is led to the lit path rather than left with a
-   sudden dim; the lit column's boxes come up one after another as the
-   current reaches them, top to bottom. */
-.node[data-dim], .wire[data-dim], .cap[data-dim] { opacity: .2; transition-delay: 90ms; }
-.loop[data-dim] { opacity: .14; transition-delay: 90ms; }
-.node[data-lit] {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 26px -16px rgba(14, 14, 14, .55);
-  transition-delay: calc(560ms + var(--row) * 70ms);
+/* Focus. Nothing is added to the followed branch - it simply stays as
+   the board already draws it, and everything else recedes. The lit
+   column is never lifted, shadowed or thickened: on a hairline diagram
+   any of those reads as a different object rather than the same object
+   being attended to.
+
+   The rest steps back a beat after the current starts, so the eye is
+   led to the path rather than left with a sudden dim, and it recedes as
+   a ripple outward from the column being followed. */
+.node[data-dim], .wire[data-dim], .cap[data-dim] {
+  opacity: .15;
+  transition-delay: calc(120ms + var(--away, 0) * 50ms);
 }
-.node[data-lit][data-head] { box-shadow: inset 0 0 0 1px var(--app-ink), 0 14px 26px -16px rgba(14, 14, 14, .55); }
-.loop[data-lit] { opacity: .85; transition-delay: 900ms; }
+.loop[data-dim] { opacity: .08; transition-delay: 120ms; }
+.loop[data-lit] { opacity: .9; transition-delay: 900ms; }
 
 /* ---------- the draw-in ---------- */
 /* Nothing shows until the board has been scrolled to. Then everything
@@ -149,10 +149,10 @@
      there for the mask to reveal */
   opacity: 1;
 }
-/* The loop fades to its resting value the moment the board is drawn -
-   long before the mask starts revealing it at T_LOOP, so nothing shows.
-   It keeps its transition so a focus can dim or brighten it smoothly. */
-.board[data-drawn] .loop { opacity: .42; }
+/* The loop needs no rule here: its resting .42 is on .loop itself and
+   the mask is what holds it back until T_LOOP. Giving it one would beat
+   .loop[data-lit] on specificity and quietly pin it at .42 - the same
+   trap the fill-mode note above describes. */
 .board[data-drawn] .cap {
   animation: appear 380ms var(--ease-out) calc(var(--t) * 1ms) backwards;
 }
@@ -201,5 +201,4 @@
   .board:not([data-drawn]) .wire, .board:not([data-drawn]) .cap { opacity: .5; }
   .board:not([data-drawn]) .loop { opacity: .42; }
   .pulse, .node, .chip { transition-duration: 0ms !important; transition-delay: 0ms !important; }
-  .node[data-lit] { transform: none; }
 }
