@@ -79,6 +79,25 @@ const stacks = {
       { kind: "chip", text: { en: "UX/UI · AI behavior · web development", zh: "UX/UI · AI 行为 · 网页开发" }, x: 31, y: 69, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
   },
+  /* The prototype's three surfaces at once: the week view as the base
+     sheet, the phone leaning out on the left, and the suggestion card -
+     the one thing the case study is about - lifted off the right edge.
+     The card is tall and narrow, which is why the More Work folder
+     leaves it out; on a square stage it has the room. */
+  cleared: {
+    copy: {
+      en: { when: "2026 · 8 weeks", role: "Product Designer", summary: "Turning email commitments into calendar suggestions people can inspect, adjust and confirm - usability tested on simulated data.", facets: ["Desktop + mobile", "B2C", "AI · Productivity"] },
+      zh: { when: "2026 年 · 8 周", role: "产品设计师", summary: "AI 从邮件里读出待办，给出一条可以核对、调整和确认的日程建议。用模拟数据做过可用性测试。", facets: ["桌面端 + 移动端", "B2C", "AI · 效率工具"] }
+    },
+    tint: "blue",
+    layers: [
+      { kind: "shot", src: "/cleared/hifi-calendar.png", x: 8, y: 20, w: 84, r: 0, dx: 0, dy: 4, dr: -2, ds: 1.04, depth: 0.4, z: 1 },
+      { kind: "cut", src: "/cleared/phone1.png", x: -1, y: 32, w: 25, r: -7, dx: -26, dy: 14, dr: -13, depth: 1, z: 3 },
+      { kind: "shot", src: "/cleared/hifi-suggestion.png", x: 70, y: 4, w: 28, r: 6, dx: 26, dy: -22, dr: 12, depth: 0.9, z: 3 },
+      { kind: "chip", text: { en: "Email → calendar suggestion", zh: "邮件 → 日程建议" }, x: 2, y: 6, r: -4, dx: -14, dy: -12, dr: -8, depth: 0.5, z: 4 },
+      { kind: "chip", text: { en: "4 went back to the source email", zh: "4 位回看了邮件原文" }, x: 36, y: 74, r: 3, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
+    ]
+  },
   /* Suglar sits in the visual track's Selected Work, and TAROO kept its
      stack for the same reason after moving down to More Work - the same
      three cards already cut for their folder in lib/projects.js, laid out
@@ -167,9 +186,9 @@ function layerStyle(layer, index) {
   }
 }
 
-/* boa-budgeting is the one tested concept on the board; every other
-   featured project is a real, finished product - bar BUBU, still being
-   built, whose stage has no case study to open yet. */
+/* boa-budgeting and cleared are the tested concepts on the board; every
+   other featured project is a real, finished product - bar BUBU, still
+   being built. */
 const SHIPPED = new Set(["vortexnet", "lastmessage", "taroo", "suglar"])
 const IN_PROGRESS = new Set(["bubu"])
 
