@@ -27,7 +27,6 @@
 .scroller {
   overflow-x: auto; overscroll-behavior-x: contain;
   padding-bottom: 12px; scrollbar-width: thin;
-  background: var(--app-paper);
 }
 .board {
   container-type: inline-size;
