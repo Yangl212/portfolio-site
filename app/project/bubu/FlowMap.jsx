@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 
 import styles from "./flow-map.module.css"
 
@@ -18,6 +18,14 @@ import styles from "./flow-map.module.css"
  * columns on a 168 pitch and rows on a 70 pitch. Nodes are HTML so the
  * labels wrap and scale on their own; the connectors are one SVG on the
  * same viewBox underneath them.
+ *
+ * Motion is one stroke, not a grid of beats. The spine is a single line
+ * that the nodes sit on top of, so it draws as one pull of the pen and
+ * each box surfaces as the ink reaches it; the bar sweeps out from the
+ * middle; the columns fall as a ripple from the centre outward; the loop
+ * is drawn last, through a mask, so a dashed line can still be drawn
+ * end to end. Following a branch runs a current along the same route -
+ * spine, then bar, then column - and lifts its boxes in turn.
  */
 
 /* --- geometry, straight off the board --- */
@@ -31,13 +39,14 @@ const COL_X = [40, 208, 376, 544, 712, 880]
 const ROW_Y = [512, 582, 652, 722, 792, 862, 932]
 
 const mid = (x) => x + NODE_W / 2
+const CX = mid(SPINE_X)
 
 const spine = [
-  { y: 130, label: { en: "BUBU", zh: "BUBU·步步" }, start: true },
-  { y: 200, label: { en: "Sign in / Sign up", zh: "登录 / 注册" } },
-  { y: 270, label: { en: "Set your goal", zh: "设定目标" }, note: { en: "height · weight · target · weeks", zh: "身高 · 体重 · 目标 · 周期" } },
-  { y: 340, label: { en: "How to record", zh: "怎么记录" }, note: { en: "solo / duo", zh: "单人 / 双人" } },
-  { y: 410, label: { en: "Home", zh: "首页" }, note: { en: "Day N · today's photos · track", zh: "第 N 天 · 今天的照片 · 跑道" } }
+  { y: 130, label: { en: "BUBU", zh: "BUBU·步步" }, t: 0 },
+  { y: 200, label: { en: "Sign in / Sign up", zh: "登录 / 注册" }, t: 90 },
+  { y: 270, label: { en: "Set your goal", zh: "设定目标" }, note: { en: "height · weight · target · weeks", zh: "身高 · 体重 · 目标 · 周期" }, t: 250 },
+  { y: 340, label: { en: "How to record", zh: "怎么记录" }, note: { en: "solo / duo", zh: "单人 / 双人" }, t: 410 },
+  { y: 410, label: { en: "Home", zh: "首页" }, note: { en: "Day N · today's photos · track", zh: "第 N 天 · 今天的照片 · 跑道" }, t: 570 }
 ]
 
 /* Each branch is the tab strip's own order, and the column under it. */
@@ -51,7 +60,7 @@ const branches = [
       { label: { en: "Auto cutout", zh: "自动抠图" } },
       { label: { en: "Paste on receipt", zh: "贴到小票" }, note: { en: "breakfast · lunch · dinner · snack · scale", zh: "早餐 · 午餐 · 晚餐 · 加餐 · 体重" } },
       { label: { en: "Goal reached", zh: "目标达成" }, note: { en: "when the target weight is hit", zh: "到达目标体重时" } },
-      { label: { en: "New challenge", zh: "开始新的挑战" }, note: { en: "back to Set your goal", zh: "回到设定目标" }, loops: true }
+      { label: { en: "New challenge", zh: "开始新的挑战" }, note: { en: "back to Set your goal", zh: "回到设定目标" } }
     ]
   },
   {
@@ -110,79 +119,57 @@ const branches = [
   }
 ]
 
+/* --- the strokes --- */
+/* The spine is one line from under BUBU to the bar; the boxes lie on it
+   and hide the parts between them. Same for each column: one line from
+   the bar down to its last box. */
+const SPINE_D = `M ${CX} ${spine[0].y + NODE_H} V ${BAR_Y}`
+const BAR_L = `M ${CX} ${BAR_Y} H ${mid(COL_X[0])}`
+const BAR_R = `M ${CX} ${BAR_Y} H ${mid(COL_X[5])}`
+const colD = (col) => `M ${mid(COL_X[col])} ${BAR_Y} V ${ROW_Y[branches[col].nodes.length - 1] + 12}`
+const barTo = (col) => `M ${CX} ${BAR_Y} H ${mid(COL_X[col])}`
+
 /* The one edge that is not a straight drop: New challenge sends you back
-   up to Set your goal, which is the only cycle on the board and the whole
-   reason the product does not end when you hit the number. */
+   up to Set your goal, the only cycle on the board and the reason the
+   product does not end when you hit the number. */
 const LOOP_D = `M ${COL_X[0]} ${ROW_Y[5] + NODE_H / 2} H 18 V 293 H ${SPINE_X}`
 
-/* Order the edges draw in: the spine first, then the bar sweeps out, then
-   each column falls. `step` is the beat, used as an animation delay. */
-function buildEdges() {
-  const edges = []
-  for (let i = 0; i < spine.length - 1; i++) {
-    edges.push({ key: `s${i}`, d: `M ${mid(SPINE_X)} ${spine[i].y + NODE_H} V ${spine[i + 1].y}`, step: i })
-  }
-  edges.push({ key: "drop", d: `M ${mid(SPINE_X)} ${spine[4].y + NODE_H} V ${BAR_Y}`, step: 4 })
-  edges.push({ key: "bar", d: `M ${mid(COL_X[0])} ${BAR_Y} H ${mid(COL_X[5])}`, step: 5 })
-
-  branches.forEach((branch, col) => {
-    const x = mid(COL_X[col])
-    edges.push({ key: `${branch.id}-in`, d: `M ${x} ${BAR_Y} V ${ROW_Y[0]}`, step: 6, branch: branch.id })
-    for (let i = 0; i < branch.nodes.length - 1; i++) {
-      edges.push({
-        key: `${branch.id}-${i}`,
-        d: `M ${x} ${ROW_Y[i] + NODE_H} V ${ROW_Y[i + 1]}`,
-        step: 7 + i,
-        branch: branch.id
-      })
-    }
-  })
-
-  edges.push({ key: "loop", d: LOOP_D, step: 13, branch: "record", loop: true })
-  return edges
-}
-
-const EDGES = buildEdges()
+/* Draw-in timing, in ms. The columns ripple out from the middle: the two
+   centre ones first, the outer pair last. */
+const T_BAR = 720
+const T_COLS = 1120
+const colStart = (col) => T_COLS + Math.abs(col - 2.5) * 90
+const T_LOOP = 2050
 
 export function FlowMap({ locale = "en", copy }) {
   const [active, setActive] = useState(null)
   const [pinned, setPinned] = useState(false)
   const [drawn, setDrawn] = useState(false)
-  const [settled, setSettled] = useState(false)
   const ref = useRef(null)
+  const maskId = useId()
 
   const pick = (pair) => (pair ? pair[locale] || pair.en : null)
 
   /* The board draws itself once, when it is first scrolled to - the same
-     contract as the rest of the page's sections.
-
-     `settled` is what lets the focus dimming work afterwards. The draw-in
-     runs on animation-fill-mode: forwards, and a filled animation beats a
-     plain declaration, so while it is still applied the last keyframe's
-     opacity would override any dim a hover asks for. Once the last beat
-     has landed the animations come off and the board is styled statically
-     again. */
+     contract as the rest of the page's sections. */
   useEffect(() => {
     const el = ref.current
     if (!el) return undefined
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setDrawn(true)
-      setSettled(true)
       return undefined
     }
-    let timer = 0
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setDrawn(true)
-          timer = window.setTimeout(() => setSettled(true), 2200)
           observer.disconnect()
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.2 }
     )
     observer.observe(el)
-    return () => { observer.disconnect(); window.clearTimeout(timer) }
+    return () => observer.disconnect()
   }, [])
 
   const focus = (id) => {
@@ -194,16 +181,11 @@ export function FlowMap({ locale = "en", copy }) {
     setActive(id)
     setPinned(true)
   }
-
-  const hover = (id) => {
-    if (!pinned) setActive(id)
-  }
-
-  const clearHover = () => {
-    if (!pinned) setActive(null)
-  }
+  const hover = (id) => { if (!pinned) setActive(id) }
+  const clearHover = () => { if (!pinned) setActive(null) }
 
   const dimmed = (id) => (active && id && active !== id ? "" : undefined)
+  const lit = (id) => (active && active === id ? "" : undefined)
 
   return (
     <figure className={styles.wrap} ref={ref}>
@@ -236,27 +218,56 @@ export function FlowMap({ locale = "en", copy }) {
         <div
           className={styles.board}
           data-drawn={drawn || undefined}
-          data-settled={settled || undefined}
           data-focused={active || undefined}
           style={{ "--w": W, "--h": H }}
           role="img"
           aria-label={copy.alt}
         >
           <svg className={styles.wires} viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
-            {EDGES.map((edge) => (
+            <defs>
+              {/* A dashed line cannot be unrolled with dashoffset - the
+                  dashes are the offset. So it is revealed instead: a
+                  solid stroke drawn along the same path, used as a mask. */}
+              <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+                <path className={styles.reveal} d={LOOP_D} pathLength="1" style={{ "--t": T_LOOP, "--dur": 700 }} />
+              </mask>
+            </defs>
+
+            {/* the resting wires */}
+            <path className={styles.wire} d={SPINE_D} pathLength="1" style={{ "--t": 0, "--dur": 720 }} />
+            <path className={styles.wire} d={BAR_L} pathLength="1" style={{ "--t": T_BAR, "--dur": 440 }} />
+            <path className={styles.wire} d={BAR_R} pathLength="1" style={{ "--t": T_BAR, "--dur": 440 }} />
+            {branches.map((branch, col) => (
               <path
-                key={edge.key}
-                className={`${styles.wire} ${edge.loop ? styles.loopWire : ""}`}
-                d={edge.d}
+                key={branch.id}
+                className={styles.wire}
+                d={colD(col)}
                 pathLength="1"
-                data-dim={dimmed(edge.branch)}
-                style={{ "--step": edge.step }}
+                data-dim={dimmed(branch.id)}
+                style={{ "--t": colStart(col), "--dur": 560 }}
               />
             ))}
-            {/* Where a line ends on a node it ends in a dot, the way the
-                board draws it - the arrowheads were only ever dots. */}
-            <circle className={styles.cap} cx={mid(SPINE_X)} cy={spine[0].y + NODE_H} r="3" style={{ "--step": 0 }} />
-            <circle className={styles.cap} cx={SPINE_X} cy="293" r="3" data-dim={dimmed("record")} style={{ "--step": 13 }} />
+            <path
+              className={styles.loop}
+              d={LOOP_D}
+              mask={`url(#${maskId})`}
+              data-dim={dimmed("record")}
+              data-lit={lit("record")}
+            />
+
+            {/* the current: a heavier stroke that runs the route to a
+                focused branch, spine then bar then column */}
+            <path className={styles.pulse} d={SPINE_D} pathLength="1" data-leg="spine" data-on={active ? "" : undefined} />
+            {branches.map((branch, col) => (
+              <g key={branch.id}>
+                <path className={styles.pulse} d={barTo(col)} pathLength="1" data-leg="bar" data-on={lit(branch.id)} />
+                <path className={styles.pulse} d={colD(col)} pathLength="1" data-leg="col" data-on={lit(branch.id)} />
+              </g>
+            ))}
+
+            {/* the dots where a line meets a box, as the board draws them */}
+            <circle className={styles.cap} cx={CX} cy={spine[0].y + NODE_H} r="3" style={{ "--t": 0 }} />
+            <circle className={styles.cap} cx={SPINE_X} cy="293" r="3" data-dim={dimmed("record")} style={{ "--t": T_LOOP + 620 }} />
             {branches.map((branch, col) => (
               <circle
                 key={branch.id}
@@ -265,7 +276,7 @@ export function FlowMap({ locale = "en", copy }) {
                 cy={ROW_Y[0] - 3}
                 r="3"
                 data-dim={dimmed(branch.id)}
-                style={{ "--step": 6 }}
+                style={{ "--t": colStart(col) + 60 }}
               />
             ))}
           </svg>
@@ -275,7 +286,8 @@ export function FlowMap({ locale = "en", copy }) {
               key={node.label.en}
               className={styles.node}
               data-spine=""
-              style={{ "--x": SPINE_X, "--y": node.y, "--step": i }}
+              data-root={i === 0 ? "" : undefined}
+              style={{ "--x": SPINE_X, "--y": node.y, "--t": node.t, "--row": i }}
             >
               <span className={styles.label}>{pick(node.label)}</span>
               {node.note ? <span className={styles.note}>{pick(node.note)}</span> : null}
@@ -289,7 +301,8 @@ export function FlowMap({ locale = "en", copy }) {
                 className={styles.node}
                 data-head={row === 0 ? "" : undefined}
                 data-dim={dimmed(branch.id)}
-                style={{ "--x": COL_X[col], "--y": ROW_Y[row], "--step": 6 + row }}
+                data-lit={lit(branch.id)}
+                style={{ "--x": COL_X[col], "--y": ROW_Y[row], "--t": colStart(col) + 120 + row * 95, "--row": row }}
                 onMouseEnter={() => hover(branch.id)}
                 onMouseLeave={clearHover}
               >

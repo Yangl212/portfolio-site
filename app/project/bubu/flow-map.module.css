@@ -8,6 +8,11 @@
  * because below ~1000px the board stops shrinking and starts scrolling
  * sideways instead. Type that kept shrinking would be unreadable long
  * before the whole map fit on a phone.
+ *
+ * Every timed thing carries its own --t (start, ms) and --dur (length,
+ * ms) from the component, so the choreography lives in one place - the
+ * geometry file - and this sheet only says what each kind of thing does
+ * when its moment comes.
  */
 .wrap { display: flex; flex-direction: column; gap: 18px; margin: 0; }
 
@@ -17,9 +22,10 @@
   border: 1px solid var(--divider); border-radius: 999px; background: transparent;
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: .75rem; letter-spacing: .04em; color: var(--muted);
-  cursor: pointer; transition: color 200ms, border-color 200ms, background-color 200ms;
+  cursor: pointer;
+  transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease, transform 320ms cubic-bezier(.22, 1, .36, 1);
 }
-.chip:hover { color: var(--text); border-color: var(--text); }
+.chip:hover { color: var(--text); border-color: var(--text); transform: translateY(-1px); }
 .chip[data-on] { color: var(--inverse); background: var(--app-ink); border-color: var(--app-ink); }
 
 /* Under ~1040px the board keeps its size and the reader pans instead.
@@ -34,23 +40,48 @@
   width: 100%; min-width: 980px;
   aspect-ratio: var(--w) / var(--h);
   padding: 0;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-draw: cubic-bezier(.45, 0, .2, 1);
 }
 
 .wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- resting wires ---------- */
 .wire {
   fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
-  opacity: .55;
-  transition: opacity 320ms ease, stroke 320ms ease;
+  stroke-dasharray: 1; stroke-dashoffset: 0;
+  opacity: .5;
+  transition: opacity 420ms ease;
 }
-.loopWire { stroke-dasharray: 6 4; opacity: .45; }
-/* The cycle is the point of the Record branch, so following that branch
-   brings its return line up with it rather than leaving it as faint as
-   the lines that are being stepped back. */
-.board[data-focused="record"] .loopWire { opacity: .8; }
-.cap { fill: var(--app-ink); opacity: .55; transition: opacity 320ms ease; }
+.loop {
+  fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 6 4;
+  opacity: .42;
+  transition: opacity 420ms ease;
+}
+.reveal { fill: none; stroke: #fff; stroke-width: 8; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.cap { fill: var(--app-ink); opacity: .5; transition: opacity 420ms ease; }
 
-/* A node is a box on the board: the same 132 x 46 it is in Figma, with
-   the label centred and the note under it in the small hand. */
+/* ---------- the current ---------- */
+/* A second, heavier stroke along the same paths. At rest it is fully
+   offset - nothing showing. Following a branch lets each leg run in
+   turn: the spine, then the bar out to that column, then the column
+   itself. Letting go pulls them all back at once, quickly, so a hover
+   that moves between columns feels like the current jumping tracks
+   rather than three separate lines being erased. */
+.pulse {
+  fill: none; stroke: var(--app-ink); stroke-width: 2; vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 240ms ease-in, opacity 160ms ease 80ms;
+}
+.pulse[data-on] { stroke-dashoffset: 0; opacity: 1; }
+.pulse[data-on][data-leg="spine"] { transition: stroke-dashoffset 360ms var(--ease-draw), opacity 80ms; }
+.pulse[data-on][data-leg="bar"] { transition: stroke-dashoffset 300ms var(--ease-draw) 300ms, opacity 80ms 300ms; }
+.pulse[data-on][data-leg="col"] { transition: stroke-dashoffset 520ms var(--ease-draw) 540ms, opacity 80ms 540ms; }
+
+/* ---------- nodes ---------- */
 .node {
   position: absolute;
   left: calc(var(--x) / var(--w) * 100%);
@@ -63,11 +94,15 @@
   border: 1px solid var(--app-ink);
   background: #ffffff;
   text-align: center;
-  transition: opacity 320ms ease, border-color 320ms ease, box-shadow 320ms ease, transform 320ms ease;
+  transform-origin: 50% 0;
+  transition:
+    opacity 420ms ease,
+    transform 480ms var(--ease-out),
+    box-shadow 480ms var(--ease-out),
+    border-color 420ms ease;
 }
-/* The entry point and the six branch heads are the board's own emphasis:
-   filled, so the eye finds the doors before the rooms. */
-.node[data-spine]:first-of-type { background: var(--app-ink); color: #ffffff; }
+.node[data-root] { background: var(--app-ink); color: #ffffff; }
+.node[data-root] .label { color: #ffffff; }
 .node[data-head] { box-shadow: inset 0 0 0 1px var(--app-ink); }
 
 .label { font-size: 1.3cqw; line-height: 1.2; font-weight: 500; letter-spacing: -.01em; }
@@ -80,49 +115,70 @@
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: -.03em;
 }
-.node[data-spine]:first-of-type .label { color: #ffffff; }
 
-/* Focus: one branch at full strength, the rest stepped back far enough to
-   read as context but not so far they disappear. */
-.node[data-dim], .wire[data-dim], .cap[data-dim] { opacity: .16; }
-.node[data-dim] { border-color: rgba(14, 14, 14, .5); }
-.board[data-focused] .node:not([data-dim]) { border-color: var(--app-ink); }
+/* Focus. The rest of the board steps back a beat after the current
+   starts, so the eye is led to the lit path rather than left with a
+   sudden dim; the lit column's boxes come up one after another as the
+   current reaches them, top to bottom. */
+.node[data-dim], .wire[data-dim], .cap[data-dim] { opacity: .2; transition-delay: 90ms; }
+.loop[data-dim] { opacity: .14; transition-delay: 90ms; }
+.node[data-lit] {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px -16px rgba(14, 14, 14, .55);
+  transition-delay: calc(560ms + var(--row) * 70ms);
+}
+.node[data-lit][data-head] { box-shadow: inset 0 0 0 1px var(--app-ink), 0 14px 26px -16px rgba(14, 14, 14, .55); }
+.loop[data-lit] { opacity: .85; transition-delay: 900ms; }
 
 /* ---------- the draw-in ---------- */
-/* Nothing is visible until the board has been scrolled to; then the spine
-   draws down, the bar sweeps out and the columns fall in order. */
-.board:not([data-drawn]) .wire,
-.board:not([data-drawn]) .cap,
-.board:not([data-drawn]) .node { opacity: 0; }
+/* Nothing shows until the board has been scrolled to. Then everything
+   runs from its own --t: fill-mode backwards holds each thing at its
+   first frame through the wait, and once its animation ends it is
+   simply back on the rules above, so a hover afterwards has nothing to
+   fight. (A forwards fill would have pinned every box at opacity 1 and
+   quietly broken the dimming.) */
+.board:not([data-drawn]) :is(.wire, .reveal, .cap, .node) { opacity: 0; }
+.board:not([data-drawn]) .loop { opacity: 0; }
 
-.board[data-drawn]:not([data-settled]) .wire {
-  stroke-dasharray: 1; stroke-dashoffset: 1;
-  animation: draw 420ms ease-out forwards;
-  animation-delay: calc(var(--step) * 90ms);
+.board[data-drawn] .wire {
+  animation: draw calc(var(--dur) * 1ms) var(--ease-draw) calc(var(--t) * 1ms) backwards;
 }
-.board[data-drawn]:not([data-settled]) .loopWire {
-  /* Dashed in its resting state, so it is drawn by fading rather than by
-     unrolling a dash pattern that is already there. */
-  stroke-dasharray: 6 4; stroke-dashoffset: 0;
-  animation: fadeWire 520ms ease-out forwards;
-  animation-delay: calc(var(--step) * 90ms);
+.board[data-drawn] .reveal {
+  animation: draw calc(var(--dur) * 1ms) var(--ease-draw) calc(var(--t) * 1ms) backwards;
+  /* the mask must start empty, and the loop under it must already be
+     there for the mask to reveal */
+  opacity: 1;
 }
-.board[data-drawn]:not([data-settled]) .cap {
-  animation: pop 260ms ease-out forwards;
-  animation-delay: calc(var(--step) * 90ms + 240ms);
+/* The loop fades to its resting value the moment the board is drawn -
+   long before the mask starts revealing it at T_LOOP, so nothing shows.
+   It keeps its transition so a focus can dim or brighten it smoothly. */
+.board[data-drawn] .loop { opacity: .42; }
+.board[data-drawn] .cap {
+  animation: appear 380ms var(--ease-out) calc(var(--t) * 1ms) backwards;
 }
-.board[data-drawn]:not([data-settled]) .node {
-  animation: settle 420ms cubic-bezier(.16, 1, .3, 1) forwards;
-  animation-delay: calc(var(--step) * 90ms + 60ms);
+.board[data-drawn] .node {
+  animation: surface 620ms var(--ease-out) calc(var(--t) * 1ms) backwards;
 }
-/* Once the last beat has landed the animations come off, so the focus
-   rules above are plain declarations again and nothing overrides them. */
-.board[data-settled] .wire, .board[data-settled] .cap, .board[data-settled] .node { animation: none; }
 
-@keyframes draw { from { stroke-dashoffset: 1; opacity: .55; } to { stroke-dashoffset: 0; opacity: .55; } }
-@keyframes fadeWire { from { opacity: 0; } to { opacity: .45; } }
-@keyframes pop { from { opacity: 0; } to { opacity: .55; } }
-@keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes draw {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  12% { opacity: 1; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+/* draw ends at opacity 1 for the mask stroke, which is right; the wires
+   want to land on their resting .5, so they run their own copy. */
+.board[data-drawn] .wire { animation-name: drawWire; }
+@keyframes drawWire {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  12% { opacity: .5; }
+  to { stroke-dashoffset: 0; opacity: .5; }
+}
+@keyframes appear { from { opacity: 0; } to { opacity: .5; } }
+@keyframes surface {
+  from { opacity: 0; transform: translateY(6px) scale(.985); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
 
 .caption { font-size: .8125rem; line-height: 1.6; color: var(--muted); }
 
@@ -136,13 +192,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .board .wire, .board .cap, .board .node { animation: none !important; }
-  .board .wire { stroke-dashoffset: 0; opacity: .55; }
-  .board .loopWire { opacity: .45; }
-  .board .cap { opacity: .55; }
+  .board :is(.wire, .reveal, .cap, .node) { animation: none !important; }
+  .board .wire, .board .cap { opacity: .5; }
+  .board .loop { opacity: .42; }
+  .board .reveal { opacity: 1; }
   .board .node { opacity: 1; transform: none; }
-  .board:not([data-drawn]) .wire,
-  .board:not([data-drawn]) .cap,
-  .board:not([data-drawn]) .node { opacity: 1; }
-  .board:not([data-drawn]) .wire { opacity: .55; }
+  .board:not([data-drawn]) :is(.wire, .reveal, .cap, .node) { opacity: 1; }
+  .board:not([data-drawn]) .wire, .board:not([data-drawn]) .cap { opacity: .5; }
+  .board:not([data-drawn]) .loop { opacity: .42; }
+  .pulse, .node, .chip { transition-duration: 0ms !important; transition-delay: 0ms !important; }
+  .node[data-lit] { transform: none; }
 }
