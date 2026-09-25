@@ -162,6 +162,9 @@ function Picture({ side, src, alt, ratio, lift, book, width, tilt, edge, stack, 
  */
 export function AboutSheet({ track = "uiux", locale = "en", title = "About me", statement, chapters }) {
   const base = pageBase(track, locale)
+  /* The Chinese sheet is written in the hand declared in the stylesheet;
+     the English one is left exactly as it was, down to the class string. */
+  const contentClass = [styles.content, locale === "zh" ? styles.zhHand : null].filter(Boolean).join(" ")
 
   return (
     <main className={`${styles.page} ${sans.variable} ${handA.variable} ${handB.variable} ${handC.variable} ${handD.variable} ${handE.variable}`}>
@@ -174,7 +177,7 @@ export function AboutSheet({ track = "uiux", locale = "en", title = "About me", 
       <div className={styles.sheet} data-about-sheet="">
         <Reveal />
 
-        <article className={styles.content}>
+        <article className={contentClass}>
           <header className={`${styles.opening} ${styles.rise}`}>
             <h1 className={styles.title}>{title}</h1>
             <p className={styles.statement}>{parts(statement)}</p>

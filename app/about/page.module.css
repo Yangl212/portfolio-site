@@ -54,6 +54,30 @@
   to { opacity: 1; transform: none; }
 }
 
+/* The hand the Chinese sheet is written in: the owner's own file from
+   /public/about, cut down to the characters this page prints. The whole
+   face is 17 MB of Japanese and Chinese; at 287 glyphs it is 127 KB, so
+   it can be a real webfont rather than a download. Regenerate it with
+   pyftsubset when the Chinese copy changes, or the new characters fall
+   back to the sans:
+
+     pyftsubset public/about/fonts.otf --text-file=<the page's characters>        --flavor=woff2 --layout-features= --no-hinting --desubroutinize        --output-file=public/about/fonts-zh.woff2
+
+   Declared here rather than beside Satoshi in globals.css because only
+   this page uses it, and a face that is never applied is never fetched:
+   the English sheet pays nothing for it. */
+@font-face {
+  font-family: "Itijyou Raura";
+  src: url("/about/fonts-zh.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  /* Latin is left out of the subset on purpose, so the few English words
+     in the Chinese writing - AI, Figma - stay in the sans they are in
+     today and only the Chinese changes hand. */
+  unicode-range: U+00B7, U+2013-2027, U+3000-302F, U+3400-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
 .content {
   /* Measured off the page this one is modelled on: a 520px column of
      writing, 99px between its sections, 42px between its paragraphs, all
@@ -247,28 +271,28 @@
    the column: it takes the whole margin, less the page's own gutter, and
    is held back from the column by 2rem so the two never touch. */
 .edge {
-  width: min(var(--pic-w, 400px), calc((100vw - var(--measure)) / 2 - 3.5rem));
+  width: min(var(--pic-w, 400px), calc((100% - var(--measure)) / 2 - 3rem));
 }
 
 .edge.left {
   right: auto;
-  left: clamp(16px, 2vw, 40px);
+  left: 0;
 }
 
 .edge.right {
   left: auto;
-  right: clamp(16px, 2vw, 40px);
+  right: 0;
 }
 
 /* Clear of the column on either side. The left-hand ones stand further
    off than the right: they lean toward the text, and at the same gap the
    lean read as crowding it. */
 .left {
-  right: calc(50% + var(--measure) / 2 + 4rem);
+  right: calc(50% + var(--measure) / 2 + 5rem);
 }
 
 .right {
-  left: calc(50% + var(--measure) / 2 + 1.75rem);
+  left: calc(50% + var(--measure) / 2 + 3.5rem);
 }
 
 /* The angle sits on the picture rather than the figure: the figure's own
@@ -356,9 +380,9 @@
 .stack img:nth-child(2) { --r: 2deg; --x: 6%; --y: 2%; transition-delay: 40ms; }
 .stack img:nth-child(3) { --r: -3deg; --x: 0%; --y: 0%; transition-delay: 80ms; }
 
-.stack:hover img:nth-child(1) { --r: 17deg; --x: 64%; --y: 7%; }
-.stack:hover img:nth-child(2) { --r: 5deg; --x: 31%; --y: -15%; }
-.stack:hover img:nth-child(3) { --r: -11deg; --x: -4%; --y: 7%; }
+.stack:hover img:nth-child(1) { --r: 13deg; --x: 26%; --y: 6%; }
+.stack:hover img:nth-child(2) { --r: 5deg; --x: 13%; --y: -11%; }
+.stack:hover img:nth-child(3) { --r: -9deg; --x: -3%; --y: 5%; }
 
 @media (prefers-reduced-motion: reduce) {
   .stack img {
@@ -376,7 +400,7 @@
    chapter: it sits beside the first line rather than next to the middle
    of the paragraph. */
 .book {
-  right: calc(50% + var(--measure) / 2 + 5.5rem);
+  right: calc(50% + var(--measure) / 2 + 7rem);
   perspective: 1000px;
 }
 
@@ -455,11 +479,11 @@
 /* Each one stands at its own distance from the column, so the four
    zig-zag out as well as down. */
 .icon.left {
-  right: calc(50% + var(--measure) / 2 + var(--out, 7rem));
+  right: calc(50% + var(--measure) / 2 + var(--out, 7rem) + 1.5rem);
 }
 
 .icon.right {
-  left: calc(50% + var(--measure) / 2 + var(--out, 5rem));
+  left: calc(50% + var(--measure) / 2 + var(--out, 5rem) + 1.5rem);
 }
 
 .icon img {
@@ -474,12 +498,29 @@
   background: rgba(63, 176, 230, 0.05);
 }
 
-/* Not enough margin left to hang a picture in: they fall in with the
-   text instead, at part width, one after the other. */
+/* Not enough margin left to hang a picture in: they fall in underneath
+   the writing instead, in a row that wraps. The writing keeps the middle
+   of the page to itself at every width, so the column takes the whole
+   line and the measure moves onto the paragraphs inside it - left on the
+   column, a picture narrow enough to fit beside it would come up next to
+   the text and push it off centre. */
 @media (max-width: 1260px) {
   .chapter {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .column {
+    flex: 1 0 100%;
+    max-width: none;
+  }
+
+  .column > p {
+    max-width: var(--measure);
+    margin-inline: auto;
   }
 
   .picture,
@@ -489,7 +530,29 @@
     left: auto;
     right: auto;
     width: min(62%, 300px);
-    margin: clamp(28px, 4vw, 44px) auto 0;
+    margin: clamp(28px, 4vw, 44px) 12px 0;
+  }
+
+  /* The offsets above are for the margins; in the flow they would shove
+     each picture sideways. The icons are offset by a rule of their own,
+     so they need naming, and they keep their own size: blown up to
+     picture width and stacked four deep they opened a screenful of empty
+     page under the last paragraph. */
+  .edge.left,
+  .edge.right,
+  .icon.left,
+  .icon.right {
+    left: auto;
+    right: auto;
+  }
+
+  .edge {
+    width: min(62%, 300px);
+  }
+
+  .icon {
+    width: 76px;
+    margin: clamp(20px, 3vw, 32px) 14px 0;
   }
 }
 
@@ -523,4 +586,20 @@
     transform: none;
     transition: none;
   }
+}
+
+
+/* ---------- the Chinese sheet ---------- */
+/* The hand, and nothing else: everything about how this page is laid out
+   is shared with the English sheet. */
+.zhHand {
+  font-family: "Itijyou Raura", var(--font-sans), "Satoshi", sans-serif;
+}
+
+/* The note under a picture is written in the same hand as the writing.
+   The Latin script the English sheet uses for it has no Chinese in it,
+   so the caption was falling through to the system face. */
+.zhHand .note {
+  font-family: "Itijyou Raura", var(--font-hand-a), cursive;
+  font-size: 1.1em;
 }
