@@ -54,14 +54,18 @@
   to { opacity: 1; transform: none; }
 }
 
-/* The hand the Chinese sheet is written in: the owner's own file from
-   /public/about, cut down to the characters this page prints. The whole
-   face is 17 MB of Japanese and Chinese; at 287 glyphs it is 127 KB, so
-   it can be a real webfont rather than a download. Regenerate it with
-   pyftsubset when the Chinese copy changes, or the new characters fall
-   back to the sans:
+/* The hand the Chinese sheet is written in: Itijyou Raura, cut down to
+   the characters this page prints. The whole face is 17 MB of Japanese
+   and Chinese; at 287 glyphs it is 127 KB, so it can be a real webfont
+   rather than a download.
 
-     pyftsubset public/about/fonts.otf --text-file=<the page's characters>        --flavor=woff2 --layout-features= --no-hinting --desubroutinize        --output-file=public/about/fonts-zh.woff2
+   Only the subset is committed. The full .otf used to sit in
+   /public/about beside it, which meant every deploy served 17 MB that no
+   page ever asked for - keep it on the machine that regenerates the
+   subset instead. Rerun this when the Chinese copy changes, or the new
+   characters fall back to the sans:
+
+     pyftsubset <path to Itijyou Raura.otf> --text-file=<the page's characters>        --flavor=woff2 --layout-features= --no-hinting --desubroutinize        --output-file=public/about/fonts-zh.woff2
 
    Declared here rather than beside Satoshi in globals.css because only
    this page uses it, and a face that is never applied is never fetched:
