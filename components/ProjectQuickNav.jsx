@@ -73,12 +73,13 @@ const projectSections = {
     ["reflection", { en: "Reflection", zh: "反思" }]
   ],
   bubu: [
-    ["problem", { en: "Problem", zh: "问题" }],
-    ["bet", { en: "The bet", zh: "判断" }],
-    ["match", { en: "Matching", zh: "匹配" }],
-    ["receipt", { en: "Daily loop", zh: "每日循环" }],
-    ["report", { en: "Weekly report", zh: "每周回顾" }],
-    ["next", { en: "Where it stands", zh: "进展" }]
+    ["why", { en: "Why", zh: "为什么" }],
+    ["how", { en: "How it works", zh: "怎么运作" }],
+    ["testing", { en: "Testing", zh: "访谈" }],
+    ["look", { en: "The look", zh: "视觉" }],
+    ["cast", { en: "The cast", zh: "小人" }],
+    ["screens", { en: "Every screen", zh: "全部界面" }],
+    ["shipping", { en: "Shipping", zh: "上架" }]
   ],
   suglar: [
     ["product", { en: "Product", zh: "成品" }],

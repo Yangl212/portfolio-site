@@ -4,26 +4,94 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import CaseVideo from "../cleared/CaseVideo"
 
-import { Receipt } from "./Receipt"
+import { Journal } from "./Journal"
+import { Loop } from "./Loop"
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "BUBU",
   description:
-    "A weight-loss app for two: buddies log meals as receipts, race each other to a shared goal, and fill one food journal together."
+    "A weight-loss app for two, built for the App Store: a receipt a day, a journal a week, a solo mode and a matching system that came out of two interviews."
 }
 
 /*
- * Both languages of the case study, in the shape the other project pages
- * use: one object per locale, same keys, picked once at render.
+ * The case study reads in the order the product makes sense: why it
+ * exists, how it works, what two conversations changed about it, what it
+ * looks like, every screen, and what is left before the App Store. The
+ * screens are the artwork throughout; the reasoning is kept to the two
+ * sections that carry a decision.
  *
- * "Dazi" is the hinge of the whole argument, so the two languages carry it
- * differently on purpose. The English gloss explains the word, because the
- * problem only makes sense once a reader knows how little a dazi pairing
- * asks; the Chinese just says 搭子 and spends the sentence on something a
- * Chinese reader does not already know.
+ * Everything that has no language - file paths, hex values, the order the
+ * screens run in - is a constant below, and the labels that go with them
+ * are index-aligned arrays inside `copy`, so the two languages cannot
+ * drift apart from each other or from the screens.
  */
+const screen = (name) => `/bubu/screens/${name}.webp`
+const motion = (name) => `/bubu/motion/${name}`
+
+/* The usage recordings, one per beat, the way the Last Message page runs
+   its loops beside the writing. Until a recording is in, its stage shows
+   the built screens instead, so the page reads as finished either way.
+   To add one: put <name>-loop.mp4 and <name>-poster.webp in
+   /public/bubu/media and flip the name to true. Recordings are portrait,
+   at the phone's own aspect. */
+const recordings = { day: false, week: false, finish: false, solo: false, matching: false }
+const recording = (name) =>
+  recordings[name] ? { src: `/bubu/media/${name}-loop.mp4`, poster: `/bubu/media/${name}-poster.webp` } : null
+
+/* The build ships in both languages. Where a screen exists twice the page
+   quietly shows the reader their own; it is not made a point of. */
+const inLanguage = {
+  home: { en: screen("en-home"), zh: screen("home-duo") },
+  challenge: { en: screen("en-challenge"), zh: screen("challenge-progress") },
+  cover: { en: screen("en-journal-cover"), zh: screen("journal-cover") },
+  title: { en: screen("en-journal-title"), zh: screen("journal-title") },
+  mine: { en: screen("en-journal-mine"), zh: screen("journal-mine") },
+  theirs: { en: screen("en-journal-theirs"), zh: screen("journal-theirs") },
+  spread: { en: screen("en-journal-spread"), zh: screen("journal-spread") }
+}
+
+const pick = (key, locale) => inLanguage[key][locale] || inLanguage[key].en
+
+/* The full build, in the order a first-time user meets it. Captions are
+   in `copy.screens.rail`, one per entry. */
+const rail = [
+  screen("signup"),
+  screen("how-to-log"),
+  screen("set-goal"),
+  screen("invite"),
+  screen("matched"),
+  screen("home-duo"),
+  screen("receipt-duo"),
+  screen("receipt-mine"),
+  screen("journal-cover"),
+  screen("journal-mine"),
+  screen("journal-spread"),
+  screen("challenge-progress"),
+  screen("challenge-rules"),
+  screen("goal-reached"),
+  screen("home-solo"),
+  screen("journal-solo"),
+  screen("challenge-solo"),
+  screen("settings"),
+  screen("rename")
+]
+
+/* Sampled out of the build rather than written down first: the app is
+   four surfaces and one ink. Names are in `copy.look.swatches`. */
+const palette = ["#F6F6F4", "#C8C5AD", "#F6F5EE", "#0E0E0E"]
+
+/* Five loops, one pen. Where each one runs is in `copy.cast.clips`. */
+const cast = [
+  { src: motion("jumprope.mp4"), webm: motion("jumprope.webm"), poster: motion("jumprope.webp") },
+  { src: motion("duo.mp4"), poster: motion("duo.webp") },
+  { src: motion("solo.mp4"), poster: motion("solo.webp") },
+  { src: motion("finish.mp4"), poster: motion("finish.webp") },
+  { src: motion("cheer.mp4"), poster: motion("cheer.webp") }
+]
+
 const copy = {
   en: {
     hero: {
@@ -31,253 +99,482 @@ const copy = {
       context: "Product Design · iOS · 2026",
       titleA: "BUBU:",
       titleB: "losing weight in pairs.",
-      lead: "Pair with one person on the same timeline, share nothing but what you ate, and finish the same challenge on the same day.",
-      challengeLabel: "The challenge",
-      challenge: "A diet partner is easy to want and hard to keep, so people spend more effort finding one than following the plan.",
-      contributionLabel: "My contribution",
-      contribution: "Product framing, interaction design, illustration and the visual system.",
-      betLabel: "The bet",
-      bet: "Cap the relationship at one subject - food - and give it a start date and an end date, so it has nothing to maintain and nothing to drift out of.",
-      statusLabel: "Status",
-      status: "In progress · Not yet user-tested",
+      lead: "An iOS app for two people on the same eight weeks. You photograph what you ate, the day prints itself as a receipt, and seven receipts bind into a paper journal you both sign.",
+      storeLabel: "App Store",
+      store: "Build complete · preparing submission",
       roleLabel: "Role",
-      role: "Product Designer & Illustrator",
+      role: "Product design, UI, illustration",
       scopeLabel: "Scope",
-      scope: "Product · UI · Illustration",
+      scope: "23 screens · paired and solo",
       platformLabel: "Platform",
-      platform: "iOS",
-      action: "Read the case",
-      heroAlt: "The BUBU challenge home screen: day 12, both players' progress, and today's receipt"
+      platform: "iOS · iPhone 17",
+      statusLabel: "Status",
+      status: "Built · one round of interviews · TestFlight next",
+      action: "How it works",
+      heroAlt: "The BUBU home screen on an iPhone: day 24, both players' progress, and the meals they logged today"
     },
-    problem: {
-      kicker: "01 / The starting point",
+    why: {
+      kicker: "01 / Why it exists",
       heading: "A dazi is easy to find and easy to lose.",
-      lead: "In China, a dazi (搭子) is a partner for exactly one activity - a lunch dazi, a gym dazi, a concert dazi. What makes it appealing is how little it asks: no friendship to keep up, no obligation past the activity itself.",
-      breakLabel: "Why it breaks",
-      breakLead: "The same looseness that makes a dazi easy to start makes it impossible to keep.",
-      breakBody: "Nothing holds the pairing together, so it quietly stops after a week and the search begins again. People end up spending more energy finding a partner than following the plan the partner was meant to support.",
-      dietLabel: "Why dieting is the worst case",
-      dietLead: "It needs weeks, a matching schedule, and a witness on exactly the days you least want one.",
-      dietBody: "A concert dazi has to survive one evening. A diet dazi has to survive two months, a mismatched starting weight, and the day you would rather nobody saw what you ate.",
-      questionLabel: "The design question",
-      question: "What is the smallest commitment that can hold two strangers together for eight weeks?"
-    },
-    bet: {
-      kicker: "02 / The bet",
-      heading: "Narrow the relationship until there is nothing left to break.",
-      lead: "Rather than add features to make the pairing stickier, I took things away until only one shared subject was left.",
-      tradeoffLabel: "The trade-off",
-      principles: [
+      lead: "In China a dazi (搭子) is a partner for exactly one activity: a lunch dazi, a gym dazi. What makes it appealing is how little it asks, and that is also why it falls apart. Nothing holds the pairing together, so it quietly stops after a week and the search starts again. Dieting is the worst case, because it needs two months rather than one evening.",
+      rulesLabel: "Three rules the whole product is built on",
+      rules: [
         {
           label: "01 / One subject",
           title: "You share food. Nothing else.",
-          body: "Your buddy sees what you ate and when. There is no chat thread, no feed, no profile and no display name - both of you are a user id for the length of the challenge.",
-          tradeoff: "A message box would make this a social app, and a social app is exactly the upkeep a dazi pairing is meant to avoid."
+          body: "No chat, no feed, no profile, no display name. For the length of the challenge you are both a user id and a plate of food."
         },
         {
           label: "02 / A fixed end",
-          title: "The challenge ends on a date, not on a decision.",
-          body: "You pick 4, 8 or 12 weeks at setup, and both pages count down to the same day. Nobody has to be the one who quits.",
-          tradeoff: "A fixed window rules out an open-ended habit tracker. This is a race with a finish line, not a lifelong log."
+          title: "It ends on a date, not on a decision.",
+          body: "You pick 4, 8 or 12 weeks at setup and both pages count down to the same day. Nobody has to be the one who quits."
         },
         {
           label: "03 / Visible absence",
           title: "A missed day prints as a blank.",
-          body: "Skipping does not send a nudge or a guilt notification. It leaves an empty dashed frame on the day's receipt, and the counter reads MISSED 1 / 3.",
-          tradeoff: "Three blank days in a row ends the challenge for both people. Harsh, but it is the only thing holding the pairing together."
+          body: "No nudge, no guilt notification. An empty dashed frame on the day's receipt, and a counter that reads MISSED 1 / 3."
         }
       ]
     },
-    match: {
-      kicker: "03 / Finding a buddy",
-      heading: "Invite someone you know, or match on the three things that decide whether you can finish together.",
-      lead: "Matching does not ask for age, city, gender or a photo. It compares the only three facts that affect whether two people can run the same challenge to the end.",
-      axes: [
-        ["Similar goal", "Both aiming for about the same number of kilograms"],
-        ["Similar start", "Close enough in starting weight that the pace is comparable"],
-        ["Same end date", "Both challenges close on the same day"]
-      ],
-      cardLabel: "Your challenge",
-      yourGoal: "Your goal",
-      theirGoal: "Their goal",
-      startsLabel: "Starts",
-      starts: "Tomorrow 0:00",
-      endsLabel: "Ends",
-      ends: "11.17 · 56 days",
-      caption: "Three blank days in a row ends the challenge for both of you."
-    },
-    receipt: {
-      kicker: "04 / The daily loop",
-      heading: "Photograph the meal; the day closes itself as a receipt.",
-      lead: "You shoot the plate, the app cuts it out of its background, and at 23:59 the day seals into a printed receipt. Yours and theirs sit side by side.",
-      whyLabel: "Why a receipt",
-      why: "A receipt is already read as a day that has been closed and totalled. Sealing it at 23:59 means yesterday cannot be edited to look better, which is what makes the other person's copy worth anything.",
-      secondLabel: "The second reason to look",
-      second: "Motivation is only half of it. Their receipt is also the most useful answer to “what do I eat tonight” - a real meal, eaten by someone on the same plan, at a time you can compare to your own.",
-      note: "The receipts above are drawn in CSS from the product’s own layout. The meal photos are stand-ins from the home screen; in the app they are cut out of their background and printed straight onto the paper."
-    },
-    report: {
-      kicker: "05 / The weekly report",
-      heading: "Seven receipts become a spread you both sign.",
-      lead: "Every week the daily receipts bind into one journal. Your page and theirs face each other, so a week reads as a single object rather than two separate logs.",
-      alt: "The weekly report: two facing journal pages, one per player, each holding seven days of meal photos and notes",
-      caption: "Left page is mine, right page is theirs. Missed days stay on the paper as empty frames."
-    },
-    next: {
-      kicker: "06 / Where it stands",
-      heading: "The loop is designed. The assumption underneath it is not yet tested.",
-      lead: "BUBU is still being built. The screens, the receipt system and the illustration set are done; what is missing is evidence that the core bet holds for anyone other than me.",
-      questionLabel: "Open question",
-      questions: [
+    how: {
+      kicker: "02 / How it works",
+      heading: "Photograph the meal. The rest prints itself.",
+      lead: "There is no form to fill in. You shoot the plate, the app cuts it out of its background, and from there the product is three pieces of printed matter: a receipt a day, a spread a week, and a track that runs the length of the challenge.",
+      beats: [
         {
-          title: "Does a stranger's receipt push or pressure?",
-          body: "The whole product assumes that seeing someone else show up is motivating. It could just as easily read as surveillance on a bad day. This is the first thing to put in front of people."
+          label: "The day",
+          title: "At 23:59 the day seals itself as a receipt.",
+          body: "A receipt is already read as a day that has been closed and totalled. Sealing it means yesterday cannot be edited to look better, which is the only reason the other person's copy is worth anything. It is also the most useful answer to what to eat tonight: a real meal, eaten by someone on the same plan.",
+          demo: "Logging a meal and watching the day seal into a receipt",
+          alts: [
+            "Both players' receipts for the day, printed side by side on a black ground",
+            "One receipt in full: each meal with its time, the exercise line, and the day's progress"
+          ]
         },
         {
-          title: "Is no messaging at all the right cap?",
-          body: "Zero contact is the cleanest version of the idea. It may also be too cold to sustain - a single reaction per receipt might be the minimum warmth needed without turning it into a chat app."
+          label: "The week",
+          title: "Seven receipts, bound and laid open.",
+          body: "The journal is the only place the two of you are shown as one object. Turn it and the cover, the title page, your week and their week come up in order; open it flat and both weeks read across the gutter at once.",
+          demo: "Turning the journal from the cover to the open spread"
         },
         {
-          title: "Is ending after three blank days fair?",
-          body: "The rule exists so the pairing cannot quietly rot. Whether it reads as a fair contract or as a punishment for one bad week is a question for testing, not for me."
+          label: "The finish",
+          title: "One track, two runners, a date at the end.",
+          body: "The home screen keeps the two of you on one track. The challenge page keeps the rules and the count. When the date arrives, the last screen is a celebration and a receipt you can share.",
+          demo: "The challenge page, and reaching the goal on the last day",
+          alts: [
+            "The challenge page: both players' progress against the rules",
+            "The goal-reached screen: a drawn figure with arms up, and the final numbers"
+          ]
         }
       ],
-      limit: "No usability testing has been run yet, so nothing on this page is a validated outcome. The numbers shown in the screens are sample data."
+      journalStepsLabel: "Turn the journal",
+      journalPages: [
+        ["Cover", "The journal, closed on the desk"],
+        ["Title page", "My Diet Diary, and the two of you drawn on the flyleaf"],
+        ["My week", "Seven days, each with what I ate and what I did"],
+        ["Their week", "The same page, kept by the other person"],
+        ["Open flat", "Both weeks across the gutter, with the week's loss clipped to each"]
+      ]
+    },
+    testing: {
+      kicker: "03 / What testing changed",
+      heading: "Two conversations, two changes to the product.",
+      lead: "Before TestFlight I sat down with two people who would meet the app from opposite ends: someone who would use it, and someone who has shipped things like it.",
+      whoLabel: "Who",
+      saidLabel: "What they said",
+      changedLabel: "What changed",
+      findings: [
+        {
+          who: "A fitness creator with 20,000 followers",
+          said: "She liked the interface enough to want it for herself, on her own. Her point was that people will come for how it looks and may not have a buddy to hand, and the app should not turn them away at the door.",
+          changed: "A solo mode. The same home, journal and challenge, with one runner on the track and a journal that holds only your week. Pairing became something you can add later rather than the price of entry.",
+          demo: "Running a challenge alone: home, journal and challenge in solo mode",
+          alts: [
+            "Home in solo mode: one runner on the track",
+            "The journal in solo mode: one week, one page",
+            "The challenge page in solo mode"
+          ]
+        },
+        {
+          who: "A product designer with three years of shipped work",
+          said: "His concern was the cold start. Matching strangers online is a bad experience in a new app, because there are not yet enough strangers: you wait, or you are given someone nothing like you.",
+          changed: "Matching that is one-to-one for you and one-to-many for the system. You are shown exactly one buddy, chosen for a similar goal, a similar starting weight and the same length of challenge. But the person you are shown may already be someone else's buddy, and that is allowed. When A and B are paired and C arrives closest to A, C is matched to A; A still sees B, and B still sees A. Nobody waits for an even number of people to turn up.",
+          demo: "Being matched: from setting a goal to the buddy arriving",
+          alt: "The matched screen: your buddy has arrived, with both goals side by side"
+        }
+      ],
+      figureLabel: "How a third person joins",
+      legend: [
+        ["A", "sees B"],
+        ["B", "sees A"],
+        ["C", "sees A"]
+      ],
+      note: "Both conversations were about the prototype, before any real pair had run a challenge."
+    },
+    look: {
+      kicker: "04 / The look",
+      heading: "Flat paper, hairlines, and photographs printed straight onto it.",
+      lead: "The whole app is one material. Nothing floats, nothing has a shadow, and nothing is rounded except the phone it runs on.",
+      swatchLabel: "Four surfaces, one ink",
+      swatches: [
+        ["Paper", "Every screen but the journal and the receipt"],
+        ["Board", "The journal's cover cloth and the desk it lies on"],
+        ["Page", "The journal's own paper, a shade warmer than the app"],
+        ["Ink", "Type, rules, the black key and the receipt ground"]
+      ],
+      typeLabel: "Two typefaces, no third",
+      type: "Geist Mono carries every number, label and timestamp, because a receipt is a printed object and a receipt's numbers line up. Noto Sans SC carries the sentences. Nothing is set in a script face; the only handwriting in the app is drawn, not typed.",
+      rulesLabel: "What the system refuses",
+      rules: [
+        "No drop shadows and no elevation. A card is a rule, not a layer.",
+        "No rounded corners. Right angles everywhere, including the buttons.",
+        "No white border on a photograph. A meal is cut out of its background and printed onto the paper.",
+        "One filled button per screen, in ink, as a plain rectangle. The receipt is the one place the system inverts: paper type on a black ground."
+      ],
+      detailAlt: "Setting the goal: height, current weight, target weight in mono, and the 4, 8 or 12 week choice",
+      detailCaption: "Setting the goal. The numbers in mono, the 4 / 8 / 12 week choice set as three figures rather than a control, and the one ink button on the screen."
+    },
+    cast: {
+      kicker: "05 / The cast",
+      heading: "One pen, five loops.",
+      lead: "The app has no mascot and no illustration library. It has a cast of two, drawn with the same line as the interface rules, who appear only at the moments the product needs a person rather than a number.",
+      clips: [
+        ["Skipping", "Empty states, and the pause between two challenges"],
+        ["Both of you", "The screen that confirms a match"],
+        ["Solo", "Home, when you are running the challenge alone"],
+        ["The finish", "Crossing the line on the last day"],
+        ["Goal reached", "The celebration screen, and the receipt you can share from it"]
+      ],
+      note: "The loops run while they are on screen and stop when they are not."
+    },
+    screens: {
+      kicker: "06 / Every screen",
+      heading: "The whole build, in the order you meet it.",
+      lead: "Nineteen screens captured on an iPhone 17 simulator, from sign-up to the settings page. Drag the strip.",
+      rail: [
+        "Sign up",
+        "Solo or paired",
+        "Set the goal",
+        "Invite a buddy",
+        "Matched",
+        "Home · paired",
+        "Today's receipt · both",
+        "Today's receipt · mine",
+        "Journal · cover",
+        "Journal · my week",
+        "Journal · the spread",
+        "Challenge · progress",
+        "Challenge · rules",
+        "Goal reached",
+        "Home · solo",
+        "Journal · solo",
+        "Challenge · solo",
+        "Settings",
+        "Rename"
+      ]
+    },
+    shipping: {
+      kicker: "07 / Shipping it",
+      heading: "What is built, and what is between here and the App Store.",
+      lead: "The app is not a prototype. It is a build that runs, and the work left is the work of getting a build reviewed rather than designed.",
+      doneLabel: "Done",
+      done: [
+        "23 screens, designed and built",
+        "Paired and solo modes",
+        "The receipt, the journal and the share card",
+        "One-to-many matching, out of the second interview",
+        "The five drawn loops"
+      ],
+      leftLabel: "Between here and the store",
+      left: [
+        "TestFlight round with real pairs, which is also the first test of the matching",
+        "Privacy labels and the data the matching actually needs",
+        "App Store screenshots and the listing",
+        "Review, and whatever review asks for"
+      ],
+      limit: "One thing is still untested: the whole product rests on the assumption that a stranger's receipt is motivating rather than uncomfortable. Two interviews moved the product, but two interviews are not eight weeks of use. That is what TestFlight is for."
     }
   },
+
   zh: {
     hero: {
       pill: "自发项目",
       context: "产品设计 · iOS · 2026",
       titleA: "BUBU：",
       titleB: "两个人一起减脂。",
-      lead: "和一个周期相同的人组队，除了吃了什么之外什么都不共享，在同一天一起结束这场挑战。",
-      challengeLabel: "挑战",
-      challenge: "减脂搭子人人都想要，却很难留住，找搭子花掉的力气经常比执行计划本身还多。",
-      contributionLabel: "我做了什么",
-      contribution: "产品定义、交互设计、插画，以及整套视觉系统。",
-      betLabel: "我的判断",
-      bet: "把这段关系收窄到只剩一件事——吃，再给它一个开始日期和一个结束日期。没有需要维护的东西，也就没有可以散掉的东西。",
-      statusLabel: "状态",
-      status: "进行中 · 还没做用户测试",
-      roleLabel: "角色",
-      role: "产品设计师 & 插画",
+      lead: "一个给两个人用的 iOS 应用，同一个八周。你拍下这一餐，这一天自己印成一张小票，七张小票装订成一页你们共同签收的手账。",
+      storeLabel: "App Store",
+      store: "开发已完成 · 正在准备上架",
+      roleLabel: "我的角色",
+      role: "产品设计、UI、插画",
       scopeLabel: "范围",
-      scope: "产品 · UI · 插画",
+      scope: "23 个界面 · 双人与单人",
       platformLabel: "平台",
-      platform: "iOS",
-      action: "开始阅读",
-      heroAlt: "BUBU 的挑战主页：第 12 天、两个人各自的进度，以及今天的小票"
+      platform: "iOS · iPhone 17",
+      statusLabel: "状态",
+      status: "已完成开发 · 做了一轮访谈 · 接下来是 TestFlight",
+      action: "它怎么运作",
+      heroAlt: "iPhone 上的 BUBU 首页：第 24 天、两个人的进度，以及今天各自记的餐"
     },
-    problem: {
-      kicker: "01 / 起点",
+    why: {
+      kicker: "01 / 它为什么存在",
       heading: "搭子好找，也好散。",
-      lead: "搭子的吸引力在于它要求得足够少：不用维系友情，活动结束了也不欠对方什么。饭搭子、健身搭子、演出搭子，一次活动就是关系的全部边界。",
-      breakLabel: "它为什么会散",
-      breakLead: "让搭子容易开始的那份松散，也让它没法持续。",
-      breakBody: "没有任何东西把两个人绑在一起，所以一周之后它就悄悄停了，然后又要重新找。最后花在找搭子上的力气，比花在计划本身上的还多。",
-      dietLabel: "减脂为什么是最难的一种",
-      dietLead: "它要熬几周，要作息对得上，还要在你最不想被人看见的那天有人在看。",
-      dietBody: "演出搭子只需要撑过一个晚上。减脂搭子要撑过两个月、对不上的起始体重，还有那些你宁愿没人知道自己吃了什么的日子。",
-      questionLabel: "设计问题",
-      question: "能把两个陌生人绑在一起八周的最小承诺，是什么？"
-    },
-    bet: {
-      kicker: "02 / 我的判断",
-      heading: "把关系收窄到没有东西可以坏掉为止。",
-      lead: "我没有靠加功能让这段关系更黏，而是一直做减法，直到只剩下一个共同话题。",
-      tradeoffLabel: "代价",
-      principles: [
+      lead: "搭子只对应一件事：饭搭子、健身搭子。它吸引人的地方在于要求很低，散得快也是同一个原因。没有东西把两个人绑在一起，一周之后就悄悄停了，然后重新开始找。减脂是其中最难的一种，因为它要撑两个月，不是一个晚上。",
+      rulesLabel: "整个产品建立在三条规则上",
+      rules: [
         {
-          label: "01 / 只有一件事",
-          title: "你们只共享吃的，别的都没有。",
-          body: "搭子能看到你吃了什么、什么时候吃的。没有聊天、没有动态、没有主页，也没有昵称——整场挑战里你们彼此都只是一个用户 id。",
-          tradeoff: "加个聊天框，它就变成社交产品了，而社交产品需要的维护成本，正是搭子关系想躲开的东西。"
+          label: "01 / 只共享一件事",
+          title: "你们只共享吃了什么。",
+          body: "没有聊天、没有动态、没有主页、没有昵称。在这场挑战里，你们彼此就是一个用户 ID 和一盘饭。"
         },
         {
-          label: "02 / 固定的终点",
-          title: "挑战是到日子结束，不是到有人决定结束。",
-          body: "创建时选 4 周、8 周或 12 周，两个人的页面倒数同一天。谁都不用当那个先开口说不干了的人。",
-          tradeoff: "固定周期意味着它做不成一个没有尽头的习惯打卡。这是一场有终点线的比赛，不是一本记一辈子的账。"
+          label: "02 / 有固定的终点",
+          title: "它在某一天结束，不靠谁决定。",
+          body: "开始时选 4 周、8 周或 12 周，两个人的页面倒数同一天。没有人需要当那个先退出的人。"
         },
         {
           label: "03 / 缺席是看得见的",
-          title: "漏掉的那天，会印成一块空白。",
-          body: "漏记不会推送提醒，也不会发愧疚感通知。它只是在那天的小票上留下一个空的虚线框，计数变成 MISSED 1 / 3。",
-          tradeoff: "连续三天空白，两个人的挑战一起结束。是有点狠，但这是唯一还在支撑这段关系的东西。"
+          title: "漏掉的那天会印成一块空白。",
+          body: "不催、不发让人内疚的通知。当天的小票上留一个虚线空框，计数写着 MISSED 1 / 3。"
         }
       ]
     },
-    match: {
-      kicker: "03 / 找到搭子",
-      heading: "邀请你认识的人，或者按三件真正决定你们能不能一起走完的事来匹配。",
-      lead: "匹配不问年龄、城市、性别，也不要照片。它只比对三件会影响两个人能否把同一场挑战跑到底的事实。",
-      axes: [
-        ["目标相近", "两个人想减掉的公斤数差不多"],
-        ["起点相近", "起始体重足够接近，节奏才有可比性"],
-        ["同一天结束", "两场挑战在同一天收尾"]
-      ],
-      cardLabel: "你们的挑战",
-      yourGoal: "你的目标",
-      theirGoal: "TA 的目标",
-      startsLabel: "开始",
-      starts: "明天 0:00",
-      endsLabel: "结束",
-      ends: "11.17 · 共 56 天",
-      caption: "连续三天没有记录，两个人的挑战一起结束。"
-    },
-    receipt: {
-      kicker: "04 / 每天的循环",
-      heading: "拍下这一餐，这一天自己结算成一张小票。",
-      lead: "你拍下盘子，App 把它从背景里抠出来，23:59 这一天封存成一张打印好的小票。你的和 TA 的并排放着。",
-      whyLabel: "为什么是小票",
-      why: "小票这个形式本身就意味着「这一天已经结算完了」。23:59 自动封存，等于昨天不能再改得好看一点——这也正是对方那张小票有价值的原因。",
-      secondLabel: "看对方小票的第二个理由",
-      second: "动力只是一半。TA 的小票也是「今晚吃什么」最实用的答案——一顿真实的饭，来自一个和你执行同一套计划的人，时间点还能和你自己的对上。",
-      note: "上面两张小票是按产品本身的排版用 CSS 画出来的。食物照片暂时用了主页的素材；在 App 里它们是抠好图直接印在纸上的。"
-    },
-    report: {
-      kicker: "05 / 每周回顾",
-      heading: "七张小票装订成一页你们共同签收的手账。",
-      lead: "每周的小票会装订成同一本手账。你的那页和 TA 的那页面对面，一周因此读起来是一件完整的东西，而不是两份各自的记录。",
-      alt: "每周回顾：面对面的两页手账，一人一页，各自记着七天的食物照片和备注",
-      caption: "左页是我的，右页是 TA 的。漏掉的日子以空框的形式留在纸上。"
-    },
-    next: {
-      kicker: "06 / 目前进展",
-      heading: "循环已经设计好了，但它底下的那个假设还没被验证。",
-      lead: "BUBU 还在做。界面、小票系统和插画都完成了；缺的是证据——除了我自己之外，这个核心判断对别人是否也成立。",
-      questionLabel: "待验证",
-      questions: [
+    how: {
+      kicker: "02 / 它怎么运作",
+      heading: "拍下这一餐，剩下的自己印出来。",
+      lead: "没有表格要填。你拍一下盘子，app 把它从背景里抠出来，之后整个产品就是三样印刷品：一天一张小票，一周一页手账，还有一条贯穿整场挑战的跑道。",
+      beats: [
         {
-          title: "陌生人的小票，是推动还是压力？",
-          body: "整个产品都建立在「看见别人在坚持会给人动力」这个假设上。但在状态不好的那天，它也完全可能被读成一种监视。这是最该先拿去问用户的事。"
+          label: "一天",
+          title: "23:59，这一天自己封成一张小票。",
+          body: "小票本来就读作一个已经结清、已经合计过的日子。封存意味着昨天不能再改得好看一点，这是对方手上那一张唯一值钱的原因。它同时也是今晚吃什么最有用的答案：一顿真实的饭，被一个跟你同一套计划的人吃掉。",
+          demo: "记一餐，然后看着这一天封成一张小票",
+          alts: [
+            "两个人当天的小票，并排印在黑色底上",
+            "一张完整的小票：每一餐带时间、运动那一行，以及这一天的进度"
+          ]
         },
         {
-          title: "完全不能说话，是对的边界吗？",
-          body: "零沟通是这个想法最干净的版本，但也可能冷到撑不下去。每张小票允许一个表情回应，也许就是既不变成聊天软件、又够暖的那条底线。"
+          label: "一周",
+          title: "七张小票，装订起来摊开。",
+          body: "手账是整个产品里唯一把两个人显示成一件东西的地方。一页页翻过去是封面、扉页、我的一周、TA 的一周；摊平了看，两周的内容横跨订口一起读。",
+          demo: "把手账从封面翻到摊开"
         },
         {
-          title: "连续三天空白就结束，算公平吗？",
-          body: "这条规则的存在是为了不让关系悄无声息地烂掉。但它读起来是一份公平的契约，还是对一个糟糕星期的惩罚，得靠测试回答，不该由我来定。"
+          label: "终点",
+          title: "一条跑道，两个人，尽头是一个日期。",
+          body: "首页把你们俩放在同一条跑道上，挑战页放着规则和计数。日期到了，最后一屏是庆祝，和一张可以分享出去的小票。",
+          demo: "挑战页，以及最后一天达成目标",
+          alts: [
+            "挑战页：两个人的进度，对照着规则",
+            "目标达成页：一个举着手的小人，和最终的数字"
+          ]
         }
       ],
-      limit: "目前还没有做过可用性测试，所以这一页上的任何内容都不是经过验证的结论。界面里出现的数字均为示例数据。"
+      journalStepsLabel: "翻这本手账",
+      journalPages: [
+        ["封面", "合着放在桌上的手账"],
+        ["扉页", "我的减脂日记，还有画在衬页上的你们俩"],
+        ["我的一周", "七天，每天记着吃了什么、做了什么"],
+        ["TA 的一周", "同一页，由对方记"],
+        ["摊平", "两周横跨订口，各自夹着这一周掉了多少"]
+      ]
+    },
+    testing: {
+      kicker: "03 / 访谈改变了什么",
+      heading: "两次访谈，改了两处。",
+      lead: "TestFlight 之前，我找了两个从相反方向接触这个 app 的人聊：一个会用它的人，一个做过这类东西的人。",
+      whoLabel: "谁",
+      saidLabel: "她 / 他说了什么",
+      changedLabel: "改了什么",
+      findings: [
+        {
+          who: "一位有两万粉丝的健身博主",
+          said: "她喜欢这套界面，喜欢到想自己一个人用。她的意思是，很多人会冲着好看来，手边未必有搭子，app 不该把这些人挡在门口。",
+          changed: "加了单人模式。同样的首页、手账和挑战，跑道上只有一个人，手账里只有你自己那一周。配对变成以后可以加的东西，不再是进门的条件。",
+          demo: "一个人跑一场挑战：单人模式的首页、手账和挑战",
+          alts: [
+            "单人模式的首页：跑道上只有一个人",
+            "单人模式的手账：一周，一页",
+            "单人模式的挑战页"
+          ]
+        },
+        {
+          who: "一位有三年经验的产品设计师",
+          said: "他担心的是冷启动。新 app 里线上匹配陌生人的体验非常差，因为陌生人还不够多：要么一直等，要么配到一个和你完全不像的人。",
+          changed: "把匹配改成对你是一对一、对系统是一对多。你只会看到一个搭子，按目标接近、起始体重接近、周期一样长来选。但你看到的这个人可能已经是别人的搭子了，这是允许的。A 和 B 配成一对之后，C 进来时和 A 最像，C 就配给 A；A 看到的还是 B，B 看到的还是 A。没有人需要等到凑齐偶数才能开始。",
+          demo: "被匹配的过程：从设定目标到搭子到来",
+          alt: "组队成功页：搭子来了，两个人的目标并排"
+        }
+      ],
+      figureLabel: "第三个人进来时",
+      legend: [
+        ["A", "看到 B"],
+        ["B", "看到 A"],
+        ["C", "看到 A"]
+      ],
+      note: "两次访谈聊的都是原型，那时还没有任何一对真实的搭子跑完过一场挑战。"
+    },
+    look: {
+      kicker: "04 / 视觉",
+      heading: "平的纸、细线，照片直接印在上面。",
+      lead: "整个 app 只用一种材质。没有东西浮起来，没有阴影，除了手机本身没有圆角。",
+      swatchLabel: "四个面，一种墨",
+      swatches: [
+        ["纸", "除手账和小票以外的每一屏"],
+        ["板", "手账的封面布，以及它躺着的那张桌面"],
+        ["页", "手账自己的纸，比 app 暖一点"],
+        ["墨", "文字、分隔线、黑色按钮和小票底色"]
+      ],
+      typeLabel: "两款字，没有第三款",
+      type: "所有数字、标签和时间都用 Geist Mono，因为小票是印出来的东西，印出来的数字要对齐。句子用 Noto Sans SC。没有任何一处用手写体：app 里唯一的手写是画上去的，不是打出来的。",
+      rulesLabel: "这套系统拒绝的东西",
+      rules: [
+        "不用投影，也没有层级高度。卡片是一条线，不是一层。",
+        "不用圆角。哪里都是直角，按钮也一样。",
+        "照片不留白边。一餐被从背景里抠出来，直接印在纸上。",
+        "每屏只有一个实心按钮，墨色，就是一个矩形。唯一反过来的地方是小票：纸色的字印在黑底上。"
+      ],
+      detailAlt: "设定目标：身高、当前体重、目标体重用等宽字，以及 4、8、12 周的选择",
+      detailCaption: "设定目标这一屏。数字用等宽字，4 / 8 / 12 周直接排成三个数字而不是一个控件，整屏只有一个墨色按钮。"
+    },
+    cast: {
+      kicker: "05 / 这些小人",
+      heading: "一支笔，五段动画。",
+      lead: "这个 app 没有吉祥物，也没有插画库。它只有两个小人，用和界面分隔线同一条线画出来，只在产品需要一个人而不是一个数字的时刻出现。",
+      clips: [
+        ["跳绳", "空状态，以及两场挑战之间的间隙"],
+        ["你们俩", "确认组队成功的那一屏"],
+        ["一个人", "单人模式下的首页"],
+        ["冲线", "最后一天撞过终点线"],
+        ["达成目标", "庆祝页，以及从那里分享出去的小票"]
+      ],
+      note: "动画只在进入画面时播放，离开就停。"
+    },
+    screens: {
+      kicker: "06 / 全部界面",
+      heading: "整个 app，按你第一次用的顺序。",
+      lead: "19 个界面，在 iPhone 17 模拟器上截的，从注册到设置。这一排可以横向拖动。",
+      rail: [
+        "注册",
+        "单人还是双人",
+        "设定目标",
+        "邀请搭子",
+        "组队成功",
+        "首页 · 双人",
+        "今日小票 · 双人",
+        "今日小票 · 我的",
+        "手账本 · 封面",
+        "手账本 · 我的一周",
+        "手账本 · 摊开",
+        "挑战 · 进度",
+        "挑战 · 规则",
+        "目标达成",
+        "首页 · 单人",
+        "手账本 · 单人",
+        "挑战 · 单人",
+        "设置",
+        "改名"
+      ]
+    },
+    shipping: {
+      kicker: "07 / 上架",
+      heading: "做完了什么，离 App Store 还差什么。",
+      lead: "这不是一个原型，是一个能跑起来的版本。剩下的工作属于送审，不属于设计。",
+      doneLabel: "已完成",
+      done: [
+        "23 个界面，设计并开发完成",
+        "双人和单人两种模式",
+        "小票、手账和分享卡",
+        "一对多的匹配，来自第二次访谈",
+        "五段手绘动画"
+      ],
+      leftLabel: "离上架还差",
+      left: [
+        "一轮 TestFlight，找真实的搭子来用，也是第一次真正测匹配",
+        "隐私标签，以及匹配到底需要哪些数据",
+        "App Store 的截图和文案",
+        "送审，以及审核提出的任何要求"
+      ],
+      limit: "有一件事仍然没验证：整个产品压在一个假设上，就是看到一个陌生人的小票是有动力的，而不是让人不舒服。两次访谈推着产品往前走了，但两次访谈不等于八周的使用。TestFlight 就是去看这个的。"
     }
   }
 }
 
+/*
+ * The matching, drawn: A and B are each other's buddy; C arrives closest
+ * to A and is given A, without taking A off B. Strokes are hairlines in
+ * ink, like the app's own rules. Everything the figure says is repeated
+ * in the legend under it, so the picture is decoration for the sentence
+ * rather than the only place the idea lives.
+ */
+function MatchingFigure({ legend }) {
+  return (
+    <div className={styles.matchFigure}>
+      <svg viewBox="0 0 400 128" role="img" aria-label={legend.map((l) => `${l[0]} ${l[1]}`).join(", ")}>
+        <defs>
+          <marker id="bubu-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0.5 L9.5 5 L0 9.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          </marker>
+        </defs>
+        {/* C -> A, one way */}
+        <line x1="86" y1="64" x2="168" y2="64" stroke="currentColor" strokeWidth="1.2" markerEnd="url(#bubu-arrow)" />
+        {/* A <-> B, both ways */}
+        <line x1="234" y1="64" x2="312" y2="64" stroke="currentColor" strokeWidth="1.2" markerStart="url(#bubu-arrow)" markerEnd="url(#bubu-arrow)" />
+        {[["C", 58], ["A", 200], ["B", 342]].map(([name, x]) => (
+          <g key={name}>
+            <circle cx={x} cy="64" r="28" fill="none" stroke="currentColor" strokeWidth="1.2" />
+            <text x={x} y="70" textAnchor="middle" fontSize="20" fontFamily="inherit" fill="currentColor">{name}</text>
+          </g>
+        ))}
+      </svg>
+      <ul className={styles.matchLegend}>
+        {legend.map(([who, sees]) => (
+          <li key={who}><span className={styles.matchWho}>{who}</span><span>{sees}</span></li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/*
+ * One stage per beat. When the recording for it is in, the stage runs it
+ * the way Last Message's page runs its loops - silent, phone-shaped, the
+ * image its own play control; until then it holds the built screens, so
+ * a reader sees the product either way and the layout does not move when
+ * the video lands.
+ */
+function Stage({ name, label, children }) {
+  const clip = recording(name)
+  return (
+    <div className={styles.stage} data-recording={clip ? "" : undefined}>
+      {clip
+        ? <CaseVideo className={styles.stageVideo} src={clip.src} poster={clip.poster} width={804} height={1748} label={label} />
+        : children}
+    </div>
+  )
+}
+
 export default function BubuPage({ track = "uiux", locale = "en" }) {
   const t = copy[locale] || copy.en
+  const journalPages = ["cover", "title", "mine", "theirs", "spread"].map((key, index) => ({
+    src: pick(key, locale),
+    step: t.how.journalPages[index][0],
+    alt: t.how.journalPages[index][1]
+  }))
+  const [day, week, finish] = t.how.beats
+  const [solo, matching] = t.testing.findings
 
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
         <SiteHeader active={trackHome(track, locale)} track={track} locale={locale} />
-        {/* The hero animates itself on load (.reveal below); everything past
-            it waits until it is scrolled to, so a reader meets each section
-            as they reach it rather than finding it already played out. */}
+
+        {/* Each section arrives as it is scrolled to rather than all at
+            once, the way the other case studies do. */}
         <Reveal fade={`.${styles.caseSection}`} />
+
         <div className={styles.content}>
           <header className={styles.hero}>
             <div className={styles.heroCopy}>
@@ -287,200 +584,245 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               </div>
               <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>{t.hero.titleA}<br />{t.hero.titleB}</h1>
               <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>{t.hero.lead}</p>
-              <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
-                <div><dt>{t.hero.challengeLabel}</dt><dd>{t.hero.challenge}</dd></div>
-                <div><dt>{t.hero.contributionLabel}</dt><dd>{t.hero.contribution}</dd></div>
-                <div><dt>{t.hero.betLabel}</dt><dd>{t.hero.bet}</dd></div>
-                <div><dt>{t.hero.statusLabel}</dt><dd>{t.hero.status}</dd></div>
-              </dl>
-              <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
+
+              {/* The app icon at its real corner radius, next to the line
+                  that says where the build actually is. */}
+              <div className={`${styles.storeRow} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+                <img className={styles.storeIcon} src={screen("app-icon")} alt="BUBU" width="500" height="500" />
+                <div>
+                  <p className={styles.microLabel}>{t.hero.storeLabel}</p>
+                  <p className={styles.storeLine}>{t.hero.store}</p>
+                </div>
+              </div>
+
+              <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "200ms" }}>
                 <div><dt>{t.hero.roleLabel}</dt><dd>{t.hero.role}</dd></div>
                 <div><dt>{t.hero.scopeLabel}</dt><dd>{t.hero.scope}</dd></div>
                 <div><dt>{t.hero.platformLabel}</dt><dd>{t.hero.platform}</dd></div>
+                <div><dt>{t.hero.statusLabel}</dt><dd>{t.hero.status}</dd></div>
               </dl>
-              <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
-                <a className={styles.action} href="#problem">{t.hero.action} <span aria-hidden="true">&darr;</span></a>
+
+              <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "240ms" }}>
+                <a className={styles.action} href="#how">{t.hero.action} <span aria-hidden="true">&darr;</span></a>
               </div>
             </div>
-            <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
-              <img src="/bubu/phone.webp" alt={t.hero.heroAlt} width="900" height="1100" />
+
+            <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
+              <img src="/bubu/phone.webp" alt={t.hero.heroAlt} width="773" height="1328" fetchPriority="high" />
             </div>
           </header>
 
           <ProjectQuickNav slug="bubu" track={track} locale={locale} />
 
-          <section id="problem" className={styles.caseSection}>
+          <section id="why" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.problem.kicker}</p>
-              <h2>{t.problem.heading}</h2>
-              <p className={styles.sectionLead}>{t.problem.lead}</p>
+              <p className={styles.kicker}>{t.why.kicker}</p>
+              <h2>{t.why.heading}</h2>
+              <p className={styles.sectionLead}>{t.why.lead}</p>
             </div>
-            <div className={styles.contextGrid}>
-              <div>
-                <p className={styles.microLabel}>{t.problem.breakLabel}</p>
-                <p className={styles.bodyLead}>{t.problem.breakLead}</p>
-                <p>{t.problem.breakBody}</p>
-              </div>
-              <div>
-                <p className={styles.microLabel}>{t.problem.dietLabel}</p>
-                <p className={styles.bodyLead}>{t.problem.dietLead}</p>
-                <p>{t.problem.dietBody}</p>
-              </div>
-            </div>
-            <div className={styles.question}>
-              <p className={styles.microLabel}>{t.problem.questionLabel}</p>
-              <blockquote>{t.problem.question}</blockquote>
-            </div>
-          </section>
-
-          <section id="bet" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.bet.kicker}</p>
-              <h2>{t.bet.heading}</h2>
-              <p className={styles.sectionLead}>{t.bet.lead}</p>
-            </div>
-            <div className={styles.principles}>
-              {t.bet.principles.map((principle) => (
-                <article className={styles.principle} key={principle.label}>
-                  <p className={styles.microLabel}>{principle.label}</p>
-                  <h3>{principle.title}</h3>
-                  <p>{principle.body}</p>
-                  <dl className={styles.reasoning}>
-                    <div><dt>{t.bet.tradeoffLabel}</dt><dd>{principle.tradeoff}</dd></div>
-                  </dl>
+            <p className={styles.microLabel}>{t.why.rulesLabel}</p>
+            <div className={styles.rules}>
+              {t.why.rules.map((rule) => (
+                <article className={styles.rule} key={rule.label}>
+                  <p className={styles.microLabel}>{rule.label}</p>
+                  <h3>{rule.title}</h3>
+                  <p>{rule.body}</p>
                 </article>
               ))}
             </div>
           </section>
 
-          <section id="match" className={styles.caseSection}>
+          <section id="how" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.match.kicker}</p>
-              <h2>{t.match.heading}</h2>
-              <p className={styles.sectionLead}>{t.match.lead}</p>
+              <p className={styles.kicker}>{t.how.kicker}</p>
+              <h2>{t.how.heading}</h2>
+              <p className={styles.sectionLead}>{t.how.lead}</p>
             </div>
-            <div className={styles.matchStage}>
-              <ul className={styles.axes}>
-                {t.match.axes.map(([name, detail]) => (
-                  <li key={name}>
-                    <span className={styles.check} aria-hidden="true" />
-                    <span className={styles.axisName}>{name}</span>
-                    <span className={styles.axisDetail}>{detail}</span>
+
+            <article className={styles.beat}>
+              <div className={styles.beatCopy}>
+                <p className={styles.microLabel}>{day.label}</p>
+                <h3>{day.title}</h3>
+                <p>{day.body}</p>
+              </div>
+              <Stage name="day" label={day.demo}>
+                <div className={styles.shots}>
+                  <img src={screen("receipt-duo")} alt={day.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
+                  <img src={screen("receipt-mine")} alt={day.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
+                </div>
+              </Stage>
+            </article>
+
+            <article className={styles.beat}>
+              <div className={styles.beatCopy}>
+                <p className={styles.microLabel}>{week.label}</p>
+                <h3>{week.title}</h3>
+                <p>{week.body}</p>
+              </div>
+              <Stage name="week" label={week.demo}>
+                <Journal pages={journalPages} label={t.how.journalStepsLabel} />
+              </Stage>
+            </article>
+
+            <article className={styles.beat}>
+              <div className={styles.beatCopy}>
+                <p className={styles.microLabel}>{finish.label}</p>
+                <h3>{finish.title}</h3>
+                <p>{finish.body}</p>
+              </div>
+              <Stage name="finish" label={finish.demo}>
+                <div className={styles.shots}>
+                  <img src={pick("challenge", locale)} alt={finish.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
+                  <img src={screen("goal-reached")} alt={finish.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
+                </div>
+              </Stage>
+            </article>
+          </section>
+
+          <section id="testing" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.testing.kicker}</p>
+              <h2>{t.testing.heading}</h2>
+              <p className={styles.sectionLead}>{t.testing.lead}</p>
+            </div>
+
+            <article className={styles.finding}>
+              <dl className={styles.findingText}>
+                <div><dt>{t.testing.whoLabel}</dt><dd className={styles.findingWho}>{solo.who}</dd></div>
+                <div><dt>{t.testing.saidLabel}</dt><dd>{solo.said}</dd></div>
+                <div><dt>{t.testing.changedLabel}</dt><dd>{solo.changed}</dd></div>
+              </dl>
+              <Stage name="solo" label={solo.demo}>
+                <div className={styles.shots} data-count="3">
+                  <img src={screen("home-solo")} alt={solo.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
+                  <img src={screen("journal-solo")} alt={solo.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
+                  <img src={screen("challenge-solo")} alt={solo.alts[2]} width="804" height="1748" loading="lazy" decoding="async" />
+                </div>
+              </Stage>
+            </article>
+
+            <article className={styles.finding}>
+              <dl className={styles.findingText}>
+                <div><dt>{t.testing.whoLabel}</dt><dd className={styles.findingWho}>{matching.who}</dd></div>
+                <div><dt>{t.testing.saidLabel}</dt><dd>{matching.said}</dd></div>
+                <div><dt>{t.testing.changedLabel}</dt><dd>{matching.changed}</dd></div>
+              </dl>
+              <Stage name="matching" label={matching.demo}>
+                <div className={styles.shots} data-count="figure">
+                  <div className={styles.figureCell}>
+                    <p className={styles.microLabel}>{t.testing.figureLabel}</p>
+                    <MatchingFigure legend={t.testing.legend} />
+                  </div>
+                  <img src={screen("matched")} alt={matching.alt} width="804" height="1748" loading="lazy" decoding="async" />
+                </div>
+              </Stage>
+            </article>
+
+            <p className={styles.sourceNote}>{t.testing.note}</p>
+          </section>
+
+          <section id="look" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.look.kicker}</p>
+              <h2>{t.look.heading}</h2>
+              <p className={styles.sectionLead}>{t.look.lead}</p>
+            </div>
+
+            <div>
+              <p className={styles.microLabel}>{t.look.swatchLabel}</p>
+              <ul className={styles.swatches}>
+                {palette.map((hex, index) => (
+                  <li key={hex}>
+                    <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
+                    <p className={styles.swatchName}>{t.look.swatches[index][0]}</p>
+                    <p className={styles.swatchHex}>{hex}</p>
+                    <p className={styles.swatchUse}>{t.look.swatches[index][1]}</p>
                   </li>
                 ))}
               </ul>
-              {/* The match card as the product prints it: two goals, no
-                  names. Drawn here rather than exported so the numbers stay
-                  legible at any width. */}
-              <figure className={styles.matchCard}>
-                <p className={styles.matchLabel}>{t.match.cardLabel}</p>
-                <div className={styles.matchGoals}>
-                  <div>
-                    <p className={styles.microLabel}>{t.match.yourGoal}</p>
-                    <p className={styles.matchNumber}>&minus;6.0 <span>kg</span></p>
-                    <p className={styles.matchRange}>68.0 &rarr; 62.0</p>
-                  </div>
-                  <div>
-                    <p className={styles.microLabel}>{t.match.theirGoal}</p>
-                    <p className={styles.matchNumber}>&minus;6.0 <span>kg</span></p>
-                    <p className={styles.matchRange}>66.0 &rarr; 60.0</p>
-                  </div>
-                </div>
-                <dl className={styles.matchFacts}>
-                  <div><dt>{t.match.startsLabel}</dt><dd>{t.match.starts}</dd></div>
-                  <div><dt>{t.match.endsLabel}</dt><dd>{t.match.ends}</dd></div>
-                </dl>
-                <figcaption>{t.match.caption}</figcaption>
-              </figure>
             </div>
-          </section>
 
-          <section id="receipt" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.receipt.kicker}</p>
-              <h2>{t.receipt.heading}</h2>
-              <p className={styles.sectionLead}>{t.receipt.lead}</p>
-            </div>
-            {/* The receipt itself stays in the product's own English, in
-                either locale - it is the designed artifact, not page copy. */}
-            <div className={styles.receiptStage}>
-              <Receipt
-                player="ME"
-                date="2026.09.22 TUE"
-                no="012 / 056"
-                meals={[
-                  { slot: "BREAKFAST", time: "08:05", image: "/bubu/polaroid-coffee.webp", name: "ICED AMERICANO & EGGS" },
-                  { slot: "LUNCH", time: "12:40", image: "/bubu/polaroid-salad.webp", name: "SHRIMP & EGG SALAD" }
-                ]}
-                exercise="RUN 30 MIN"
-                progress="42% → 46%"
-                items="4"
-                streak="12 DAYS"
-                missed="0 / 3"
-              />
-              <Receipt
-                player="TA"
-                date="2026.09.22 TUE"
-                no="012 / 056"
-                meals={[
-                  { slot: "BREAKFAST", time: "07:50", image: "/bubu/polaroid-salad.webp", name: "CROISSANT & LATTE" },
-                  { slot: "LUNCH", time: "12:30", image: null, name: "NOT LOGGED" }
-                ]}
-                exercise="WALK 5 KM"
-                progress="30% → 34%"
-                items="4"
-                streak="12 DAYS"
-                missed="1 / 3"
-              />
-            </div>
-            <div className={styles.contextGrid}>
+            <div className={styles.lookGrid}>
               <div>
-                <p className={styles.microLabel}>{t.receipt.whyLabel}</p>
-                <p>{t.receipt.why}</p>
+                <p className={styles.microLabel}>{t.look.typeLabel}</p>
+                <p className={styles.typeSpec}>0123456789 · MISSED 1 / 3 · 08:05</p>
+                <p>{t.look.type}</p>
               </div>
               <div>
-                <p className={styles.microLabel}>{t.receipt.secondLabel}</p>
-                <p>{t.receipt.second}</p>
+                <p className={styles.microLabel}>{t.look.rulesLabel}</p>
+                <ul className={styles.refusals}>
+                  {t.look.rules.map((rule) => <li key={rule}>{rule}</li>)}
+                </ul>
               </div>
             </div>
-            <p className={styles.sourceNote}>{t.receipt.note}</p>
-          </section>
 
-          <section id="report" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.report.kicker}</p>
-              <h2>{t.report.heading}</h2>
-              <p className={styles.sectionLead}>{t.report.lead}</p>
-            </div>
-            <figure className={styles.spread}>
-              <img src="/bubu/book.webp" alt={t.report.alt} width="1520" height="1120" loading="lazy" />
-              <figcaption>{t.report.caption}</figcaption>
+            <figure className={styles.detail}>
+              <img src={screen("set-goal")} alt={t.look.detailAlt} width="804" height="1748" loading="lazy" decoding="async" />
+              <figcaption>{t.look.detailCaption}</figcaption>
             </figure>
           </section>
 
-          <section id="next" className={styles.caseSection}>
+          <section id="cast" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.next.kicker}</p>
-              <h2>{t.next.heading}</h2>
-              <p className={styles.sectionLead}>{t.next.lead}</p>
+              <p className={styles.kicker}>{t.cast.kicker}</p>
+              <h2>{t.cast.heading}</h2>
+              <p className={styles.sectionLead}>{t.cast.lead}</p>
             </div>
-            {/*
-              Placeholder for user validation. When the interviews or the
-              survey are done, replace this list with the findings - the
-              pattern to follow is the evaluation section of the BOA and
-              AI Calendar case studies: one card per finding, each with
-              what was observed and what changed because of it.
-            */}
-            <div className={styles.questions}>
-              {t.next.questions.map((question) => (
-                <article key={question.title}>
-                  <p className={styles.microLabel}>{t.next.questionLabel}</p>
-                  <h3>{question.title}</h3>
-                  <p>{question.body}</p>
-                </article>
+            <ul className={styles.cast}>
+              {cast.map((clip, index) => (
+                <li className={styles.castItem} key={clip.src}>
+                  <Loop
+                    className={styles.castLoop}
+                    src={clip.src}
+                    webm={clip.webm}
+                    poster={clip.poster}
+                    alt={t.cast.clips[index][0]}
+                  />
+                  <p className={styles.castName}>{t.cast.clips[index][0]}</p>
+                  <p className={styles.castWhere}>{t.cast.clips[index][1]}</p>
+                </li>
               ))}
+            </ul>
+            <p className={styles.sourceNote}>{t.cast.note}</p>
+          </section>
+
+          <section id="screens" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.screens.kicker}</p>
+              <h2>{t.screens.heading}</h2>
+              <p className={styles.sectionLead}>{t.screens.lead}</p>
             </div>
-            <p className={styles.limitNote}>{t.next.limit}</p>
+            <ul className={styles.rail}>
+              {rail.map((src, index) => (
+                <li className={styles.railItem} key={src}>
+                  <img src={src} alt={t.screens.rail[index]} width="804" height="1748" loading="lazy" decoding="async" />
+                  <span>{String(index + 1).padStart(2, "0")} · {t.screens.rail[index]}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section id="shipping" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.shipping.kicker}</p>
+              <h2>{t.shipping.heading}</h2>
+              <p className={styles.sectionLead}>{t.shipping.lead}</p>
+            </div>
+            <div className={styles.shipGrid}>
+              <div>
+                <p className={styles.microLabel}>{t.shipping.doneLabel}</p>
+                <ul className={styles.shipList} data-done="">
+                  {t.shipping.done.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <p className={styles.microLabel}>{t.shipping.leftLabel}</p>
+                <ul className={styles.shipList}>
+                  {t.shipping.left.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            </div>
+            <p className={styles.limitNote}>{t.shipping.limit}</p>
           </section>
 
           <ProjectNav slug="bubu" track={track} locale={locale} styles={styles} />
