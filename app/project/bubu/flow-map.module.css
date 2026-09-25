@@ -1,0 +1,237 @@
+/*
+ * The flow board. Figma's 1052 x 1022 space is kept as the coordinate
+ * system: every node is placed at its own x/y in those units and the SVG
+ * of connectors shares the viewBox, so the two layers can never drift.
+ *
+ * The board is sized in container query units, not viewport ones, so the
+ * type scales with the board rather than with the window - which matters
+ * because below ~1000px the board stops shrinking and starts scrolling
+ * sideways instead. Type that kept shrinking would be unreadable long
+ * before the whole map fit on a phone.
+ *
+ * Every timed thing carries its own --t (start, ms) and --dur (length,
+ * ms) from the component, so the choreography lives in one place - the
+ * geometry file - and this sheet only says what each kind of thing does
+ * when its moment comes.
+ */
+.wrap { display: flex; flex-direction: column; gap: 18px; margin: 0; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  min-height: 36px; padding: 7px 14px;
+  border: 1px solid var(--divider); border-radius: 999px; background: transparent;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .75rem; letter-spacing: .04em; color: var(--muted);
+  cursor: pointer;
+  transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease, transform 320ms cubic-bezier(.22, 1, .36, 1);
+}
+.chip:hover { color: var(--text); border-color: var(--text); transform: translateY(-1px); }
+.chip[data-on] { color: var(--inverse); background: var(--app-ink); border-color: var(--app-ink); }
+
+/* Under ~1040px the board keeps its size and the reader pans instead.
+   Same move the strip of screens further down the page makes. */
+.scroller {
+  overflow-x: auto; overscroll-behavior-x: contain;
+  padding-bottom: 12px; scrollbar-width: thin;
+}
+.board {
+  container-type: inline-size;
+  position: relative;
+  width: 100%; min-width: 980px;
+  aspect-ratio: var(--w) / var(--h);
+  padding: 0;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-draw: cubic-bezier(.45, 0, .2, 1);
+}
+
+.wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- resting wires ---------- */
+.wire {
+  fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 0;
+  opacity: .5;
+  transition: opacity 420ms ease;
+}
+.loop {
+  fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 6 4;
+  opacity: .42;
+  transition: opacity 420ms ease;
+}
+.reveal { fill: none; stroke: #fff; stroke-width: 8; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.cap { fill: var(--app-ink); opacity: .5; transition: opacity 420ms ease; }
+
+/* ---------- the current ---------- */
+/* Two strokes on the one route path. `trace` is the route inking in, at
+   the same 1px as the line beneath it: on a board drawn entirely in
+   hairlines, thickening one route reads as a different material, while
+   going from half ink to full ink reads as attention. `spark` is a short
+   segment that travels the same path just ahead of the ink, and it is
+   what makes the change read as a current arriving rather than as a
+   colour swap - the ink on its own was too quiet to notice.
+
+   Both run the whole way in one travel, spine to bar to column. Letting
+   go pulls the ink back quickly, so a hover moving between columns feels
+   like the current jumping tracks. */
+.trace {
+  fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 220ms ease-in, opacity 140ms ease 80ms;
+}
+.trace[data-on] {
+  stroke-dashoffset: 0; opacity: 1;
+  transition: stroke-dashoffset 880ms var(--ease-draw), opacity 100ms;
+}
+
+/* One short dash and one gap spanning the path, so exactly one segment
+   exists on it; a negative offset walks that segment forward. */
+.spark {
+  fill: none; stroke: var(--app-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-dasharray: .05 .95; stroke-dashoffset: 0;
+  opacity: 0;
+}
+.spark[data-on] { animation: spark 880ms var(--ease-draw); }
+@keyframes spark {
+  0%   { stroke-dashoffset: 0;  opacity: 0; }
+  10%  { opacity: .9; }
+  80%  { opacity: .9; }
+  100% { stroke-dashoffset: -1; opacity: 0; }
+}
+
+/* ---------- nodes ---------- */
+.node {
+  position: absolute;
+  left: calc(var(--x) / var(--w) * 100%);
+  top: calc(var(--y) / var(--h) * 100%);
+  width: calc(132 / var(--w) * 100%);
+  min-height: calc(46 / var(--h) * 100%);
+  display: flex; flex-direction: column; justify-content: center; gap: .12em;
+  padding: .4em .35em;
+  box-sizing: border-box;
+  border: 1px solid var(--app-ink);
+  background: #ffffff;
+  text-align: center;
+  transition: opacity 420ms ease, border-color 420ms ease, color 420ms ease, box-shadow 420ms ease;
+}
+.node[data-root] { background: var(--app-ink); color: #ffffff; }
+.node[data-root] .label { color: #ffffff; }
+.node[data-head] { box-shadow: inset 0 0 0 1px var(--app-ink); }
+
+.label { font-size: 1.3cqw; line-height: 1.2; font-weight: 500; letter-spacing: -.01em; }
+/* The note is set tighter than the board's own 11px would scale to: DM
+   Mono is wider than the face the board was drawn in, so at matching size
+   the longest notes took a third line and pushed their box into the node
+   below. Narrower tracking and a tighter leading put them back on two. */
+.note {
+  font-size: .95cqw; line-height: 1.15; color: var(--muted);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: -.03em;
+}
+
+/* Focus. Nothing is added to the followed branch - it simply stays as
+   the board already draws it, and everything else recedes. The lit
+   column is never lifted, shadowed or thickened: on a hairline diagram
+   any of those reads as a different object rather than the same object
+   being attended to.
+
+   The rest steps back a beat after the current starts, so the eye is
+   led to the path rather than left with a sudden dim, and it recedes as
+   a ripple outward from the column being followed. */
+/* A dimmed box fades its ink but keeps its white fill. Fading the whole
+   box with opacity turned the fill transparent too, and the column line
+   runs unbroken behind every box in its column - so the line showed
+   straight through all of them and out the bottom of the last one, which
+   is what made the board look like it was full of broken and crossing
+   lines. The fill is the mask; it has to stay. */
+.node[data-dim] {
+  border-color: rgba(14, 14, 14, .17);
+  color: rgba(14, 14, 14, .24);
+  transition-delay: calc(120ms + var(--away, 0) * 50ms);
+}
+.node[data-dim] .note { color: rgba(14, 14, 14, .2); }
+/* A branch head carries its extra weight as an inset shadow, which the
+   border-colour fade above cannot reach - without this the six heads
+   stayed at full strength while their own columns went quiet. */
+.node[data-dim][data-head] { box-shadow: inset 0 0 0 1px rgba(14, 14, 14, .17); }
+.wire[data-dim], .cap[data-dim] {
+  opacity: .15;
+  transition-delay: calc(120ms + var(--away, 0) * 50ms);
+}
+.loop[data-dim] { opacity: .08; transition-delay: 120ms; }
+.loop[data-lit] { opacity: .9; transition-delay: 900ms; }
+
+/* ---------- the draw-in ---------- */
+/* Nothing shows until the board has been scrolled to. Then everything
+   runs from its own --t: fill-mode backwards holds each thing at its
+   first frame through the wait, and once its animation ends it is
+   simply back on the rules above, so a hover afterwards has nothing to
+   fight. (A forwards fill would have pinned every box at opacity 1 and
+   quietly broken the dimming.) */
+.board:not([data-drawn]) :is(.wire, .reveal, .cap, .node) { opacity: 0; }
+.board:not([data-drawn]) .loop { opacity: 0; }
+
+.board[data-drawn] .wire {
+  animation: draw calc(var(--dur) * 1ms) var(--ease-draw) calc(var(--t) * 1ms) backwards;
+}
+.board[data-drawn] .reveal {
+  animation: draw calc(var(--dur) * 1ms) var(--ease-draw) calc(var(--t) * 1ms) backwards;
+  /* the mask must start empty, and the loop under it must already be
+     there for the mask to reveal */
+  opacity: 1;
+}
+/* The loop needs no rule here: its resting .42 is on .loop itself and
+   the mask is what holds it back until T_LOOP. Giving it one would beat
+   .loop[data-lit] on specificity and quietly pin it at .42 - the same
+   trap the fill-mode note above describes. */
+.board[data-drawn] .cap {
+  animation: appear 380ms var(--ease-out) calc(var(--t) * 1ms) backwards;
+}
+.board[data-drawn] .node {
+  animation: surface 620ms var(--ease-out) calc(var(--t) * 1ms) backwards;
+}
+
+@keyframes draw {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  12% { opacity: 1; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+/* draw ends at opacity 1 for the mask stroke, which is right; the wires
+   want to land on their resting .5, so they run their own copy. */
+.board[data-drawn] .wire { animation-name: drawWire; }
+@keyframes drawWire {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  12% { opacity: .5; }
+  to { stroke-dashoffset: 0; opacity: .5; }
+}
+@keyframes appear { from { opacity: 0; } to { opacity: .5; } }
+@keyframes surface {
+  from { opacity: 0; transform: translateY(6px) scale(.985); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+
+.caption { font-size: .8125rem; line-height: 1.6; color: var(--muted); }
+
+/* The written-out structure, for a screen reader and for anyone who lands
+   here with CSS off. Off-screen rather than display:none, which would
+   take it out of the accessibility tree along with the pixels. */
+.plain {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board :is(.wire, .reveal, .cap, .node) { animation: none !important; }
+  .board .wire, .board .cap { opacity: .5; }
+  .board .loop { opacity: .42; }
+  .board .reveal { opacity: 1; }
+  .board .node { opacity: 1; transform: none; }
+  .board:not([data-drawn]) :is(.wire, .reveal, .cap, .node) { opacity: 1; }
+  .board:not([data-drawn]) .wire, .board:not([data-drawn]) .cap { opacity: .5; }
+  .board:not([data-drawn]) .loop { opacity: .42; }
+  .trace, .spark, .node, .chip { transition-duration: 0ms !important; transition-delay: 0ms !important; animation: none !important; }
+}

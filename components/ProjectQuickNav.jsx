@@ -78,6 +78,7 @@ const projectSections = {
     ["testing", { en: "Testing", zh: "访谈" }],
     ["look", { en: "The look", zh: "视觉" }],
     ["cast", { en: "The cast", zh: "小人" }],
+    ["flow", { en: "The map", zh: "全图" }],
     ["screens", { en: "Every screen", zh: "全部界面" }],
     ["shipping", { en: "Shipping", zh: "上架" }]
   ],

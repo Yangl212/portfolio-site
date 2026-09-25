@@ -6,6 +6,7 @@ import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 import CaseVideo from "../cleared/CaseVideo"
 
+import { FlowMap } from "./FlowMap"
 import { Journal } from "./Journal"
 import { Loop } from "./Loop"
 import styles from "./page.module.css"
@@ -248,8 +249,17 @@ const copy = {
       ],
       note: "The loops run while they are on screen and stop when they are not."
     },
+    flow: {
+      kicker: "06 / The map",
+      heading: "Four screens to the start line, then six ways to spend the eight weeks.",
+      lead: "Everything past Home is a branch you can ignore. Sign-up asks for four things and hands you a running challenge; the six columns are what is there once it is running, and only one of them - Record - has to be touched daily.",
+      filterLabel: "Show one branch",
+      all: "Whole map",
+      caption: "Hover a branch to follow it, or click to hold it. The dashed line is the only loop on the board: hitting the target weight sends you back to Set your goal rather than to an end screen.",
+      alt: "BUBU's user flow: sign in, set your goal, choose how to record, then Home, which opens onto six branches - Record, Receipts, Journal, Challenge, Buddy and Settings."
+    },
     screens: {
-      kicker: "06 / Every screen",
+      kicker: "07 / Every screen",
       heading: "The whole build, in the order you meet it.",
       lead: "Nineteen screens captured on an iPhone 17 simulator, from sign-up to the settings page. Drag the strip.",
       rail: [
@@ -275,7 +285,7 @@ const copy = {
       ]
     },
     shipping: {
-      kicker: "07 / Shipping it",
+      kicker: "08 / Shipping it",
       heading: "What is built, and what is between here and the App Store.",
       lead: "The app is not a prototype. It is a build that runs, and the work left is the work of getting a build reviewed rather than designed.",
       doneLabel: "Done",
@@ -452,8 +462,17 @@ const copy = {
       ],
       note: "动画只在进入画面时播放，离开就停。"
     },
+    flow: {
+      kicker: "06 / 全图",
+      heading: "四步走到起跑线，然后是度过这八周的六条路。",
+      lead: "首页之后的每一条都可以不管。注册只问四件事，问完你就已经在挑战里了；六列是挑战跑起来之后的全部内容，其中只有「记录」这一列需要每天碰。",
+      filterLabel: "只看一条分支",
+      all: "看全图",
+      caption: "把鼠标移到一条分支上跟着看，点一下固定住。虚线是整张图上唯一的回路：减到目标体重不是走到结束页，而是回到「设定目标」。",
+      alt: "BUBU 的用户流程：登录、设定目标、选择记录方式，然后进入首页，首页分出六条分支——记录、小票、手账本、挑战、搭子、设置。"
+    },
     screens: {
-      kicker: "06 / 全部界面",
+      kicker: "07 / 全部界面",
       heading: "整个 app，按你第一次用的顺序。",
       lead: "19 个界面，在 iPhone 17 模拟器上截的，从注册到设置。这一排可以横向拖动。",
       rail: [
@@ -479,7 +498,7 @@ const copy = {
       ]
     },
     shipping: {
-      kicker: "07 / 上架",
+      kicker: "08 / 上架",
       heading: "做完了什么，离 App Store 还差什么。",
       lead: "这不是一个原型，是一个能跑起来的版本。剩下的工作属于送审，不属于设计。",
       doneLabel: "已完成",
@@ -784,6 +803,15 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               ))}
             </ul>
             <p className={styles.sourceNote}>{t.cast.note}</p>
+          </section>
+
+          <section id="flow" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.flow.kicker}</p>
+              <h2>{t.flow.heading}</h2>
+              <p className={styles.sectionLead}>{t.flow.lead}</p>
+            </div>
+            <FlowMap locale={locale} copy={t.flow} />
           </section>
 
           <section id="screens" className={styles.caseSection}>
