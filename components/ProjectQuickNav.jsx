@@ -69,6 +69,14 @@ const projectSections = {
     ["spreads", "Spreads"],
     ["reflection", "Reflection"]
   ],
+  bubu: [
+    ["problem", "Problem"],
+    ["bet", "The bet"],
+    ["match", "Matching"],
+    ["receipt", "Daily loop"],
+    ["report", "Weekly report"],
+    ["next", "Where it stands"]
+  ],
   suglar: [
     ["product", "Product"],
     ["idea", "Idea"],

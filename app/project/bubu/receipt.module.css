@@ -1,0 +1,75 @@
+/*
+ * One printed receipt. Sized by its container, so the two-up stage on the
+ * case study can hand each one a column and let them fall to a stack on a
+ * phone without either changing shape.
+ */
+.receipt {
+  --paper: #fbfaf7;
+  --ink: #1b1b1b;
+  --faint: #8d8d8d;
+  --rule: rgba(27, 27, 27, .45);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 18px 18px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: .6875rem;
+  line-height: 1.5;
+  letter-spacing: .02em;
+}
+
+/* TA's copy is the one you are not filling in, so it prints a shade back. */
+.receipt[data-player="ta"] { --ink: #5c5c5c; }
+
+/* The torn top and bottom edge of a till roll. */
+.receipt::before,
+.receipt::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 6px;
+  background:
+    repeating-linear-gradient(-45deg, var(--paper) 0 5px, transparent 5px 10px),
+    repeating-linear-gradient(45deg, var(--paper) 0 5px, transparent 5px 10px);
+}
+.receipt::before { top: -5px; }
+.receipt::after { bottom: -5px; transform: scaleY(-1); }
+
+.head { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.brand { font-size: .8125rem; font-weight: 500; letter-spacing: .34em; text-indent: .34em; }
+.sub { font-size: .5625rem; letter-spacing: .28em; text-indent: .28em; color: var(--faint); }
+
+.facts, .totals { display: flex; flex-direction: column; gap: 3px; padding-top: 12px; border-top: 1px dashed var(--rule); }
+.facts div, .totals div { display: flex; justify-content: space-between; gap: 14px; }
+.facts dt, .totals dt { color: var(--faint); letter-spacing: .1em; }
+.facts dd, .totals dd { text-align: right; font-variant-numeric: tabular-nums; }
+
+.meals { display: flex; flex-direction: column; gap: 18px; padding-top: 12px; border-top: 1px dashed var(--rule); }
+.meal { display: flex; flex-direction: column; gap: 8px; }
+.mealHead { display: flex; justify-content: space-between; gap: 14px; letter-spacing: .1em; }
+.mealHead span:last-child { font-variant-numeric: tabular-nums; color: var(--faint); }
+
+/* Printed straight onto the paper: no white plate, no shadow, no tilt. */
+.mealImage { width: min(100%, 132px); height: auto; align-self: center; mix-blend-mode: multiply; }
+.mealBlank { align-self: center; width: min(100%, 132px); aspect-ratio: 4 / 3; border: 1px dashed var(--rule); }
+.mealName { color: var(--faint); }
+
+.barcode {
+  margin-top: 4px;
+  height: 34px;
+  background: repeating-linear-gradient(90deg,
+    var(--ink) 0 1px, transparent 1px 3px,
+    var(--ink) 3px 5px, transparent 5px 6px,
+    var(--ink) 6px 7px, transparent 7px 10px);
+  opacity: .85;
+}
+
+.foot { text-align: center; font-size: .5625rem; letter-spacing: .2em; color: var(--faint); }
+
+@media (min-width: 700px) {
+  .receipt { padding: 26px 22px 20px; font-size: .75rem; }
+  .mealImage, .mealBlank { width: min(100%, 152px); }
+}
