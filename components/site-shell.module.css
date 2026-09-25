@@ -36,7 +36,7 @@
   position: relative;
   display: inline-block;
   isolation: isolate;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(19px, 2vw, 25px);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -164,7 +164,7 @@
 }
 
 .link span {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.9em;
   letter-spacing: 0;
 }
@@ -193,6 +193,55 @@
 /* The page you are on: the hairline drawn in full ink. */
 .link[data-active="true"] {
   border-color: var(--text);
+}
+
+/* The language switch: EN and 中 in one hairline pill, split by a single
+   rule, so both states show at once instead of one button whose label
+   changes. Same pill as .link, just halved and with no gap between the
+   two sides. */
+.localeSwitch {
+  display: inline-flex;
+  align-items: stretch;
+  min-height: 34px;
+  border: 1px solid rgba(34, 34, 34, 0.28);
+  border-radius: 999px;
+  overflow: hidden;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.localeOption {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 0 12px;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.localeOption + .localeOption {
+  border-left: 1px solid rgba(34, 34, 34, 0.28);
+}
+
+/* The language already on screen: lit like an active nav pill, but never
+   a link - there is nothing to navigate to. */
+.localeOption[data-active="true"] {
+  background: var(--text);
+  color: var(--inverse);
+  cursor: default;
+}
+
+.localeOption:not([data-active="true"]):hover,
+.localeOption:not([data-active="true"]):focus-visible {
+  background: rgba(34, 34, 34, 0.08);
+  color: var(--text);
 }
 
 
@@ -256,7 +305,7 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: 149px;
   line-height: 1;
@@ -412,6 +461,11 @@
   }
 
   .link {
+    min-height: 40px;
+    padding: 0 16px;
+  }
+
+  .localeOption {
     min-height: 40px;
     padding: 0 16px;
   }

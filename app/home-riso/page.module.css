@@ -172,7 +172,7 @@
    the print rather than a second headline. */
 .band {
   position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none; overflow: hidden;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(2.5rem, 5.6vw, 5.25rem); font-weight: 700; line-height: 1;
   letter-spacing: -0.03em; text-transform: uppercase; white-space: nowrap;
   color: transparent;
@@ -205,7 +205,7 @@
 .op {
   position: relative; display: inline-block;
   margin: clamp(30px, 3.6vw, 46px) 0 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(4.25rem, 15vw, 12.5rem); line-height: 0.82; font-weight: 700;
   letter-spacing: -0.045em; text-transform: uppercase; white-space: nowrap;
   cursor: pointer; user-select: none; -webkit-user-select: none;

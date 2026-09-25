@@ -28,7 +28,7 @@
 
 .heroTitle {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: 149px;
   line-height: 1;
@@ -48,7 +48,7 @@
 
 .introText {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: 36px;
   line-height: 1.2;
@@ -88,7 +88,7 @@
 
 .sectionTitle {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 500;
   font-size: 24px;
   line-height: 1.4;
@@ -184,7 +184,7 @@
 }
 
 .travelDate {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 500;
   font-size: 24px;
   line-height: 1.4;

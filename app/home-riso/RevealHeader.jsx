@@ -14,7 +14,7 @@ import styles from "./page.module.css"
  * and slides back out on the way up. The hero carries its own Resume and
  * Selected-work actions, so nothing is unreachable while it is hidden.
  */
-export function RevealHeader({ track }) {
+export function RevealHeader({ track, locale = "en" }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function RevealHeader({ track }) {
 
   return (
     <div className={styles.headerDock} data-visible={visible}>
-      <SiteHeader active={trackHome(track)} track={track} />
+      <SiteHeader active={trackHome(track, locale)} track={track} locale={locale} />
     </div>
   )
 }

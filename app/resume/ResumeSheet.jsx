@@ -5,7 +5,8 @@ import { useState } from "react"
 
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
-import { aboutReady, trackBase, trackHome } from "../../lib/projects"
+import { t } from "../../lib/dictionary"
+import { aboutReady, pageBase, trackHome } from "../../lib/projects"
 
 import styles from "./resume.module.css"
 
@@ -76,14 +77,15 @@ function ExperienceEntry({ entry, index }) {
  * of tool marks rather than sentences.
  * The site's own header and footer bracket it.
  */
-export function ResumeSheet({ track = "uiux", role, photo, education, experience, skillGroups, pdf }) {
-  const base = trackBase(track)
+export function ResumeSheet({ track = "uiux", locale = "en", role, photo, education, experience, skillGroups, pdf }) {
+  const base = pageBase(track, locale)
   const knowMore = aboutReady(track)
+  const copy = t(locale)
 
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active={`${base}/resume`} track={track} />
+        <SiteHeader active={`${base}/resume`} track={track} locale={locale} />
 
         <article className={styles.content}>
           <div className={styles.intro}>
@@ -103,16 +105,16 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
             </p>
             <div className={styles.actions}>
               <a className={styles.download} href={pdf} target="_blank" rel="noreferrer">
-                Download PDF <span aria-hidden="true">↓</span>
+                {copy.resume.download} <span aria-hidden="true">↓</span>
               </a>
-              <Link className={styles.back} href={knowMore ? `${base}/about` : trackHome(track)}>
-                {knowMore ? "Know more about me" : "Back to work"} <span aria-hidden="true">→</span>
+              <Link className={styles.back} href={knowMore ? `${base}/about` : trackHome(track, locale)}>
+                {knowMore ? copy.nav.knowMore : copy.resume.backToWork} <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
 
           <section className={`${styles.section} ${styles.educationSection}`}>
-            <h2 className={styles.label}>Education</h2>
+            <h2 className={styles.label}>{copy.resume.education}</h2>
             <div className={styles.entries}>
               {education.map((entry) => (
                 <div className={styles.degree} key={entry.school}>
@@ -126,7 +128,7 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
           </section>
 
           <section className={styles.section}>
-            <h2 className={styles.label}>Experience</h2>
+            <h2 className={styles.label}>{copy.resume.experience}</h2>
             <div className={styles.entries}>
               {experience.map((entry, index) => (
                 <ExperienceEntry entry={entry} index={index} key={`${entry.company}-${entry.title}`} />
@@ -135,7 +137,7 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
           </section>
 
           <section className={styles.section}>
-            <h2 className={styles.label}>Skills</h2>
+            <h2 className={styles.label}>{copy.resume.skills}</h2>
             <div>
               {skillGroups.map((group, index) => (
                 <div className={styles.skillGroup} key={group.label} style={{ "--i": index }}>
@@ -170,7 +172,7 @@ export function ResumeSheet({ track = "uiux", role, photo, education, experience
           </section>
         </article>
 
-        <SiteFooter compact />
+        <SiteFooter compact locale={locale} />
       </div>
     </main>
   )

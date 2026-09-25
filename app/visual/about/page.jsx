@@ -70,10 +70,11 @@ const chapters = [
   }
 ]
 
-export default function VisualAboutPage() {
+export default function VisualAboutPage({ locale = "en" }) {
   return (
     <AboutSheet
       track="visual"
+      locale={locale}
       statement={["I used to think a good design had to prove itself before it was allowed to just look good."]}
       chapters={chapters}
     />

@@ -120,10 +120,11 @@ const chapters = [
   }
 ]
 
-export default function AboutPage({ track = "uiux" }) {
+export default function AboutPage({ track = "uiux", locale = "en" }) {
   return (
     <AboutSheet
       track={track}
+      locale={locale}
       statement={["I used to think that the most important thing about a piece of work was whether it had meaning."]}
       chapters={chapters}
     />

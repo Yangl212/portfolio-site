@@ -5,6 +5,6 @@ export const metadata = {
   alternates: { canonical: "/lab" }
 }
 
-export default function VisualLabPage() {
-  return <LabPage track="visual" />
+export default function VisualLabPage({ locale = "en" }) {
+  return <LabPage track="visual" locale={locale} />
 }

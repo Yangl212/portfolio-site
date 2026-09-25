@@ -1,6 +1,7 @@
 import { Caveat } from "next/font/google"
 
 import { Reveal } from "../../components/Reveal"
+import { t } from "../../lib/dictionary"
 import { featuredProjects, moreProjects } from "../../lib/projects"
 
 import homeStyles from "../page.module.css"
@@ -33,9 +34,9 @@ export const metadata = {
    name once it has finished printing. */
 const hand = Caveat({ subsets: ["latin"], weight: ["600"], variable: "--font-hand", display: "swap" })
 
-export default function HomeRisoPage({ track = "uiux" }) {
-  const featured = featuredProjects(track)
-  const more = moreProjects(track)
+export default function HomeRisoPage({ track = "uiux", locale = "en" }) {
+  const featured = featuredProjects(track, locale)
+  const more = moreProjects(track, locale)
 
   return (
     <main className={`${homeStyles.page} ${hand.variable}`}>
@@ -44,9 +45,9 @@ export default function HomeRisoPage({ track = "uiux" }) {
       <div className={`${homeStyles.frame} ${styles.whiteFrame}`}>
         {/* Docked above the page and hidden while the sheet is on screen;
             it slides in as Selected Work arrives. */}
-        <RevealHeader track={track} />
+        <RevealHeader track={track} locale={locale} />
 
-        <RisoHero track={track} />
+        <RisoHero track={track} locale={locale} />
 
         {/* Selected Work as three stages of stacked screens, More Work as
             a row of folders; the section header is the live home page's own. */}
@@ -54,16 +55,16 @@ export default function HomeRisoPage({ track = "uiux" }) {
         <section className={`${homeStyles.content} ${styles.contentTight}`} id="work">
           <section className={homeStyles.selectedWork}>
             <div className={`${homeStyles.sectionHeader} ${homeStyles.reveal}`}>
-              <h2>Selected Work</h2>
+              <h2>{t(locale).work.selectedWork}</h2>
             </div>
 
-            <FeaturedStacks projects={featured} />
+            <FeaturedStacks projects={featured} locale={locale} />
           </section>
 
-          <MoreWorkFolders className={homeStyles.moreWork} projects={more} />
+          <MoreWorkFolders className={homeStyles.moreWork} projects={more} locale={locale} />
         </section>
 
-        <RisoFooter />
+        <RisoFooter locale={locale} />
       </div>
     </main>
   )

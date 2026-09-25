@@ -5,7 +5,7 @@
   --divider: rgba(34, 34, 34, .17);
   min-height: 100vh;
   background: var(--page-bg);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
 }
 
 .frame { background: var(--panel-bg); border: 1px solid var(--border); border-bottom: 0; }

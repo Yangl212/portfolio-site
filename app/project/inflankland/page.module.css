@@ -63,7 +63,7 @@
 .heroTitle {
   margin: 0;
   max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: clamp(2.5rem, 8vw, 4.75rem);
   line-height: 0.94;
@@ -76,7 +76,7 @@
   width: 100%;
   max-width: 1300px;
   text-align: left;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.55;
@@ -101,7 +101,7 @@
 
 .kicker {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 500;
   font-size: 22px;
   line-height: 1.2;
@@ -113,7 +113,7 @@
 .heading {
   margin: 0;
   max-width: 100%;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   line-height: 1.04;
@@ -127,7 +127,7 @@
 
 .subheading {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 500;
   font-size: 1.125rem;
   line-height: 1.4;
@@ -139,7 +139,7 @@
 .body {
   margin: 0;
   max-width: 46rem;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.65;

@@ -1,3 +1,5 @@
+import { t } from "../lib/dictionary"
+
 import styles from "./site-shell.module.css"
 
 /* `compact` is for the case-study pages, whose type scale keeps the closing
@@ -11,16 +13,17 @@ import styles from "./site-shell.module.css"
    scale. Unlike those two, it holds still: a footer a reader hits at the
    bottom of ten different pages does not need to re-print itself every
    time, only to look like it was printed once. */
-export function SiteFooter({ className = "", compact = false }) {
+export function SiteFooter({ className = "", compact = false, locale = "en" }) {
   const mergedClassName = [styles.footer, compact ? styles.footerCompact : "", className].filter(Boolean).join(" ")
+  const line = t(locale).footer.line
 
   return (
     <footer className={mergedClassName}>
       <span className={styles.footerGrain} aria-hidden="true" />
-      <h2 className={styles.footerTitle} aria-label="Stay curious, stay kind.">
+      <h2 className={styles.footerTitle} aria-label={line}>
         <span className={styles.footerSheet}>
-          <span className={`${styles.footerPlate} ${styles.footerPlateA}`} aria-hidden="true">Stay curious, stay kind.</span>
-          <span className={`${styles.footerPlate} ${styles.footerPlateB}`} aria-hidden="true">Stay curious, stay kind.</span>
+          <span className={`${styles.footerPlate} ${styles.footerPlateA}`} aria-hidden="true">{line}</span>
+          <span className={`${styles.footerPlate} ${styles.footerPlateB}`} aria-hidden="true">{line}</span>
         </span>
       </h2>
       <nav className={styles.footerContact} aria-label="Contact Lele Yang">

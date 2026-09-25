@@ -85,7 +85,7 @@
 .systemLead figcaption,
 .systemGrid figcaption {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -101,7 +101,7 @@
 .sectionTitle {
   max-width: 30ch;
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-h2);
   font-weight: 500;
   line-height: 1.16;
@@ -112,7 +112,7 @@
 .sectionLead {
   max-width: var(--measure);
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-lead);
   line-height: 1.65;
   color: var(--muted);
@@ -122,7 +122,7 @@
 
 .insightCard h3 {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.25;
@@ -137,7 +137,7 @@
 .highlightCopy > p:not(.microLabel),
 .reflectionGrid p:not(.microLabel) {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text);
@@ -148,7 +148,7 @@
   max-width: 60ch;
   padding-left: 14px;
   border-left: 2px solid #f3c443;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--muted);
@@ -176,7 +176,7 @@
 
 .surveyQuestion {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   font-weight: 500;
   line-height: 1.4;
@@ -185,7 +185,7 @@
 
 .surveyMeta {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -231,7 +231,7 @@
   align-items: center;
   gap: 8px;
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 1.125rem;
   font-weight: 500;
   line-height: 1;
@@ -249,7 +249,7 @@
 
 .surveyKey dd {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.45;
   color: var(--muted);
@@ -259,7 +259,7 @@
   margin: 0;
   max-width: 56ch;
   padding-top: 4px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text);
@@ -292,7 +292,7 @@
 
 .rankChart dt {
   margin: 0 0 6px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--muted);
@@ -324,7 +324,7 @@
   flex: none;
   min-width: 3.5em;
   text-align: right;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1;
@@ -352,7 +352,7 @@
   margin: auto 0 0;
   padding-top: 14px;
   border-top: 1px solid var(--divider);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--muted);
@@ -382,7 +382,7 @@
 
 .personaCard h3 {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.2;
@@ -392,7 +392,7 @@
 
 .personaMeta {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--muted);
@@ -402,7 +402,7 @@
   margin: 0;
   padding-left: 14px;
   border-left: 2px solid var(--text);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.45;
@@ -422,7 +422,7 @@
 .personaPoints li {
   position: relative;
   padding-left: 16px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.875rem;
   line-height: 1.55;
   color: var(--muted);
@@ -486,7 +486,7 @@
 }
 
 .modeLabel {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.35;
@@ -497,7 +497,7 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   line-height: 1.35;
   color: var(--muted);
@@ -529,7 +529,7 @@
 .compareTable dt,
 .compareTable dd {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   line-height: 1.55;
 }
@@ -645,7 +645,7 @@
 
 .iterationNumber {
   grid-row: 1 / span 3;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1;
@@ -687,7 +687,7 @@
 .highlightCopy h3 {
   margin: 0;
   max-width: 22ch;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(1.375rem, 1.15rem + 1.1vw, 2rem);
   font-weight: 500;
   line-height: 1.18;
@@ -744,7 +744,7 @@
 
 .mediaLabel {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -754,7 +754,7 @@
 
 .mediaHint {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted);
@@ -842,7 +842,7 @@
 }
 
 .projectNavLabel {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -856,7 +856,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
   font-weight: 500;
   line-height: 1.2;
@@ -894,7 +894,7 @@
   padding: 8px 18px;
   border: 1px solid rgba(34, 34, 34, 0.24);
   border-radius: 999px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.01em;

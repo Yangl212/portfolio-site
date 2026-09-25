@@ -18,19 +18,19 @@ import styles from "./wordmark-anatomy.module.css"
  */
 
 const shapes = [
-  { key: "crossbar", label: "Coral", hex: "#E36D6D", part: "T crossbar", box: [0, 0, 301.2, 71.5],
+  { key: "crossbar", label: { en: "Coral", zh: "珊瑚红" }, hex: "#E36D6D", part: { en: "T crossbar", zh: "T 的横" }, box: [0, 0, 301.2, 71.5],
     draw: (fill) => <rect width="301.234" height="71.479" fill={fill} /> },
-  { key: "stem", label: "Orchid", hex: "#D96DE3", part: "T stem", box: [112.3, 0, 76.6, 339.5],
+  { key: "stem", label: { en: "Orchid", zh: "兰紫" }, hex: "#D96DE3", part: { en: "T stem", zh: "T 的竖" }, box: [112.3, 0, 76.6, 339.5],
     draw: (fill) => <rect x="112.324" width="76.585" height="339.526" fill={fill} /> },
-  { key: "a", label: "Periwinkle", hex: "#7B88FA", part: "A", box: [257.8, 0, 263.6, 339.9],
+  { key: "a", label: { en: "Periwinkle", zh: "长春花蓝" }, hex: "#7B88FA", part: { en: "A", zh: "A" }, box: [257.8, 0, 263.6, 339.9],
     draw: (fill) => <path d="M389.612 0L521.425 339.895H257.798L389.612 0Z" fill={fill} /> },
-  { key: "bowl", label: "Mist", hex: "#BFE0F3", part: "R bowl", box: [545.4, 0, 229.9, 199.1],
+  { key: "bowl", label: { en: "Mist", zh: "雾蓝" }, hex: "#BFE0F3", part: { en: "R bowl", zh: "R 的圆" }, box: [545.4, 0, 229.9, 199.1],
     draw: (fill) => <path d={BOWL} fill={fill} /> },
-  { key: "leg", label: "Pink", hex: "#F154A5", part: "R leg", box: [545.4, 71.5, 229.9, 268],
+  { key: "leg", label: { en: "Pink", zh: "粉" }, hex: "#F154A5", part: { en: "R leg", zh: "R 的腿" }, box: [545.4, 71.5, 229.9, 268],
     draw: (fill) => <path d={LEG} fill={fill} /> },
-  { key: "o1", label: "Amber", hex: "#FBBF37", part: "First O", box: [798.3, 0, 339.5, 339.5],
+  { key: "o1", label: { en: "Amber", zh: "琥珀" }, hex: "#FBBF37", part: { en: "First O", zh: "第一个 O" }, box: [798.3, 0, 339.5, 339.5],
     draw: (fill) => <circle cx="968.064" cy="169.763" r="169.763" fill={fill} /> },
-  { key: "o2", label: "Sky", hex: "#4BADF4", part: "Second O", box: [1019.4, 0, 339.5, 339.5],
+  { key: "o2", label: { en: "Sky", zh: "天蓝" }, hex: "#4BADF4", part: { en: "Second O", zh: "第二个 O" }, box: [1019.4, 0, 339.5, 339.5],
     draw: (fill) => <circle cx="1189.12" cy="169.763" r="169.763" fill={fill} /> }
 ]
 
@@ -40,11 +40,11 @@ const LEG = "M545.367 339.526V71.479L775.223 339.526H545.367Z"
 /* Each crossing: the two shapes it is made of, the clip that bounds it,
    the piece painted inside that clip, and where its number sits. */
 const crossings = [
-  { n: 1, of: ["crossbar", "stem"], hex: "#BD0051", label: "Coral × Orchid", part: "The T", at: [150.6, 35.7],
+  { n: 1, of: ["crossbar", "stem"], hex: "#BD0051", label: { en: "Coral × Orchid", zh: "珊瑚红 × 兰紫" }, part: { en: "The T", zh: "T" }, at: [150.6, 35.7],
     clip: <rect width="301.234" height="71.479" />, paint: <rect x="112.324" width="76.585" height="339.526" /> },
-  { n: 2, of: ["bowl", "leg"], hex: "#B13599", label: "Mist × Pink", part: "The R", at: [574, 165],
+  { n: 2, of: ["bowl", "leg"], hex: "#B13599", label: { en: "Mist × Pink", zh: "雾蓝 × 粉" }, part: { en: "The R", zh: "R" }, at: [574, 165],
     clip: <path d={BOWL} />, paint: <path d={LEG} /> },
-  { n: 3, of: ["o1", "o2"], hex: "#456D2B", label: "Amber × Sky", part: "The double O", at: [1078.6, 169.8],
+  { n: 3, of: ["o1", "o2"], hex: "#456D2B", label: { en: "Amber × Sky", zh: "琥珀 × 天蓝" }, part: { en: "The double O", zh: "两个 O" }, at: [1078.6, 169.8],
     clip: <circle cx="968.064" cy="169.763" r="169.763" />, paint: <circle cx="1189.12" cy="169.763" r="169.763" /> }
 ]
 
@@ -52,7 +52,14 @@ const crossings = [
    true sizes relative to one another. */
 const TILE = 350
 
-export function WordmarkAnatomy() {
+const chrome = {
+  en: { markAria: "The TAROO wordmark, built from seven overlapping shapes", shapesAria: "The seven shapes", groupAria: "Language" },
+  zh: { markAria: "TAROO 字标，由七个互相叠压的形状拼成", shapesAria: "七个形状", groupAria: "语言" }
+}
+
+export function WordmarkAnatomy({ locale = "en" }) {
+  const ui = chrome[locale] || chrome.en
+  const pick = (v) => (v && typeof v === "object" ? v[locale] || v.en : v)
   /* What is lit: a shape key, or a crossing number. */
   const [lit, setLit] = useState(null)
   const litShapes = typeof lit === "number" ? crossings[lit - 1].of : lit ? [lit] : null
@@ -61,7 +68,7 @@ export function WordmarkAnatomy() {
   return (
     <div className={styles.anatomy} onPointerLeave={() => setLit(null)}>
       <figure className={styles.mark}>
-        <svg viewBox="-20 -150 1400 510" role="img" aria-label="The TAROO wordmark, built from seven overlapping shapes">
+        <svg viewBox="-20 -150 1400 510" role="img" aria-label={ui.markAria}>
           <defs>
             {crossings.map((c) => <clipPath key={c.n} id={`taroo-cross-${c.n}`}>{c.clip}</clipPath>)}
           </defs>
@@ -110,14 +117,14 @@ export function WordmarkAnatomy() {
             <span className={styles.crossingNo}>{c.n}</span>
             <span className={styles.crossingSwatch} style={{ background: c.hex }} aria-hidden="true" />
             <span>
-              <strong>{c.part}</strong>
-              <em>{c.label} → {c.hex}</em>
+              <strong>{pick(c.part)}</strong>
+              <em>{pick(c.label)} → {c.hex}</em>
             </span>
           </li>
         ))}
       </ol>
 
-      <ul className={styles.shapes} aria-label="The seven shapes">
+      <ul className={styles.shapes} aria-label={ui.shapesAria}>
         {shapes.map((s) => {
           const [x, y, w, h] = s.box
           const viewBox = `${x + w / 2 - TILE / 2} ${y + h / 2 - TILE / 2} ${TILE} ${TILE}`
@@ -129,8 +136,8 @@ export function WordmarkAnatomy() {
               onPointerEnter={() => setLit(s.key)}
             >
               <svg viewBox={viewBox} aria-hidden="true">{s.draw(s.hex)}</svg>
-              <strong>{s.part}</strong>
-              <em>{s.label}</em>
+              <strong>{pick(s.part)}</strong>
+              <em>{pick(s.label)}</em>
               <em>{s.hex}</em>
             </li>
           )
