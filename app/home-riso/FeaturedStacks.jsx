@@ -79,12 +79,12 @@ const stacks = {
       { kind: "chip", text: { en: "UX/UI · AI behavior · web development", zh: "UX/UI · AI 行为 · 网页开发" }, x: 31, y: 69, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
   },
-  /* TAROO and Suglar lead the visual track's Selected Work, so they need
-     a stack too - the same three cards already cut for their More Work
-     folder in lib/projects.js, laid out here as a fanned hand instead of
-     a folder's worth of paper. `when` is the year alone rather than a
-     duration: unlike the three case studies above, no task-tested weeks
-     figure exists for either project to report. */
+  /* Suglar sits in the visual track's Selected Work, and TAROO kept its
+     stack for the same reason after moving down to More Work - the same
+     three cards already cut for their folder in lib/projects.js, laid out
+     here as a fanned hand instead of a folder's worth of paper. `when` is
+     the year alone rather than a duration: unlike the three case studies
+     above, no task-tested weeks figure exists for either project. */
   taroo: {
     copy: {
       en: { when: "2025", role: "Brand & Illustration Design", summary: "A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them.", facets: ["Print + Packaging", "B2C", "Brand"] },
