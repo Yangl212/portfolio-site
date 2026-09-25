@@ -4,7 +4,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
-import { trackBase } from "../lib/projects"
+import { dictionary, t } from "../lib/dictionary"
+import { withLocale } from "../lib/locale"
+import { pageBase } from "../lib/projects"
 import { requestScrollToWork } from "../lib/scrollIntent"
 
 import { BrandMark } from "./BrandMark"
@@ -24,9 +26,10 @@ export function resumeUrlFor(track) {
   return resumeByTrack[track] || resumeByTrack.uiux
 }
 
-export function SiteHeader({ active = "/", track = "uiux" }) {
+export function SiteHeader({ active = "/", track = "uiux", locale = "en" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
+  const copy = t(locale)
 
   /*
    * The site is applied for on two self-contained tracks: "/" for UI/UX roles
@@ -38,11 +41,11 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
    * Contact follows the same rule so a visual visitor cannot leak back into
    * the UI/UX home in two clicks.
    */
-  const base = trackBase(track)
+  const base = pageBase(track, locale)
   const homeHref = base || "/"
   const isHomepage = pathname === homeHref
   const logoHref = isHomepage ? `${base}/about` : homeHref
-  const logoLabel = isHomepage ? "Know more about me" : "Home page"
+  const logoLabel = isHomepage ? copy.nav.knowMore : copy.nav.home
 
   /* Work always points at Selected Work, not just the home route: from
      any other page it should land past the print, not back at the top
@@ -50,8 +53,22 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
      Next's default scroll-into-view handles it, so the flag below is
      only set when the click is actually leaving the current page. */
   const navItems = [
-    { href: `${homeHref}#work`, activeHref: homeHref, label: "Work", onClick: isHomepage ? undefined : requestScrollToWork },
-    { href: `${base}/lab`, label: "Lab" }
+    { href: `${homeHref}#work`, activeHref: homeHref, label: copy.nav.work, onClick: isHomepage ? undefined : requestScrollToWork },
+    { href: `${base}/lab`, label: copy.nav.lab }
+  ]
+
+  /* The locale switch only ever flips language, never track - the same
+     silo rule the comment above draws for track itself. Both languages
+     show at once, like a real switch rather than a single button whose
+     label changes - EN and 中 sit side by side, the current one lit. The
+     lit side is plain text, not a link: it is already the page you are
+     on, so nothing under it should be clickable. The other side is a
+     real navigation to the /zh URL (or back off it), not client state,
+     so it survives a reload and is a link search engines can follow
+     both ways. */
+  const localeOptions = [
+    { code: "en", label: "EN", switchTo: dictionary.en.localeToggle.switchTo },
+    { code: "zh", label: "中", switchTo: dictionary.zh.localeToggle.switchTo }
   ]
 
   const closeMenu = () => {
@@ -108,8 +125,29 @@ export function SiteHeader({ active = "/", track = "uiux" }) {
             onClick={closeMenu}
             prefetch={false}
           >
-            Resume <span aria-hidden="true">&#8594;</span>
+            {copy.nav.resume} <span aria-hidden="true">&#8594;</span>
           </Link>
+          <div className={styles.localeSwitch} role="group" aria-label="Language">
+            {localeOptions.map((option) => {
+              const isCurrent = option.code === locale
+              return isCurrent ? (
+                <span key={option.code} className={styles.localeOption} data-active="true" aria-current="true">
+                  {option.label}
+                </span>
+              ) : (
+                <Link
+                  key={option.code}
+                  className={styles.localeOption}
+                  href={withLocale(pathname, option.code)}
+                  onClick={closeMenu}
+                  prefetch={false}
+                  aria-label={option.switchTo}
+                >
+                  {option.label}
+                </Link>
+              )
+            })}
+          </div>
         </nav>
       </div>
     </header>

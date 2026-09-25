@@ -14,7 +14,28 @@ import styles from "./image-carousel.module.css"
  * a neighbour steps to it; clicking the centre one opens it full screen, since
  * these are dense desktop screens that a column of body text cannot do justice.
  */
-export function ImageCarousel({ className = "", label, slides }) {
+/* Screen-reader labels only - nothing here is visible on the page. */
+const copy = {
+  en: {
+    enlarge: (n) => `Enlarge image ${n}`,
+    show: (n) => `Show image ${n}`,
+    prev: "Previous image",
+    next: "Next image",
+    close: "Close full screen",
+    position: (label, n, total) => `${label} - image ${n} of ${total}`
+  },
+  zh: {
+    enlarge: (n) => `放大第 ${n} 张图`,
+    show: (n) => `查看第 ${n} 张图`,
+    prev: "上一张",
+    next: "下一张",
+    close: "退出全屏",
+    position: (label, n, total) => `${label}：第 ${n} / ${total} 张`
+  }
+}
+
+export function ImageCarousel({ className = "", label, slides, locale = "en" }) {
+  const t = copy[locale] || copy.en
   const [active, setActive] = useState(0)
   const [zoomed, setZoomed] = useState(false)
   const [touchStart, setTouchStart] = useState(null)
@@ -79,7 +100,7 @@ export function ImageCarousel({ className = "", label, slides }) {
                 type="button"
                 className={styles.slideButton}
                 tabIndex={active === index ? 0 : -1}
-                aria-label={active === index ? `Enlarge image ${index + 1}` : `Show image ${index + 1}`}
+                aria-label={active === index ? t.enlarge(index + 1) : t.show(index + 1)}
                 onClick={() => (active === index ? setZoomed(true) : goTo(index))}
               >
                 <img src={item.src} alt={item.alt} loading={index === 0 ? undefined : "lazy"} decoding="async" />
@@ -90,7 +111,7 @@ export function ImageCarousel({ className = "", label, slides }) {
       </div>
 
       <div className={styles.controls}>
-        <button type="button" aria-label="Previous image" onClick={() => goTo(active - 1)}>
+        <button type="button" aria-label={t.prev} onClick={() => goTo(active - 1)}>
           &#8592;
         </button>
 
@@ -99,7 +120,7 @@ export function ImageCarousel({ className = "", label, slides }) {
             <button
               type="button"
               key={item.src}
-              aria-label={`Show image ${index + 1}`}
+              aria-label={t.show(index + 1)}
               aria-pressed={active === index}
               data-active={active === index}
               onClick={() => goTo(index)}
@@ -107,7 +128,7 @@ export function ImageCarousel({ className = "", label, slides }) {
           ))}
         </div>
 
-        <button type="button" aria-label="Next image" onClick={() => goTo(active + 1)}>
+        <button type="button" aria-label={t.next} onClick={() => goTo(active + 1)}>
           &#8594;
         </button>
       </div>
@@ -120,17 +141,17 @@ export function ImageCarousel({ className = "", label, slides }) {
               className={styles.lightbox}
               role="dialog"
               aria-modal="true"
-              aria-label={`${label} - image ${active + 1} of ${count}`}
+              aria-label={t.position(label, active + 1, count)}
               onClick={() => setZoomed(false)}
             >
-              <button type="button" className={styles.lightboxClose} aria-label="Close full screen" onClick={() => setZoomed(false)}>
+              <button type="button" className={styles.lightboxClose} aria-label={t.close} onClick={() => setZoomed(false)}>
                 &#10005;
               </button>
 
               <button
                 type="button"
                 className={styles.lightboxPrev}
-                aria-label="Previous image"
+                aria-label={t.prev}
                 onClick={(event) => {
                   event.stopPropagation()
                   goTo(active - 1)
@@ -149,7 +170,7 @@ export function ImageCarousel({ className = "", label, slides }) {
               <button
                 type="button"
                 className={styles.lightboxNext}
-                aria-label="Next image"
+                aria-label={t.next}
                 onClick={(event) => {
                   event.stopPropagation()
                   goTo(active + 1)

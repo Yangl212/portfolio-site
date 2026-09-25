@@ -1,5 +1,12 @@
 :root {
   color-scheme: light;
+  /* The site's one sans stack, spelled exactly as every stylesheet used
+     to spell it out. English pages resolve to this and nothing else, so
+     nothing about them changes. Named for the Latin face rather than
+     "sans" because the About sheet already loads its own --font-sans
+     (DM Sans) for its essay, and a shared name would repaint its
+     header and footer. */
+  --font-satoshi: "Satoshi", "Satoshi Variable", sans-serif;
   --page-bg: #222222;
   --panel-bg: #e4e2e2;
   --footer-bg: #000000;
@@ -7,6 +14,27 @@
   --muted: #5f5f5f;
   --border: #222222;
   --inverse: #ffffff;
+}
+
+/* Chinese pages only. Satoshi has no CJK glyph, so without this the
+   characters fall through to whatever the machine happens to install -
+   PingFang on a Mac, YaHei on Windows, something else on Android.
+   Source Han Sans (served as Noto Sans SC, loaded in app/layout.js) was
+   drawn to sit beside a geometric Latin sans, so it keeps Satoshi's
+   weight and proportions and reads the same everywhere.
+
+   Scoped to lang="zh", which components/LocaleHtmlLang.jsx sets from the
+   URL: an English page never sees this rule, so its font-family string
+   stays byte-for-byte what it was. Latin inside a Chinese page still
+   comes from Satoshi, since it is still first in the stack.
+
+   Written against `body` rather than the <html> element itself because
+   next/font declares --font-cjk on the body's class. A var() is
+   substituted where it is written, so declaring this on :root - where
+   --font-cjk does not exist yet - would make the whole stack invalid
+   and drop the page to the browser's default serif. */
+:root[lang="zh"] body {
+  --font-satoshi: "Satoshi", "Satoshi Variable", var(--font-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 @font-face {
@@ -99,10 +127,14 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Satoshi first, so Latin text is unchanged; CJK has no glyph in it and
+   falls through to the Chinese face behind it (see app/layout.js). The
+   system faces after that only cover the moment before the webfont
+   arrives, or a machine that blocks it. */
 body {
   background: var(--page-bg);
   color: var(--text);
-  font-family: "Satoshi", "Satoshi Variable", "Inter", sans-serif;
+  font-family: var(--font-satoshi);
 }
 
 a {

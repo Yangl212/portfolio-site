@@ -11,6 +11,6 @@ export const metadata = {
   alternates: { canonical: "/interest" }
 }
 
-export default function VisualPage() {
-  return <InterestPage track="visual" />
+export default function VisualPage({ locale = "en" }) {
+  return <InterestPage track="visual" locale={locale} />
 }

@@ -84,7 +84,7 @@
 .decisionVisual figcaption,
 .brandBoard figcaption {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -100,7 +100,7 @@
 .sectionTitle {
   max-width: 30ch;
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-h2);
   font-weight: 500;
   line-height: 1.16;
@@ -111,7 +111,7 @@
 .sectionLead {
   max-width: var(--measure);
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-lead);
   line-height: 1.65;
   color: var(--muted);
@@ -125,7 +125,7 @@
 .competitorCard > p:not(.competitorKeywords),
 .reflectionGrid article > p:not(.microLabel) {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text);
@@ -135,7 +135,7 @@
 .decisionCopy h3,
 .competitorCard h3 {
   margin: 0;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-h3);
   font-weight: 500;
   line-height: 1.25;
@@ -278,7 +278,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--muted);
@@ -351,7 +351,7 @@
 }
 
 .baseName {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif !important;
+  font-family: var(--font-satoshi) !important;
   font-size: 12px;
   font-weight: 500;
   fill: var(--text) !important;
@@ -433,7 +433,7 @@
 }
 
 .traitList li {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--muted);
@@ -488,7 +488,7 @@
   max-width: 60ch;
   padding-left: 14px;
   border-left: 2px solid #f3c443;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--muted);
@@ -527,7 +527,7 @@
   padding: 8px 14px;
   border: 1px solid rgba(34, 34, 34, 0.24);
   border-radius: 999px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   line-height: 1.2;
   color: var(--text);
@@ -579,7 +579,7 @@
 }
 
 .projectNavLabel {
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -593,7 +593,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
   font-weight: 500;
   line-height: 1.2;
@@ -631,7 +631,7 @@
   padding: 8px 18px;
   border: 1px solid rgba(34, 34, 34, 0.24);
   border-radius: 999px;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.01em;

@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 
+import { t } from "../../lib/dictionary"
+
 import styles from "./more-work-folders.module.css"
 
 /*
@@ -19,12 +21,14 @@ import styles from "./more-work-folders.module.css"
  * A project may also carry `cards`, and with them a `cardStyle`: "deck"
  * fans them out from behind the cover, "scatter" throws them up over it.
  */
-export function MoreWorkFolders({ className = "", projects }) {
+export function MoreWorkFolders({ className = "", projects, locale = "en" }) {
+  const copy = t(locale).work
+
   return (
-    <section className={`${className} ${styles.shelf}`} aria-label="More work">
+    <section className={`${className} ${styles.shelf}`} aria-label={copy.moreWork}>
       <div className={styles.header}>
-        <h2>More Work</h2>
-        <p>{projects.length} projects</p>
+        <h2>{copy.moreWork}</h2>
+        <p>{copy.projects(projects.length)}</p>
       </div>
 
       <div className={styles.grid}>

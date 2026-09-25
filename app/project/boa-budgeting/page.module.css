@@ -4,7 +4,7 @@
   --panel-bg: #ffffff;
   min-height: 100vh;
   background: #ffffff;
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
 }
 .frame { background: #ffffff; border: 1px solid var(--border); border-bottom: 0; }
 .content { width: min(100%, 1344px); margin: 0 auto; padding: 32px 24px 88px; display: flex; flex-direction: column; gap: 72px; }

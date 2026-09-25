@@ -83,10 +83,11 @@ const skillGroups = [
   }
 ]
 
-export default function VisualResumePage() {
+export default function VisualResumePage({ locale = "en" }) {
   return (
     <ResumeSheet
       track="visual"
+      locale={locale}
       role="Visual Designer"
       photo="/resume/photo.jpg"
       education={education}

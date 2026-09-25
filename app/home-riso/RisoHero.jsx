@@ -4,7 +4,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
-import { aboutReady, trackBase } from "../../lib/projects"
+import { t } from "../../lib/dictionary"
+import { aboutReady, pageBase } from "../../lib/projects"
 import { clearScrollToWork, peekScrollToWork } from "../../lib/scrollIntent"
 
 import styles from "./page.module.css"
@@ -52,16 +53,28 @@ function Band({ className, text }) {
    registration marks stay the same either way) - one lookup, the way the
    header's own resumeByTrack is one lookup, so a page only has to pass
    its track through and never repeat this copy. */
+/* The print itself stays English on every locale (see the note where
+   `copy` is read below) - eyebrow, facts and the scrolling band are all
+   plain strings. `subline`, the one sentence of actual prose in the
+   hero, is the one exception: it reads as a real self-description
+   rather than a printer's mark, so it is a `{ en, zh }` pair like any
+   other translated copy. */
 const HERO_COPY = {
   uiux: {
     eyebrow: "UI/UX & Visual Designer · New York",
-    subline: "UI/UX designer with a visual designer’s eye: interfaces people can trust, and the data, brand and print work around them.",
+    subline: {
+      en: "UI/UX designer with a visual designer’s eye: interfaces people can trust, and the data, brand and print work around them.",
+      zh: "我在纽约做 UI/UX，也做数据可视化、品牌和印刷。视觉细节和使用体验，我都很在意。"
+    },
     facts: ["Parsons MFA ’26", "Previously at VortexNet", "Open to roles across the U.S."],
     band: "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
   },
   visual: {
     eyebrow: "Visual & Brand Designer · New York",
-    subline: "Visual & brand designer with an eye for systems: identity, illustration, and print work built to hold together.",
+    subline: {
+      en: "Visual & brand designer with an eye for systems: identity, illustration, and print work built to hold together.",
+      zh: "我做视觉和品牌设计，也喜欢把一套系统从品牌识别延伸到插画和印刷里。"
+    },
     facts: ["Parsons MFA ’26", "Former UI/UX Design Intern at VortexNet", "Seeking Visual & Brand Design roles"],
     band: "Brand identity · Illustration · Game & board design · Riso zines · Print · New York · "
   }
@@ -109,9 +122,20 @@ const newRegistration = () => ({
   bx: jitter(5, 3), by: jitter(4, 2)
 })
 
-export function RisoHero({ track = "uiux" }) {
-  const base = trackBase(track)
+export function RisoHero({ track = "uiux", locale = "en" }) {
+  const base = pageBase(track, locale)
+  /* The print itself - the pulled name and everything on the sheet
+     around it - stays English on every locale: it is a fixed printed
+     object, not a piece of UI chrome, and reads as one thing rather
+     than something that would ever be reprinted in another language.
+     `locale` still decides where its links lead (base above), just not
+     what they say. */
   const copy = HERO_COPY[track] || HERO_COPY.uiux
+  const subline = copy.subline[locale] || copy.subline.en
+  /* The three actions below the print are read as buttons, not as part
+     of the printed sheet, so - unlike the rest of the hero - they follow
+     locale like any other nav control. */
+  const dict = t(locale)
   const ref = useRef(null)
   const [pull, setPull] = useState(1)
   const [reg, setReg] = useState({ ax: -5, ay: -4, bx: 5, by: 4 })
@@ -475,7 +499,7 @@ export function RisoHero({ track = "uiux" }) {
         </h1>
 
         <p className={`${styles.opSub} ${styles.rise}`} style={{ animationDelay: "160ms" }}>
-          {copy.subline}
+          {subline}
         </p>
 
         <p className={`${styles.opFacts} ${styles.rise}`} style={{ animationDelay: "240ms" }}>
@@ -483,9 +507,9 @@ export function RisoHero({ track = "uiux" }) {
         </p>
 
         <div className={`${styles.opActions} ${styles.rise}`} style={{ animationDelay: "320ms" }}>
-          <a className={styles.primary} href="#work" data-magnet="" onClick={scrollToWork}>Selected work <span aria-hidden="true">↓</span></a>
-          <Link className={`${styles.secondary} ${styles.lab}`} href={`${base}/lab`} data-magnet="" prefetch={false}>Lab <span aria-hidden="true">→</span></Link>
-          <Link className={styles.secondary} href={`${base}/resume`} data-magnet="" prefetch={false}>Resume <span aria-hidden="true">→</span></Link>
+          <a className={styles.primary} href="#work" data-magnet="" onClick={scrollToWork}>{locale === "zh" ? "精选作品" : "Selected work"} <span aria-hidden="true">↓</span></a>
+          <Link className={`${styles.secondary} ${styles.lab}`} href={`${base}/lab`} data-magnet="" prefetch={false}>{dict.nav.lab} <span aria-hidden="true">→</span></Link>
+          <Link className={styles.secondary} href={`${base}/resume`} data-magnet="" prefetch={false}>{dict.nav.resume} <span aria-hidden="true">→</span></Link>
         </div>
 
         {/* The sheet's furniture, each at its own depth. */}

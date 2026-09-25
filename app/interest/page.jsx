@@ -1,6 +1,6 @@
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
-import { trackBase } from "../../lib/projects"
+import { pageBase } from "../../lib/projects"
 
 import styles from "./page.module.css"
 
@@ -43,13 +43,13 @@ const travelPhotos = [
   }
 ]
 
-export default function InterestPage({ track = "uiux" }) {
-  const base = trackBase(track)
+export default function InterestPage({ track = "uiux", locale = "en" }) {
+  const base = pageBase(track, locale)
 
   return (
     <main className={styles.page}>
       <div className={styles.frame}>
-        <SiteHeader active={`${base}/interest`} track={track} />
+        <SiteHeader active={`${base}/interest`} track={track} locale={locale} />
 
         <section className={styles.content}>
           <div className={`${styles.hero} ${styles.reveal}`}>
@@ -164,7 +164,7 @@ export default function InterestPage({ track = "uiux" }) {
           </section>
         </section>
 
-        <SiteFooter className={styles.reveal} />
+        <SiteFooter className={styles.reveal} locale={locale} />
       </div>
     </main>
   )

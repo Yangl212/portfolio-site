@@ -25,7 +25,7 @@
   background: #ffffff;
   color: var(--ink);
   box-shadow: 0 22px 54px -24px rgba(17, 17, 19, 0.38);
-  font-family: "Satoshi", "Satoshi Variable", sans-serif;
+  font-family: var(--font-satoshi);
 }
 
 .card :is(h2, p, dl, dd) { margin: 0; }

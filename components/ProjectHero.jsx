@@ -1,3 +1,5 @@
+import { t } from "../lib/dictionary"
+
 import styles from "./ProjectHero.module.css"
 
 export function ProjectHero({
@@ -18,8 +20,14 @@ export function ProjectHero({
   platform,
   timeline,
   action,
-  secondaryAction
+  secondaryAction,
+  /* Only the field labels (dt text) below come from locale - the values
+     (summary, problem, ...) are per-project prose, still English until
+     translated page by page. */
+  locale = "en"
 }) {
+  const copy = t(locale).hero
+
   return (
     <section className={styles.wrap}>
       <div className={styles.eyebrow}>
@@ -36,15 +44,15 @@ export function ProjectHero({
         <p className={styles.summary}>{summary}</p>
         <div className={styles.details}>
           <dl className={styles.facts}>
-            <div><dt>The problem</dt><dd>{problem}</dd></div>
-            <div><dt>What I did</dt><dd>{contribution}</dd></div>
-            <div><dt>The outcome</dt><dd>{outcome}</dd></div>
+            <div><dt>{copy.problem}</dt><dd>{problem}</dd></div>
+            <div><dt>{copy.whatIDid}</dt><dd>{contribution}</dd></div>
+            <div><dt>{copy.outcome}</dt><dd>{outcome}</dd></div>
           </dl>
           <dl className={styles.meta}>
-            <div><dt>Role</dt><dd>{role}</dd></div>
-            <div><dt>Scope</dt><dd>{scope}</dd></div>
-            <div><dt>Platform</dt><dd>{platform}</dd></div>
-            <div><dt>Timeline</dt><dd>{timeline}</dd></div>
+            <div><dt>{copy.role}</dt><dd>{role}</dd></div>
+            <div><dt>{copy.scope}</dt><dd>{scope}</dd></div>
+            <div><dt>{copy.platform}</dt><dd>{platform}</dd></div>
+            <div><dt>{copy.timeline}</dt><dd>{timeline}</dd></div>
           </dl>
           {(action || secondaryAction) && (
             <div className={styles.actions}>

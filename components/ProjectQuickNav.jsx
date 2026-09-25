@@ -3,91 +3,94 @@
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
+import { t } from "../lib/dictionary"
 import { trackHome } from "../lib/projects"
 
 import styles from "./project-quick-nav.module.css"
 
+/* Each section is [id, { en, zh }] - the id is also the DOM anchor, so it
+   never translates; only the label shown in the bar does. */
 const projectSections = {
   "boa-budgeting": [
-    ["experience", "Experience"],
-    ["prototype", "Prototype"],
-    ["research", "Research"],
-    ["testing", "Evaluation"],
-    ["web", "Web"]
+    ["experience", { en: "Experience", zh: "经历" }],
+    ["prototype", { en: "Prototype", zh: "原型" }],
+    ["research", { en: "Research", zh: "调研" }],
+    ["testing", { en: "Evaluation", zh: "评估" }],
+    ["web", { en: "Web", zh: "网页版" }]
   ],
   vortexnet: [
-    ["result", "Redesign"],
-    ["testing", "Results"],
-    ["start", "Problem"],
-    ["iteration", "Decisions"],
-    ["navigation", "Navigation"],
-    ["reflection", "Trade-offs"]
+    ["result", { en: "Redesign", zh: "重新设计" }],
+    ["testing", { en: "Results", zh: "结果" }],
+    ["start", { en: "Problem", zh: "问题" }],
+    ["iteration", { en: "Decisions", zh: "决策" }],
+    ["navigation", { en: "Navigation", zh: "导航" }],
+    ["reflection", { en: "Trade-offs", zh: "取舍" }]
   ],
   lastmessage: [
-    ["experience", "Experience"],
-    ["investigation-flow", "Investigation"],
-    ["ai-behavior", "AI behavior"],
-    ["playtesting", "Playtesting"],
-    ["figma-to-build", "Build"]
+    ["experience", { en: "Experience", zh: "体验" }],
+    ["investigation-flow", { en: "Investigation", zh: "调查流程" }],
+    ["ai-behavior", { en: "AI behavior", zh: "AI 行为" }],
+    ["playtesting", { en: "Playtesting", zh: "测试" }],
+    ["figma-to-build", { en: "Build", zh: "开发" }]
   ],
   cleared: [
-    ["context", "Context"],
-    ["experience", "Design"],
-    ["trust", "AI & trust"],
-    ["mobile-ui", "Mobile"],
-    ["prototype", "Prototype"],
-    ["validation", "Evaluation"]
+    ["context", { en: "Context", zh: "背景" }],
+    ["experience", { en: "Design", zh: "设计" }],
+    ["trust", { en: "AI & trust", zh: "AI 与信任" }],
+    ["mobile-ui", { en: "Mobile", zh: "移动端" }],
+    ["prototype", { en: "Prototype", zh: "原型" }],
+    ["validation", { en: "Evaluation", zh: "评估" }]
   ],
   backstage: [
-    ["problem", "Problem"],
-    ["design", "Design"],
-    ["research", "Research"],
-    ["direction", "Direction"],
-    ["iteration", "Iteration"],
-    ["reflection", "Reflection"]
+    ["problem", { en: "Problem", zh: "问题" }],
+    ["design", { en: "Design", zh: "设计" }],
+    ["research", { en: "Research", zh: "调研" }],
+    ["direction", { en: "Direction", zh: "方向" }],
+    ["iteration", { en: "Iteration", zh: "迭代" }],
+    ["reflection", { en: "Reflection", zh: "反思" }]
   ],
   graveyard: [
-    ["problem", "Problem"],
-    ["research", "Research"],
-    ["concept", "Concept"],
-    ["experience", "Experience"],
-    ["visual-design", "Visual design"]
+    ["problem", { en: "Problem", zh: "问题" }],
+    ["research", { en: "Research", zh: "调研" }],
+    ["concept", { en: "Concept", zh: "概念" }],
+    ["experience", { en: "Experience", zh: "体验" }],
+    ["visual-design", { en: "Visual design", zh: "视觉设计" }]
   ],
   taroo: [
-    ["product", "Product"],
-    ["idea", "Idea"],
-    ["decisions", "Decisions"],
-    ["positioning", "Positioning"],
-    ["brand", "Brand"],
-    ["reflection", "Reflection"]
+    ["product", { en: "Product", zh: "成品" }],
+    ["idea", { en: "Idea", zh: "想法" }],
+    ["decisions", { en: "Decisions", zh: "决策" }],
+    ["positioning", { en: "Positioning", zh: "定位" }],
+    ["brand", { en: "Brand", zh: "品牌" }],
+    ["reflection", { en: "Reflection", zh: "反思" }]
   ],
   alcohol: [
-    ["book", "The book"],
-    ["idea", "Idea"],
-    ["direction", "Direction"],
-    ["highlights", "Highlights"],
-    ["spreads", "Spreads"],
-    ["reflection", "Reflection"]
+    ["book", { en: "The book", zh: "这本书" }],
+    ["idea", { en: "Idea", zh: "想法" }],
+    ["direction", { en: "Direction", zh: "方向" }],
+    ["highlights", { en: "Highlights", zh: "亮点" }],
+    ["spreads", { en: "Spreads", zh: "内页" }],
+    ["reflection", { en: "Reflection", zh: "反思" }]
   ],
   bubu: [
-    ["problem", "Problem"],
-    ["bet", "The bet"],
-    ["match", "Matching"],
-    ["receipt", "Daily loop"],
-    ["report", "Weekly report"],
-    ["next", "Where it stands"]
+    ["problem", { en: "Problem", zh: "问题" }],
+    ["bet", { en: "The bet", zh: "判断" }],
+    ["match", { en: "Matching", zh: "匹配" }],
+    ["receipt", { en: "Daily loop", zh: "每日循环" }],
+    ["report", { en: "Weekly report", zh: "每周回顾" }],
+    ["next", { en: "Where it stands", zh: "进展" }]
   ],
   suglar: [
-    ["product", "Product"],
-    ["idea", "Idea"],
-    ["decisions", "Decisions"],
-    ["iteration", "Iteration"],
-    ["visual-system", "Visual system"],
-    ["results", "Results"]
+    ["product", { en: "Product", zh: "成品" }],
+    ["idea", { en: "Idea", zh: "想法" }],
+    ["decisions", { en: "Decisions", zh: "决策" }],
+    ["iteration", { en: "Iteration", zh: "迭代" }],
+    ["visual-system", { en: "Visual system", zh: "视觉系统" }],
+    ["results", { en: "Results", zh: "结果" }]
   ]
 }
 
-export function ProjectQuickNav({ slug, track = "uiux" }) {
+export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
   const sections = projectSections[slug] || []
   const [active, setActive] = useState(sections[0]?.[0] || "")
   const [floating, setFloating] = useState(false)
@@ -179,9 +182,9 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
   return (
     <div className={styles.slot} ref={slotRef}>
       <div className={styles.bar} data-floating={floating}>
-        <Link className={styles.back} href={trackHome(track)} prefetch={false} aria-label="Back to all projects">
+        <Link className={styles.back} href={trackHome(track, locale)} prefetch={false} aria-label={t(locale).projectNav.back}>
           <span className={styles.backArrow} aria-hidden="true">&#8592;</span>
-          <span className={styles.backLabel}>Work</span>
+          <span className={styles.backLabel}>{t(locale).projectNav.back}</span>
         </Link>
         <nav className={styles.links} aria-label="On this project" ref={linksRef}>
           {sections.map(([id, label], index) => (
@@ -197,7 +200,7 @@ export function ProjectQuickNav({ slug, track = "uiux" }) {
               <span className={styles.linkIndex} aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <span className={styles.linkLabel}>{label}</span>
+              <span className={styles.linkLabel}>{label[locale] || label.en}</span>
             </a>
           ))}
         </nav>

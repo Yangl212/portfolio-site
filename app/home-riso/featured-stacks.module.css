@@ -103,7 +103,7 @@
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
 }
-.plate strong { font-family: "Satoshi", "Satoshi Variable", sans-serif; font-size: clamp(1.15rem, 1.4vw, 1.35rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+.plate strong { font-family: var(--font-satoshi); font-size: clamp(1.15rem, 1.4vw, 1.35rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
 .arrow { display: inline-block; margin-left: 2px; transition: transform 320ms var(--ease-spring); }
 .stage:hover .arrow, .stage:focus-visible .arrow { transform: translateX(6px); }
 

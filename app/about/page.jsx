@@ -17,7 +17,7 @@ export const metadata = {
  * needs to change. `lift` is how far down the chapter the picture sits,
  * so they do not all line up with each other.
  */
-const chapters = [
+const enChapters = [
   {
     text: [
       "I would always ask myself what it was trying to say, what it could bring to people, and why it was worth making.",
@@ -120,12 +120,88 @@ const chapters = [
   }
 ]
 
-export default function AboutPage({ track = "uiux" }) {
+const zhChapters = [
+  {
+    text: [
+      ["我最初喜欢设计，是因为我喜欢", [HL, "漂亮的东西"], "。我相信美感会影响人们使用产品时的心情：一个清晰、舒服的界面，能让人更愿意开始探索，也能让一次普通的操作变得愉快。但慢慢地，我开始好奇：除了好看，是什么让一个体验真正吸引人，又是什么让人在使用时感到困惑？"]
+    ],
+    pictures: []
+  },
+  {
+    text: [
+      ["本科在北京电影学院学习数字媒体艺术时，我做了很多游戏相关的项目。设计游戏让我不断思考玩家会先注意到什么、在哪里犹豫、为什么愿意继续玩下去。我发现自己很喜欢", [CIRCLE, "观察和研究用户"], "，也擅长从他们的反应中找到问题，再用清晰的逻辑梳理流程、绘制线框图，把复杂的想法变成可以体验的内容。"]
+    ],
+    pictures: [
+      {
+        side: "right",
+        src: "/about/7.webp",
+        alt: "本科时期制作的一款叙事游戏场景，房间里摆着钢琴、扶手椅和散落的线索",
+        width: 290,
+        tilt: -2,
+        lift: -24,
+        note: "本科时期的游戏作品"
+      },
+      {
+        side: "left",
+        src: "/about/8.webp",
+        alt: "本科时期制作的一款像素游戏，角色站在街边的包子铺前",
+        width: 286,
+        tilt: 2.5,
+        lift: 118,
+        note: "本科时期的游戏作品"
+      },
+      {
+        side: "right",
+        src: "/about/9.webp",
+        alt: "本科时期制作的一款国风游戏，几位角色围绕一棵树展开故事",
+        width: 280,
+        tilt: 3,
+        lift: 286,
+        note: "本科时期的游戏作品"
+      }
+    ]
+  },
+  {
+    text: [
+      ["游戏对我来说一直是", [HL, "一个媒介"], "。它让我同时练习视觉、叙事、交互和系统设计，也帮我确认了自己最想深入的方向：人如何理解和使用一个产品。因此，到了帕森斯设计学院读硕士时，我开始更专注于用户体验与界面设计。在财务数据平台和预算流程等项目中，我通过调研、原型和", [UNDERLINE, "可用性测试"], "理解用户的困难，再不断调整信息结构与交互方式。"]
+    ],
+    pictures: [
+      {
+        side: "right",
+        src: "/about/1.jpg",
+        alt: "一张研究拼贴，照片、剪影、批注和手写问题被整理在同一张画面上",
+        width: 430,
+        tilt: -2.5,
+        lift: 12,
+        edge: true
+      }
+    ]
+  },
+  {
+    text: [
+      [[CIRCLE_ROUND, "AI"], " 和代码也让我能更快地把想法做成可操作的原型。我可以亲自试用、发现问题、继续修改，也能让合作的人更直观地理解我的设计。我希望自己做的不只是停留在 Figma 里的界面，而是经过", [HL_LONG, "真实使用与反复迭代"], "，最终成为", [UNDERLINE, "能够落地的产品"], "。"]
+    ],
+    pictures: [
+      { side: "right", src: "/about/icon-11.webp", alt: "ChatGPT", icon: true, width: 84, lift: -18, out: 9.5 },
+      { side: "left", src: "/about/icon-10.webp", alt: "Gemini", icon: true, width: 84, lift: 112, out: 4.5 },
+      { side: "right", src: "/about/icon-12.webp", alt: "Claude", icon: true, width: 84, lift: 164, out: 3.5 },
+      { side: "left", src: "/about/icon-13.webp", alt: "Cursor", icon: true, width: 84, lift: 246, out: 10 }
+    ]
+  }
+]
+
+export default function AboutPage({ track = "uiux", locale = "en" }) {
+  const isZh = locale === "zh"
+
   return (
     <AboutSheet
       track={track}
-      statement={["I used to think that the most important thing about a piece of work was whether it had meaning."]}
-      chapters={chapters}
+      locale={locale}
+      title={isZh ? "关于我" : "About me"}
+      statement={isZh
+        ? ["你好，我是杨乐乐，一名专注于用户体验与界面设计的设计师。"]
+        : ["I used to think that the most important thing about a piece of work was whether it had meaning."]}
+      chapters={isZh ? zhChapters : enChapters}
     />
   )
 }

@@ -7,7 +7,7 @@ import {
   Reenie_Beanie
 } from "next/font/google"
 import { SiteHeader } from "../../components/SiteHeader"
-import { trackBase } from "../../lib/projects"
+import { pageBase } from "../../lib/projects"
 import { RisoFooter } from "../home-riso/RisoFooter"
 
 import { CyclingWord } from "./CyclingWord"
@@ -160,14 +160,16 @@ function Picture({ side, src, alt, ratio, lift, book, width, tilt, edge, stack, 
  * `chapters[].pictures[].book`, where used, is `{ src, alt }` rather than
  * a fixed file: each track keeps its own book.
  */
-export function AboutSheet({ track = "uiux", title = "About me", statement, chapters }) {
-  const base = trackBase(track)
+export function AboutSheet({ track = "uiux", locale = "en", title = "About me", statement, chapters }) {
+  const base = pageBase(track, locale)
 
   return (
     <main className={`${styles.page} ${sans.variable} ${handA.variable} ${handB.variable} ${handC.variable} ${handD.variable} ${handE.variable}`}>
       {/* The bar sits outside the sheet, so the sheet's scrollbar runs
-          below it rather than up the side of it. */}
-      <SiteHeader active={`${base}/about`} track={track} />
+          below it rather than up the side of it. The chapters below stay
+          English until translated - only the chrome (header, footer) is
+          locale-aware for now. */}
+      <SiteHeader active={`${base}/about`} track={track} locale={locale} />
 
       <div className={styles.sheet} data-about-sheet="">
         <Reveal />
@@ -193,7 +195,7 @@ export function AboutSheet({ track = "uiux", title = "About me", statement, chap
         </article>
 
         {/* The same back of the sheet the home page prints. */}
-        <RisoFooter />
+        <RisoFooter locale={locale} />
       </div>
     </main>
   )

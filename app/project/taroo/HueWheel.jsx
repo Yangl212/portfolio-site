@@ -22,6 +22,14 @@ import styles from "./page.module.css"
 const ORBIT = { pale: 156, saturated: 118, deep: 84 }
 const CARD = { w: 22, h: 35 }
 
+/* Only the disc at the centre says anything; the arcana names it shows
+   come from the page and stay English, since they are what is printed on
+   the cards. */
+const copy = {
+  en: { base1: "Pastel", base2: "base", aria: "The 22 Major Arcana field colours arranged around a hue circle on three orbits: pale, saturated and deep" },
+  zh: { base1: "粉彩", base2: "底色", aria: "22 张大阿卡纳的底色沿色相环排布，分浅色、饱和、深色三圈" }
+}
+
 function hue(hex) {
   const n = parseInt(hex.slice(1), 16)
   const r = ((n >> 16) & 255) / 255
@@ -34,7 +42,8 @@ function hue(hex) {
   return (h * 60 + 360) % 360
 }
 
-export function HueWheel({ cards }) {
+export function HueWheel({ cards, locale = "en" }) {
+  const t = copy[locale] || copy.en
   const [on, setOn] = useState(null)
   const sorted = [...cards].sort((a, b) => hue(a.hex) - hue(b.hex))
   const step = 360 / sorted.length
@@ -45,7 +54,7 @@ export function HueWheel({ cards }) {
       className={styles.hueWheel}
       viewBox="0 0 400 400"
       role="img"
-      aria-label="The 22 Major Arcana field colours arranged around a hue circle on three orbits: pale, saturated and deep"
+      aria-label={t.aria}
       data-on={on ? "" : undefined}
       onPointerLeave={() => setOn(null)}
     >
@@ -63,8 +72,8 @@ export function HueWheel({ cards }) {
           </>
         ) : (
           <>
-            <text className={styles.baseLabel} x="200" y="197">Pastel</text>
-            <text className={styles.baseLabel} x="200" y="209">base</text>
+            <text className={styles.baseLabel} x="200" y="197">{t.base1}</text>
+            <text className={styles.baseLabel} x="200" y="209">{t.base2}</text>
           </>
         )}
       </g>

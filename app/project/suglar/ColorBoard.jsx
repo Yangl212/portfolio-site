@@ -80,6 +80,29 @@ function inside(kind, u, v) {
   return d >= 66 * 66 && d <= 10000
 }
 
+/* The only words the board says. Swatch names and roles arrive already
+   translated from the page; these are the board's own chrome. */
+const copy = {
+  en: {
+    count: "18 colours",
+    on: (name, hex) => `on ${name} ${hex}`,
+    onGround: "on the ground",
+    fallbackRole: "Card fills · candy accents",
+    hint: "Drag a piece · overlaps print their mix",
+    reset: "Reset",
+    drag: (name, hex) => `${name} ${hex}, drag to overlap`
+  },
+  zh: {
+    count: "18 个颜色",
+    on: (name, hex) => `铺在${name} ${hex} 上`,
+    onGround: "铺在底色上",
+    fallbackRole: "卡面填色 · 糖果点缀",
+    hint: "拖动一块 · 叠在一起会印出混色",
+    reset: "重置",
+    drag: (name, hex) => `${name} ${hex}，拖动可以叠色`
+  }
+}
+
 function rgb(hex) {
   const n = parseInt(hex.slice(1), 16)
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
@@ -106,7 +129,8 @@ function Glyph({ kind, hex }) {
   return <path d="M0 100 A100 100 0 0 1 100 0 L100 34 A66 66 0 0 0 34 100 Z" fill={hex} />
 }
 
-export function ColorBoard({ core, support }) {
+export function ColorBoard({ core, support, locale = "en" }) {
+  const t = copy[locale] || copy.en
   const boardRef = useRef(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const [on, setOn] = useState(null)
@@ -120,7 +144,7 @@ export function ColorBoard({ core, support }) {
   const build = (square = narrow) => {
     const at = square ? START_NARROW : START
     return [
-      ...core.filter((c) => c.role !== "Ground").map((c, i) => ({ ...c, tier: "core", kind: KINDS.core[i], w: SIZE.core, x: at.core[i][0], y: at.core[i][1] })),
+      ...core.filter((c) => !c.ground).map((c, i) => ({ ...c, tier: "core", kind: KINDS.core[i], w: SIZE.core, x: at.core[i][0], y: at.core[i][1] })),
       ...support.map((c, i) => ({ ...c, tier: "support", kind: KINDS.support[i], w: SIZE.support, x: at.support[i][0], y: at.support[i][1] }))
     ]
   }
@@ -135,7 +159,7 @@ export function ColorBoard({ core, support }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [narrow])
 
-  const ground = core.find((c) => c.role === "Ground")
+  const ground = core.find((c) => c.ground)
 
   useEffect(() => {
     const el = boardRef.current
@@ -251,18 +275,18 @@ export function ColorBoard({ core, support }) {
             <>
               <strong>{on.name}</strong>
               <span>{on.hex}</span>
-              <span>{on.role || "Card fills · candy accents"}</span>
+              <span>{on.role || t.fallbackRole}</span>
               {onMix ? <span className={styles.boardMix}>× {onMix.a.hex === on.hex ? onMix.b.name : onMix.a.name} → {onMix.hex}</span> : null}
             </>
           ) : (
             <>
-              <strong>18 colours</strong>
-              <span>on {ground ? `${ground.name} ${ground.hex}` : "the ground"}</span>
-              <span>Drag a piece · overlaps print their mix</span>
+              <strong>{t.count}</strong>
+              <span>{ground ? t.on(ground.name, ground.hex) : t.onGround}</span>
+              <span>{t.hint}</span>
             </>
           )}
         </p>
-        <button type="button" className={styles.boardReset} onClick={reset}>Reset</button>
+        <button type="button" className={styles.boardReset} onClick={reset}>{t.reset}</button>
       </div>
 
       <div
@@ -278,7 +302,7 @@ export function ColorBoard({ core, support }) {
             className={styles.piece}
             data-tier={piece.tier}
             style={{ left: `${piece.x * 100}%`, top: `${piece.y * 100}%`, width: `${pw(piece) * 100}%`, zIndex: order.indexOf(piece.hex) + 1, "--i": i }}
-            aria-label={`${piece.name} ${piece.hex}, drag to overlap`}
+            aria-label={t.drag(piece.name, piece.hex)}
             onPointerEnter={() => setOn(piece)}
             onPointerDown={(e) => onPointerDown(e, piece)}
           >

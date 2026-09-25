@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { t } from "../../lib/dictionary"
+
 import styles from "./riso-footer.module.css"
 
 /*
@@ -22,7 +24,8 @@ function RegMark({ className }) {
 const INKS = ["pink", "blue", "paper"]
 const MAX_STAMPS = 14
 
-export function RisoFooter() {
+export function RisoFooter({ locale = "en" }) {
+  const [line1, line2] = t(locale).footer.lines
   const ref = useRef(null)
   /* "still" until we know the footer starts below the fold, then "armed"
      (plates hidden) and "in" once it scrolls into view. With no script the
@@ -97,10 +100,10 @@ export function RisoFooter() {
       <RegMark className={styles.regBR} />
 
       <div className={styles.inner}>
-        <h2 className={styles.op} aria-label="Stay curious, stay kind.">
+        <h2 className={styles.op} aria-label={`${line1} ${line2}`}>
           <span className={styles.sheet}>
-            <span className={`${styles.plate} ${styles.plateA}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkA}`}>Stay curious,<br />stay kind.</span></span>
-            <span className={`${styles.plate} ${styles.plateB}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkB}`}>Stay curious,<br />stay kind.</span></span>
+            <span className={`${styles.plate} ${styles.plateA}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkA}`}>{line1}<br />{line2}</span></span>
+            <span className={`${styles.plate} ${styles.plateB}`} aria-hidden="true"><span className={`${styles.ink} ${styles.inkB}`}>{line1}<br />{line2}</span></span>
             <span className={`${styles.squeegee} ${styles.squeegeeA}`} aria-hidden="true" />
             <span className={`${styles.squeegee} ${styles.squeegeeB}`} aria-hidden="true" />
           </span>
