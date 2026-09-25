@@ -173,6 +173,10 @@ const stacks = {
 function layerStyle(layer, index) {
   return {
     "--x": `${layer.x}%`,
+    /* The same x as a bare number, so .chip's right-edge guard can compare
+       it against the stage width in cqw - a percentage inside a transform
+       would resolve against the chip itself, not the stage. */
+    "--xc": layer.x,
     "--y": `${layer.y}%`,
     "--w": `${layer.w}%`,
     "--r": `${layer.r}deg`,
