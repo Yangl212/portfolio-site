@@ -127,7 +127,13 @@ const SPINE_D = `M ${CX} ${spine[0].y + NODE_H} V ${BAR_Y}`
 const BAR_L = `M ${CX} ${BAR_Y} H ${mid(COL_X[0])}`
 const BAR_R = `M ${CX} ${BAR_Y} H ${mid(COL_X[5])}`
 const colD = (col) => `M ${mid(COL_X[col])} ${BAR_Y} V ${ROW_Y[branches[col].nodes.length - 1] + 12}`
-const barTo = (col) => `M ${CX} ${BAR_Y} H ${mid(COL_X[col])}`
+/* The whole way to a branch as one polyline - down the spine, out along
+   the bar, down the column - so the current can run it in a single
+   unbroken travel instead of three legs handing off to each other. The
+   boxes sit over the SVG, so the parts that pass behind them are hidden
+   exactly as they are for the resting lines. */
+const routeD = (col) =>
+  `M ${CX} ${spine[0].y + NODE_H} V ${BAR_Y} H ${mid(COL_X[col])} V ${ROW_Y[branches[col].nodes.length - 1] + 12}`
 
 /* The one edge that is not a straight drop: New challenge sends you back
    up to Set your goal, the only cycle on the board and the reason the
@@ -260,13 +266,14 @@ export function FlowMap({ locale = "en", copy }) {
               data-lit={lit("record")}
             />
 
-            {/* the current: a heavier stroke that runs the route to a
-                focused branch, spine then bar then column */}
-            <path className={styles.pulse} d={SPINE_D} pathLength="1" data-leg="spine" data-on={active ? "" : undefined} />
+            {/* Following a branch: the route inks in from the top, and a
+                short bright segment travels it just ahead of the ink, so
+                the change reads as a current arriving rather than as a
+                colour swap. */}
             {branches.map((branch, col) => (
               <g key={branch.id}>
-                <path className={styles.pulse} d={barTo(col)} pathLength="1" data-leg="bar" data-on={lit(branch.id)} />
-                <path className={styles.pulse} d={colD(col)} pathLength="1" data-leg="col" data-on={lit(branch.id)} />
+                <path className={styles.trace} d={routeD(col)} pathLength="1" data-on={lit(branch.id)} />
+                <path className={styles.spark} d={routeD(col)} pathLength="1" data-on={lit(branch.id)} />
               </g>
             ))}
 

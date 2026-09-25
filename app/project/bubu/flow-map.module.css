@@ -63,26 +63,43 @@
 .cap { fill: var(--app-ink); opacity: .5; transition: opacity 420ms ease; }
 
 /* ---------- the current ---------- */
-/* A second stroke along the same paths, at the same weight as the line
-   under it - the path inks in rather than getting fat. On a board drawn
-   entirely in hairlines, thickening one route reads as a different
-   material; going from half-ink to full ink reads as attention.
+/* Two strokes on the one route path. `trace` is the route inking in, at
+   the same 1px as the line beneath it: on a board drawn entirely in
+   hairlines, thickening one route reads as a different material, while
+   going from half ink to full ink reads as attention. `spark` is a short
+   segment that travels the same path just ahead of the ink, and it is
+   what makes the change read as a current arriving rather than as a
+   colour swap - the ink on its own was too quiet to notice.
 
-   At rest it is fully offset, so nothing shows. Following a branch lets
-   each leg run in turn: the spine, then the bar out to that column, then
-   the column itself. Letting go pulls them all back at once, quickly, so
-   a hover moving between columns feels like the current jumping tracks
-   rather than three lines being erased one by one. */
-.pulse {
+   Both run the whole way in one travel, spine to bar to column. Letting
+   go pulls the ink back quickly, so a hover moving between columns feels
+   like the current jumping tracks. */
+.trace {
   fill: none; stroke: var(--app-ink); stroke-width: 1; vector-effect: non-scaling-stroke;
   stroke-dasharray: 1; stroke-dashoffset: 1;
   opacity: 0;
-  transition: stroke-dashoffset 240ms ease-in, opacity 160ms ease 80ms;
+  transition: stroke-dashoffset 220ms ease-in, opacity 140ms ease 80ms;
 }
-.pulse[data-on] { stroke-dashoffset: 0; opacity: 1; }
-.pulse[data-on][data-leg="spine"] { transition: stroke-dashoffset 360ms var(--ease-draw), opacity 80ms; }
-.pulse[data-on][data-leg="bar"] { transition: stroke-dashoffset 300ms var(--ease-draw) 300ms, opacity 80ms 300ms; }
-.pulse[data-on][data-leg="col"] { transition: stroke-dashoffset 520ms var(--ease-draw) 540ms, opacity 80ms 540ms; }
+.trace[data-on] {
+  stroke-dashoffset: 0; opacity: 1;
+  transition: stroke-dashoffset 880ms var(--ease-draw), opacity 100ms;
+}
+
+/* One short dash and one gap spanning the path, so exactly one segment
+   exists on it; a negative offset walks that segment forward. */
+.spark {
+  fill: none; stroke: var(--app-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-dasharray: .05 .95; stroke-dashoffset: 0;
+  opacity: 0;
+}
+.spark[data-on] { animation: spark 880ms var(--ease-draw); }
+@keyframes spark {
+  0%   { stroke-dashoffset: 0;  opacity: 0; }
+  10%  { opacity: .9; }
+  80%  { opacity: .9; }
+  100% { stroke-dashoffset: -1; opacity: 0; }
+}
 
 /* ---------- nodes ---------- */
 .node {
@@ -97,7 +114,7 @@
   border: 1px solid var(--app-ink);
   background: #ffffff;
   text-align: center;
-  transition: opacity 420ms ease;
+  transition: opacity 420ms ease, border-color 420ms ease, color 420ms ease, box-shadow 420ms ease;
 }
 .node[data-root] { background: var(--app-ink); color: #ffffff; }
 .node[data-root] .label { color: #ffffff; }
@@ -123,7 +140,23 @@
    The rest steps back a beat after the current starts, so the eye is
    led to the path rather than left with a sudden dim, and it recedes as
    a ripple outward from the column being followed. */
-.node[data-dim], .wire[data-dim], .cap[data-dim] {
+/* A dimmed box fades its ink but keeps its white fill. Fading the whole
+   box with opacity turned the fill transparent too, and the column line
+   runs unbroken behind every box in its column - so the line showed
+   straight through all of them and out the bottom of the last one, which
+   is what made the board look like it was full of broken and crossing
+   lines. The fill is the mask; it has to stay. */
+.node[data-dim] {
+  border-color: rgba(14, 14, 14, .17);
+  color: rgba(14, 14, 14, .24);
+  transition-delay: calc(120ms + var(--away, 0) * 50ms);
+}
+.node[data-dim] .note { color: rgba(14, 14, 14, .2); }
+/* A branch head carries its extra weight as an inset shadow, which the
+   border-colour fade above cannot reach - without this the six heads
+   stayed at full strength while their own columns went quiet. */
+.node[data-dim][data-head] { box-shadow: inset 0 0 0 1px rgba(14, 14, 14, .17); }
+.wire[data-dim], .cap[data-dim] {
   opacity: .15;
   transition-delay: calc(120ms + var(--away, 0) * 50ms);
 }
@@ -200,5 +233,5 @@
   .board:not([data-drawn]) :is(.wire, .reveal, .cap, .node) { opacity: 1; }
   .board:not([data-drawn]) .wire, .board:not([data-drawn]) .cap { opacity: .5; }
   .board:not([data-drawn]) .loop { opacity: .42; }
-  .pulse, .node, .chip { transition-duration: 0ms !important; transition-delay: 0ms !important; }
+  .trace, .spark, .node, .chip { transition-duration: 0ms !important; transition-delay: 0ms !important; animation: none !important; }
 }
