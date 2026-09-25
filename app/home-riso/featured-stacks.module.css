@@ -58,7 +58,7 @@
 .layer {
   display: block; width: 100%; height: auto;
   transform:
-    translate(calc(var(--k) * var(--dx) * var(--fan) + var(--sx) * var(--depth) * 10px), calc(var(--k) * var(--dy) * var(--fan) + var(--sy) * var(--depth) * 8px))
+    translate(calc(var(--guard, 0px) + var(--k) * var(--dx) * var(--fan) + var(--sx) * var(--depth) * 10px), calc(var(--k) * var(--dy) * var(--fan) + var(--sy) * var(--depth) * 8px))
     rotate(calc(var(--r) + var(--k) * var(--fan) * (var(--dr) - var(--r))))
     scale(calc(var(--fit) * (1 + var(--k) * (var(--ds) - 1))));
   transition: transform 750ms var(--ease-spring);
@@ -81,12 +81,32 @@
    chip ran ~40px past its own stage at almost every width, and on the
    rightmost card that came out past the window. Sizing it in cqw (a share
    of the stage, not of the viewport) holds that share still. The padding
-   goes with it, or the text shrinks inside a fixed pill. */
+   goes with it, or the text shrinks inside a fixed pill.
+
+   Sizing alone was not enough, though: a chip's length is its text, and
+   the longest line in either language still ran past the stage at the
+   three-column widths. --guard is the fix - the distance the chip would
+   overhang the right edge, as a negative number, or zero when it fits.
+   It is folded into .layer's own translate above, so one transform still
+   carries the lean, the fan-out and this. The hover drift is subtracted
+   too, so a chip that fits at rest cannot fan its way out either.
+
+   The outer max() is what keeps the cure from becoming the disease: a
+   chip already at the left edge has nowhere to retreat to, so the shift
+   stops at its own offset rather than pushing it out the other side.
+
+   With the overhang handled, the type can be read from a normal viewing
+   distance rather than sized down to whatever happened not to collide. */
 .chip {
+  --chip-gutter: 10px;
+  --guard: max(
+    calc(-1 * var(--xc) * 1cqw),
+    min(0px, calc(100cqw - var(--xc) * 1cqw - 100% - var(--chip-gutter) - max(0px, var(--dx))))
+  );
   display: inline-block; width: max-content; max-width: none;
   padding: 0.6em 0.95em; border: 1px solid var(--chip-ink); border-radius: 999px; background: #ffffff;
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: clamp(0.54rem, 2.45cqw, 0.72rem); letter-spacing: 0.04em; white-space: nowrap; color: var(--chip-ink);
+  font-size: clamp(0.66rem, 3.1cqw, 0.9rem); letter-spacing: 0.04em; white-space: nowrap; color: var(--chip-ink);
   box-shadow: 0 10px 18px -12px rgba(34, 34, 34, 0.35);
 }
 
