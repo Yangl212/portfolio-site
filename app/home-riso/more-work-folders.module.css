@@ -242,3 +242,21 @@
   .folder, .sheet, .fan img { transition: none; }
   .folder:hover, .folder:focus-visible { transform: none; }
 }
+
+/* --- widgets: charts cut out of the product, at two depths --- */
+/* Three different shapes, kept in two places. The ring (1) is behind
+   the cover (z 1) and comes out from behind it, up and a little left;
+   the chart (2) and the flow (3) are in the folder's front pocket - in
+   front of the cover (z 3) but below the fold, so the front hides them
+   at rest - and rise out of it, the chart high over the top, the flow
+   out to the right. No piece changes depth on hover, so each goes back
+   exactly the way it came instead of dropping behind the cover
+   mid-flight. The ring's throw stays short on the left: this folder
+   heads its row, and further would leave the page. */
+.widgets img { transform-origin: 50% 60%; }
+.widgets img:nth-child(1) { left: 22%; top: 16%; width: 34%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; }
+.widgets img:nth-child(2) { left: 24%; top: 50%; width: 52%; z-index: 3; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 90ms; transition-duration: 820ms; }
+.widgets img:nth-child(3) { left: 52%; top: 52%; width: 32%; z-index: 3; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 45ms; transition-duration: 880ms; }
+.folder:hover .widgets img:nth-child(1), .folder:focus-visible .widgets img:nth-child(1) { --x: -50%; --y: -150%; --r: -10deg; }
+.folder:hover .widgets img:nth-child(2), .folder:focus-visible .widgets img:nth-child(2) { --x: 12%; --y: -200%; --r: 5deg; }
+.folder:hover .widgets img:nth-child(3), .folder:focus-visible .widgets img:nth-child(3) { --x: 60%; --y: -130%; --r: 12deg; }
