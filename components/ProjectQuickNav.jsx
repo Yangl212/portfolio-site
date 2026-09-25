@@ -72,6 +72,14 @@ const projectSections = {
     ["spreads", { en: "Spreads", zh: "内页" }],
     ["reflection", { en: "Reflection", zh: "反思" }]
   ],
+  bubu: [
+    ["problem", { en: "Problem", zh: "问题" }],
+    ["bet", { en: "The bet", zh: "判断" }],
+    ["match", { en: "Matching", zh: "匹配" }],
+    ["receipt", { en: "Daily loop", zh: "每日循环" }],
+    ["report", { en: "Weekly report", zh: "每周回顾" }],
+    ["next", { en: "Where it stands", zh: "进展" }]
+  ],
   suglar: [
     ["product", { en: "Product", zh: "成品" }],
     ["idea", { en: "Idea", zh: "想法" }],
