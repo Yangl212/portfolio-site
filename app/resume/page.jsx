@@ -1,9 +1,17 @@
 import { ResumeSheet } from "./ResumeSheet"
+import { shareCard } from "../../lib/share"
 
 export const metadata = {
   title: "Resume",
   description:
-    "Lele Yang's resume: UI/UX design work at VortexNet, case studies in fintech and AI, and an MFA at Parsons."
+    "Lele Yang's resume: UI/UX design work at VortexNet, case studies in fintech and AI, and an MFA at Parsons.",
+  ...shareCard({
+    title: "Resume",
+    description:
+      "Lele Yang's resume: UI/UX design work at VortexNet, case studies in fintech and AI, and an MFA at Parsons.",
+    image: "/og/resume.jpg",
+    alt: "Lele Yang's resume"
+  })
 }
 
 const education = [

@@ -4,13 +4,20 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "Graveyard",
   description:
-    "An interactive archive that visualizes how censored language adapts, survives, and carries cultural memory."
+    "An interactive archive that visualizes how censored language adapts, survives, and carries cultural memory.",
+  ...projectShareCard("graveyard", {
+    title: "Graveyard",
+    description:
+      "An interactive archive that visualizes how censored language adapts, survives, and carries cultural memory.",
+    alt: "Graveyard: browser windows laid out on a laptop"
+  })
 }
 
 const prototypeUrl = "https://graveyard.framer.website/?editSite"

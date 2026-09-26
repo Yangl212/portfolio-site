@@ -4,6 +4,7 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 import CaseVideo from "./CaseVideo"
 import { PrototypePreview } from "./PrototypePreview"
 import { SuggestionCard } from "./SuggestionCard"
@@ -12,7 +13,13 @@ import styles from "./page.module.css"
 export const metadata = {
   title: "AI Calendar",
   description:
-    "An AI-assisted Calendar concept tested with simulated data. Participants understood the scheduling actions, while four returned to the source email to verify the AI's interpretation."
+    "An AI-assisted Calendar concept tested with simulated data. Participants understood the scheduling actions, while four returned to the source email to verify the AI's interpretation.",
+  ...projectShareCard("cleared", {
+    title: "AI Calendar",
+    description:
+      "An AI-assisted Calendar concept tested with simulated data. Participants understood the scheduling actions, while four returned to the source email to verify the AI's interpretation.",
+    alt: "AI Calendar open on a laptop"
+  })
 }
 
 const prototypeUrl = "/cleared/calendar-assistant-prototype.html?v=20260918-review"

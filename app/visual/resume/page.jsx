@@ -1,10 +1,18 @@
 import { ResumeSheet } from "../../resume/ResumeSheet"
+import { shareCard } from "../../../lib/share"
 
 export const metadata = {
   title: "Resume",
   description:
     "Lele Yang's resume: visual and brand design work at VortexNet, TAROO and the Alcohol Directory zine, and an MFA at Parsons.",
-  alternates: { canonical: "/resume" }
+  alternates: { canonical: "/resume" },
+  ...shareCard({
+    title: "Resume",
+    description:
+      "Lele Yang's resume: visual and brand design work at VortexNet, TAROO and the Alcohol Directory zine, and an MFA at Parsons.",
+    image: "/og/resume.jpg",
+    alt: "Lele Yang's resume"
+  })
 }
 
 const education = [

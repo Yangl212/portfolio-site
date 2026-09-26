@@ -1,4 +1,5 @@
 import HomeRisoPage from "../home-riso/page"
+import { shareCard } from "../../lib/share"
 
 /* Same riso-print home page as "/" - the pulled name, the folder-style
    More Work, all of it - entered from the visual track instead. Only the
@@ -12,7 +13,14 @@ export const metadata = {
   title: { absolute: "Lele Yang — Visual & Brand Designer" },
   description:
     "Visual and brand design across identity, digital, and visual systems: a tarot brand, a candy board game, and an editorial zine.",
-  alternates: { canonical: "/visual" }
+  alternates: { canonical: "/visual" },
+  ...shareCard({
+    title: "Lele Yang — Visual & Brand Designer",
+    description:
+      "Visual and brand design across identity, digital, and visual systems: a tarot brand, a candy board game, and an editorial zine.",
+    image: "/og/home-visual.jpg",
+    alt: "Lele Yang, visual and brand designer, with three case-study covers"
+  })
 }
 
 export default function VisualPage() {

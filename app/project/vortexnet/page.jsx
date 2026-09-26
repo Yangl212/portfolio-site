@@ -4,6 +4,7 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 import ScreenComparison from "./ScreenComparison"
 import styles from "./page.module.css"
 
@@ -13,7 +14,13 @@ import styles from "./page.module.css"
 // usage analytics.
 export const metadata = {
   title: "VortexNet: Finance Dashboard",
-  description: "Information hierarchy and consolidation for an internal finance dashboard at a 30-person company. Today's overview and its task-based navigation shipped during the internship; in testing with 10 colleagues, finding the day's work dropped from 20–30 seconds to about 8."
+  description: "Information hierarchy and consolidation for an internal finance dashboard at a 30-person company. Today's overview and its task-based navigation shipped during the internship; in testing with 10 colleagues, finding the day's work dropped from 20–30 seconds to about 8.",
+  ...projectShareCard("vortexnet", {
+    title: "VortexNet: Finance Dashboard",
+    description:
+      "Information hierarchy and consolidation for an internal finance dashboard at a 30-person company. Today's overview and its task-based navigation shipped during the internship; in testing with 10 colleagues, finding the day's work dropped from 20–30 seconds to about 8.",
+    alt: "The VortexNet finance dashboard on a laptop"
+  })
 }
 
 const media = (name) => "/vortexnet/media/" + name + ".webp"

@@ -5,6 +5,7 @@ import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 
 import { HueWheel } from "./HueWheel"
 import { WordmarkAnatomy } from "./WordmarkAnatomy"
@@ -14,7 +15,13 @@ import styles from "./page.module.css"
 export const metadata = {
   title: "TAROO",
   description:
-    "A tarot brand for people drawn to good design rather than fortune telling: 22 Major Arcana cards, packaging, and the visual system behind them."
+    "A tarot brand for people drawn to good design rather than fortune telling: 22 Major Arcana cards, packaging, and the visual system behind them.",
+  ...projectShareCard("taroo", {
+    title: "TAROO",
+    description:
+      "A tarot brand for people drawn to good design rather than fortune telling: 22 Major Arcana cards, packaging, and the visual system behind them.",
+    alt: "TAROO: the wordmark and a fan of tarot cards"
+  })
 }
 
 const img = (hash) => `/framer-assets/images/${hash}`

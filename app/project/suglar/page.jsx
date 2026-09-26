@@ -5,6 +5,7 @@ import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 
 import { ColorBoard } from "./ColorBoard"
 import styles from "./page.module.css"
@@ -12,7 +13,13 @@ import styles from "./page.module.css"
 export const metadata = {
   title: "Suglar",
   description:
-    "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy."
+    "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy.",
+  ...projectShareCard("suglar", {
+    title: "Suglar",
+    description:
+      "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy.",
+    alt: "Suglar: the board game cover, in candy colours"
+  })
 }
 
 const img = (hash, ext = "png") => `/framer-assets/images/${hash}.${ext}`

@@ -1,10 +1,18 @@
 import { AboutSheet, CIRCLE, CIRCLE_ROUND, CYCLE, HAND_B, HL, HL_LONG, UNDERLINE } from "../../about/AboutSheet"
+import { shareCard } from "../../../lib/share"
 
 export const metadata = {
   title: "About",
   description:
     "Lele Yang on beautiful things, the game projects that never shipped, Last Message and Bubu, and what AI and code changed about the work.",
-  alternates: { canonical: "/about" }
+  alternates: { canonical: "/about" },
+  ...shareCard({
+    title: "About",
+    description:
+      "Lele Yang on beautiful things, the game projects that never shipped, Last Message and Bubu, and what AI and code changed about the work.",
+    image: "/og/about-visual.jpg",
+    alt: "About Lele Yang"
+  })
 }
 
 /*

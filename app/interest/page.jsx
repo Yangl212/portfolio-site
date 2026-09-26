@@ -1,13 +1,21 @@
 import { SiteFooter } from "../../components/SiteFooter"
 import { SiteHeader } from "../../components/SiteHeader"
 import { pageBase } from "../../lib/projects"
+import { shareCard } from "../../lib/share"
 
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "Interest",
   description:
-    "Zines, illustration, and photography from travels in Japan, Thailand, the UK, and beyond - personal work outside client projects."
+    "Zines, illustration, and photography from travels in Japan, Thailand, the UK, and beyond - personal work outside client projects.",
+  ...shareCard({
+    title: "Interest",
+    description:
+      "Zines, illustration, and photography from travels in Japan, Thailand, the UK, and beyond - personal work outside client projects.",
+    image: "/og/interest.jpg",
+    alt: "Lele Yang's personal work"
+  })
 }
 
 const travelPhotos = [

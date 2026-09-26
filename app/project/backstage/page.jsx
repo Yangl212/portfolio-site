@@ -6,12 +6,19 @@ import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "Backstage",
-  description: "Helping people turn shared interests and free time into real-life plans."
+  description: "Helping people turn shared interests and free time into real-life plans.",
+  ...projectShareCard("backstage", {
+    title: "Backstage",
+    description:
+      "Helping people turn shared interests and free time into real-life plans.",
+    alt: "Backstage: the welcome screen of a social support system"
+  })
 }
 
 const prototypeUrl = "https://sagbackstage.framer.website/?editSite"

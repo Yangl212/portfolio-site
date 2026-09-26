@@ -1,9 +1,17 @@
 import { AboutSheet, CIRCLE, CIRCLE_ROUND, CYCLE, HAND_B, HL, HL_LONG, UNDERLINE } from "./AboutSheet"
+import { shareCard } from "../../lib/share"
 
 export const metadata = {
   title: "About",
   description:
-    "Lele Yang on beauty and curiosity, researching users, games as a medium, usability testing at Parsons, and what AI and code changed about the work."
+    "Lele Yang on beauty and curiosity, researching users, games as a medium, usability testing at Parsons, and what AI and code changed about the work.",
+  ...shareCard({
+    title: "About",
+    description:
+      "Lele Yang on beauty and curiosity, researching users, games as a medium, usability testing at Parsons, and what AI and code changed about the work.",
+    image: "/og/about.jpg",
+    alt: "About Lele Yang"
+  })
 }
 
 /*

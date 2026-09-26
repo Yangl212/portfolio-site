@@ -4,11 +4,18 @@
    Case-study/essay body prose is still English here until translated;
    only the site chrome (nav, footer, field labels) reads Chinese. */
 import LabPage, { metadata as pageMetadata } from "../../lab/page"
+import { translateCard } from "../../../lib/share"
 
 export const metadata = {
   ...pageMetadata,
-  description: "这里放着我的摄影、视觉练习和一些还在试验中的作品。",
-  alternates: { canonical: "/zh/lab" }
+  alternates: { canonical: "/zh/lab" },
+  ...translateCard(pageMetadata, {
+    title: "实验室",
+    description:
+      "这里放着我的摄影、视觉练习和一些还在试验中的作品。",
+    image: "/og/lab-zh.jpg",
+    alt: "杨乐乐的实验室"
+  })
 }
 
 export default function ZhLabPage() {

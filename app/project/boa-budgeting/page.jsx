@@ -7,13 +7,20 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "BOA: Budgeting Redesign",
   description:
-    "An independent redesign of Bank of America's spending and budgeting flow: trace a total to its transactions, fix categories in bulk, and adjust a budget without restarting setup."
+    "An independent redesign of Bank of America's spending and budgeting flow: trace a total to its transactions, fix categories in bulk, and adjust a budget without restarting setup.",
+  ...projectShareCard("boa-budgeting", {
+    title: "BOA: Budgeting Redesign",
+    description:
+      "An independent redesign of Bank of America's spending and budgeting flow: trace a total to its transactions, fix categories in bulk, and adjust a budget without restarting setup.",
+    alt: "The BOA budgeting redesign on a phone"
+  })
 }
 
 const img = (hash) => `/framer-assets/images/${hash}`

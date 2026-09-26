@@ -154,8 +154,8 @@ const stacks = {
      in the corner. */
   bubu: {
     copy: {
-      en: { when: "2026", role: "Product Design", summary: "A weight-loss app for two: buddies log meals as receipts, race each other to a shared goal, and fill one food journal together.", facets: ["iOS app", "B2C", "Health · Social"] },
-      zh: { when: "2026 年", role: "产品设计", summary: "一款两个人一起用的减脂 App：每餐记成小票，一起朝同一个目标前进，也一起留下食物记录。", facets: ["iOS App", "B2C", "健康 · 社交"] }
+      en: { when: "2026", role: "Product Design", summary: "An iOS app for an eight-week weight-loss challenge. Meals become daily receipts, and seven days of records become a weekly journal shared with a buddy.", facets: ["iOS app", "B2C", "Health · Social"] },
+      zh: { when: "2026 年", role: "产品设计", summary: "一款为八周减脂挑战设计的 iOS App。拍照记下一餐，每天生成小票，每周整理成手账。", facets: ["iOS App", "B2C", "健康 · 社交"] }
     },
     tint: "pink",
     layers: [

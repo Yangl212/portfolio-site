@@ -4,13 +4,20 @@ import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
+import { projectShareCard } from "../../../lib/share"
 import CaseVideo from "../cleared/CaseVideo"
 import styles from "./page.module.css"
 
 export const metadata = {
   title: "Last Message",
   description:
-    "An open-ended detective game with a readable main investigation and an optional, more demanding hidden route. Two of eight players reached the hidden ending in the playtest."
+    "An open-ended detective game with a readable main investigation and an optional, more demanding hidden route. Two of eight players reached the hidden ending in the playtest.",
+  ...projectShareCard("lastmessage", {
+    title: "Last Message",
+    description:
+      "An open-ended detective game with a readable main investigation and an optional, more demanding hidden route. Two of eight players reached the hidden ending in the playtest.",
+    alt: "Last Message: a chat with an AI suspect over a glitched terminal"
+  })
 }
 
 const img = (hash) => "/framer-assets/images/" + hash

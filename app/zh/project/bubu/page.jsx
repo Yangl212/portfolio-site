@@ -2,12 +2,15 @@
    See lib/locale.js for why this lives as a sibling file instead of a
    [locale] dynamic segment: it keeps every existing English URL untouched. */
 import Page, { metadata as projectMetadata } from "../../../project/bubu/page"
+import { translateCard } from "../../../../lib/share"
 
 export const metadata = {
   ...projectMetadata,
-  description:
-    "一款两个人一起用的减脂 App：每餐记成一张小票，两个人朝同一个目标前进，也一起留下食物记录。",
-  alternates: { canonical: "/zh/project/bubu" }
+  alternates: { canonical: "/zh/project/bubu" },
+  ...translateCard(projectMetadata, {
+    description:
+      "一款为八周减脂挑战设计的 iOS App。拍照记下一餐，每天生成一张小票，每周整理成手账；可以和搭子一起，也可以独自完成。"
+  })
 }
 
 export default function ZhProjectPage() {
