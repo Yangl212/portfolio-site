@@ -5,10 +5,8 @@ import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 import { projectShareCard } from "../../../lib/share"
-import CaseVideo from "../cleared/CaseVideo"
 
 import { iconFamilies, icons } from "./icons"
-import { Journal } from "./Journal"
 import { Loop } from "./Loop"
 import styles from "./page.module.css"
 
@@ -39,29 +37,28 @@ export const metadata = {
 const screen = (name) => `/bubu/screens/${name}.webp`
 const motion = (name) => `/bubu/motion/${name}`
 
-/* The usage recordings, one per beat, the way the Last Message page runs
-   its loops beside the writing. Until a recording is in, its stage shows
-   the built screens instead, so the page reads as finished either way.
-   To add one: put <name>-loop.mp4 and <name>-poster.webp in
-   /public/bubu/media and flip the name to true. Recordings are portrait,
-   at the phone's own aspect. */
-const recordings = { day: false, week: false, finish: false, solo: false, matching: false }
-const recording = (name) =>
-  recordings[name] ? { src: `/bubu/media/${name}-loop.mp4`, poster: `/bubu/media/${name}-poster.webp` } : null
+/* The usage recordings, one per beat, run beside the writing the way the
+   Last Message page runs its loops. Each is recorded twice, off the
+   English build and the Chinese one, and the reader gets the one in their
+   own language - the interface in the video should say what the page
+   around it says. A beat with no recording (null) shows the built screens
+   instead, so the layout is the same either way.
 
-/* The build ships in both languages. Where a screen exists twice the page
-   quietly shows the reader their own; it is not made a point of. */
-const inLanguage = {
-  home: { en: screen("en-home"), zh: screen("home-duo") },
-  challenge: { en: screen("en-challenge"), zh: screen("challenge-progress") },
-  cover: { en: screen("en-journal-cover"), zh: screen("journal-cover") },
-  title: { en: screen("en-journal-title"), zh: screen("journal-title") },
-  mine: { en: screen("en-journal-mine"), zh: screen("journal-mine") },
-  theirs: { en: screen("en-journal-theirs"), zh: screen("journal-theirs") },
-  spread: { en: screen("en-journal-spread"), zh: screen("journal-spread") }
+   Files are /public/bubu/media/<name>-<locale>.mp4 and a .webp poster cut
+   from the same recording, portrait at the phone's own aspect. */
+const recordings = {
+  mode: ["en", "zh"],
+  journal: ["en", "zh"],
+  race: ["en", "zh"],
+  solo: null,
+  matching: null
 }
-
-const pick = (key, locale) => inLanguage[key][locale] || inLanguage[key].en
+const recording = (name, locale) => {
+  const langs = recordings[name]
+  if (!langs) return null
+  const lang = langs.includes(locale) ? locale : langs[0]
+  return { src: `/bubu/media/${name}-${lang}.mp4`, poster: `/bubu/media/${name}-${lang}.webp` }
+}
 
 /* The full build, in the order a first-time user meets it. Captions are
    in `copy.screens.rail`, one per entry. */
@@ -149,42 +146,26 @@ const copy = {
     how: {
       kicker: "02 / How it works",
       heading: "Take a photo and the app makes the record.",
-      lead: "There is no form to fill in. After you photograph a plate, the app removes the background and adds the meal to three views: a daily receipt, a weekly journal spread and the challenge track.",
+      lead: "There is no form to fill in. You choose whether to run the challenge alone or with a buddy, photograph each plate, and the app does the rest: it removes the background and files the meal into the day's receipt, the week's journal and the challenge track.",
       beats: [
         {
-          label: "The day",
-          title: "At 23:59, the day's receipt locks.",
-          body: "Yesterday cannot be edited to look better after the fact, so the receipt your buddy sees reflects what you actually logged. It can also answer a simple question: what did someone on the same plan really eat today?",
-          demo: "Logging a meal and seeing the day close as a receipt",
-          alts: [
-            "Both players' receipts for the day, printed side by side on a black ground",
-            "One receipt in full: each meal with its time, the exercise line, and the day's progress"
-          ]
+          label: "Start",
+          title: "Solo, or with a buddy.",
+          body: "The first thing the app asks is how you will log. On your own, you get the same home, receipts and journal with one runner on the track. With a buddy, you are matched or invite someone, and the track has two. The choice can be changed later in Settings, so it is not a commitment.",
+          demo: "Choosing between logging solo and logging with a buddy"
         },
         {
-          label: "The week",
+          label: "The day, the week",
           title: "Seven receipts become a weekly journal.",
-          body: "The journal brings both people's records into one place. Its pages move from the cover and title page to each person's week. Open it flat to compare both weeks across the spread.",
-          demo: "Turning the journal from the cover to the open spread"
+          body: "The journal brings both people's records into one place: open it and your week and your buddy's lie side by side, each day a cluster of cut-out meals. Any day opens into its receipts. At 23:59 they lock, so yesterday cannot be edited to look better after the fact, and what your buddy sees is what you actually logged.",
+          demo: "Opening the weekly journal, then a day's locked receipts"
         },
         {
-          label: "The finish",
+          label: "The race",
           title: "Both people follow the same timeline.",
-          body: "The home screen shows both people on one track, while the challenge page keeps the rules and progress count. On the final date, the app shows a celebration screen and a shareable receipt.",
-          demo: "The challenge page, and reaching the goal on the last day",
-          alts: [
-            "The challenge page: both players' progress against the rules",
-            "The goal-reached screen: a drawn figure with arms up, and the final numbers"
-          ]
+          body: "The challenge page counts medals for both of you - first step, perfect week, halfway - and keeps the rules a tap away: log every day, and three days in a row without a record ends the challenge for both. The home screen shows you both on one track, counting down to the same final date.",
+          demo: "The challenge page's medals and rules, then both runners on the home track"
         }
-      ],
-      journalStepsLabel: "Turn the journal",
-      journalPages: [
-        ["Cover", "The journal, closed on the desk"],
-        ["Title page", "My Diet Diary, and the two of you drawn on the flyleaf"],
-        ["My week", "Seven days, each with what I ate and what I did"],
-        ["Their week", "The same page, kept by the other person"],
-        ["Open flat", "Both weeks across the gutter, with the week's loss clipped to each"]
       ]
     },
     testing: {
@@ -381,42 +362,26 @@ const copy = {
     how: {
       kicker: "02 / 它怎么运作",
       heading: "拍下这一餐，App 会整理好记录。",
-      lead: "不用填写表格。拍下餐盘后，App 会去掉照片背景，并把这顿饭放进三个地方：当天的小票、每周的手账，以及整场挑战的进度跑道。",
+      lead: "不用填写表格。先选一个人记还是和搭子一起，之后每餐拍一下，剩下的交给 App：它会去掉照片背景，把这顿饭放进当天的小票、每周的手账，以及整场挑战的进度跑道。",
       beats: [
         {
-          label: "一天",
-          title: "23:59，当天的小票会锁定。",
-          body: "锁定后，昨天的记录不能再补改。搭子看到的是当天真正留下的内容，也能从中知道：一个执行相似计划的人今天实际吃了什么。",
-          demo: "记录一餐，并在当天结束时生成小票",
-          alts: [
-            "两个人当天的小票，并排印在黑色底上",
-            "一张完整的小票：每一餐带时间、运动那一行，以及这一天的进度"
-          ]
+          label: "开始",
+          title: "一个人，或者和搭子一起。",
+          body: "App 问的第一件事是你打算怎么记录。一个人用，首页、小票和手账都一样，跑道上只有你；和搭子一起，就去匹配或者邀请一个人，跑道上变成两个。之后可以在设置里改，所以这一步不是定下来就改不了的决定。",
+          demo: "在一个人记录和与搭子一起记录之间选择"
         },
         {
-          label: "一周",
+          label: "一天，一周",
           title: "七张小票组成一周手账。",
-          body: "手账把两个人的记录放到了一起。从封面和扉页继续翻，会依次看到我的一周和 TA 的一周；摊开后，两边的内容可以直接对照。",
-          demo: "把手账从封面翻到摊开"
+          body: "手账把两个人的记录放到了一起：翻开是我的一周和 TA 的一周并排，每天是一小撮抠好图的饭。点进任何一天就是那天的小票。23:59 之后小票会锁定，昨天的记录不能再补改，搭子看到的是当天真正留下的内容。",
+          demo: "翻开一周手账，再点进某一天锁定的小票"
         },
         {
-          label: "终点",
+          label: "比赛",
           title: "两个人按照同一段时间推进。",
-          body: "首页用同一条跑道显示双方进度，挑战页保留规则和计数。到达结束日期后，App 会显示庆祝页面，并生成一张可以分享的小票。",
-          demo: "挑战页，以及最后一天达成目标",
-          alts: [
-            "挑战页：两个人的进度，对照着规则",
-            "目标达成页：一个举着手的小人，和最终的数字"
-          ]
+          body: "挑战页替你们俩数勋章：第一步、完美一周、过半……规则也随时点得开：每天都要记，连续三天没有记录，两个人的挑战会一起结束。首页用同一条跑道显示双方进度，倒数到同一个结束日期。",
+          demo: "挑战页的勋章和规则，然后回到首页的跑道"
         }
-      ],
-      journalStepsLabel: "翻这本手账",
-      journalPages: [
-        ["封面", "合着放在桌上的手账"],
-        ["扉页", "我的减脂日记，还有画在衬页上的你们俩"],
-        ["我的一周", "七天，每天记着吃了什么、做了什么"],
-        ["TA 的一周", "同一页，由对方记"],
-        ["摊平", "两周横跨订口，各自夹着这一周掉了多少"]
       ]
     },
     testing: {
@@ -606,18 +571,49 @@ function MatchingFigure({ legend }) {
 
 /*
  * One stage per beat. When the recording for it is in, the stage runs it
- * the way Last Message's page runs its loops - silent, phone-shaped, the
- * image its own play control; until then it holds the built screens, so
- * a reader sees the product either way and the layout does not move when
- * the video lands.
+ * inside the phone - silent, looping, playing only while it is on screen;
+ * until then it holds the built screens, so a reader sees the product
+ * either way and the layout does not move when the video lands.
  */
-function Stage({ name, label, children }) {
-  const clip = recording(name)
+function Stage({ name, label, locale, children }) {
+  const clip = recording(name, locale)
   return (
     <div className={styles.stage} data-recording={clip ? "" : undefined}>
       {clip
-        ? <CaseVideo className={styles.stageVideo} src={clip.src} poster={clip.poster} width={804} height={1748} label={label} />
+        ? (
+          <IPhone>
+            {/* Loop rather than CaseVideo: it plays while it is on screen
+                and stops when it is not, and there is nothing to click -
+                a phone that pauses when you touch it reads as a broken
+                phone, not a control. */}
+            <Loop className={styles.screenVideo} src={clip.src} poster={clip.poster} alt={label} />
+          </IPhone>
+        )
         : children}
+    </div>
+  )
+}
+
+/*
+ * An iPhone 17, drawn rather than photographed: the recordings are off the
+ * iPhone 17 simulator, so the body around them is that phone's - a 402 x
+ * 874 screen, its corner radius, the thin black border inside a flat
+ * aluminium band, the Action button and volume keys on the left and the
+ * side button and Camera Control on the right. The Dynamic Island is not
+ * drawn: it is already in the recording, where iOS put it.
+ *
+ * Everything is sized off the phone's own width (cqw), so the proportions
+ * hold at whatever size the column gives it.
+ */
+function IPhone({ children }) {
+  return (
+    <div className={styles.iphone}>
+      <span className={`${styles.iphoneKey} ${styles.keyAction}`} aria-hidden="true" />
+      <span className={`${styles.iphoneKey} ${styles.keyVolUp}`} aria-hidden="true" />
+      <span className={`${styles.iphoneKey} ${styles.keyVolDown}`} aria-hidden="true" />
+      <span className={`${styles.iphoneKey} ${styles.keySide}`} aria-hidden="true" />
+      <span className={`${styles.iphoneKey} ${styles.keyCamera}`} aria-hidden="true" />
+      <div className={styles.iphoneScreen}>{children}</div>
     </div>
   )
 }
@@ -649,12 +645,7 @@ function Glyph({ icon, size }) {
 
 export default function BubuPage({ track = "uiux", locale = "en" }) {
   const t = copy[locale] || copy.en
-  const journalPages = ["cover", "title", "mine", "theirs", "spread"].map((key, index) => ({
-    src: pick(key, locale),
-    step: t.how.journalPages[index][0],
-    alt: t.how.journalPages[index][1]
-  }))
-  const [day, week, finish] = t.how.beats
+  const [start, week, race] = t.how.beats
   const [solo, matching] = t.testing.findings
 
   return (
@@ -730,44 +721,16 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               <p className={styles.sectionLead}>{t.how.lead}</p>
             </div>
 
-            <article className={styles.beat}>
-              <div className={styles.beatCopy}>
-                <p className={styles.microLabel}>{day.label}</p>
-                <h3>{day.title}</h3>
-                <p>{day.body}</p>
-              </div>
-              <Stage name="day" label={day.demo}>
-                <div className={styles.shots}>
-                  <img src={screen("receipt-duo")} alt={day.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
-                  <img src={screen("receipt-mine")} alt={day.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
+            {[["mode", start], ["journal", week], ["race", race]].map(([name, beat]) => (
+              <article className={styles.beat} key={name}>
+                <div className={styles.beatCopy}>
+                  <p className={styles.microLabel}>{beat.label}</p>
+                  <h3>{beat.title}</h3>
+                  <p>{beat.body}</p>
                 </div>
-              </Stage>
-            </article>
-
-            <article className={styles.beat}>
-              <div className={styles.beatCopy}>
-                <p className={styles.microLabel}>{week.label}</p>
-                <h3>{week.title}</h3>
-                <p>{week.body}</p>
-              </div>
-              <Stage name="week" label={week.demo}>
-                <Journal pages={journalPages} label={t.how.journalStepsLabel} />
-              </Stage>
-            </article>
-
-            <article className={styles.beat}>
-              <div className={styles.beatCopy}>
-                <p className={styles.microLabel}>{finish.label}</p>
-                <h3>{finish.title}</h3>
-                <p>{finish.body}</p>
-              </div>
-              <Stage name="finish" label={finish.demo}>
-                <div className={styles.shots}>
-                  <img src={pick("challenge", locale)} alt={finish.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
-                  <img src={screen("goal-reached")} alt={finish.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
-                </div>
-              </Stage>
-            </article>
+                <Stage name={name} label={beat.demo} locale={locale} />
+              </article>
+            ))}
           </section>
 
           <section id="testing" className={styles.caseSection}>
@@ -783,7 +746,7 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                 <div><dt>{t.testing.saidLabel}</dt><dd>{solo.said}</dd></div>
                 <div><dt>{t.testing.changedLabel}</dt><dd>{solo.changed}</dd></div>
               </dl>
-              <Stage name="solo" label={solo.demo}>
+              <Stage name="solo" label={solo.demo} locale={locale}>
                 <div className={styles.shots} data-count="3">
                   <img src={screen("home-solo")} alt={solo.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
                   <img src={screen("journal-solo")} alt={solo.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
@@ -798,7 +761,7 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                 <div><dt>{t.testing.saidLabel}</dt><dd>{matching.said}</dd></div>
                 <div><dt>{t.testing.changedLabel}</dt><dd>{matching.changed}</dd></div>
               </dl>
-              <Stage name="matching" label={matching.demo}>
+              <Stage name="matching" label={matching.demo} locale={locale}>
                 <div className={styles.shots} data-count="figure">
                   <div className={styles.figureCell}>
                     <p className={styles.microLabel}>{t.testing.figureLabel}</p>

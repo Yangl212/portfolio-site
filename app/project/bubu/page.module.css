@@ -84,7 +84,7 @@
 /* A screenshot is the artwork here, so it gets the device's corner and a
    hairline instead of a card: no shadow, nothing floating, the same rule
    the app itself follows. */
-.page :is(.shots, .detail, .railItem, .journalStage) img {
+.page :is(.shots, .detail, .railItem) img {
   display: block; width: 100%; height: auto;
   border-radius: clamp(14px, 2.6vw, 28px);
   border: 1px solid var(--divider);
@@ -103,8 +103,49 @@
    holds the built screens; when one lands it holds the phone-shaped loop
    at the same place, so nothing around it moves. */
 .stage { display: grid; place-items: center; padding: clamp(20px, 3vw, 40px); background: var(--app-paper); }
-.stageVideo { width: min(100%, 320px); border-radius: clamp(20px, 4vw, 34px); border: 1px solid var(--divider); background: var(--app-paper); }
-.stageVideo video { background: var(--app-paper); }
+
+/* A recording needs no panel under it: the phone is the frame. Without
+   the paper block and its padding the beat is only as tall as the phone,
+   which is most of the room this section used to take. */
+.stage[data-recording] { padding: 0; background: none; justify-items: center; }
+
+/* ---------- the iPhone 17 ---------- */
+/* Proportions off the real phone, as shares of its own width (--w): the
+   black border ~3.4% a side, the aluminium band ~1%, and the screen's
+   corner 13.7% of the screen's width - 55 of 402 points - with the body's
+   corner the screen's plus the border, so the two curves stay concentric.
+   A variable rather than cqw: a container cannot measure itself, and the
+   phone's own padding and radius are exactly what need its width. */
+.iphone {
+  --w: clamp(220px, 21vw, 268px);
+  --band: #d6d6d9;
+  position: relative;
+  width: var(--w);
+  padding: calc(var(--w) * 0.034);
+  border-radius: calc(var(--w) * 0.162);
+  background: #0b0b0c;
+  box-shadow:
+    0 0 0 calc(var(--w) * 0.011) var(--band),
+    0 0 0 calc(var(--w) * 0.011 + 1px) rgba(34, 34, 34, 0.26),
+    0 30px 44px -30px rgba(34, 34, 34, 0.45);
+}
+.iphoneScreen { position: relative; border-radius: calc(var(--w) * 0.128); overflow: hidden; background: #ffffff; }
+/* The recording fills the screen at its own aspect - 402 x 874 - so the
+   phone has its height before a frame of it has loaded. */
+.screenVideo { display: block; width: 100%; height: auto; aspect-ratio: 804 / 1748; object-fit: cover; background: #ffffff; }
+
+/* The keys stand proud of the band, in the band's own metal. */
+.iphoneKey {
+  position: absolute; width: calc(var(--w) * 0.012); border-radius: calc(var(--w) * 0.01);
+  background: var(--band); box-shadow: inset 0 0 0 1px rgba(34, 34, 34, 0.18);
+}
+.keyAction, .keyVolUp, .keyVolDown { left: calc(var(--w) * -0.021); }
+.keySide, .keyCamera { right: calc(var(--w) * -0.021); }
+.keyAction { top: 18%; height: 6%; }
+.keyVolUp { top: 27%; height: 10%; }
+.keyVolDown { top: 39%; height: 10%; }
+.keySide { top: 28%; height: 15%; }
+.keyCamera { top: 62%; height: 8%; }
 
 .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); width: 100%; max-width: 560px; align-items: start; }
 .shots[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 720px; }
@@ -155,19 +196,6 @@
 .castName { font-size: 1rem; font-weight: 500; }
 .castWhere { font-size: .8125rem; line-height: 1.55; color: var(--muted); }
 
-/* One frame that changes, rather than five phones in a row: the journal
-   is one object in five states, and cross-fading is the closest a page
-   gets to turning a page. */
-.journal { display: flex; flex-direction: column; gap: 18px; }
-.journalStage { position: relative; width: min(100%, 320px); aspect-ratio: 804 / 1748; margin-inline: auto; }
-.journalPage { position: absolute; inset: 0; opacity: 0; transition: opacity 420ms ease; }
-.journalPage[data-on] { opacity: 1; }
-.journalSteps { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-.journalStep { display: inline-flex; align-items: baseline; gap: 7px; padding: 9px 13px; border: 1px solid var(--divider); background: transparent; font: inherit; font-size: .8125rem; color: var(--muted); cursor: pointer; }
-.journalStep:hover { border-color: var(--text); color: var(--text); }
-.journalStep[data-on] { border-color: var(--text); background: var(--text); color: var(--inverse); }
-.journalStepNo { font-variant-numeric: tabular-nums; letter-spacing: .06em; opacity: .7; }
-
 /* ---------- 06 every screen ---------- */
 /* The whole build in one gesture. Snapping keeps a screen squared up in
    the viewport when the drag stops, and the scrollbar is left visible so
@@ -212,6 +240,9 @@
 
 @media (min-width: 900px) {
   .beat, .finding { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: 48px; padding-top: 40px; }
+  /* A beat holding a phone gives it a column its own width and centres it
+     in what is left, rather than floating it in a wide empty panel. */
+  .beat:has(.iphone) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
 @media (min-width: 1100px) {
@@ -242,7 +273,7 @@
   .stage { padding: 16px; }
   .shots[data-count="3"] { gap: 8px; }
   .shots[data-count="figure"] { grid-template-columns: 1fr; }
-  .detail img, .journalStage { width: 100%; }
+  .detail img { width: 100%; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
 }
