@@ -25,8 +25,8 @@ export const metadata = {
 
 /*
  * The case study reads in the order the product makes sense: why it
- * exists, how it works, what two conversations changed about it, what it
- * looks like, every screen, and what is left before the App Store. The
+ * exists, how it works, what two conversations changed about it, the icons
+ * and the cast, every screen, and what is left before the App Store. The
  * screens are the artwork throughout; the reasoning is kept to the two
  * sections that carry a decision.
  *
@@ -82,10 +82,6 @@ const rail = [
   screen("settings"),
   screen("rename")
 ]
-
-/* Sampled out of the build rather than written down first: the app is
-   four surfaces and one ink. Names are in `copy.look.swatches`. */
-const palette = ["#F6F6F4", "#C8C5AD", "#F6F5EE", "#0E0E0E"]
 
 /* Five loops, one pen. Where each one runs is in `copy.cast.clips`.
    All five are black line work on an alpha channel, so the paper behind
@@ -213,31 +209,8 @@ const copy = {
       },
       note: "Both conversations were about the prototype, before any real pair had run a challenge."
     },
-    look: {
-      kicker: "04 / The look",
-      heading: "The interface is built from paper, thin rules and cut-out food photos.",
-      lead: "Every screen uses the same flat material language. Elements do not float or cast shadows, and the interface avoids rounded corners.",
-      swatchLabel: "Color and materials",
-      swatches: [
-        ["Paper", "Every screen but the journal and the receipt"],
-        ["Board", "The journal's cover cloth and the desk it lies on"],
-        ["Page", "The journal's own paper, a shade warmer than the app"],
-        ["Ink", "Type, rules, the black key and the receipt ground"]
-      ],
-      typeLabel: "Typography",
-      type: "Geist Mono is used for numbers, labels and timestamps so the receipt data lines up. Noto Sans SC is used for sentences. Handwriting appears only in the drawn illustrations, not as a typeface.",
-      rulesLabel: "Visual rules",
-      rules: [
-        "Cards use thin rules instead of drop shadows or elevation.",
-        "Buttons and containers use right angles rather than rounded corners.",
-        "Meal photos are removed from their backgrounds and placed directly on the paper without white borders.",
-        "Each screen has one filled rectangular button. Receipts invert the palette, using light type on a black ground."
-      ],
-      detailAlt: "Setting the goal: height, current weight, target weight in mono, and the 4, 8 or 12 week choice",
-      detailCaption: "Setting the goal: mono numbers, 4 / 8 / 12 week choices shown as figures, and one filled button."
-    },
     iconset: {
-      kicker: "05 / The icon set",
+      kicker: "04 / The icon set",
       heading: "Thirty-five icons, and not one of them drawn straight.",
       lead: "The interface needed an icon set that belonged to the same hand as the illustrations, without being redrawn every time the app grew. So the icons are not drawn one at a time: they are built from three primitives, and then knocked off true on purpose.",
       partsLabel: "Three primitives",
@@ -264,7 +237,7 @@ const copy = {
       drawNote: "They draw themselves in as the section arrives. Point at one and the rest step back; point at a family below and its icons light up on the sheet."
     },
     cast: {
-      kicker: "06 / The cast",
+      kicker: "05 / The cast",
       heading: "I drew five looping animations in the same line style as the interface.",
       lead: "The same two figures appear throughout the app. They use the same line weight as the dividers and show up when a screen needs to express a human moment, not just another number.",
       clips: [
@@ -277,7 +250,7 @@ const copy = {
       note: "The loops run while they are on screen and stop when they are not."
     },
     screens: {
-      kicker: "07 / Every screen",
+      kicker: "06 / Every screen",
       heading: "All 19 screens, from sign-up to settings.",
       lead: "These screens were captured in an iPhone 17 simulator and follow the order of a first-time experience. Drag the strip to browse them.",
       rail: [
@@ -303,7 +276,7 @@ const copy = {
       ]
     },
     shipping: {
-      kicker: "08 / Shipping it",
+      kicker: "07 / Shipping it",
       heading: "The build is complete. TestFlight and App Store review are next.",
       lead: "The current version runs as an app. The remaining work is user testing, store preparation and review.",
       doneLabel: "Done",
@@ -440,31 +413,8 @@ const copy = {
       },
       note: "两次访谈聊的都是原型，那时还没有任何一对真实的搭子跑完过一场挑战。"
     },
-    look: {
-      kicker: "04 / 视觉",
-      heading: "界面由纸张、细线和抠出的食物照片组成。",
-      lead: "所有页面使用同一套平面材质。界面没有悬浮效果、阴影或圆角。",
-      swatchLabel: "颜色与材质",
-      swatches: [
-        ["纸", "除手账和小票以外的每一屏"],
-        ["板", "手账的封面布，以及它躺着的那张桌面"],
-        ["页", "手账自己的纸，比 app 暖一点"],
-        ["墨", "文字、分隔线、黑色按钮和小票底色"]
-      ],
-      typeLabel: "字体",
-      type: "数字、标签和时间使用 Geist Mono，让小票上的信息保持对齐；句子使用 Noto Sans SC。手写只出现在绘制的插画里，不作为字体使用。",
-      rulesLabel: "视觉规则",
-      rules: [
-        "卡片用细线划分，不使用投影或悬浮层级。",
-        "按钮和容器都使用直角，不做圆角。",
-        "食物照片去掉背景后直接放在纸面上，不加白边。",
-        "每屏只有一个墨色实心矩形按钮。小票会反转配色，在黑底上使用浅色文字。"
-      ],
-      detailAlt: "设定目标：身高、当前体重、目标体重用等宽字，以及 4、8、12 周的选择",
-      detailCaption: "设定目标：等宽数字、直接排列的 4 / 8 / 12 周选项，以及一个墨色实心按钮。"
-    },
     iconset: {
-      kicker: "05 / 图标",
+      kicker: "04 / 图标",
       heading: "35 个图标，没有一笔是直的。",
       lead: "界面需要一套和插画同一只手画出来的图标，又不能每加一个功能就重画一遍。所以这些图标不是一个个画的：它们由三个基本形状搭出来，然后被刻意画歪。",
       partsLabel: "三个基本形状",
@@ -491,7 +441,7 @@ const copy = {
       drawNote: "滚到这里时它们会自己画出来。指向一个，其余的会退到后面去；指向下面的一组，这一组会在纸上亮起来。"
     },
     cast: {
-      kicker: "06 / 这些小人",
+      kicker: "05 / 这些小人",
       heading: "我用界面的线条风格画了五段循环动画。",
       lead: "同样的两个小人会在 App 里反复出现。它们和分隔线使用相同的线条，只在画面需要传达人物状态时出现。",
       clips: [
@@ -504,7 +454,7 @@ const copy = {
       note: "动画只在进入画面时播放，离开就停。"
     },
     screens: {
-      kicker: "07 / 全部界面",
+      kicker: "06 / 全部界面",
       heading: "从注册到设置，共 19 个界面。",
       lead: "这些画面来自 iPhone 17 模拟器，并按照第一次使用的顺序排列。可以横向拖动查看。",
       rail: [
@@ -530,7 +480,7 @@ const copy = {
       ]
     },
     shipping: {
-      kicker: "08 / 上架",
+      kicker: "07 / 上架",
       heading: "开发已经完成，接下来是 TestFlight 和 App Store 审核。",
       lead: "目前的版本可以实际运行。剩下的工作包括用户测试、商店素材准备和送审。",
       doneLabel: "已完成",
@@ -751,47 +701,6 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
             <MatchingModel copy={t.testing.model} />
 
             <p className={styles.sourceNote}>{t.testing.note}</p>
-          </section>
-
-          <section id="look" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.look.kicker}</p>
-              <h2>{t.look.heading}</h2>
-              <p className={styles.sectionLead}>{t.look.lead}</p>
-            </div>
-
-            <div>
-              <p className={styles.microLabel}>{t.look.swatchLabel}</p>
-              <ul className={styles.swatches}>
-                {palette.map((hex, index) => (
-                  <li key={hex}>
-                    <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
-                    <p className={styles.swatchName}>{t.look.swatches[index][0]}</p>
-                    <p className={styles.swatchHex}>{hex}</p>
-                    <p className={styles.swatchUse}>{t.look.swatches[index][1]}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className={styles.lookGrid}>
-              <div>
-                <p className={styles.microLabel}>{t.look.typeLabel}</p>
-                <p className={styles.typeSpec}>0123456789 · MISSED 1 / 3 · 08:05</p>
-                <p>{t.look.type}</p>
-              </div>
-              <div>
-                <p className={styles.microLabel}>{t.look.rulesLabel}</p>
-                <ul className={styles.refusals}>
-                  {t.look.rules.map((rule) => <li key={rule}>{rule}</li>)}
-                </ul>
-              </div>
-            </div>
-
-            <figure className={styles.detail}>
-              <img src={screen("set-goal")} alt={t.look.detailAlt} width="804" height="1748" loading="lazy" decoding="async" />
-              <figcaption>{t.look.detailCaption}</figcaption>
-            </figure>
           </section>
 
           <section id="iconset" className={styles.caseSection}>

@@ -76,7 +76,6 @@ const projectSections = {
     ["why", { en: "Why", zh: "为什么" }],
     ["how", { en: "How it works", zh: "怎么运作" }],
     ["testing", { en: "Testing", zh: "访谈" }],
-    ["look", { en: "The look", zh: "视觉" }],
     ["iconset", { en: "Icons", zh: "图标" }],
     ["cast", { en: "The cast", zh: "小人" }],
     ["screens", { en: "Every screen", zh: "全部界面" }],

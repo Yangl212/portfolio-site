@@ -84,7 +84,7 @@
 /* A screenshot is the artwork here, so it gets the device's corner and a
    hairline instead of a card: no shadow, nothing floating, the same rule
    the app itself follows. */
-.page :is(.detail, .railItem) img {
+.page .railItem img {
   display: block; width: 100%; height: auto;
   border-radius: clamp(14px, 2.6vw, 28px);
   border: 1px solid var(--divider);
@@ -274,30 +274,14 @@
 @keyframes fadeIn { from { opacity: 0; } }
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
-/* ---------- 04 the look ---------- */
-.swatches { margin-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.swatches li { display: flex; flex-direction: column; gap: 8px; }
-.swatch { height: 96px; border: 1px solid var(--divider); }
-.swatchName { font-size: 1rem; font-weight: 500; }
-.swatchHex { font-size: .8125rem; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
-.swatchUse { font-size: .8125rem; line-height: 1.55; color: var(--muted); }
-
+/* ---------- two columns and a dashed list, as shipping uses them ---------- */
 .lookGrid { display: grid; gap: 32px; }
 .lookGrid > div { display: flex; flex-direction: column; gap: 14px; }
-/* The numbers set the way the app sets them: mono, tabular, spaced out.
-   The app's own face is Geist Mono; this page has the site's mono loaded
-   rather than a second one for one line, so the line shows the treatment
-   and the sentence under it names the face. */
-.typeSpec { font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: clamp(1.1rem, .9rem + .8vw, 1.6rem); letter-spacing: .02em; font-variant-numeric: tabular-nums; padding: 18px 0; border-block: 1px solid var(--divider); }
 .refusals { display: flex; flex-direction: column; gap: 14px; }
 .refusals li { padding-left: 20px; position: relative; font-size: .9375rem; line-height: 1.6; }
 .refusals li::before { content: ""; position: absolute; left: 0; top: .72em; width: 11px; height: 1px; background: var(--text); }
 
-.detail { display: grid; gap: 14px; justify-items: start; }
-.detail img { width: min(100%, 300px); }
-.detail figcaption { max-width: 54ch; font-size: .8125rem; line-height: 1.6; color: var(--muted); }
-
-/* ---------- 04 the cast ---------- */
+/* ---------- 05 the cast ---------- */
 .cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
 .castItem { display: flex; flex-direction: column; gap: 10px; }
 .castLoop { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--app-paper); border: 1px solid var(--divider); }
@@ -339,11 +323,9 @@
 
 @media (min-width: 700px) {
   .rules { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
-  .swatches { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .lookGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
   .cast { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .shipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
-  .detail { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: center; gap: 32px; }
 }
 
 @media (min-width: 900px) {
@@ -383,12 +365,11 @@
      of. */
   .railItem { width: 58vw; }
   .stage { padding: 16px; }
-  .detail img { width: 100%; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
 }
 
-/* ---------- 05 the icon set ---------- */
+/* ---------- 04 the icon set ---------- */
 .primitives { margin-top: 18px; display: grid; gap: 18px; }
 .primitives div { display: grid; gap: 4px; }
 .primitives dt { display: flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 500; }
