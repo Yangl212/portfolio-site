@@ -27,6 +27,11 @@ import styles from "./featured-stacks.module.css"
  * r the resting rotation. dx/dy/dr/ds are the hover move, spin and scale.
  * depth is how far the layer leans with the pointer.
  *
+ * No chip sits lower than about y 70. Below that is the title card's band,
+ * and a chip long enough to overhang the right edge on a narrow stage is
+ * pulled left by its guard (see .chip) - straight under the card. Every
+ * lower chip on the board ends above it.
+ *
  * `copy` and a chip layer's `text` are both `{ en, zh }` - geometry is
  * language-neutral and stays a single value; anything printed is a pair,
  * picked by `locale` at render time.
@@ -95,7 +100,7 @@ const stacks = {
       { kind: "cut", src: "/cleared/phone1.png", x: -1, y: 32, w: 25, r: -7, dx: -26, dy: 14, dr: -13, depth: 1, z: 3 },
       { kind: "shot", src: "/cleared/hifi-suggestion.png", x: 70, y: 4, w: 28, r: 6, dx: 26, dy: -22, dr: 12, depth: 0.9, z: 3 },
       { kind: "chip", text: { en: "Email → calendar suggestion", zh: "邮件 → 日程建议" }, x: 2, y: 6, r: -4, dx: -14, dy: -12, dr: -8, depth: 0.5, z: 4 },
-      { kind: "chip", text: { en: "4 went back to the source email", zh: "4 位回看了邮件原文" }, x: 36, y: 74, r: 3, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
+      { kind: "chip", text: { en: "4 went back to the source email", zh: "4 位回看了邮件原文" }, x: 36, y: 68, r: 3, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   /* Suglar sits in the visual track's Selected Work, and TAROO kept its
@@ -125,7 +130,7 @@ const stacks = {
       { kind: "cut", src: "/Taroo/card3.png", x: 54, y: 26, w: 26, r: 7, dx: 10, dy: 6, dr: 13, depth: 0.8, z: 2 },
       { kind: "cut", src: "/Taroo/card2.png", x: 36, y: 16, w: 28, r: 0, dx: 0, dy: -10, dr: -1, ds: 1.05, depth: 1, z: 3 },
       { kind: "chip", text: { en: "22 Major Arcana · one visual system", zh: "22 张大阿卡纳 · 一套视觉系统" }, x: 2, y: 2, r: -4, dx: -10, dy: -10, dr: -8, depth: 0.5, z: 4 },
-      { kind: "chip", text: { en: "Packaging + card system", zh: "包装 + 卡牌系统" }, x: 44, y: 80, r: 4, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
+      { kind: "chip", text: { en: "Packaging + card system", zh: "包装 + 卡牌系统" }, x: 44, y: 68, r: 4, dx: 12, dy: 12, dr: 7, depth: 0.5, z: 4 }
     ]
   },
   suglar: {
@@ -144,7 +149,7 @@ const stacks = {
       { kind: "cut", src: "/suglar/card3.png", x: 80, y: 20, w: 16, r: 13, dx: 16, dy: 10, dr: 18, depth: 0.6, z: 1 },
       { kind: "cut", src: "/suglar/card1.png", x: 2, y: 42, w: 19, r: -15, dx: -16, dy: -8, dr: -20, depth: 0.7, z: 1 },
       { kind: "chip", text: { en: "Color & texture → game rules", zh: "颜色与质感 → 游戏规则" }, x: 1, y: 5, r: -5, dx: -12, dy: -12, dr: -9, depth: 0.5, z: 4 },
-      { kind: "chip", text: { en: "Sweetness becomes strategy", zh: "甜味即策略" }, x: 40, y: 78, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
+      { kind: "chip", text: { en: "Sweetness becomes strategy", zh: "甜味即策略" }, x: 40, y: 64, r: 4, dx: 14, dy: 14, dr: 8, depth: 0.5, z: 4 }
     ]
   },
   /* The app in hand, and the book it keeps: the home screen on a phone
@@ -165,7 +170,7 @@ const stacks = {
       { kind: "cut", src: "/bubu/phone.webp", x: 1, y: 3, w: 48, r: 0, dx: -14, dy: -6, dr: -4, ds: 1.02, depth: 0.8, z: 3 },
       { kind: "app", src: "/bubu/icon.webp", x: 60, y: 70, w: 21, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
       { kind: "chip", text: { en: "Home · a race for two", zh: "首页 · 两人赛跑" }, x: 2, y: 0, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
-      { kind: "chip", text: { en: "Weekly journal · me & my buddy", zh: "周记手账 · 我与搭子" }, x: 38, y: 91, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
+      { kind: "chip", text: { en: "Weekly journal · me & my buddy", zh: "周记手账 · 我与搭子" }, x: 34, y: 58, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
     ]
   }
 }
