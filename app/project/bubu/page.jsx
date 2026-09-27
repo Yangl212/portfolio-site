@@ -8,6 +8,7 @@ import { projectShareCard } from "../../../lib/share"
 
 import { iconFamilies, icons } from "./icons"
 import { Loop } from "./Loop"
+import { MatchingModel } from "./MatchingModel"
 import styles from "./page.module.css"
 
 export const metadata = {
@@ -49,9 +50,7 @@ const motion = (name) => `/bubu/motion/${name}`
 const recordings = {
   mode: ["en", "zh"],
   journal: ["en", "zh"],
-  race: ["en", "zh"],
-  solo: null,
-  matching: null
+  race: ["en", "zh"]
 }
 const recording = (name, locale) => {
   const langs = recordings[name]
@@ -172,35 +171,46 @@ const copy = {
       kicker: "03 / What testing changed",
       heading: "Two interviews led to solo mode and a new matching model.",
       lead: "Before TestFlight, I spoke with one potential user and one product designer who had shipped similar work.",
-      whoLabel: "Who",
       saidLabel: "What they said",
       changedLabel: "What changed",
       findings: [
         {
           who: "A fitness creator with 20,000 followers",
           said: "She liked the interface and wanted to use it by herself. People may download the app for its look before they have a buddy, so requiring a partner at sign-up would turn them away.",
-          changed: "I added solo mode. It uses the same home, journal and challenge with one runner on the track and one week in the journal. Pairing can be added later instead of being required at sign-up.",
-          demo: "Running a challenge alone: home, journal and challenge in solo mode",
-          alts: [
-            "Home in solo mode: one runner on the track",
-            "The journal in solo mode: one week, one page",
-            "The challenge page in solo mode"
-          ]
+          changed: "I added solo mode. It uses the same home, journal and challenge with one runner on the track and one week in the journal. Pairing can be added later instead of being required at sign-up."
         },
         {
           who: "A product designer with three years of shipped work",
           said: "He was concerned about cold start. A new app will not have a large pool of people to match, which can mean a long wait or a poor match.",
-          changed: "I changed matching so it feels one-to-one to each person while working one-to-many in the system. Each user sees one buddy with a similar goal, starting weight and challenge length, but that buddy may already be paired with someone else. If A and B are paired and C is closest to A, C sees A while A still sees B and B still sees A. This lets people start without waiting for an even number of users.",
-          demo: "Being matched: from setting a goal to the buddy arriving",
-          alt: "The matched screen: your buddy has arrived, with both goals side by side"
+          changed: "I made matching one-way. The system gives each person one rival, the closest on height and weight, goal and length, and that is the only person they see. The same person can be several people's rival at once, so nobody waits for a match to be returned before they can start. A buddy you invite with a code is kept apart: that relation runs both ways."
         }
       ],
-      figureLabel: "How a third person joins",
-      legend: [
-        ["A", "sees B"],
-        ["B", "sees A"],
-        ["C", "sees A"]
-      ],
+      model: {
+        label: "What interview 02 turned into",
+        title: "Everyone sees one rival. Anyone can be seen by several.",
+        steps: [
+          ["Join the pool", "Valid goal · agreed to anonymous matching", "Everyone with a valid goal who agreed to be matched anonymously is in the pool."],
+          ["Filter candidates", "Not yourself · not your buddy · available", "To find B a rival, the system first drops B, B's invited buddy P, and anyone unavailable."],
+          ["Compare", "Height & weight · goal · length", "The rest are compared with B on height and weight, goal and challenge length. D comes out closest."],
+          ["Assign one rival", "Creates B → D", "B is given D: B → D. D is not asked, and D still sees only their own rival."]
+        ],
+        people: {
+          A: { name: "User A", note: "A sees only B. B does not see A back." },
+          B: { name: "User B", note: "B sees D, is seen by A and C, and is paired with P by invite code. One log from B moves all four." },
+          C: { name: "User C", note: "C was given B too. C sees B, and B still sees only D." },
+          D: { name: "User D", note: "D is B's rival but does not see B. D's own rival is off this picture." },
+          P: { name: "Invited buddy P", note: "P joined with B's invite code, so the two see each other. The system skips P when it picks B's rival." }
+        },
+        inviteCode: "invite code",
+        aria: "A sees B, C sees B, B sees D, and B and P see each other through an invite code.",
+        legend: "A solid arrow is the system's pick: the one at the tail sees the one at the head. The dashed pair is a buddy invited with a code, seen both ways. Point at anyone.",
+        rules: [
+          ["One rival each", "A sees only B; B sees only D.", "Each person has exactly one arrow going out: A sees only B, and B sees only D."],
+          ["Seen by any number", "B is A's rival and C's at once. Nobody has to pick back.", "Arrows can pile up coming in. B is A's rival and C's at the same time, and neither needed B to choose them."],
+          ["Each relation settles on its own", "One day's log updates every race it is part of.", "B logs once, and that one log moves every relation B is in: A's, C's, D's and P's."]
+        ],
+        open: "Still open: both people missing the same day, ties, and which photos a system-matched rival can see."
+      },
       note: "Both conversations were about the prototype, before any real pair had run a challenge."
     },
     look: {
@@ -388,35 +398,46 @@ const copy = {
       kicker: "03 / 访谈改变了什么",
       heading: "两次访谈带来了单人模式和新的匹配方式。",
       lead: "TestFlight 之前，我访谈了一位潜在用户，以及一位有同类产品经验的产品设计师。",
-      whoLabel: "谁",
       saidLabel: "她 / 他说了什么",
       changedLabel: "改了什么",
       findings: [
         {
           who: "一位有两万粉丝的健身博主",
           said: "她喜欢这套界面，也想在没有搭子的情况下独自使用。有人可能先被视觉吸引，再来寻找搭子；如果注册时必须配对，这些用户就无法开始。",
-          changed: "我加入了单人模式。首页、手账和挑战沿用双人版结构，但跑道上只有一个人，手账也只记录自己的一周。用户可以先开始挑战，之后再选择配对。",
-          demo: "一个人跑一场挑战：单人模式的首页、手账和挑战",
-          alts: [
-            "单人模式的首页：跑道上只有一个人",
-            "单人模式的手账：一周，一页",
-            "单人模式的挑战页"
-          ]
+          changed: "我加入了单人模式。首页、手账和挑战沿用双人版结构，但跑道上只有一个人，手账也只记录自己的一周。用户可以先开始挑战，之后再选择配对。"
         },
         {
           who: "一位有三年经验的产品设计师",
           said: "他担心冷启动。新 App 的匹配池还很小，用户可能等很久，也可能只能匹配到条件差异很大的人。",
-          changed: "我把匹配改为：用户看到的是一对一关系，系统则允许一对多。每个人只看到一位目标、起始体重和挑战周期相近的搭子，但这位搭子可能也被匹配给其他人。如果 A 和 B 已经配对，后来加入的 C 与 A 最接近，C 会看到 A；A 仍然看到 B，B 也仍然看到 A。这样不必等人数凑成偶数才能开始。",
-          demo: "被匹配的过程：从设定目标到搭子到来",
-          alt: "组队成功页：搭子来了，两个人的目标并排"
+          changed: "我把匹配改成了单向的。系统给每个人分配一个对手：身高体重、目标和期限最接近的那位，你也只看得到 TA。同一个人可以同时是好几个人的对手，所以谁都不用等对方反过来选自己才能开始。用邀请码拉来的搭子另算，那条关系是双向的。"
         }
       ],
-      figureLabel: "第三个人进来时",
-      legend: [
-        ["A", "看到 B"],
-        ["B", "看到 A"],
-        ["C", "看到 A"]
-      ],
+      model: {
+        label: "第二次访谈之后的匹配逻辑",
+        title: "每个人只看到一个对手，一个人可以被很多人看到。",
+        steps: [
+          ["进入匹配池", "目标有效 · 同意匿名参与", "目标有效、同意匿名参与匹配的人，都会进入匹配池。"],
+          ["筛选候选", "排除本人 · 搭子 · 不可用", "给 B 找对手时，先排除 B 自己、B 邀请来的搭子 P，以及不可用的人。"],
+          ["比较相似度", "身高体重 · 目标 · 期限", "剩下的人按身高体重、目标和挑战期限跟 B 比较，D 最接近。"],
+          ["分配一个对手", "建立 B → D", "D 被分配给 B：B → D。不需要 D 同意，D 看到的仍然只有自己的对手。"]
+        ],
+        people: {
+          A: { name: "用户 A", note: "A 只看到 B，B 看不到 A。" },
+          B: { name: "用户 B", note: "B 看到 D，被 A 和 C 看到，又和 P 用邀请码互相绑定。B 打一次卡，四条关系一起更新。" },
+          C: { name: "用户 C", note: "C 也被分配到了 B。C 看到 B，B 仍然只看到 D。" },
+          D: { name: "用户 D", note: "D 是 B 的对手，但 D 看不到 B；D 自己的对手不在这张图里。" },
+          P: { name: "邀请搭子 P", note: "P 是用 B 的邀请码加入的，两人互相看得到。系统给 B 找对手时会跳过 P。" }
+        },
+        inviteCode: "邀请码",
+        aria: "A 看到 B，C 看到 B，B 看到 D，B 和 P 通过邀请码互相看到。",
+        legend: "实线箭头是系统分配：箭尾的人看得到箭头指向的人。虚线是用邀请码拉来的搭子，双向可见。指一下任意一个人看看。",
+        rules: [
+          ["一人一个出边", "A 只看到 B；B 只看到 D。", "每个人只有一条指出去的箭头：A 只看到 B，B 只看到 D。"],
+          ["一人可有多个入边", "B 同时被 A 和 C 使用，无须互选。", "指进来的箭头可以有很多条。B 同时是 A 和 C 的对手，不需要 B 反过来选他们。"],
+          ["每条关系独立结算", "同一份打卡更新所有相关进度。", "B 打一次卡，这一份记录会同时更新 B 所在的每一条关系：A、C、D 和 P 的进度都会动。"]
+        ],
+        open: "待定：两人同时缺席、平局，以及系统分配的对手能看到哪些照片。"
+      },
       note: "两次访谈聊的都是原型，那时还没有任何一对真实的搭子跑完过一场挑战。"
     },
     look: {
@@ -534,42 +555,6 @@ const copy = {
 }
 
 /*
- * The matching, drawn: A and B are each other's buddy; C arrives closest
- * to A and is given A, without taking A off B. Strokes are hairlines in
- * ink, like the app's own rules. Everything the figure says is repeated
- * in the legend under it, so the picture is decoration for the sentence
- * rather than the only place the idea lives.
- */
-function MatchingFigure({ legend }) {
-  return (
-    <div className={styles.matchFigure}>
-      <svg viewBox="0 0 400 128" role="img" aria-label={legend.map((l) => `${l[0]} ${l[1]}`).join(", ")}>
-        <defs>
-          <marker id="bubu-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-            <path d="M0 0.5 L9.5 5 L0 9.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
-          </marker>
-        </defs>
-        {/* C -> A, one way */}
-        <line x1="86" y1="64" x2="168" y2="64" stroke="currentColor" strokeWidth="1.2" markerEnd="url(#bubu-arrow)" />
-        {/* A <-> B, both ways */}
-        <line x1="234" y1="64" x2="312" y2="64" stroke="currentColor" strokeWidth="1.2" markerStart="url(#bubu-arrow)" markerEnd="url(#bubu-arrow)" />
-        {[["C", 58], ["A", 200], ["B", 342]].map(([name, x]) => (
-          <g key={name}>
-            <circle cx={x} cy="64" r="28" fill="none" stroke="currentColor" strokeWidth="1.2" />
-            <text x={x} y="70" textAnchor="middle" fontSize="20" fontFamily="inherit" fill="currentColor">{name}</text>
-          </g>
-        ))}
-      </svg>
-      <ul className={styles.matchLegend}>
-        {legend.map(([who, sees]) => (
-          <li key={who}><span className={styles.matchWho}>{who}</span><span>{sees}</span></li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-/*
  * One stage per beat. When the recording for it is in, the stage runs it
  * inside the phone - silent, looping, playing only while it is on screen;
  * until then it holds the built screens, so a reader sees the product
@@ -646,7 +631,6 @@ function Glyph({ icon, size }) {
 export default function BubuPage({ track = "uiux", locale = "en" }) {
   const t = copy[locale] || copy.en
   const [start, week, race] = t.how.beats
-  const [solo, matching] = t.testing.findings
 
   return (
     <main className={styles.page}>
@@ -740,37 +724,31 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               <p className={styles.sectionLead}>{t.testing.lead}</p>
             </div>
 
-            <article className={styles.finding}>
-              <dl className={styles.findingText}>
-                <div><dt>{t.testing.whoLabel}</dt><dd className={styles.findingWho}>{solo.who}</dd></div>
-                <div><dt>{t.testing.saidLabel}</dt><dd>{solo.said}</dd></div>
-                <div><dt>{t.testing.changedLabel}</dt><dd>{solo.changed}</dd></div>
-              </dl>
-              <Stage name="solo" label={solo.demo} locale={locale}>
-                <div className={styles.shots} data-count="3">
-                  <img src={screen("home-solo")} alt={solo.alts[0]} width="804" height="1748" loading="lazy" decoding="async" />
-                  <img src={screen("journal-solo")} alt={solo.alts[1]} width="804" height="1748" loading="lazy" decoding="async" />
-                  <img src={screen("challenge-solo")} alt={solo.alts[2]} width="804" height="1748" loading="lazy" decoding="async" />
-                </div>
-              </Stage>
-            </article>
-
-            <article className={styles.finding}>
-              <dl className={styles.findingText}>
-                <div><dt>{t.testing.whoLabel}</dt><dd className={styles.findingWho}>{matching.who}</dd></div>
-                <div><dt>{t.testing.saidLabel}</dt><dd>{matching.said}</dd></div>
-                <div><dt>{t.testing.changedLabel}</dt><dd>{matching.changed}</dd></div>
-              </dl>
-              <Stage name="matching" label={matching.demo} locale={locale}>
-                <div className={styles.shots} data-count="figure">
-                  <div className={styles.figureCell}>
-                    <p className={styles.microLabel}>{t.testing.figureLabel}</p>
-                    <MatchingFigure legend={t.testing.legend} />
+            {/* The two conversations side by side, each read top to bottom:
+                who, what they said, what it changed. On wide screens the
+                rows line up across both, so "said" sits beside "said".
+                What 02 changed is a model rather than a screen, so it gets
+                the full width under both, drawn and live. */}
+            <ol className={styles.findings}>
+              {t.testing.findings.map((finding, index) => (
+                <li className={styles.finding} key={finding.who}>
+                  <div className={styles.findingHead}>
+                    <span className={styles.findingNo}>{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{finding.who}</h3>
                   </div>
-                  <img src={screen("matched")} alt={matching.alt} width="804" height="1748" loading="lazy" decoding="async" />
-                </div>
-              </Stage>
-            </article>
+                  <div className={styles.findingSaid}>
+                    <p className={styles.microLabel}>{t.testing.saidLabel}</p>
+                    <p>{finding.said}</p>
+                  </div>
+                  <div className={styles.findingChanged}>
+                    <p className={styles.microLabel}>{t.testing.changedLabel}</p>
+                    <p>{finding.changed}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <MatchingModel copy={t.testing.model} />
 
             <p className={styles.sourceNote}>{t.testing.note}</p>
           </section>

@@ -84,7 +84,7 @@
 /* A screenshot is the artwork here, so it gets the device's corner and a
    hairline instead of a card: no shadow, nothing floating, the same rule
    the app itself follows. */
-.page :is(.shots, .detail, .railItem) img {
+.page :is(.detail, .railItem) img {
   display: block; width: 100%; height: auto;
   border-radius: clamp(14px, 2.6vw, 28px);
   border: 1px solid var(--divider);
@@ -147,24 +147,132 @@
 .keySide { top: 28%; height: 15%; }
 .keyCamera { top: 62%; height: 8%; }
 
-.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); width: 100%; max-width: 560px; align-items: start; }
-.shots[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 720px; }
-.shots[data-count="figure"] { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); max-width: 640px; align-items: center; }
-.figureCell { display: flex; flex-direction: column; gap: 14px; }
 
 /* ---------- 03 what testing changed ---------- */
-.finding { display: grid; gap: 28px; align-items: center; padding-top: 32px; border-top: 1px solid var(--divider); }
-.findingText { display: grid; gap: 20px; max-width: 60ch; }
-.findingText dt { font-size: .75rem; line-height: 1.4; text-transform: uppercase; letter-spacing: .065em; font-weight: 500; color: var(--muted); }
-.findingText dd { margin-top: 8px; font-size: .9375rem; line-height: 1.65; }
-.findingText .findingWho { font-size: 1.25rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.3; }
+/* Two columns under one heavy rule each, the way the three rules in 01
+   sit. What they said is set back in muted type behind a hairline; what
+   it changed is the answer, so it is in full ink. */
+.findings { display: grid; gap: 48px; margin: 0; padding: 0; list-style: none; }
+.finding { display: grid; align-content: start; gap: 24px; padding-top: 24px; border-top: 2px solid var(--text); }
+.findingHead { display: flex; flex-direction: column; gap: 12px; }
+.findingNo { font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .8125rem; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); }
+.findingHead h3 { max-width: 24ch; }
+.findingSaid, .findingChanged { display: flex; flex-direction: column; gap: 8px; }
+.findingSaid > p:not(.microLabel) { padding-left: 16px; border-left: 1px solid var(--divider); font-size: .9375rem; line-height: 1.65; color: var(--muted); }
+.findingChanged > p:not(.microLabel) { font-size: .9375rem; line-height: 1.65; }
 
-/* The matching, in hairline ink like the app's own rules. */
-.matchFigure { display: flex; flex-direction: column; gap: 12px; color: var(--text); }
-.matchFigure svg { display: block; width: 100%; height: auto; }
-.matchLegend { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-.matchLegend li { display: inline-flex; align-items: baseline; gap: 7px; font-size: .8125rem; color: var(--muted); }
-.matchWho { font-weight: 500; color: var(--text); }
+/* ---------- the matching model, out of interview 02 ----------
+   On the app's paper, in its ink, with its rules: thin lines, square
+   corners, no shadows, and one thing inverted at a time - the way a
+   receipt is the one black thing on a screen. What is pointed at goes to
+   ink; everything else steps back to a trace. */
+.model {
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --mono: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  display: grid; gap: clamp(28px, 4vw, 44px);
+  padding: clamp(22px, 4vw, 52px) clamp(18px, 4vw, 56px);
+  background: var(--app-paper); color: var(--app-ink);
+}
+.modelHead { display: flex; flex-direction: column; gap: 10px; }
+.page .modelHead h3 { max-width: 30ch; font-size: clamp(1.3rem, 1.1rem + .8vw, 1.75rem); letter-spacing: -.03em; text-wrap: balance; }
+
+/* The pipeline. Four boxes on one rule, each joined to the next. */
+.modelSteps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.modelStep {
+  position: relative; display: flex; flex-direction: column; gap: 6px; min-width: 0;
+  padding: 14px 14px 16px; border: 1px solid var(--app-ink); background: var(--app-paper);
+  cursor: default; outline: none;
+  transition: background-color 260ms ease, color 260ms ease, transform 420ms var(--ease);
+}
+.modelStepNo { font-family: var(--mono); font-size: .6875rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; opacity: .55; }
+.modelStepTitle { font-size: .9375rem; font-weight: 500; line-height: 1.3; letter-spacing: -.01em; }
+.modelStepSub { font-family: var(--mono); font-size: .6875rem; line-height: 1.5; letter-spacing: .02em; opacity: .62; }
+.modelStep[data-on] { background: var(--app-ink); color: var(--app-paper); transform: translateY(-4px); }
+.modelStep:focus-visible { outline: 2px solid #174fa4; outline-offset: 4px; }
+
+/* The board the people stand on. */
+.modelBoard { display: grid; gap: 18px; justify-items: center; padding-top: clamp(4px, 1vw, 12px); border-top: 1px solid var(--divider); }
+.modelGraph { display: block; width: 100%; max-width: 860px; height: auto; overflow: visible; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+
+.edge { transition: opacity 320ms ease; }
+.edge[data-off], .edgeLabel[data-off] { opacity: .14; }
+.edgeLine { fill: none; stroke: var(--app-ink); stroke-width: 1.3; transition: stroke-width 320ms ease; }
+.edgeHead { fill: none; stroke: var(--app-ink); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; transition: stroke-width 320ms ease; }
+.edge[data-on] :is(.edgeLine, .edgeHead) { stroke-width: 2.2; }
+.edge[data-kind="invite"] .edgeLine { stroke: rgba(14, 14, 14, .5); stroke-dasharray: 5 6; }
+.edge[data-kind="invite"] .edgeHead { stroke: rgba(14, 14, 14, .5); }
+.edge[data-kind="invite"][data-on] :is(.edgeLine, .edgeHead) { stroke: var(--app-ink); stroke-width: 1.6; }
+.edgeLabel { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; fill: rgba(14, 14, 14, .62); transition: opacity 320ms ease; }
+.edgeDot { fill: var(--app-ink); }
+
+.person { cursor: pointer; outline: none; transform-box: fill-box; transform-origin: center; transition: opacity 320ms ease; }
+.person[data-off] { opacity: .2; }
+.person > * { transform-box: fill-box; transform-origin: center; }
+.personFill { fill: var(--app-paper); transition: fill 260ms ease; }
+.person[data-held] .personFill { fill: #e4e2d4; }
+.personRing { fill: none; stroke: var(--app-ink); stroke-width: 1.5; stroke-linecap: round; transition: transform 420ms var(--ease); }
+.personLetter { font-size: 30px; font-weight: 500; letter-spacing: -.02em; fill: var(--app-ink); pointer-events: none; transition: fill 260ms ease; }
+.personName { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; fill: rgba(14, 14, 14, .62); pointer-events: none; }
+.person[data-lead] .personFill { fill: var(--app-ink); }
+.person[data-lead] .personLetter { fill: var(--app-paper); }
+.person[data-lead] .personRing { transform: scale(1.08) rotate(-8deg); }
+.person:focus-visible .personRing { stroke: #174fa4; stroke-width: 2.5; }
+/* Being weighed: a second, looser ring. */
+.personCompare { fill: none; stroke: var(--app-ink); stroke-width: 1; stroke-dasharray: 2 5; opacity: .6; }
+.personRipple { fill: none; stroke: var(--app-ink); stroke-width: 1.2; pointer-events: none; }
+
+.page .modelReadout { max-width: 64ch; min-height: 3.3em; text-align: center; font-size: .9375rem; line-height: 1.65; }
+.modelReadout span { display: inline-block; }
+
+/* The three rules. Each is a hover target for the graph, and its rule
+   draws across when it is the one pointed at. */
+.modelRules { display: grid; gap: 18px; }
+.modelRule { position: relative; display: flex; flex-direction: column; gap: 6px; padding-top: 16px; border-top: 1px solid var(--divider); cursor: default; outline: none; }
+.modelRule::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--app-ink);
+  transform: scaleX(0); transform-origin: left; transition: transform 520ms var(--ease);
+}
+.modelRule[data-on]::before { transform: scaleX(1); }
+.modelRule:focus-visible { outline: 2px solid #174fa4; outline-offset: 6px; }
+.page .modelRuleTitle { font-size: 1.0625rem; font-weight: 500; letter-spacing: -.015em; }
+.page .modelRuleBody { font-size: .875rem; line-height: 1.6; color: var(--muted); }
+.page .modelOpen { font-size: .8125rem; line-height: 1.6; color: var(--muted); }
+
+@media (min-width: 700px) {
+  .modelSteps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+  /* The rule that joins one step to the next. */
+  .modelStep + .modelStep::before {
+    content: ""; position: absolute; top: 50%; right: calc(100% + 1px); width: 28px;
+    border-top: 1px solid var(--app-ink);
+  }
+  .modelRules { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+}
+
+/* Motion, only once the script is running and only for readers who
+   have not asked for less. */
+.model[data-motion] .edge[data-kind="invite"] .edgeLine { animation: march 1.1s linear infinite; }
+.model[data-motion] .edge[data-kind="invite"] + .edge[data-kind="invite"] .edgeLine { animation-direction: reverse; }
+.model[data-motion] .personRipple { animation: ripple 1.6s cubic-bezier(.2, .6, .3, 1) infinite; }
+.model[data-motion] .modelReadout span { animation: readout 420ms var(--ease) both; }
+.model[data-motion] .person:hover:not([data-lead]) .personRing { transform: scale(1.06) rotate(6deg); }
+
+/* Scrolled to: the steps come up one after another, the people land, and
+   the arrows draw from tail to head. */
+.model[data-stage="armed"] :is(.modelStep, .person, .edge, .edgeLabel) { opacity: 0; }
+.model[data-stage="armed"] .modelStep { transform: translateY(14px); }
+.model[data-stage="in"] .modelStep { animation: stepIn 620ms var(--ease) backwards; animation-delay: calc(var(--i) * 110ms); }
+.model[data-stage="in"] .person { animation: personIn 700ms var(--ease) backwards; animation-delay: calc(300ms + var(--i) * 90ms); }
+.model[data-stage="in"] .edge[data-kind="match"] .edgeLine { stroke-dasharray: 1; animation: draw 900ms cubic-bezier(.55, .05, .3, 1) backwards; animation-delay: calc(700ms + var(--i) * 140ms); }
+.model[data-stage="in"] .edge { animation: fadeIn 300ms ease backwards; animation-delay: calc(700ms + var(--i) * 140ms); }
+.model[data-stage="in"] .edgeLabel { animation: fadeIn 500ms ease backwards; animation-delay: 1400ms; }
+
+@keyframes march { to { stroke-dashoffset: -22; } }
+@keyframes ripple { from { transform: scale(1); opacity: .7; } to { transform: scale(1.9); opacity: 0; } }
+@keyframes readout { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes personIn { from { opacity: 0; transform: scale(.6); } }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
 /* ---------- 04 the look ---------- */
 .swatches { margin-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -239,7 +347,11 @@
 }
 
 @media (min-width: 900px) {
-  .beat, .finding { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: 48px; padding-top: 40px; }
+  .beat { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: 48px; padding-top: 40px; }
+  /* Subgrid, so head, said and changed each share a row across both
+     columns and start level however long the other one runs. */
+  .findings { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+  .finding { grid-row: span 3; grid-template-rows: subgrid; row-gap: 24px; }
   /* A beat holding a phone gives it a column its own width and centres it
      in what is left, rather than floating it in a wide empty panel. */
   .beat:has(.iphone) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
@@ -271,8 +383,6 @@
      of. */
   .railItem { width: 58vw; }
   .stage { padding: 16px; }
-  .shots[data-count="3"] { gap: 8px; }
-  .shots[data-count="figure"] { grid-template-columns: 1fr; }
   .detail img { width: 100%; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
