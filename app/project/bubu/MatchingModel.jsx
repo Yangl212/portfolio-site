@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import styles from "./page.module.css"
+import { f, seeded } from "./pen"
 
 /*
  * The matching model that came out of the second interview, drawn so it
@@ -24,7 +25,9 @@ import styles from "./page.module.css"
 
 /* Where everyone stands. Wide is the landscape the section has room for
    on a desktop; tall is the same graph turned for a phone column, where
-   a landscape drawing would shrink its type to nothing. */
+   a landscape drawing would shrink its type to nothing. Both are in the
+   markup and the stylesheet shows one, so a phone gets the right drawing
+   before the script runs and nothing below it moves when it does. */
 const layouts = {
   wide: {
     box: [760, 360],
@@ -75,22 +78,6 @@ const focusMap = {
   "step:2": { nodes: "BD", edges: [], lead: "B", compare: true },
   "step:3": { nodes: "BD", edges: ["bd"], lead: "B" }
 }
-
-/* Seeded, so a person's ring wobbles the same way on the server and in
-   the browser and the two agree. */
-function seeded(seed) {
-  let h = 2166136261
-  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619)
-  return () => {
-    h += 0x6d2b79f5
-    let t = h
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
-
-const f = (n) => Math.round(n * 10) / 10
 
 /* The icon set's circle, at this size: one stroke that goes round a
    little more than once and does not quite meet itself. */
@@ -161,18 +148,6 @@ function useReducedMotion() {
   return reduced
 }
 
-function useNarrow() {
-  const [narrow, setNarrow] = useState(false)
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 699px)")
-    const update = () => setNarrow(query.matches)
-    update()
-    query.addEventListener("change", update)
-    return () => query.removeEventListener("change", update)
-  }, [])
-  return narrow
-}
-
 /* The walk-through: one step at a time, then a breath with nothing lit,
    then again. */
 const tour = ["step:0", "step:1", "step:2", "step:3", null]
@@ -181,19 +156,30 @@ const tourBeat = [2400, 2400, 2400, 3000, 1600]
 export function MatchingModel({ copy }) {
   const root = useRef(null)
   const reduced = useReducedMotion()
-  const narrow = useNarrow()
-  const layout = narrow ? layouts.tall : layouts.wide
 
-  const [pointed, setPointed] = useState(null)
+  /* The mouse and the keyboard are kept apart: what is hovered wins
+     while a mouse is over it, and what is focused is still there when
+     the mouse has gone, so a keyboard reader's pick is not dropped by a
+     pointer passing through. */
+  const [hovered, setHovered] = useState(null)
+  const [focused, setFocused] = useState(null)
   const [touring, setTouring] = useState(null)
   const [stage, setStage] = useState("still")
   const [visible, setVisible] = useState(false)
+  const pointed = hovered || focused
 
   /* Arrive drawn if already on screen; otherwise hide, and draw in when
      scrolled to. The same observer tells the tour when to run. */
   useEffect(() => {
     const el = root.current
-    if (!el || reduced) return undefined
+    if (!el) return undefined
+    /* The reduced-motion query is only answered after the first run of
+       this effect, which may already have hidden the drawing: a reader
+       who asked for less gets it back whole. */
+    if (reduced) {
+      setStage("still")
+      return undefined
+    }
     const onScreen = el.getBoundingClientRect().top < window.innerHeight * 0.9
     if (!onScreen) setStage("armed")
     const observer = new IntersectionObserver(
@@ -242,13 +228,10 @@ export function MatchingModel({ copy }) {
   /* A mouse points; a finger taps. A tap fires enter and click together,
      so hover is left to the mouse and a tap simply selects - tapping
      somewhere else moves focus away and clears it. */
-  const point = (next) => (e) => { if (e.pointerType === "mouse") setPointed(next) }
-  const leave = (e) => { if (!e?.pointerType || e.pointerType === "mouse") setPointed(null) }
-  const select = (next) => () => setPointed(next)
-
-  const [w, h] = layout.box
-  const geo = Object.fromEntries(edges.map((e) => [e.id, geometry(layout, e)]))
-  const inviteLabel = layout.invite
+  const point = (next) => (e) => { if (e.pointerType === "mouse") setHovered(next) }
+  const leave = (e) => { if (e.pointerType === "mouse") setHovered(null) }
+  const select = (next) => () => setFocused(next)
+  const blur = () => setFocused(null)
 
   return (
     <div
@@ -275,7 +258,7 @@ export function MatchingModel({ copy }) {
               tabIndex={0}
               onPointerEnter={point(id)}
               onFocus={select(id)}
-              onBlur={leave}
+              onBlur={blur}
               onClick={select(id)}
             >
               <span className={styles.modelStepNo}>{String(index + 1).padStart(2, "0")}</span>
@@ -287,107 +270,118 @@ export function MatchingModel({ copy }) {
       </ol>
 
       <div className={styles.modelBoard}>
-        <svg
-          className={styles.modelGraph}
-          viewBox={`0 0 ${w} ${h}`}
-          role="img"
-          aria-label={copy.aria}
-          onPointerLeave={leave}
-        >
-          {edges.map((edge, index) => {
-            const g = geo[edge.id]
-            const isOn = on(edge.id)
-            return (
-              <g
-                key={edge.id}
-                className={styles.edge}
-                data-kind={edge.kind}
-                data-on={focus && isOn ? "" : undefined}
-                data-off={isOn ? undefined : ""}
-                style={{ "--i": index }}
+        {Object.entries(layouts).map(([name, layout]) => {
+          const [w, h] = layout.box
+          const geo = Object.fromEntries(edges.map((e) => [e.id, geometry(layout, e)]))
+          const inviteLabel = layout.invite
+          return (
+            <svg
+              key={name}
+              className={styles.modelGraph}
+              data-layout={name}
+              viewBox={`0 0 ${w} ${h}`}
+              role="group"
+              aria-label={copy.aria}
+              onPointerLeave={leave}
+            >
+              {edges.map((edge, index) => {
+                const g = geo[edge.id]
+                const isOn = on(edge.id)
+                return (
+                  <g
+                    key={edge.id}
+                    className={styles.edge}
+                    data-kind={edge.kind}
+                    data-on={focus && isOn ? "" : undefined}
+                    data-off={isOn ? undefined : ""}
+                    style={{ "--i": index }}
+                  >
+                    <path className={styles.edgeLine} d={g.d} pathLength={edge.kind === "match" ? 1 : undefined} />
+                    <path className={styles.edgeHead} d={g.arrow} />
+                    {edge.kind === "match" && layout.edgeLabels && (
+                      <text className={styles.edgeLabel} x={g.label[0]} y={g.label[1]} textAnchor="middle">
+                        {edge.from} → {edge.to}
+                      </text>
+                    )}
+                    {/* A person seeing another, as something travelling the
+                        line: slow at rest, quicker when it is the point. */}
+                    {!reduced && edge.kind === "match" && isOn && (
+                      <circle className={styles.edgeDot} r="3.4">
+                        <animateMotion dur={focus ? "1.4s" : "3.2s"} begin={`${index * 0.7}s`} repeatCount="indefinite" path={g.d} />
+                      </circle>
+                    )}
+                    {/* B's one log, running out along every relation it is part
+                        of - backwards up the arrows that point at B. */}
+                    {!reduced && focus?.ripple && (
+                      <circle className={styles.edgeDot} data-log="" r="3.4">
+                        <animateMotion
+                          dur="1.6s"
+                          repeatCount="indefinite"
+                          path={g.d}
+                          keyPoints={edge.to === "B" ? "1;0" : "0;1"}
+                          keyTimes="0;1"
+                          calcMode="linear"
+                        />
+                      </circle>
+                    )}
+                  </g>
+                )
+              })}
+
+              <text
+                className={styles.edgeLabel}
+                data-off={on("bp") ? undefined : ""}
+                x={inviteLabel[0]}
+                y={inviteLabel[1]}
+                textAnchor={inviteLabel[2]}
               >
-                <path className={styles.edgeLine} d={g.d} pathLength={edge.kind === "match" ? 1 : undefined} />
-                <path className={styles.edgeHead} d={g.arrow} />
-                {edge.kind === "match" && layout.edgeLabels && (
-                  <text className={styles.edgeLabel} x={g.label[0]} y={g.label[1]} textAnchor="middle">
-                    {edge.from} → {edge.to}
-                  </text>
-                )}
-                {/* A person seeing another, as something travelling the
-                    line: slow at rest, quicker when it is the point. */}
-                {!reduced && edge.kind === "match" && isOn && (
-                  <circle className={styles.edgeDot} r="3.4">
-                    <animateMotion dur={focus ? "1.4s" : "3.2s"} begin={`${index * 0.7}s`} repeatCount="indefinite" path={g.d} />
-                  </circle>
-                )}
-                {/* B's one log, running out along every relation it is part
-                    of - backwards up the arrows that point at B. */}
-                {!reduced && focus?.ripple && (
-                  <circle className={styles.edgeDot} data-log="" r="3.4">
-                    <animateMotion
-                      dur="1.6s"
-                      repeatCount="indefinite"
-                      path={g.d}
-                      keyPoints={edge.to === "B" ? "1;0" : "0;1"}
-                      keyTimes="0;1"
-                      calcMode="linear"
-                    />
-                  </circle>
-                )}
-              </g>
-            )
-          })}
+                B ↔ P · {copy.inviteCode}
+              </text>
 
-          <text
-            className={styles.edgeLabel}
-            data-off={on("bp") ? undefined : ""}
-            x={inviteLabel[0]}
-            y={inviteLabel[1]}
-            textAnchor={inviteLabel[2]}
-          >
-            B ↔ P · {copy.inviteCode}
-          </text>
+              {people.map((id, index) => {
+                const [cx, cy] = layout.nodes[id]
+                const isLead = focus?.lead === id
+                return (
+                  <g
+                    key={id}
+                    className={styles.person}
+                    data-held={id === "B" || id === "P" ? "" : undefined}
+                    data-lead={isLead ? "" : undefined}
+                    data-off={lit(id) ? undefined : ""}
+                    style={{ "--i": index }}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${copy.people[id].name}. ${copy.people[id].note}`}
+                    onPointerEnter={point(`node:${id}`)}
+                    onFocus={select(`node:${id}`)}
+                    onBlur={blur}
+                    onClick={select(`node:${id}`)}
+                  >
+                    {focus?.ripple && id === "B" && !reduced && (
+                      <circle className={styles.personRipple} cx={cx} cy={cy} r={layout.r} />
+                    )}
+                    {focus?.compare && id === "D" && <circle className={styles.personCompare} cx={cx} cy={cy} r={layout.r + 9} />}
+                    <circle className={styles.personFill} cx={cx} cy={cy} r={layout.r - 1} />
+                    <path className={styles.personRing} d={ring(cx, cy, layout.r, id)} />
+                    <text className={styles.personLetter} x={cx} y={cy + 10} textAnchor="middle">{id}</text>
+                    <text
+                      className={styles.personName}
+                      {...(layout.nameBeside === id
+                        ? { x: cx + layout.r + 12, y: cy + 5, textAnchor: "start" }
+                        : { x: cx, y: cy + layout.r + 24, textAnchor: "middle" })}
+                    >
+                      {copy.people[id].name}
+                    </text>
+                  </g>
+                )
+              })}
+            </svg>
+          )
+        })}
 
-          {people.map((id, index) => {
-            const [cx, cy] = layout.nodes[id]
-            const isLead = focus?.lead === id
-            return (
-              <g
-                key={id}
-                className={styles.person}
-                data-held={id === "B" || id === "P" ? "" : undefined}
-                data-lead={isLead ? "" : undefined}
-                data-off={lit(id) ? undefined : ""}
-                style={{ "--i": index }}
-                tabIndex={0}
-                role="button"
-                aria-label={`${copy.people[id].name}. ${copy.people[id].note}`}
-                onPointerEnter={point(`node:${id}`)}
-                onFocus={select(`node:${id}`)}
-                onBlur={leave}
-                onClick={select(`node:${id}`)}
-              >
-                {focus?.ripple && id === "B" && !reduced && (
-                  <circle className={styles.personRipple} cx={cx} cy={cy} r={layout.r} />
-                )}
-                {focus?.compare && id === "D" && <circle className={styles.personCompare} cx={cx} cy={cy} r={layout.r + 9} />}
-                <circle className={styles.personFill} cx={cx} cy={cy} r={layout.r - 1} />
-                <path className={styles.personRing} d={ring(cx, cy, layout.r, id)} />
-                <text className={styles.personLetter} x={cx} y={cy + 10} textAnchor="middle">{id}</text>
-                <text
-                  className={styles.personName}
-                  {...(layout.nameBeside === id
-                    ? { x: cx + layout.r + 12, y: cy + 5, textAnchor: "start" }
-                    : { x: cx, y: cy + layout.r + 24, textAnchor: "middle" })}
-                >
-                  {copy.people[id].name}
-                </text>
-              </g>
-            )
-          })}
-        </svg>
-
-        <p className={styles.modelReadout} aria-live="polite">
+        {/* Read out only for what the reader points at: the walk-through
+            would otherwise be announced on every beat. */}
+        <p className={styles.modelReadout} aria-live={pointed ? "polite" : "off"}>
           <span key={readout}>{readout}</span>
         </p>
       </div>
@@ -403,7 +397,7 @@ export function MatchingModel({ copy }) {
               tabIndex={0}
               onPointerEnter={point(id)}
               onFocus={select(id)}
-              onBlur={leave}
+              onBlur={blur}
               onClick={select(id)}
             >
               <p className={styles.modelRuleTitle}>{title}</p>

@@ -185,6 +185,14 @@
 /* The board the people stand on. */
 .modelBoard { display: grid; gap: 18px; justify-items: center; padding-top: clamp(4px, 1vw, 12px); border-top: 1px solid var(--divider); }
 .modelGraph { display: block; width: 100%; max-width: 860px; height: auto; overflow: visible; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+/* Both drawings are in the markup and one is shown, so the page is laid
+   out right before the script runs. Hidden with display, which also
+   takes the drawing not shown out of the tab order. */
+.modelGraph[data-layout="tall"] { display: none; }
+@media (max-width: 699px) {
+  .modelGraph[data-layout="wide"] { display: none; }
+  .modelGraph[data-layout="tall"] { display: block; }
+}
 
 .edge { transition: opacity 320ms ease; }
 .edge[data-off], .edgeLabel[data-off] { opacity: .14; }
@@ -199,6 +207,8 @@
 
 .person { cursor: pointer; outline: none; transform-box: fill-box; transform-origin: center; transition: opacity 320ms ease; }
 .person[data-off] { opacity: .2; }
+/* The one the keyboard is on stays readable whatever the mouse does. */
+.person:focus-visible { opacity: 1; }
 .person > * { transform-box: fill-box; transform-origin: center; }
 .personFill { fill: var(--app-paper); transition: fill 260ms ease; }
 .person[data-held] .personFill { fill: #e4e2d4; }
@@ -622,7 +632,7 @@
   .mapGraph[data-layout="wide"] { display: none; }
   .mapGraph[data-layout="tall"] { display: block; }
   .page .mapReadout {
-    order: -1; position: sticky; top: 70px; z-index: 1; width: 100%; min-height: 5.6em;
+    order: -1; position: sticky; top: 70px; z-index: 1; width: 100%; min-height: calc(6.6em + 22px);
     padding: 10px 0 12px; background: var(--app-paper); font-size: .875rem;
   }
 }

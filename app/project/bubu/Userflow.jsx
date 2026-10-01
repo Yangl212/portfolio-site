@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import styles from "./page.module.css"
+import { f, seeded } from "./pen"
 
 /*
  * The build as a map: every screen a name, every line a tap from the
@@ -84,24 +85,6 @@ const parents = nodes.filter((n) => n.kids.length)
 /* The walk-through: a day in the app, then a breath with nothing lit. */
 const tour = ["node:home", "node:record", "node:mealphoto", "node:receipt", "node:week", null]
 const tourBeat = [2000, 1800, 2200, 2200, 2600, 1600]
-
-/* The pen. `seeded` and `f` are the matching model's, copied so that
-   file stays as it is: a pill here wobbles the way a ring does there,
-   the same on the server and in the browser, and the two agree. Change
-   one and change the other. */
-function seeded(seed) {
-  let h = 2166136261
-  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619)
-  return () => {
-    h += 0x6d2b79f5
-    let t = h
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
-
-const f = (n) => Math.round(n * 10) / 10
 
 /* A polyline measured out, so a point can be asked for at any distance
    along it - wrapping round if it is closed. Each point comes with the
