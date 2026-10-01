@@ -23,3 +23,9 @@ out/
 # scripts/cleared-desktop-media-build.cjs re-exports from.
 /public/cleared/video1.mp4
 /public/cleared/video2.mp4
+
+# Simulator captures for the BUBU case study (28 MB of PNG, one folder per
+# language). The page shows the WebP copies in public/bubu/screens/<locale>/;
+# these are the originals that scripts/bubu-media-build.cjs re-exports from.
+/public/bubu/English/
+/public/bubu/中文/

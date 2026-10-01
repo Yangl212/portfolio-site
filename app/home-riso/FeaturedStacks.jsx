@@ -167,7 +167,7 @@ const stacks = {
       { kind: "cut", src: "/bubu/book.webp", x: 29, y: 7, w: 70, r: 0, dx: 16, dy: -4, dr: 3, depth: 0.5, z: 1 },
       { kind: "cut", src: "/bubu/polaroid-salad.webp", x: 55, y: 0, w: 16, r: 0, dx: -6, dy: -20, dr: -8, ds: 1.06, depth: 1, z: 2 },
       { kind: "cut", src: "/bubu/polaroid-coffee.webp", x: 66, y: 8, w: 17, r: 0, dx: 14, dy: -16, dr: 8, ds: 1.06, depth: 1.1, z: 2 },
-      { kind: "cut", src: "/bubu/phone.webp", x: 1, y: 3, w: 48, r: 0, dx: -14, dy: -6, dr: -4, ds: 1.02, depth: 0.8, z: 3 },
+      { kind: "cut", src: "/bubu/phone.webp", x: 6, y: 5, w: 37.5, r: -8, dx: -14, dy: -6, dr: -12, ds: 1.02, depth: 0.8, z: 3 },
       { kind: "app", src: "/bubu/icon.webp", x: 60, y: 70, w: 21, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
       { kind: "chip", text: { en: "Home · a race for two", zh: "首页 · 两人赛跑" }, x: 2, y: 0, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
       { kind: "chip", text: { en: "Weekly journal · me & my buddy", zh: "周记手账 · 我与搭子" }, x: 34, y: 58, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }

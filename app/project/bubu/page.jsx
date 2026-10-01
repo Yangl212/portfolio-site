@@ -60,28 +60,42 @@ const recording = (name, locale) => {
 }
 
 /* The full build, in the order a first-time user meets it. Captions are
-   in `copy.screens.rail`, one per entry. */
+   in `copy.screens.rail`, one per entry. Every screen is captured twice,
+   off the English build and the Chinese one, like the recordings above,
+   and the reader gets the set in their own language: the files are
+   /public/bubu/screens/<locale>/<name>.webp, exported from the simulator
+   captures by scripts/bubu-media-build.cjs, which keeps their names. */
 const rail = [
-  screen("signup"),
-  screen("how-to-log"),
-  screen("set-goal"),
-  screen("invite"),
-  screen("matched"),
-  screen("home-duo"),
-  screen("receipt-duo"),
-  screen("receipt-mine"),
-  screen("journal-cover"),
-  screen("journal-mine"),
-  screen("journal-spread"),
-  screen("challenge-progress"),
-  screen("challenge-rules"),
-  screen("goal-reached"),
-  screen("home-solo"),
-  screen("journal-solo"),
-  screen("challenge-solo"),
-  screen("settings"),
-  screen("rename")
+  "01-welcome-register",
+  "02-welcome-signin",
+  "03-setup-name",
+  "04-setup-body",
+  "05-setup-target",
+  "06-setup-weeks",
+  "07-setup-mode",
+  "08-setup-ready",
+  "09-home-duo",
+  "10-record-choice",
+  "11-weight",
+  "12-exercise",
+  "13-capture",
+  "14-receipts",
+  "15-my-receipt",
+  "16-journal",
+  "17-journal-overview",
+  "18-challenge-progress",
+  "19-challenge-rules",
+  "20-buddy-panel",
+  "21-settings",
+  "22-settings-language",
+  "23-rename",
+  "24-record-mode",
+  "25-plus-on",
+  "27-home-solo",
+  "28-journal-locked",
+  "29-paywall"
 ]
+const railScreen = (name, locale) => screen(`${locale === "zh" ? "zh" : "en"}/${name}`)
 
 /* Five loops, one pen. Where each one runs is in `copy.cast.clips`.
    All five are black line work on an alpha channel, so the paper behind
@@ -113,7 +127,7 @@ const copy = {
       statusLabel: "Status",
       status: "Built · one round of interviews · TestFlight next",
       action: "How it works",
-      heroAlt: "The BUBU home screen on an iPhone: day 24, both players' progress, and the meals they logged today"
+      heroAlt: "The BUBU home screen on an iPhone: day 21, the meals logged today beside an empty frame for a buddy who has not joined yet, and both runners on the track"
     },
     why: {
       kicker: "01 / Why it exists",
@@ -251,28 +265,37 @@ const copy = {
     },
     screens: {
       kicker: "06 / Every screen",
-      heading: "All 19 screens, from sign-up to settings.",
+      heading: "All 28 screens, from sign-up to the paywall.",
       lead: "These screens were captured in an iPhone 17 simulator and follow the order of a first-time experience. Drag the strip to browse them.",
       rail: [
         "Sign up",
+        "Sign in",
+        "Pick a name",
+        "Height and weight",
+        "Target weight",
+        "Plan length",
         "Solo or paired",
-        "Set the goal",
-        "Invite a buddy",
-        "Matched",
+        "Ready",
         "Home · paired",
+        "What to record",
+        "Log weight",
+        "Log exercise",
+        "Photograph a meal",
         "Today's receipt · both",
         "Today's receipt · mine",
-        "Journal · cover",
         "Journal · my week",
         "Journal · the spread",
         "Challenge · progress",
         "Challenge · rules",
-        "Goal reached",
-        "Home · solo",
-        "Journal · solo",
-        "Challenge · solo",
+        "Matched",
         "Settings",
-        "Rename"
+        "Settings · language",
+        "Rename",
+        "Switch mode",
+        "BUBU Plus · active",
+        "Home · solo",
+        "Journal · locked pages",
+        "BUBU Plus · paywall"
       ]
     },
     shipping: {
@@ -317,7 +340,7 @@ const copy = {
       statusLabel: "状态",
       status: "已完成开发 · 做了一轮访谈 · 接下来是 TestFlight",
       action: "它怎么运作",
-      heroAlt: "iPhone 上的 BUBU 首页：第 24 天、两个人的进度，以及今天各自记的餐"
+      heroAlt: "iPhone 上的 BUBU 首页：第 21 天，今天记下的餐，旁边是留给还没加入的搭子的空框，以及跑道上的两个人"
     },
     why: {
       kicker: "01 / 它为什么存在",
@@ -455,28 +478,37 @@ const copy = {
     },
     screens: {
       kicker: "06 / 全部界面",
-      heading: "从注册到设置，共 19 个界面。",
+      heading: "从注册到订阅，共 28 个界面。",
       lead: "这些画面来自 iPhone 17 模拟器，并按照第一次使用的顺序排列。可以横向拖动查看。",
       rail: [
         "注册",
+        "登录",
+        "起个名字",
+        "身高和体重",
+        "目标体重",
+        "挑战时长",
         "单人还是双人",
-        "设定目标",
-        "邀请搭子",
-        "组队成功",
+        "准备好了",
         "首页 · 双人",
+        "记录什么",
+        "记体重",
+        "记运动",
+        "拍下一餐",
         "今日小票 · 双人",
         "今日小票 · 我的",
-        "手账本 · 封面",
         "手账本 · 我的一周",
         "手账本 · 摊开",
         "挑战 · 进度",
         "挑战 · 规则",
-        "目标达成",
-        "首页 · 单人",
-        "手账本 · 单人",
-        "挑战 · 单人",
+        "组队成功",
         "设置",
-        "改名"
+        "设置 · 语言",
+        "改名",
+        "切换记录方式",
+        "BUBU Plus · 已开通",
+        "首页 · 单人",
+        "手账本 · 未解锁的页",
+        "BUBU Plus · 订阅"
       ]
     },
     shipping: {
@@ -624,7 +656,7 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
             </div>
 
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-              <img src="/bubu/phone.webp" alt={t.hero.heroAlt} width="773" height="1328" fetchPriority="high" />
+              <img src="/bubu/phone.webp" alt={t.hero.heroAlt} width="424" height="896" fetchPriority="high" />
             </div>
           </header>
 
@@ -802,9 +834,9 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               <p className={styles.sectionLead}>{t.screens.lead}</p>
             </div>
             <ul className={styles.rail}>
-              {rail.map((src, index) => (
-                <li className={styles.railItem} key={src}>
-                  <img src={src} alt={t.screens.rail[index]} width="804" height="1748" loading="lazy" decoding="async" />
+              {rail.map((name, index) => (
+                <li className={styles.railItem} key={name}>
+                  <img src={railScreen(name, locale)} alt={t.screens.rail[index]} width="804" height="1748" loading="lazy" decoding="async" />
                   <span>{String(index + 1).padStart(2, "0")} · {t.screens.rail[index]}</span>
                 </li>
               ))}
