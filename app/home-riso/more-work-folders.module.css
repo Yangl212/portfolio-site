@@ -203,6 +203,25 @@
 .folder:hover .spreads img:nth-child(1), .folder:focus-visible .spreads img:nth-child(1) { --x: -38%; --y: -95%; --r: -7deg; }
 .folder:hover .spreads img:nth-child(2), .folder:focus-visible .spreads img:nth-child(2) { --x: 29%; --y: -90%; --r: 6deg; }
 
+/* --- journal: the week's book, and two photos come loose from it --- */
+/* The book is the biggest piece in any folder and stays behind the cover
+   (z 1): it swings up and to the right, so the top of both pages shows
+   over the cover's far corner. The two polaroids are in the front pocket
+   (z 3, below the fold) and slip out a beat after it, one then the other
+   - the salad to the cover's empty top-left corner, clear of the icon
+   and the wordmark under it, the coffee over the phone's foot on the
+   right. Nothing is thrown left of the folder: this one heads its row at
+   every width. The book's rise is the tallest on the shelf and is held
+   to what still clears the section heading where the grid goes to three
+   and two columns and the folder is at its widest. */
+.journal img { transform-origin: 50% 70%; }
+.journal img:nth-child(1) { left: 19%; top: 14%; width: 62%; z-index: 1; --x: 0%; --y: 0%; --r: 0deg; transition-duration: 900ms; }
+.journal img:nth-child(2) { left: 22%; top: 52%; width: 24%; z-index: 3; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 90ms; transition-duration: 820ms; }
+.journal img:nth-child(3) { left: 50%; top: 52%; width: 27%; z-index: 3; --x: 0%; --y: 0%; --r: 0deg; transition-delay: 170ms; transition-duration: 880ms; }
+.folder:hover .journal img:nth-child(1), .folder:focus-visible .journal img:nth-child(1) { --x: 31%; --y: -60%; --r: 9deg; }
+.folder:hover .journal img:nth-child(2), .folder:focus-visible .journal img:nth-child(2) { --x: -71%; --y: -241%; --r: -10deg; }
+.folder:hover .journal img:nth-child(3), .folder:focus-visible .journal img:nth-child(3) { --x: 81%; --y: -136%; --r: 10deg; }
+
 /* ---------- the front ---------- */
 /* The folder's own white front, tab and all, at the foot of the card. */
 .front { position: absolute; left: 0; bottom: 0; z-index: 4; width: 100%; height: auto; display: block; }
@@ -224,6 +243,10 @@
 
 @media (max-width: 1080px) {
   .grid { grid-template-columns: repeat(3, minmax(0, 300px)); }
+  /* Seventh of seven, so with three or two columns this folder heads a
+     row, and the full left throw would put the card past the edge of
+     the window. */
+  .folder:hover .toss img:nth-child(1), .folder:focus-visible .toss img:nth-child(1) { --x: -56%; --r: -14deg; }
 }
 
 @media (max-width: 809px) {
