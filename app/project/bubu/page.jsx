@@ -6,6 +6,7 @@ import { SiteHeader } from "../../../components/SiteHeader"
 import { trackHome } from "../../../lib/projects"
 import { projectShareCard } from "../../../lib/share"
 
+import { Hand } from "./Hand"
 import { iconFamilies, icons } from "./icons"
 import { Loop } from "./Loop"
 import { MatchingModel } from "./MatchingModel"
@@ -59,43 +60,26 @@ const recording = (name, locale) => {
   return { src: `/bubu/media/${name}-${lang}.mp4`, poster: `/bubu/media/${name}-${lang}.webp` }
 }
 
-/* The full build, in the order a first-time user meets it. Captions are
-   in `copy.screens.rail`, one per entry. Every screen is captured twice,
-   off the English build and the Chinese one, like the recordings above,
-   and the reader gets the set in their own language: the files are
-   /public/bubu/screens/<locale>/<name>.webp, exported from the simulator
-   captures by scripts/bubu-media-build.cjs, which keeps their names. */
-const rail = [
-  "01-welcome-register",
+/* The screens, as a hand of nine cards rather than a strip of every
+   capture: the simulator's own screenshots with nothing round them but
+   the device's corner and a shadow, fanned along one ruled line in the
+   order the product is met. They are captured twice, off the English build and
+   the Chinese one, and the reader gets the set in their own language: the
+   files are /public/bubu/screens/<locale>/<file>.webp, exported by
+   scripts/bubu-media-build.cjs, which keeps the captures' names. What
+   each one is called is in `copy.screens.names`, one per entry. */
+const hand = [
   "02-welcome-signin",
-  "03-setup-name",
-  "04-setup-body",
-  "05-setup-target",
   "06-setup-weeks",
   "07-setup-mode",
   "08-setup-ready",
   "09-home-duo",
-  "10-record-choice",
-  "11-weight",
-  "12-exercise",
-  "13-capture",
-  "14-receipts",
-  "15-my-receipt",
   "16-journal",
-  "17-journal-overview",
-  "18-challenge-progress",
-  "19-challenge-rules",
+  "15-my-receipt",
   "20-buddy-panel",
-  "21-settings",
-  "22-settings-language",
-  "23-rename",
-  "24-record-mode",
-  "25-plus-on",
-  "27-home-solo",
-  "28-journal-locked",
-  "29-paywall"
+  "18-challenge-progress"
 ]
-const railScreen = (name, locale) => screen(`${locale === "zh" ? "zh" : "en"}/${name}`)
+const handScreen = (file, locale) => screen(`${locale === "zh" ? "zh" : "en"}/${file}`)
 
 /* Five loops, one pen. Where each one runs is in `copy.cast.clips`.
    All five are black line work on an alpha channel, so the paper behind
@@ -264,39 +248,11 @@ const copy = {
       note: "The loops run while they are on screen and stop when they are not."
     },
     screens: {
-      kicker: "06 / Every screen",
-      heading: "All 28 screens, from sign-up to the paywall.",
-      lead: "These screens were captured in an iPhone 17 simulator and follow the order of a first-time experience. Drag the strip to browse them.",
-      rail: [
-        "Sign up",
-        "Sign in",
-        "Pick a name",
-        "Height and weight",
-        "Target weight",
-        "Plan length",
-        "Solo or paired",
-        "Ready",
-        "Home · paired",
-        "What to record",
-        "Log weight",
-        "Log exercise",
-        "Photograph a meal",
-        "Today's receipt · both",
-        "Today's receipt · mine",
-        "Journal · my week",
-        "Journal · the spread",
-        "Challenge · progress",
-        "Challenge · rules",
-        "Matched",
-        "Settings",
-        "Settings · language",
-        "Rename",
-        "Switch mode",
-        "BUBU Plus · active",
-        "Home · solo",
-        "Journal · locked pages",
-        "BUBU Plus · paywall"
-      ]
+      kicker: "06 / The screens",
+      heading: "Nine screens from the build.",
+      lead: "Captured from the build running in an iPhone 17 simulator: getting started, a day's record, and the challenge with a buddy.",
+      names: ["Sign in", "Plan length", "Solo or paired", "Ready", "Home", "Weekly journal", "Today's receipt", "Matched", "Challenge progress"],
+      hint: "↑ Run the pointer along the line"
     },
     shipping: {
       kicker: "07 / Shipping it",
@@ -477,39 +433,11 @@ const copy = {
       note: "动画只在进入画面时播放，离开就停。"
     },
     screens: {
-      kicker: "06 / 全部界面",
-      heading: "从注册到订阅，共 28 个界面。",
-      lead: "这些画面来自 iPhone 17 模拟器，并按照第一次使用的顺序排列。可以横向拖动查看。",
-      rail: [
-        "注册",
-        "登录",
-        "起个名字",
-        "身高和体重",
-        "目标体重",
-        "挑战时长",
-        "单人还是双人",
-        "准备好了",
-        "首页 · 双人",
-        "记录什么",
-        "记体重",
-        "记运动",
-        "拍下一餐",
-        "今日小票 · 双人",
-        "今日小票 · 我的",
-        "手账本 · 我的一周",
-        "手账本 · 摊开",
-        "挑战 · 进度",
-        "挑战 · 规则",
-        "组队成功",
-        "设置",
-        "设置 · 语言",
-        "改名",
-        "切换记录方式",
-        "BUBU Plus · 已开通",
-        "首页 · 单人",
-        "手账本 · 未解锁的页",
-        "BUBU Plus · 订阅"
-      ]
+      kicker: "06 / 界面",
+      heading: "来自实际版本的九个界面。",
+      lead: "画面来自在 iPhone 17 模拟器里运行的版本：开始使用、一天的记录，以及和搭子一起的挑战。",
+      names: ["登录", "挑战时长", "单人还是双人", "准备好了", "首页", "手账本", "今日小票", "组队成功", "挑战进度"],
+      hint: "↑ 让指针沿着这条线划过去"
     },
     shipping: {
       kicker: "07 / 上架",
@@ -833,14 +761,10 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               <h2>{t.screens.heading}</h2>
               <p className={styles.sectionLead}>{t.screens.lead}</p>
             </div>
-            <ul className={styles.rail}>
-              {rail.map((name, index) => (
-                <li className={styles.railItem} key={name}>
-                  <img src={railScreen(name, locale)} alt={t.screens.rail[index]} width="804" height="1748" loading="lazy" decoding="async" />
-                  <span>{String(index + 1).padStart(2, "0")} · {t.screens.rail[index]}</span>
-                </li>
-              ))}
-            </ul>
+            <Hand
+              cards={hand.map((file, index) => ({ src: handScreen(file, locale), name: t.screens.names[index] }))}
+              hint={t.screens.hint}
+            />
           </section>
 
           <section id="shipping" className={styles.caseSection}>

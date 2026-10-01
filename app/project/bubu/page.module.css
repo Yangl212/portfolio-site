@@ -2,8 +2,9 @@
  * BUBU shares the case-study shell used by the other projects - the same
  * frame, hero grid, section rhythm and project nav. What is new here is
  * everything that holds a screenshot: the page is a tour of a finished
- * build, so the screens get device corners, the strip of all of them
- * scrolls sideways, and the drawn loops sit on the app's own paper.
+ * build, so the recordings play inside a drawn phone, the screens are
+ * dealt out as a hand of cards, and the drawn loops sit on the app's own
+ * paper.
  */
 .page {
   --page-bg: #ffffff;
@@ -81,17 +82,6 @@
 .rules { display: grid; gap: 36px; }
 .rule { display: flex; flex-direction: column; gap: 16px; border-top: 2px solid var(--text); padding-top: 24px; }
 .rule h3 { max-width: 22ch; }
-
-/* ---------- the screens, wherever they appear ---------- */
-/* A screenshot is the artwork here, so it gets the device's corner and a
-   hairline instead of a card: no shadow, nothing floating, the same rule
-   the app itself follows. */
-.page .railItem img {
-  display: block; width: 100%; height: auto;
-  border-radius: clamp(14px, 2.6vw, 28px);
-  border: 1px solid var(--divider);
-  background: var(--app-paper);
-}
 
 /* ---------- 02 how it works: a beat is writing beside a stage ---------- */
 /* The same shape as the Last Message page's feature rows: the writing
@@ -290,19 +280,108 @@
 .castName { font-size: 1rem; font-weight: 500; }
 .castWhere { font-size: .8125rem; line-height: 1.55; color: var(--muted); }
 
-/* ---------- 06 every screen ---------- */
-/* The whole build in one gesture. Snapping keeps a screen squared up in
-   the viewport when the drag stops, and the scrollbar is left visible so
-   it is obvious there is more to the right. */
-.rail {
-  display: flex; gap: clamp(12px, 1.8vw, 22px);
-  overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  padding-bottom: 18px;
-  scrollbar-width: thin;
+/* ---------- 06 the screens ---------- */
+/* A hand of cards. Nine screens fanned on the page itself, standing in a
+   line ruled across their feet: --t runs from -1 at the left card to 1 at
+   the right, and sets how far along the line a card sits, how far it
+   drops off the arc and how far it leans. Each lies over the one to its
+   left, so what shows of a card at rest is its left side; the one pointed
+   at is pulled up out of the line, stands straight and shows its name
+   over its head.
+
+   The cards are the screenshots themselves - no phone round them and no
+   sheet under them. What makes one a screen is the device's own corner
+   (55 of 402 points across, 55 of 874 down), a hairline and a shadow.
+   Card sizes are in cqw, off the hand, so the whole of it scales as one.
+
+   The line is the one thing drawn here, and it says where the cards come
+   from: everything below it is cut away, and nothing above or beside it
+   is, so a card that is pulled up has all the room it wants. The cut is a
+   clip-path and not hidden overflow - a box that hides its overflow can
+   still be scrolled, and focusing a card would have the browser scroll
+   the hand to bring the card's foot into view. */
+.hand {
+  position: relative; container-type: inline-size;
+  height: clamp(330px, 40vw, 530px);
+  clip-path: inset(-400px -80px 0 -80px);
 }
-.railItem { flex: 0 0 auto; width: clamp(146px, 19vw, 196px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 10px; }
-.railItem span { font-size: .75rem; line-height: 1.4; letter-spacing: .04em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.hand::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; z-index: 200; height: 2px; background: var(--text); }
+/* Where a card is comes out of five numbers. --t is its place in the
+   hand and never changes. The other four are the motion, and Hand.jsx
+   writes them every frame: --e is how far the card has come up through
+   the line on arrival (0 below it, 1 in place), --k how far the pointer
+   has lifted it (0 at rest, 1 pulled right out and stood straight), --p
+   how far it has been nudged aside to let a neighbour through, and --ry
+   the few degrees it turns toward the pointer. At their defaults the hand
+   lies at rest, which is also what a reader without the script gets. */
+.handCard {
+  --e: 1; --k: 0; --p: 0; --ry: 0;
+  position: absolute; left: 50%; bottom: -5cqw; width: 16.5cqw; z-index: var(--zz, var(--z));
+  transform:
+    perspective(1400px)
+    translateX(calc(-50% + var(--e) * var(--t) * 38cqw + var(--p) * 1cqw))
+    translateY(calc((1 - var(--e)) * 44cqw + var(--e) * (1 - var(--k)) * var(--t) * var(--t) * 5cqw - var(--k) * 8cqw))
+    rotate(calc(var(--e) * (1 - var(--k)) * var(--t) * 13deg))
+    rotateY(calc(var(--ry) * 1deg))
+    scale(calc(1 + var(--k) * 0.05));
+  outline: none; cursor: default;
+}
+.handCard img {
+  position: relative; display: block; width: 100%; height: auto;
+  border-radius: 13.7% / 6.3%;
+  background: var(--app-paper);
+  box-shadow:
+    0 0 0 1px rgba(34, 34, 34, 0.09),
+    0 8px 20px -6px rgba(34, 34, 34, 0.16),
+    0 28px 56px -16px rgba(34, 34, 34, 0.38);
+  -webkit-user-drag: none; user-select: none;
+}
+/* The deeper shadow a lifted card throws, as a layer of its own faded in
+   by --k: animating one opacity is cheap where re-painting a shadow on
+   every frame is not. */
+.handCard::before {
+  content: ""; position: absolute; inset: 0; border-radius: 13.7% / 6.3%;
+  box-shadow: 0 46px 80px -22px rgba(34, 34, 34, 0.5);
+  opacity: var(--k);
+}
+/* The name comes in over the last quarter of the lift, so it belongs to
+   the card that is out and not to the two sharing the lift on the way. */
+.handName {
+  position: absolute; left: 50%; bottom: calc(100% + 12px);
+  transform: translate(-50%, calc((1 - var(--k)) * 12px));
+  display: flex; gap: 10px; padding: 7px 12px; white-space: nowrap; pointer-events: none;
+  background: var(--text); color: var(--inverse);
+  font-size: .8125rem; font-weight: 500; line-height: 1.2;
+  opacity: calc((var(--k) - 0.72) * 5);
+}
+.handName span { font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace; opacity: .6; }
+.handCard:focus-visible img { outline: 2px solid #174fa4; outline-offset: 4px; }
+
+/* With the script running, the frames are its own and nothing here eases
+   them twice; a drag across the hand is the script's too, not a scroll. */
+.hand[data-live] { touch-action: pan-y; }
+.hand[data-live] .handCard { will-change: transform; }
+/* Without it, pointing at a card still pulls it out: the same lift, set
+   in one step and eased by the browser. */
+.hand:not([data-live]) .handCard { transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
+.hand:not([data-live]) .handCard::before, .hand:not([data-live]) .handName { transition: opacity 320ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
+.hand:not([data-live]) .handCard:hover, .hand:not([data-live]) .handCard:focus { --k: 1; z-index: 30; }
+
+/* The arrival: the line is ruled from the left, and the cards come up
+   through it while it is still being drawn. Hand.jsx holds the hand at
+   "wait" only when it starts off screen. */
+.hand::after { transform-origin: 0 50%; }
+.hand[data-live="wait"]::after { transform: scaleX(0); }
+.hand[data-live="in"]::after { transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1); }
+.hand[data-live="wait"] + .handHint { opacity: 0; }
+.hand[data-live="in"] + .handHint { transition: opacity 700ms ease 1300ms; }
+
+/* Under the line, what the line is for. */
+.page .handHint { margin-top: -18px; font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hand .handCard, .hand .handCard::before, .hand .handName, .hand::after, .hand + .handHint { transition: none; }
+}
 
 /* ---------- 07 shipping ---------- */
 .shipGrid { display: grid; gap: 32px; }
@@ -362,10 +441,16 @@
   .heroFacts div { grid-template-columns: 1fr; gap: 6px; }
   .heroVisual { width: min(76%, 300px); justify-self: center; }
   .caseSection + .caseSection { padding-top: 36px; }
-  /* The strip keeps its own scroll but the screens get bigger, since a
-     phone at 146px on a phone is smaller than the thing it is a picture
-     of. */
-  .railItem { width: 58vw; }
+  /* No room to fan nine cards and nothing to point with: the hand is
+     laid out flat as a strip to drag, every card upright with its name
+     under it. */
+  .hand { height: auto; clip-path: none; display: flex; gap: 16px; overflow: auto hidden; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: 8px 4px 22px; scrollbar-width: thin; }
+  .hand::after { content: none; }
+  .hand .handCard, .hand .handCard:hover, .hand .handCard:focus { position: static; flex: none; width: 54vw; transform: none; transition: none; scroll-snap-align: center; }
+  .handCard::before { content: none; }
+  .hand .handName { position: static; transform: none; display: inline-flex; margin-top: 14px; opacity: 1; transition: none; }
+  .hand[data-live] { touch-action: auto; }
+  .page .handHint { display: none; }
   .stage { padding: 16px; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }

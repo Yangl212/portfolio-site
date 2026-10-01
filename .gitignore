@@ -24,8 +24,11 @@ out/
 /public/cleared/video1.mp4
 /public/cleared/video2.mp4
 
-# Simulator captures for the BUBU case study (28 MB of PNG, one folder per
-# language). The page shows the WebP copies in public/bubu/screens/<locale>/;
-# these are the originals that scripts/bubu-media-build.cjs re-exports from.
+# Design-file exports for the BUBU case study. The two folders are the
+# simulator captures (28 MB, one per language) that
+# scripts/bubu-media-build.cjs re-exports nine of into
+# public/bubu/screens/<locale>/. Frame 1-6 are composed boards of the same
+# screens, kept beside them but not shown on the page.
 /public/bubu/English/
 /public/bubu/中文/
+/public/bubu/Frame *.png

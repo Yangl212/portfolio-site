@@ -4,43 +4,61 @@ const fs = require('node:fs');
 const path = require('node:path');
 const sharp = require('sharp');
 
-// The simulator captures, one folder per language of the build. The file
-// names are the order the page runs them in, and both folders carry the
-// same set, so a screen missing from one language fails here rather than
-// leaving a hole in the strip.
+// The simulator captures, one folder per language of the build, and the
+// nine of them the page deals out as cards. The names are kept, so the
+// page asks for a screen by the name it was captured under.
 const locales = { en: 'public/bubu/English', zh: 'public/bubu/中文' };
+const shown = [
+  '02-welcome-signin',
+  '06-setup-weeks',
+  '07-setup-mode',
+  '08-setup-ready',
+  '09-home-duo',
+  '15-my-receipt',
+  '16-journal',
+  '18-challenge-progress',
+  '20-buddy-panel',
+];
 
 // 1206 x 2622 off the iPhone 17 simulator, exported at two thirds: the
-// strip never shows a screen wider than about 250 CSS px.
+// largest card on the page is about 220 CSS px wide.
 const WIDTH = 804;
 const HEIGHT = 1748;
+
+// The cards have no phone round them, so they have no Dynamic Island
+// either - but a capture taken with a sheet up comes with one painted in.
+// Where the middle of the island's place is black and its surround is one
+// flat colour, the island is painted out in that colour.
+const ISLAND = { left: 405, top: 36, width: 396, height: 124 };
+async function withoutIsland(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const at = (x, y) => [...data.subarray((y * info.width + x) * 4, (y * info.width + x) * 4 + 3)];
+  const centre = at(ISLAND.left + ISLAND.width / 2, ISLAND.top + ISLAND.height / 2);
+  const around = [at(ISLAND.left - 10, 96), at(ISLAND.left + ISLAND.width + 10, 96), at(603, ISLAND.top - 6), at(603, ISLAND.top + ISLAND.height + 6)];
+  const flat = around.every(colour => colour.join() === around[0].join());
+  if (centre.some(channel => channel > 12) || !flat) return sharp(file);
+  const [r, g, b] = around[0];
+  const patch = await sharp({ create: { width: ISLAND.width, height: ISLAND.height, channels: 3, background: { r, g, b } } }).png().toBuffer();
+  return sharp(await sharp(file).composite([{ input: patch, left: ISLAND.left, top: ISLAND.top }]).png().toBuffer());
+}
 sharp.cache(false);
 
-const captures = directory => fs.readdirSync(directory).filter(file => file.endsWith('.png')).sort();
-
 (async () => {
-  const sets = Object.entries(locales).map(([locale, source]) => [locale, path.resolve(source), captures(path.resolve(source))]);
-  const [, , reference] = sets[0];
-  for (const [locale, , files] of sets) {
-    if (files.join() !== reference.join()) throw new Error(`${locale} does not carry the same screens as ${sets[0][0]}`);
-  }
-
   let total = 0;
-  for (const [locale, source, files] of sets) {
+  for (const [locale, source] of Object.entries(locales)) {
     const target = path.resolve('public/bubu/screens', locale);
     fs.rmSync(target, { recursive: true, force: true });
     fs.mkdirSync(target, { recursive: true });
-    for (const file of files) {
-      const info = await sharp(path.join(source, file))
+    for (const name of shown) {
+      const info = await (await withoutIsland(path.resolve(source, `${name}.png`)))
         .resize(WIDTH, HEIGHT, { fit: 'cover', kernel: 'lanczos3' })
         .flatten({ background: '#F6F6F4' })
         .webp({ quality: 84, effort: 5 })
-        .toFile(path.join(target, file.replace(/\.png$/, '.webp')));
+        .toFile(path.join(target, `${name}.webp`));
       total += info.size;
     }
-    console.log(`${locale}: ${files.length} screens`);
   }
-  console.log(`screens ${Math.round(total / 1024)} KB`);
+  console.log(`screens ${shown.length} x ${Object.keys(locales).length}, ${Math.round(total / 1024)} KB`);
 
   // The device render the hero and the home page's stage both use. It is
   // flat colour and hairlines at its native size, so it is kept lossless.
