@@ -9,7 +9,7 @@ export const metadata = {
   alternates: { canonical: "/zh/visual/project/bubu" },
   ...translateCard(projectMetadata, {
     description:
-      "一款为八周减脂挑战设计的 iOS App。拍照记下一餐，每天生成一张小票，每周整理成手账；可以和搭子一起，也可以独自完成。"
+      "我为八周减脂挑战做了 BUBU：每餐拍照，当天留下一张小票，七天后放进周手账；可以先一个人开始，也可以和搭子一起。"
   })
 }
 

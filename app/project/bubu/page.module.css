@@ -280,7 +280,7 @@
 .castName { font-size: 1rem; font-weight: 500; }
 .castWhere { font-size: .8125rem; line-height: 1.55; color: var(--muted); }
 
-/* ---------- 06 the screens ---------- */
+/* ---------- 07 the screens ---------- */
 /* A hand of cards. Nine screens fanned on the page itself, standing in a
    line ruled across their feet: --t runs from -1 at the left card to 1 at
    the right, and sets how far along the line a card sits, how far it
@@ -383,7 +383,7 @@
   .hand .handCard, .hand .handCard::before, .hand .handName, .hand::after, .hand + .handHint { transition: none; }
 }
 
-/* ---------- 07 shipping ---------- */
+/* ---------- 08 shipping ---------- */
 .shipGrid { display: grid; gap: 32px; }
 .shipGrid > div { display: flex; flex-direction: column; gap: 16px; }
 .shipList { display: flex; flex-direction: column; gap: 12px; }
@@ -558,4 +558,112 @@
   .cell .glyph { width: 32px; height: 32px; }
   .cellName { display: none; }
   .legend { gap: 6px 18px; }
+}
+
+/* ---------- 06 the map ----------
+   The build as a tree, on the same paper and in the same ink as the
+   matching model: a pill for every screen, drawn with the icon set's
+   pen, and a line for every tap. What is pointed at goes to ink and the
+   way to it from Home with it; what is under it stays half; everything
+   else steps back to a trace. One thing inverted at a time - Home while
+   nothing is pointed at, the pointed screen otherwise. */
+.map {
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --mono: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  display: grid; gap: clamp(24px, 3.5vw, 40px);
+  padding: clamp(22px, 4vw, 52px) clamp(18px, 4vw, 56px);
+  background: var(--app-paper); color: var(--app-ink);
+}
+.mapHead { display: flex; flex-direction: column; gap: 10px; }
+.page .mapHead h3 { max-width: 30ch; font-size: clamp(1.3rem, 1.1rem + .8vw, 1.75rem); letter-spacing: -.03em; text-wrap: balance; }
+
+.mapBoard { display: grid; gap: 18px; justify-items: center; }
+.mapGraph { display: block; width: 100%; max-width: 860px; height: auto; overflow: visible; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+/* Both drawings are in the markup; which one shows is the stylesheet's
+   call, so the page is laid out right before the script runs. The
+   outline for a phone is narrow and tall, and is held near the width it
+   was drawn at so its type stays its size. Hidden with display, so the
+   drawing not shown is out of the tab order too. */
+.mapGraph[data-layout="tall"] { display: none; max-width: 380px; }
+
+.mapEdge { transition: opacity 320ms ease; }
+.mapEdge[data-off] { opacity: .14; }
+.mapEdge[data-half] { opacity: .45; }
+.mapLine { fill: none; stroke: var(--app-ink); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; transition: stroke-width 320ms ease; }
+.mapEdge[data-on] .mapLine { stroke-width: 2.2; }
+.mapEdge[data-kind="sheet"] .mapLine { stroke: rgba(14, 14, 14, .5); stroke-dasharray: 5 6; }
+.mapEdge[data-kind="sheet"][data-on] .mapLine { stroke: var(--app-ink); stroke-width: 1.6; }
+.mapDot { fill: var(--app-ink); opacity: 0; pointer-events: none; }
+
+.mapNode { cursor: pointer; outline: none; transform-box: fill-box; transform-origin: center; transition: opacity 320ms ease, transform 420ms var(--ease); }
+.mapNode[data-off] { opacity: .16; }
+.mapNode[data-half] { opacity: .5; }
+/* The one the keyboard is on stays readable whatever the mouse does. */
+.mapNode:focus-visible { opacity: 1; }
+.mapNode[data-lead] { transform: scale(1.05); }
+.mapFill { fill: var(--app-paper); transition: fill 260ms ease; }
+/* The paired route's screens, on a shade of the app's own board. */
+.mapNode[data-duo] .mapFill { fill: #dad7c4; }
+.mapPill { fill: none; stroke: var(--app-ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.mapName { font-size: 14px; font-weight: 500; letter-spacing: -.01em; fill: var(--app-ink); pointer-events: none; transition: fill 260ms ease; }
+.mapNode[data-lead] .mapFill, .map:not([data-focus]) .mapNode[data-home] .mapFill { fill: var(--app-ink); }
+.mapNode[data-lead] .mapName, .map:not([data-focus]) .mapNode[data-home] .mapName { fill: var(--app-paper); }
+.mapNode:focus-visible .mapPill { stroke: #174fa4; stroke-width: 2.5; }
+
+.page .mapReadout { max-width: 64ch; min-height: 3.3em; text-align: center; font-size: .9375rem; line-height: 1.65; }
+.mapReadout span { display: inline-block; }
+
+/* Narrower than a tablet the tree turns into the outline. It runs well
+   past a phone's height, so what a tapped screen is for is printed above
+   it instead of under it, and stays put beneath the quick nav while the
+   outline scrolls by; held to its longest note, so the outline does not
+   shift with every beat. */
+@media (max-width: 799px) {
+  .mapGraph[data-layout="wide"] { display: none; }
+  .mapGraph[data-layout="tall"] { display: block; }
+  .page .mapReadout {
+    order: -1; position: sticky; top: 70px; z-index: 1; width: 100%; min-height: 5.6em;
+    padding: 10px 0 12px; background: var(--app-paper); font-size: .875rem;
+  }
+}
+
+/* While the map walks itself through a day nobody asked for the rest to
+   step back, so it steps back less: the names stay readable. */
+.map[data-touring] .mapNode[data-off] { opacity: .4; }
+.map[data-touring] .mapEdge[data-off] { opacity: .3; }
+
+/* Motion, only once the script is running and only for readers who
+   have not asked for less. */
+.map[data-motion] .mapEdge[data-kind="sheet"][data-on] .mapLine { animation: march 1.1s linear infinite; }
+.map[data-motion] .mapReadout span { animation: readout 420ms var(--ease) both; }
+.map[data-motion] .mapLit { animation: fadeIn 240ms ease both; }
+.map[data-motion] .mapNode:hover:not([data-lead]) { transform: scale(1.03); }
+/* Under the pointer a pill is stroked again, the way an icon on the
+   sheet is. */
+.map[data-motion] .mapNode[data-lead] .mapPill { stroke-dasharray: 1; animation: draw 560ms cubic-bezier(.55, .05, .3, 1) both; }
+/* The tap, travelling: one dot a step, each setting off as the one
+   before it lands. Only where the browser can run a dot along a path. */
+@supports (offset-path: path("M0 0L1 1")) {
+  .map[data-motion] .mapDot { animation: travel 340ms linear both; animation-delay: calc(var(--i) * 340ms); }
+}
+@keyframes travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+/* Scrolled to: the tree grows out of Sign in a column at a time, each
+   line drawn from the screen before it and each pill stroked as its
+   line lands. Once it has grown, Userflow.jsx takes the stage away, so
+   these never run a second time. */
+.map[data-stage="armed"] :is(.mapNode, .mapEdge) { opacity: 0; }
+.map[data-stage="in"] .mapNode { animation: nodeIn 560ms var(--ease) backwards; animation-delay: calc(var(--d) * 170ms + 160ms + var(--i) * 20ms); }
+.map[data-stage="in"] .mapPill { stroke-dasharray: 1; animation: draw 640ms cubic-bezier(.55, .05, .3, 1) backwards; animation-delay: calc(var(--d) * 170ms + 160ms + var(--i) * 20ms); }
+.map[data-stage="in"] .mapEdge { animation: fadeIn 240ms ease backwards; animation-delay: calc(var(--d) * 170ms - 10ms); }
+.map[data-stage="in"] .mapEdge:not([data-kind="sheet"]) .mapLine { stroke-dasharray: 1; animation: draw 420ms cubic-bezier(.55, .05, .3, 1) backwards; animation-delay: calc(var(--d) * 170ms - 10ms); }
+@keyframes nodeIn { from { opacity: 0; transform: scale(.7); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mapNode, .mapEdge, .mapLine, .mapFill, .mapName { transition: none; }
 }
