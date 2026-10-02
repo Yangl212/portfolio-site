@@ -314,7 +314,7 @@ const copy = {
         "App Store screenshots and the listing",
         "App Store review, plus any changes it calls for"
       ],
-      limit: "The biggest question is still open: will a stranger's meal receipt feel motivating, or simply uncomfortable? Two interviews changed the product, but they cannot tell me what eight weeks of use will feel like. That is what the TestFlight round needs to answer."
+      limit: "The TestFlight round has two things to check. One is the matching logic, which has not yet run with real people: can it find each person a sensible opponent while the pool is still small? The other is the app as a whole. Two interviews changed the product, but only eight weeks of daily use will show where it breaks or gets in the way."
     }
   },
 
@@ -535,7 +535,7 @@ const copy = {
         "App Store 的截图和文案",
         "送审，再处理审核提出的修改"
       ],
-      limit: "还有一个问题，我现在答不了：看到陌生人的餐食小票，究竟会让人更有动力，还是只会让人不舒服？两次访谈帮我改了产品，却代替不了真正用上八周。这个问题得留给 TestFlight。"
+      limit: "这一轮 TestFlight 主要测两件事。一是匹配逻辑：它还没在真实用户身上跑过，池子还小的时候，能不能给每个人配到合适的对手？二是整个 App：两次访谈帮我改了产品，但哪里会出错、哪里用着别扭，要每天用满八周才看得出来。"
     }
   }
 }
