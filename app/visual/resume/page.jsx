@@ -101,7 +101,7 @@ export default function VisualResumePage({ locale = "en" }) {
       education={education}
       experience={experience}
       skillGroups={skillGroups}
-      pdf="/resume-visual.pdf"
+      pdf={locale === "zh" ? "/resume-visual-zh.pdf" : "/resume-visual.pdf"}
     />
   )
 }

@@ -109,7 +109,7 @@ export default function ResumePage({ locale = "en" }) {
       education={education}
       experience={experience}
       skillGroups={skillGroups}
-      pdf="/resume.pdf"
+      pdf={locale === "zh" ? "/resume-zh.pdf" : "/resume.pdf"}
     />
   )
 }
