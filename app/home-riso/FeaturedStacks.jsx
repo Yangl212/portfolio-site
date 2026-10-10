@@ -211,24 +211,51 @@ function Stage({ project, stack, locale }) {
   const Tag = project.href ? Link : "div"
   const linkProps = project.href ? { href: project.href, "aria-label": `${project.title}: ${statusLabel}` } : { "aria-label": project.title }
 
-  /* The layers lean toward the pointer, each by its own depth. */
+  /* The layers lean toward the pointer, each by its own depth.
+
+     The lean eases after the pointer a frame at a time, the way the hero's
+     own parallax does, and is written once a frame rather than from the
+     event. Written straight from the event, every move restarted each
+     layer's 750ms hover transition, so the stack never stopped animating
+     while the pointer was over it and the lean dragged a spring behind it.
+     The lean now sits in `translate` (see .layer), outside that transition. */
   useEffect(() => {
     const el = ref.current
     if (!el) return undefined
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined
     if (!window.matchMedia("(pointer: fine)").matches) return undefined
+    let frame = 0, rect = null
+    let x = 0, y = 0, targetX = 0, targetY = 0
+    const tick = () => {
+      frame = 0
+      x += (targetX - x) * 0.1
+      y += (targetY - y) * 0.1
+      if (Math.abs(targetX - x) < 0.002 && Math.abs(targetY - y) < 0.002) { x = targetX; y = targetY }
+      else frame = requestAnimationFrame(tick)
+      el.style.setProperty("--sx", x.toFixed(4))
+      el.style.setProperty("--sy", y.toFixed(4))
+    }
+    const request = () => { if (!frame) frame = requestAnimationFrame(tick) }
     const onMove = (event) => {
-      const r = el.getBoundingClientRect()
-      el.style.setProperty("--sx", (((event.clientX - r.left) / r.width - 0.5) * 2).toFixed(3))
-      el.style.setProperty("--sy", (((event.clientY - r.top) / r.height - 0.5) * 2).toFixed(3))
+      if (!rect) rect = el.getBoundingClientRect()
+      targetX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2))
+      targetY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2))
+      request()
     }
-    const onLeave = () => {
-      el.style.setProperty("--sx", "0")
-      el.style.setProperty("--sy", "0")
-    }
+    const onLeave = () => { targetX = 0; targetY = 0; request() }
+    /* The stage moves under the pointer on scroll, so the cached box goes. */
+    const invalidate = () => { rect = null }
     el.addEventListener("pointermove", onMove)
     el.addEventListener("pointerleave", onLeave)
-    return () => { el.removeEventListener("pointermove", onMove); el.removeEventListener("pointerleave", onLeave) }
+    window.addEventListener("scroll", invalidate, { passive: true })
+    window.addEventListener("resize", invalidate)
+    return () => {
+      el.removeEventListener("pointermove", onMove)
+      el.removeEventListener("pointerleave", onLeave)
+      window.removeEventListener("scroll", invalidate)
+      window.removeEventListener("resize", invalidate)
+      cancelAnimationFrame(frame)
+    }
   }, [])
 
   return (
@@ -246,7 +273,7 @@ function Stage({ project, stack, locale }) {
           <span key={layer.src || layer.text?.en} className={styles.slot} style={layerStyle(layer, index)} aria-hidden="true">
             {layer.kind === "chip"
               ? <span className={`${styles.layer} ${styles.chip}`}>{layer.text[locale] || layer.text.en}</span>
-              : <img className={`${styles.layer} ${styles[layer.kind]}`} src={media(layer.src)} alt="" loading="lazy" decoding="async" />}
+              : <span className={styles.layer}><img className={styles[layer.kind]} src={media(layer.src)} alt="" loading="lazy" decoding="async" /></span>}
           </span>
         ))}
         <span className={styles.plate}>
