@@ -70,13 +70,13 @@ const focusMap = {
   "node:B": { nodes: "ABCDP", edges: ["ab", "cb", "bd", "bp", "pb"], lead: "B", ripple: true },
   "node:D": { nodes: "BD", edges: ["bd"], lead: "D" },
   "node:P": { nodes: "BP", edges: ["bp", "pb"], lead: "P" },
-  "rule:0": { nodes: "ABD", edges: ["ab", "bd"] },
+  "rule:0": { nodes: "BD", edges: ["bd"], lead: "B" },
   "rule:1": { nodes: "ABC", edges: ["ab", "cb"], lead: "B" },
-  "rule:2": { nodes: "ABCDP", edges: ["ab", "cb", "bd", "bp", "pb"], lead: "B", ripple: true },
+  "rule:2": { nodes: "AB", edges: ["ab"], lead: "A" },
   "step:0": { nodes: "ABCDP", edges: [] },
-  "step:1": { nodes: "ABCD", edges: [], lead: "B" },
-  "step:2": { nodes: "BD", edges: [], lead: "B", compare: true },
-  "step:3": { nodes: "BD", edges: ["bd"], lead: "B" }
+  "step:1": { nodes: "BP", edges: ["bp", "pb"], lead: "B" },
+  "step:2": { nodes: "BD", edges: ["bd"], lead: "B" },
+  "step:3": { nodes: "ABC", edges: ["ab", "cb"], lead: "B" }
 }
 
 /* The icon set's circle, at this size: one stroke that goes round a
@@ -242,7 +242,6 @@ export function MatchingModel({ copy }) {
       data-motion={reduced ? undefined : ""}
     >
       <div className={styles.modelHead}>
-        <p className={styles.microLabel}>{copy.label}</p>
         <h3>{copy.title}</h3>
       </div>
 
@@ -360,7 +359,6 @@ export function MatchingModel({ copy }) {
                     {focus?.ripple && id === "B" && !reduced && (
                       <circle className={styles.personRipple} cx={cx} cy={cy} r={layout.r} />
                     )}
-                    {focus?.compare && id === "D" && <circle className={styles.personCompare} cx={cx} cy={cy} r={layout.r + 9} />}
                     <circle className={styles.personFill} cx={cx} cy={cy} r={layout.r - 1} />
                     <path className={styles.personRing} d={ring(cx, cy, layout.r, id)} />
                     <text className={styles.personLetter} x={cx} y={cy + 10} textAnchor="middle">{id}</text>

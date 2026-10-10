@@ -45,7 +45,7 @@ const clamp = (value, low, high) => Math.min(high, Math.max(low, value))
 const easeOut = (p) => 1 - Math.pow(1 - p, 5)
 const easeInOut = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2)
 
-export function Hand({ cards, hint }) {
+export function Hand({ cards }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -249,14 +249,9 @@ export function Hand({ cards, hint }) {
         {cards.map((card, index) => (
           <figure className={styles.handCard} key={card.src} style={{ "--t": (index - mid) / mid, "--z": index }} tabIndex={0}>
             <img src={card.src} alt={card.name} width="804" height="1748" loading="lazy" decoding="async" draggable="false" />
-            <figcaption className={styles.handName}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {card.name}
-            </figcaption>
           </figure>
         ))}
       </div>
-      <p className={styles.handHint} aria-hidden="true">{hint}</p>
     </>
   )
 }

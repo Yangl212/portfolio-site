@@ -82,7 +82,7 @@ const hand = [
 ]
 const handScreen = (file, locale) => screen(`${locale === "zh" ? "zh" : "en"}/${file}`)
 
-/* Five loops, one pen. Where each one runs is in `copy.cast.clips`.
+/* Five loops, one pen. What each one is called is in `copy.cast.clips`.
    All five are black line work on an alpha channel, so the paper behind
    them is the tile's own background and every one of them sits on exactly
    the same colour; the mp4 beside each webm is the same matte laid over
@@ -99,95 +99,91 @@ const copy = {
       pill: "Personal project",
       context: "Product Design · iOS · 2026",
       titleA: "BUBU:",
-      titleB: "an eight-week challenge for two.",
-      lead: "I designed BUBU around one small daily habit: take a photo of what you ate. The app turns each day into a receipt, then lays seven of them out as a journal for you and your buddy.",
+      titleB: "Find your weight-loss buddy",
+      lead: "BUBU is a weight-loss app that matches you with a buddy of similar height and weight. Every entry you log is kept in your journal, where it becomes a record worth keeping",
       storeLabel: "App Store",
       store: "Working build · preparing submission",
       roleLabel: "Role",
       role: "Product design, UI, illustration",
       scopeLabel: "Scope",
-      scope: "23 screens · 35 icons · paired and solo",
+      scope: "35 icons and 30+ screens so far",
       platformLabel: "Platform",
-      platform: "iOS · iPhone 17",
+      platform: "iOS",
       statusLabel: "Status",
-      status: "Built · two interviews · TestFlight next",
-      action: "See how it works",
+      status: "Built, heading into TestFlight",
+      action: "See the design features",
       heroAlt: "The BUBU home screen on an iPhone: day 21, the meals logged today beside an empty frame for a buddy who has not joined yet, and both runners on the track"
     },
     why: {
-      kicker: "01 / Why it exists",
-      heading: "Finding a dazi is easy. Making it to week eight together is the hard part.",
-      lead: "In China, a dazi (搭子) is someone you meet for one thing, perhaps lunch or a trip to the gym. Neither person asks for much, so it is easy to start and just as easy to stop. That is fine for dinner. It gets shakier when the plan lasts two months.",
-      rulesLabel: "Three choices I built around",
+      kicker: "01",
+      heading: "User pain points and inspiration",
+      lead: "On social media I often see people forming weight-loss groups on their own. They post their height and weight, hoping to find a similar “buddy” to report their progress to, so the two can keep each other accountable and improve together. But buddies found this way are unreliable: many disappear after three or four days.",
       rules: [
         {
-          label: "01 / Keep it narrow",
-          title: "You only share what you ate.",
-          body: "There is no chat, feed, profile or display name. For the length of the challenge, your buddy sees a user ID and the meals you logged."
+          label: "01",
+          title: "Finding a buddy is hard",
+          body: "Comment threads run long, so many requests to team up never get a reply, while the posts with the most replies take over the top of the thread. I felt these people needed a platform that matches them with the right partner."
         },
         {
-          label: "02 / Know where it ends",
-          title: "Pick the finish date before day one.",
-          body: "At setup, you choose 4, 8 or 12 weeks. Both people see the same countdown, so no one has to be the person who calls the challenge over."
+          label: "02",
+          title: "Rewards and consequences",
+          body: "Most buddy pairs lose momentum after a few missed days, and that drags the other person down too. So the app should celebrate small milestones, and after three days in a row without a check-in, a pair automatically loses and is unmatched, so people who keep logging can find a new buddy."
         },
         {
-          label: "03 / Leave the gap",
-          title: "If you miss a day, the blank stays.",
-          body: "BUBU does not chase you with reminders or guilt. A missed day leaves a dashed frame on the receipt and a plain counter such as MISSED 1 / 3."
+          label: "03",
+          title: "Privacy",
+          body: "Most people trying to lose weight aren't happy with their bodies right now. So the app plays down the social side and doesn't ask users to pick a name. Most of what buddies do together is ask each other for tasty low-calorie recipes."
         }
       ]
     },
     how: {
-      kicker: "02 / How it works",
-      heading: "Take the photo; BUBU keeps the record.",
-      lead: "There is no form to fill in. Choose solo or paired mode, photograph each plate, and BUBU cuts out the background. The meal then appears on today's receipt, in the weekly journal and on the challenge track.",
+      kicker: "02",
+      heading: "Core features",
       beats: [
         {
-          label: "Start",
-          title: "Start alone or bring a buddy.",
-          body: "BUBU first asks how you want to log. Solo mode keeps the same home screen, receipts and journal, with one runner on the track. In paired mode, you can be matched or invite someone, and a second runner appears. You can switch modes later in Settings.",
+          label: "01",
+          title: "Solo and paired modes",
+          body: "When you first open the app, it asks for your height, weight and how long you want to work toward your goal. BUBU protects your privacy as far as it can, leaving out strongly social features such as user IDs and buddy chat. Log on your own to build a weight-loss journal that is all yours, or join paired matching for some friendly competition and progress together.",
           demo: "Choosing solo or paired mode"
         },
         {
-          label: "Day by day",
-          title: "Seven receipts become a weekly journal.",
-          body: "Open the journal and your week sits beside your buddy's. Each day is a small cluster of cut-out meals, and tapping it opens that day's receipt. At 23:59 the receipt locks. Yesterday cannot be cleaned up after the fact, so your buddy sees what you actually logged that day.",
+          label: "02",
+          title: "The journal and daily receipts",
+          body: "Log your daily meals alongside your buddy. Photos are cut out into stickers and added to your journal and receipts. Curious about something your buddy ate and want the recipe? Tap to send them a signal!",
           demo: "Opening the weekly journal, then a locked daily receipt"
         },
         {
-          label: "One finish line",
-          title: "Both people run on the same clock.",
-          body: "The challenge page keeps each person's medals in view, including first step, perfect week and halfway. The rules are one tap away: log every day, and three missed days in a row end the challenge for both people. On Home, the two runners move toward the same finish date.",
+          label: "03",
+          title: "Breaking a big goal into smaller ones",
+          body: "Long-term goals matter, but splitting them into smaller, easier goals and giving timely positive feedback does more to keep users coming back. As people use the app, they earn new badges based on their own progress.",
           demo: "Checking the medals and rules, then returning to the shared track"
         }
       ]
     },
     testing: {
-      kicker: "03 / After two conversations",
-      heading: "I spoke to two people, then changed the product twice.",
-      lead: "Before TestFlight, I showed the prototype to a potential user and to a product designer who had shipped similar work.",
-      saidLabel: "What I heard",
-      changedLabel: "What I changed",
+      kicker: "03",
+      heading: "Expert interviews",
+      lead: "Before TestFlight, I tested the prototype with a potential user and a designer who had worked on a similar product, and interviewed them both",
+      changedLabel: "What changed",
       findings: [
         {
           who: "A fitness creator with 20,000 followers",
-          said: "She liked the interface and wanted to use it on her own. Someone might come to BUBU for the way it looks before they have a buddy; asking them to pair up at sign-up would stop them before they had started.",
-          changed: "I added solo mode. The home screen, journal and challenge all stay, but there is one runner on the track and one week in the journal. Pairing can come later."
+          said: "“I love this interface. I don't have time to keep a journal myself, and this builds one from photos alone, which is perfect for people who want to check in. I think you could launch a solo version, because I'll use an app just because it looks good.”",
+          changed: "After this conversation, I filled out the logic of solo mode. Home, the journal and the challenge all stay; the progress bar shows only one person, and the journal holds only your own week. It also solves the problem for users who don't have a suitable buddy yet."
         },
         {
-          who: "A product designer with three years of shipped work",
-          said: "He pointed out the cold-start problem: a new app has a small matching pool, so people may wait a long time or get paired with someone who is not very similar.",
-          changed: "I changed matching to work one way. Each person sees the rival closest to them in height and weight, goal and challenge length. One person can be the rival for several others, so no one has to wait for a mutual match. Invite-code buddies still see each other both ways."
+          who: "A product designer with three years of experience",
+          said: "“A new app's matching pool is this small. Won't users wait a long time and still end up matched with someone very different? A cold start like that really hurts a new app's retention.”",
+          changed: "Based on this feedback, I reworked the matching I first had in mind so it is no longer limited to two-way matches. The system finds each person the closest rival by height and weight, goal and timeframe, and one person can be the buddy for several others at once, without waiting on the other side. I also added invite codes to encourage people to bring their own buddy; a pair formed this way can motivate more people at the same time."
         }
       ],
       model: {
-        label: "The matching idea after interview 02",
-        title: "You see one rival. More than one person may see you.",
+        title: "How matching works",
         steps: [
-          ["Join the pool", "Valid goal · agreed to anonymous matching", "Anyone with a valid goal who agrees to anonymous matching enters the pool."],
-          ["Remove the obvious noes", "Not yourself · not your buddy · available", "When B needs a rival, B, B's invited buddy P and anyone unavailable are removed first."],
-          ["Find the closest person", "Height & weight · goal · length", "The remaining people are compared with B by height and weight, goal and challenge length. D is the closest."],
-          ["Give B one rival", "Creates B → D", "B now sees D. D is not asked to match back and still sees only their own rival."]
+          ["Join the pool", "Records height, weight and goal", "Records height, weight and goal"],
+          ["Matching", "Filters out users whose goals are too far apart, and encourages inviting friends with a code", "Filters out users whose goals are too far apart, and encourages inviting friends with a code"],
+          ["Matched", "Finds a close user in the pool and pairs the two as buddies", "Finds a close user in the pool and pairs the two as buddies"],
+          ["Still in the pool", "After a match, users stay in the pool, so they can still be paired with someone whose goal is close when that person has no match", "After a match, users stay in the pool, so they can still be paired with someone whose goal is close when that person has no match"]
         ],
         people: {
           A: { name: "User A", note: "A sees only B. B does not see A back." },
@@ -200,61 +196,37 @@ const copy = {
         aria: "A sees B, C sees B, B sees D, and B and P see each other through an invite code.",
         legend: "A solid arrow shows the system's pick: the person at the tail sees the person at the head. A dashed line joins invite-code buddies, who see each other. Point to anyone to trace their connections.",
         rules: [
-          ["One rival each", "A sees only B; B sees only D.", "Each person has one outgoing arrow. A sees B, and B sees D."],
-          ["Any number can see you", "B is A's rival and C's at once. Nobody has to pick back.", "Several arrows can point to the same person. B is the rival for both A and C, without having to choose either of them."],
-          ["Each relationship updates separately", "One day's log updates every race it belongs to.", "B logs once, and that entry updates B's relationships with A, C, D and P."]
+          ["Everyone has one buddy", "From each person's own view, the match is two-way", "From each person's own view, the match is two-way"],
+          ["One person can be many people's buddy", "Helps the app get through its cold start sooner", "Helps the app get through its cold start sooner"],
+          ["Matching on current goals", "A, ten days in, can still be matched with newcomer B when their current goals are close", "A, ten days in, can still be matched with newcomer B when their current goals are close"]
         ],
         open: "Still open: both people missing the same day, ties, and which photos a system-matched rival can see."
-      },
-      note: "Both conversations were about the prototype. No real pair had completed a challenge yet."
+      }
     },
     iconset: {
-      kicker: "04 / The icon set",
-      heading: "I drew all 35 icons with the same slightly wobbly hand.",
-      lead: "A clean, geometric icon set looked out of place beside the illustrations and handwritten numbers. I kept the pen consistent, then drew each icon much as I would sketch it on paper.",
-      partsLabel: "What stays consistent",
-      parts: [
-        ["One pen", "The icons, illustrations and dividers all use the same stroke weight."],
-        ["Loose corners", "Circles stop a little short; corners turn by hand instead of snapping into place."],
-        ["Only the lines it needs", "At 24 px, every stroke has to help the icon read."]
-      ],
-      wobbleLabel: "Why the wobble stays",
-      wobble: "A ruler-straight icon beside a hand-drawn figure looked as if it belonged to another app. These lines bow and drift a little, the way quick sketches do, and each icon drifts differently.",
-      rulesLabel: "A few hard rules",
-      rules: [
-        "One 24 box, one stroke weight, round caps and joins.",
-        "Solid parts are the exception, not the fill: four icons in thirty-five.",
-        "Nothing is mirrored to make its opposite; the left arrow is its own drawing.",
-        "The set is sorted by what a screen needs, not by shape."
-      ],
+      kicker: "04",
+      heading: "Icon design",
+      subheading: "A hand-drawn icon set made for this app",
+      lead: "To suit the journal feel, I drew the app its own icon set with a hand-drawn character. Each icon was drawn with the pen tool and keeps a slight wobble, without much distortion beyond that.",
       families: [
         ["Actions", "add, remove, confirm, dismiss"],
         ["Arrows", "everything that moves you somewhere"],
         ["Controls", "checkbox, radio, toggle, filter"],
         ["The product", "the journal, the target, the race"]
-      ],
-      drawNote: "The icons draw themselves when this section enters the screen. Hover over one to isolate it, or hover over a family to find the whole group."
+      ]
     },
     cast: {
-      kicker: "05 / The cast",
-      heading: "The same two little runners show up all through BUBU.",
-      lead: "I drew five loops with the same line weight as the rest of the interface. They appear when a number is not quite enough: an empty state, meeting a buddy, running alone, crossing the line or reaching the goal.",
-      clips: [
-        ["Skipping", "Empty states, and the pause between two challenges"],
-        ["Both of you", "The screen that confirms a match"],
-        ["Solo", "Home, when you are running the challenge alone"],
-        ["The finish", "Crossing the line on the last day"],
-        ["Goal reached", "The celebration screen, and the receipt you can share from it"]
-      ],
-      note: "Each loop plays only while it is on screen."
+      kicker: "05",
+      heading: "Animation design",
+      lead: "The interface is full of little animated figures, which dress up empty pages and say things more precisely. Every figure is hand-drawn, then animated with Runway.",
+      clips: ["Skipping", "Both of you", "Solo", "The finish", "Goal reached"]
     },
     /* The map's tree is a constant in Userflow.jsx; what each screen is
        called and what it is for is here, keyed by the screen's id, so the
        two languages cannot drift from the drawing. */
     userflow: {
-      kicker: "06 / The map",
-      heading: "All 23 screens, from sign-in to the finish line.",
-      lead: "This is the working build, screen by screen. Solo and paired mode mostly follow the same paths; paired mode adds the moments where a buddy enters the picture.",
+      kicker: "06",
+      heading: "User flow",
       label: "The whole build",
       title: "Most places are within two taps of Home.",
       aria: "A map of the build: sign in and set up lead to Home; from Home, recording, today's receipt, the journal, the challenge, the match sheet and settings.",
@@ -288,130 +260,121 @@ const copy = {
       }
     },
     screens: {
-      kicker: "07 / The screens",
-      heading: "A closer look at nine screens.",
-      lead: "These are captures from the working build in an iPhone 17 simulator, covering setup, a day's record and a paired challenge.",
-      names: ["Sign in", "Plan length", "Solo or paired", "Ready", "Home", "Weekly journal", "Today's receipt", "Matched", "Challenge progress"],
-      hint: "↑ Run the pointer along the line"
+      kicker: "07",
+      heading: "High-fidelity",
+      names: ["Sign in", "Plan length", "Solo or paired", "Ready", "Home", "Weekly journal", "Today's receipt", "Matched", "Challenge progress"]
     },
     shipping: {
-      kicker: "08 / Shipping it",
-      heading: "The app works. Now it needs real pairs.",
-      lead: "The build is complete. Next comes a TestFlight round, the App Store listing and review.",
+      kicker: "08",
+      heading: "Shipping",
+      lead: "Development has wrapped up for now; next come TestFlight, the App Store page and review",
       doneLabel: "Done",
       done: [
-        "23 screens, designed and built",
-        "35 icons, drawn with one pen",
-        "Paired and solo modes",
-        "The receipt, the journal and the share card",
-        "One-to-many matching, prompted by the second interview",
-        "The five drawn loops"
+        "High-fidelity design and development complete",
+        "Icon design",
+        "Solo and paired modes",
+        "The app's core logic"
       ],
       leftLabel: "Still to do",
       left: [
-        "A TestFlight round with real pairs, including the first test of matching",
-        "Privacy labels and the data the matching actually needs",
-        "App Store screenshots and the listing",
-        "App Store review, plus any changes it calls for"
+        "A TestFlight round with real users",
+        "Turn the exercises into a full sticker set",
+        "App Store screenshots and copy",
+        "Submit for review, then handle any changes it asks for"
       ],
-      limit: "The TestFlight round has two things to check. One is the matching logic, which has not yet run with real people: can it find each person a sensible opponent while the pool is still small? The other is the app as a whole. Two interviews changed the product, but only eight weeks of daily use will show where it breaks or gets in the way."
+      limit: "This TestFlight round mainly tests two things: 1. whether any logic errors remain in everyday use, which means following up with users promptly; 2. how long matching should take, and how wide the weight and goal range for a match can be, which needs more research data to settle."
     }
   },
-
   zh: {
     hero: {
       pill: "个人项目",
       context: "产品设计 · iOS · 2026",
       titleA: "BUBU：",
-      titleB: "一起把八周走完。",
-      lead: "我把 BUBU 做成了一本会自己整理的减脂手账：每餐拍张照片，当天会有一张小票，七天后再和搭子的记录并排放进周手账里。",
+      titleB: ["寻找属于你的", "减肥搭子"],
+      lead: "BUBU是一个会根据你提供的身高体重智能寻找相似搭子的减脂软件，你的每一次记录都会留存于手账本中，成为珍贵的记录",
       storeLabel: "App Store",
       store: "开发已完成 · 正在准备上架",
       roleLabel: "我的角色",
       role: "产品设计、UI、插画",
       scopeLabel: "范围",
-      scope: "23 个界面 · 35 个图标 · 双人与单人",
+      scope: "当前包含35个icon，30+页面",
       platformLabel: "平台",
-      platform: "iOS · iPhone 17",
+      platform: "iOS",
       statusLabel: "状态",
-      status: "开发完成 · 访谈 2 人 · 下一步 TestFlight",
-      action: "看看它怎么运作",
+      status: "开发完成，准备进入TestFlight",
+      action: "查看设计功能",
       heroAlt: "iPhone 上的 BUBU 首页：第 21 天，今天记下的餐，旁边是留给还没加入的搭子的空框，以及跑道上的两个人"
     },
     why: {
-      kicker: "01 / 它为什么存在",
-      heading: "搭子好找，一起走到第八周更难。",
-      lead: "搭子关系轻松，是因为彼此不用承担太多。约饭、健身，说开始就开始，停下来也不难。可减脂一做就是两个月，这种轻松的关系很容易走到一半就散了。",
-      rulesLabel: "所以我先定了三件事",
+      kicker: "01",
+      heading: "用户痛点与灵感来源",
+      lead: "我常常会在社交平台上看到很多人自发的组成减脂小队，他们通常会写上自己的身高体重，想寻找一个接近的“搭子”一起进行减脂汇报，互相监督共同进步。然而这样找的搭档却非常不稳定，经常会出现坚持了三四天就消失的情况。",
       rules: [
         {
-          label: "01 / 只聊这一件事",
-          title: "彼此只看得到吃了什么。",
-          body: "没有聊天、动态、个人主页，也没有昵称。挑战期间，搭子看到的只有你的用户 ID 和每天记下的饭。"
+          label: "01",
+          title: "搭子的寻找困难",
+          body: "由于评论区的冗长，有些人发出的请求组队其实并没有获得回复，反而回复多的人会更占据评论区的前排，我认为应该搭建一个平台为他们匹配到合适的同伴。"
         },
         {
-          label: "02 / 先把终点定好",
-          title: "第一天就知道哪天结束。",
-          body: "开始时选 4 周、8 周或 12 周，两个人一起倒数到同一天。到了那天自然结束，不用等其中一个人开口说「要不就到这吧」。"
+          label: "02",
+          title: "激励与惩罚机制",
+          body: "多数结成“搭子”的队伍会因为几日的缺失而丧失动力，同时也会对另一方产生影响。因此在app中应该设置小阶段的胜利鼓励，同时引入连续3日未打卡自动判输并取消匹配的机制，让愿意坚持打卡的人也可以有新的搭子。"
         },
         {
-          label: "03 / 空白就留在那里",
-          title: "漏掉一天，小票上会看得见。",
-          body: "BUBU 不追着提醒，也不用通知制造愧疚。哪天没记，小票上就留一个虚线空框，旁边照实写着 MISSED 1 / 3。"
+          label: "03",
+          title: "隐私问题",
+          body: "多数想要减脂的人并不满意自己当前的身体情况。因此本app会削弱社交属性，也不会要求用户自己取名。更多的搭子交互只存在于互相询问美味的低卡菜谱。"
         }
       ]
     },
     how: {
-      kicker: "02 / 它怎么运作",
-      heading: "拍下这顿饭，后面交给 BUBU。",
-      lead: "不用填表。先选一个人记，还是和搭子一起；之后每餐拍一下，BUBU 会抠掉背景，把它放进今天的小票、本周的手账和挑战跑道。",
+      kicker: "02",
+      heading: "核心功能",
       beats: [
         {
-          label: "开始",
-          title: "先一个人开始，也可以直接找搭子。",
-          body: "BUBU 一上来先问你想怎么记。单人模式也有完整的首页、小票和手账，只是跑道上只有自己；双人模式可以等系统匹配，也可以邀请认识的人。以后在设置里随时能改。",
+          label: "01",
+          title: "单人与双人模式",
+          body: "进入软件后会向您采集个人身高体重与想要达成的目标周期。BUBU将尽可能保护您的个人隐私，取消用户id、搭子聊天等社交属性过强的设计。支持自己打卡记录做成独属于你的减脂手账本，也欢迎加入双人匹配模式进行友好切磋，互相进步。",
           demo: "选择单人或双人模式"
         },
         {
-          label: "一天一天记",
-          title: "七张小票组成一周手账。",
-          body: "翻开手账，我的一周和搭子的一周正好并排。每天都是一小撮抠好图的饭，点进去就是那天的小票。23:59 一过，小票就锁上，昨天不能再补得更好看。搭子看到的，就是你当天真正记下来的东西。",
+          label: "02",
+          title: "手账与每日小票",
+          body: "与你的搭子一起记录每日饮食，照片会抠图后做成贴纸记录入你们的手账本与小票中。看到搭子的食物很感兴趣想求配方？欢迎点击向搭子发出信号！",
           demo: "翻开周手账，再点进一张已经锁定的小票"
         },
         {
-          label: "同一个终点",
-          title: "两个人按同一只钟往前走。",
-          body: "挑战页把两个人拿到的勋章放在一起，比如第一步、完美一周和过半。规则随时能点开：每天记一次，连续三天没记，两个人一起结束挑战。回到首页，两个小人在同一条跑道上，倒数同一个终点。",
+          label: "03",
+          title: "将大目标切分成更容易完成的小目标",
+          body: "长期目标固然重要，但将目标切分成更容易完成的小目标并及时给予用户正反馈更利于用户留存。用户使用时将根据自己的减脂情况获得新的徽章。",
           demo: "看完勋章和规则，再回到两个人的跑道"
         }
       ]
     },
     testing: {
-      kicker: "03 / 聊完以后",
-      heading: "我找两个人聊了聊，BUBU 也跟着改了两次。",
-      lead: "上 TestFlight 之前，我把原型给一位潜在用户和一位做过同类产品的设计师看了。",
-      saidLabel: "对方怎么说",
-      changedLabel: "我怎么改",
+      kicker: "03",
+      heading: "达人访谈",
+      lead: "在准备上 TestFlight 之前，我把原型给一位潜在用户和一位做过同类产品的设计师进行测试与访谈",
+      changedLabel: "改动",
       findings: [
         {
           who: "一位有两万粉丝的健身博主",
-          said: "她喜欢这套界面，就算暂时没有搭子也想先用起来。有人可能是先喜欢上 BUBU 的样子，之后才去找搭子；如果注册时非得配对，这些人连第一天都进不去。",
-          changed: "我加了单人模式。首页、手账和挑战都保留，只把跑道变成一个人，手账也只放自己的一周。先开始，找到搭子以后再配对也来得及。"
+          said: "“我喜欢这套界面，我平时生活中没有时间做自己的手账本，这个只需要拍照就可以自动生成很适合想要打卡的人。我觉得可以推出单人版，因为我会因为一个软件好看就使用它的。”",
+          changed: "通过这次交流，我完善了单人模式的逻辑。首页、手账和挑战都保留，只把进度条变成一个人，手账也只放自己的一周。同时这也解决了一些用户暂时没有合适“搭子”的问题。"
         },
         {
           who: "一位有三年经验的产品设计师",
-          said: "他先问了一个很现实的问题：新 App 的匹配池这么小，用户会不会等很久，最后还只能配到一个差得很远的人？",
-          changed: "我把匹配改成了单向。系统按身高体重、目标和期限，给每个人找一个最接近的对手；你只看得到这一个人。同一个人可以同时出现在好几个人的跑道上，谁都不用等对方也选中自己。邀请码搭子另算，认识的两个人仍然互相看得到。"
+          said: "“新 App 的匹配池这么小，用户会不会等很久，最后还只能配到一个差得很远的人？这种冷启动非常影响新app的用户留存。”",
+          changed: "根据这个反馈我重新优化了一开始思考的匹配机制，不再局限于双向匹配。系统按身高体重、目标和期限，给每个人找一个最接近的对手，而同一个人可以同时成为多个人的搭子，不用等对方自己。同时设立邀请码，鼓励用户自带搭子入场，两人在形成配对的同时也可以为更多人提供激励。"
         }
       ],
       model: {
-        label: "第二次聊天之后，我这样改了匹配",
-        title: "你只看到一个对手，但好几个人可能同时看到你。",
+        title: "匹配机制",
         steps: [
-          ["进入匹配池", "目标有效 · 同意匿名参与", "目标有效，又同意匿名匹配的人，才会进入池子。"],
-          ["先排除不合适的人", "排除本人 · 搭子 · 不可用", "给 B 找对手时，先去掉 B 自己、B 用邀请码找来的搭子 P，以及目前不可用的人。"],
-          ["找最接近的一个", "身高体重 · 目标 · 期限", "剩下的人按身高体重、目标和挑战期限跟 B 比，D 最接近。"],
-          ["把 D 分给 B", "建立 B → D", "B 从此看到 D。D 不需要反过来同意，看到的仍然是自己的那位对手。"]
+          ["进入匹配池", "记录用户身高体重与目标", "记录用户身高体重与目标"],
+          ["匹配进行中", "排除与目标相差过大的用户，并鼓励用户使用邀请码邀请好友", "排除与目标相差过大的用户，并鼓励用户使用邀请码邀请好友"],
+          ["匹配成功", "在用户群中找到接近的用户并将两人结为搭子", "在用户群中找到接近的用户并将两人结为搭子"],
+          ["依旧存在于匹配池中", "匹配成功后，用户依旧存在于匹配池中，在缺少匹配对象时，依旧可以匹配为接近目标用户的搭子", "匹配成功后，用户依旧存在于匹配池中，在缺少匹配对象时，依旧可以匹配为接近目标用户的搭子"]
         ],
         people: {
           A: { name: "用户 A", note: "A 只看到 B，B 看不到 A。" },
@@ -424,58 +387,34 @@ const copy = {
         aria: "A 看到 B，C 看到 B，B 看到 D，B 和 P 通过邀请码互相看到。",
         legend: "实线箭头是系统分配，箭尾的人看得到箭头指向的人。虚线连着邀请码搭子，两边互相看得到。指一下任意一个人，就能顺着线看清 TA 的关系。",
         rules: [
-          ["每个人只看一个", "A 只看到 B；B 只看到 D。", "每个人只有一条指向别人的箭头。A 看 B，B 看 D。"],
-          ["很多人可以看同一个", "B 同时是 A 和 C 的对手，不用互选。", "好几条箭头可以一起指向 B。B 同时是 A 和 C 的对手，不需要反过来选中他们。"],
-          ["每段关系各算各的", "同一次打卡会更新所有相关进度。", "B 只打一次卡，和 A、C、D、P 相关的进度都会一起更新。"]
+          ["每个人都只有一个搭子", "在个人视角匹配是双向的", "在个人视角匹配是双向的"],
+          ["每一个人可以成为很多人的搭子", "帮助app尽快度过冷启动", "帮助app尽快度过冷启动"],
+          ["拆分个人目标的匹配", "A已进入app10天并与新进入的B当前与目标相近，也可以进行匹配", "A已进入app10天并与新进入的B当前与目标相近，也可以进行匹配"]
         ],
         open: "待定：两人同时缺席、平局，以及系统分配的对手能看到哪些照片。"
       },
-      note: "这两次聊的都是原型；当时还没有真实的搭子一起跑完一场挑战。"
     },
     iconset: {
-      kicker: "04 / 图标",
-      heading: "35 个图标，我故意没把它们画直。",
-      lead: "太规整的图标放在插画和手写数字旁边，总像是从别的 App 借来的。我只把用笔统一好，剩下的就照平时在纸上随手画的样子来。",
-      partsLabel: "我统一了这三件事",
-      parts: [
-        ["同一支笔", "图标、插画和分隔线都用同一种粗细。"],
-        ["拐弯别太整齐", "圆不必刚好闭合，转角也保留手画过去的痕迹。"],
-        ["能少一笔就少一笔", "到了 24 像素，每一笔都得真的有用。"]
-      ],
-      wobbleLabel: "这些歪线为什么要留下",
-      wobble: "随手画出来的线会有一点鼓，也会偏一点。我保留了这些小误差，而且没有让两个图标歪得一模一样。这样它们和旁边的小人放在一起，才像是同一套东西。",
-      rulesLabel: "几条不能破的规矩",
-      rules: [
-        "统一 24 的画格，统一线重，圆端点、圆转角。",
-        "实心是例外不是填充：35 个里只有 4 个用到。",
-        "不靠镜像凑出反向的那个；向左的箭头是自己画的。",
-        "按界面上的用途分类，不按形状分类。"
-      ],
+      kicker: "04",
+      heading: "icon设计",
+      subheading: "为此款app设计了一套偏手绘风格的icon",
+      lead: "为了更贴合手账记录的设计，app独立设计了一套更为贴合手绘感的icon。使用钢笔工具绘画并富有一定的抖动，没有增加过多的变形。",
       families: [
         ["操作", "添加、删除、确认、关闭"],
         ["箭头", "所有把你带去别处的东西"],
         ["控件", "复选框、单选、开关、筛选"],
         ["这个产品", "手账、靶心、比赛"]
-      ],
-      drawNote: "滚到这里，图标会一笔笔画出来。指向一个，可以单独看它；指向下面的一组，就能在整张纸上找到这一家。"
+      ]
     },
     cast: {
-      kicker: "05 / 这些小人",
-      heading: "这两个小人，从头到尾都陪你一起跑。",
-      lead: "我用界面里的同一种线画了五段循环动画。空状态、组队成功、一个人跑、冲过终点，这些光靠数字说不清的时刻，就交给它们来演。",
-      clips: [
-        ["跳绳", "空状态，以及两场挑战之间的间隙"],
-        ["你们俩", "确认组队成功的那一屏"],
-        ["一个人", "单人模式下的首页"],
-        ["冲线", "最后一天撞过终点线"],
-        ["达成目标", "庆祝页，以及从那里分享出去的小票"]
-      ],
-      note: "动画出现在画面里才会播放，离开就停。"
+      kicker: "05",
+      heading: "动画设计",
+      lead: "界面内含有很多小人动画，对于空置页面进行了美化和更精准的视觉传达。所有小人均为手绘，再使用runway进行动画生成。",
+      clips: ["跳绳", "你们俩", "一个人", "冲线", "达成目标"]
     },
     userflow: {
-      kicker: "06 / 流程图",
-      heading: "从登录到冲线，一共 23 个界面。",
-      lead: "这张图把实际版本一屏一屏摊开。单人和双人的路线大体一样，只有搭子出现的那几个时刻属于双人模式。",
+      kicker: "06",
+      heading: "流程图",
       label: "完整版本",
       title: "从首页出发，大部分地方两步就到。",
       aria: "实际版本的地图：登录和初始设置通向首页；从首页出发有记录、今日小票、手账、挑战、组队页和设置。",
@@ -509,33 +448,29 @@ const copy = {
       }
     },
     screens: {
-      kicker: "07 / 界面",
-      heading: "从实际版本里挑出的九个界面。",
-      lead: "这些画面直接截自 iPhone 17 模拟器里的版本，包含初始设置、一天的记录和双人挑战。",
-      names: ["登录", "挑战时长", "单人还是双人", "准备好了", "首页", "手账本", "今日小票", "组队成功", "挑战进度"],
-      hint: "↑ 让指针沿着这条线划过去"
+      kicker: "07",
+      heading: "高保真",
+      names: ["登录", "挑战时长", "单人还是双人", "准备好了", "首页", "手账本", "今日小票", "组队成功", "挑战进度"]
     },
     shipping: {
-      kicker: "08 / 上架",
-      heading: "App 已经能跑了，接下来要交给真的搭子。",
-      lead: "开发告一段落。下一步是 TestFlight、准备 App Store 页面，然后送审。",
+      kicker: "08",
+      heading: "上架",
+      lead: "当前开发告一段落，下一步是 TestFlight、准备 App Store 页面并送审",
       doneLabel: "已完成",
       done: [
-        "23 个界面，设计并开发完成",
-        "35 个图标，同一支笔画的",
+        "高保真设计并开发完成",
+        "icon与图标设计",
         "双人和单人两种模式",
-        "小票、手账和分享卡",
-        "第二次访谈之后改出的一对多匹配",
-        "五段手绘动画"
+        "App运行逻辑"
       ],
       leftLabel: "还要做这些",
       left: [
-        "找真实搭子跑一轮 TestFlight，也第一次真正测试匹配",
-        "隐私标签，以及匹配到底需要哪些数据",
+        "找真实用户进行一轮 TestFlight",
+        "视觉化运动项目，制作一整套表情包",
         "App Store 的截图和文案",
         "送审，再处理审核提出的修改"
       ],
-      limit: "这一轮 TestFlight 主要测两件事。一是匹配逻辑：它还没在真实用户身上跑过，池子还小的时候，能不能给每个人配到合适的对手？二是整个 App：两次访谈帮我改了产品，但哪里会出错、哪里用着别扭，要每天用满八周才看得出来。"
+      limit: "这一轮 TestFlight 主要测试：1. 是否还有使用逻辑上的错误，需要与用户进行及时的跟进；2. 对于匹配时间与宽泛匹配对象体重与目标的额度还需要更多的调研数据支撑。"
     }
   }
 }
@@ -589,13 +524,6 @@ function IPhone({ children }) {
   )
 }
 
-/* The three rules of the pen, each shown by the icon that is most nearly
-   just that rule: a minus is one line, a radio is a circle not quite
-   closed, the journal is a few strokes. Looked up by id rather than by
-   position, so cutting an icon out of the set cannot quietly point these
-   somewhere else. */
-const ruleIcons = ["minus", "radio", "notebook"].map((id) => icons.find((icon) => icon.id === id))
-
 /* One icon. `d` is stroked, `dot` is a round cap standing in for a dot,
    `fill` is the few solid parts. Colour comes from the text around it. */
 function Glyph({ icon, size }) {
@@ -635,7 +563,7 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                 <span className={styles.pill}>{t.hero.pill}</span>
                 <span>{t.hero.context}</span>
               </div>
-              <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>{t.hero.titleA}<br />{t.hero.titleB}</h1>
+              <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>{t.hero.titleA}<br />{Array.isArray(t.hero.titleB) ? t.hero.titleB.map((chunk) => <span className={styles.titleChunk} key={chunk}>{chunk}</span>) : t.hero.titleB}</h1>
               <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>{t.hero.lead}</p>
 
               {/* The app icon at its real corner radius, next to the line
@@ -673,7 +601,6 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               <h2>{t.why.heading}</h2>
               <p className={styles.sectionLead}>{t.why.lead}</p>
             </div>
-            <p className={styles.microLabel}>{t.why.rulesLabel}</p>
             <div className={styles.rules}>
               {t.why.rules.map((rule) => (
                 <article className={styles.rule} key={rule.label}>
@@ -689,7 +616,6 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.how.kicker}</p>
               <h2>{t.how.heading}</h2>
-              <p className={styles.sectionLead}>{t.how.lead}</p>
             </div>
 
             {[["mode", start], ["journal", week], ["race", race]].map(([name, beat]) => (
@@ -724,7 +650,6 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                     <h3>{finding.who}</h3>
                   </div>
                   <div className={styles.findingSaid}>
-                    <p className={styles.microLabel}>{t.testing.saidLabel}</p>
                     <p>{finding.said}</p>
                   </div>
                   <div className={styles.findingChanged}>
@@ -737,22 +662,21 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
 
             <MatchingModel copy={t.testing.model} />
 
-            <p className={styles.sourceNote}>{t.testing.note}</p>
           </section>
 
           <section id="iconset" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.iconset.kicker}</p>
               <h2>{t.iconset.heading}</h2>
+              <h3 className={styles.sectionSubheading}>{t.iconset.subheading}</h3>
               <p className={styles.sectionLead}>{t.iconset.lead}</p>
             </div>
 
             {/* The set as one sheet: thirty-five drawings on the app's paper,
                 seven to a row, which fills the rectangle exactly. Nothing is
                 labelled at rest. Pointing at a drawing brings it up to ink
-                and prints its name under it, drops everything else back to
-                a trace, and leaves its own family half-dark, so the four
-                families show themselves without a rule between them. */}
+                and prints its family and name under it, and drops
+                everything else back to a trace. */}
             <div className={styles.sheetWrap}>
               <ul className={styles.sheet}>
                 {icons.map((icon, at) => {
@@ -769,43 +693,8 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                 })}
               </ul>
 
-              {/* The families, as a line under the sheet. Pointing at one
-                  lights its icons in place on the sheet above. */}
-              <ul className={styles.legend}>
-                {iconFamilies.map((family, index) => (
-                  <li className={styles.legendItem} key={family} data-family={family}>
-                    <span className={styles.legendName}>{t.iconset.families[index][0]}</span>
-                    <span className={styles.legendWhat}>{t.iconset.families[index][1]}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
-            <div className={styles.lookGrid}>
-              <div>
-                <p className={styles.microLabel}>{t.iconset.partsLabel}</p>
-                <dl className={styles.primitives}>
-                  {t.iconset.parts.map(([name, how], index) => (
-                    <div key={name}>
-                      <dt>
-                        <Glyph icon={ruleIcons[index]} size={30} />
-                        {name}
-                      </dt>
-                      <dd>{how}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-              <div>
-                <p className={styles.microLabel}>{t.iconset.wobbleLabel}</p>
-                <p>{t.iconset.wobble}</p>
-                <p className={styles.microLabel}>{t.iconset.rulesLabel}</p>
-                <ul className={styles.refusals}>
-                  {t.iconset.rules.map((rule) => <li key={rule}>{rule}</li>)}
-                </ul>
-              </div>
-            </div>
-            <p className={styles.sourceNote}>{t.iconset.drawNote}</p>
           </section>
 
           <section id="cast" className={styles.caseSection}>
@@ -822,14 +711,11 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
                     src={clip.src}
                     webm={clip.webm}
                     poster={clip.poster}
-                    alt={t.cast.clips[index][0]}
+                    alt={t.cast.clips[index]}
                   />
-                  <p className={styles.castName}>{t.cast.clips[index][0]}</p>
-                  <p className={styles.castWhere}>{t.cast.clips[index][1]}</p>
                 </li>
               ))}
             </ul>
-            <p className={styles.sourceNote}>{t.cast.note}</p>
           </section>
 
           {/* The whole build as a tree of named screens, drawn live, before
@@ -838,7 +724,6 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.userflow.kicker}</p>
               <h2>{t.userflow.heading}</h2>
-              <p className={styles.sectionLead}>{t.userflow.lead}</p>
             </div>
             <Userflow copy={t.userflow} />
           </section>
@@ -847,11 +732,9 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.screens.kicker}</p>
               <h2>{t.screens.heading}</h2>
-              <p className={styles.sectionLead}>{t.screens.lead}</p>
             </div>
             <Hand
               cards={hand.map((file, index) => ({ src: handScreen(file, locale), name: t.screens.names[index] }))}
-              hint={t.screens.hint}
             />
           </section>
 

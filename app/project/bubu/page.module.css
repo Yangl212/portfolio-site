@@ -39,6 +39,8 @@
 .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .8125rem; color: var(--muted); }
 .pill { border-radius: 999px; background: var(--text); color: var(--inverse); padding: 7px 12px; font-size: .75rem; font-weight: 500; }
 .hero h1 { font-size: clamp(2.6rem, 1.7rem + 3.15vw, 4.5rem); line-height: 1.04; font-weight: 500; letter-spacing: -.045em; }
+/* A title given as phrases breaks only between them, never mid-phrase. */
+.titleChunk { display: inline-block; }
 .hero .heroLead { max-width: 47ch; font-size: clamp(1.1rem, 1rem + .45vw, 1.3rem); line-height: 1.55; }
 
 /* The icon at the corner radius iOS actually gives it, next to the one
@@ -74,8 +76,8 @@
 .sectionHeader { max-width: 770px; display: flex; flex-direction: column; gap: 18px; }
 .page .kicker, .page .microLabel { font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
 .microLabel { color: var(--muted); }
+.sectionSubheading { font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); font-weight: 500; line-height: 1.3; }
 .sectionLead { max-width: 64ch; color: var(--muted); }
-.page .sourceNote { max-width: 90ch; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
 .page .limitNote { max-width: 86ch; font-size: .9375rem; color: var(--muted); }
 
 /* ---------- 01 the three rules ---------- */
@@ -87,6 +89,7 @@
 /* The same shape as the Last Message page's feature rows: the writing
    in the narrower column, the moving picture in the wider one. */
 .beat { display: grid; gap: 28px; align-items: center; padding-top: 32px; border-top: 1px solid var(--divider); }
+.sectionHeader + .beat { border-top: 0; padding-top: 0; }
 .beatCopy { display: flex; flex-direction: column; gap: 16px; max-width: 60ch; }
 .beatCopy h3 { font-size: clamp(1.4rem, 1.1rem + .9vw, 1.8rem); max-width: 24ch; }
 .beatCopy > p:not(.microLabel) { font-size: .9375rem; }
@@ -161,9 +164,11 @@
 .model {
   --ease: cubic-bezier(.2, .8, .2, 1);
   --mono: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Drawn straight on the page: the paper its boxes and people are
+     filled with is the page itself. */
+  --app-paper: var(--page-bg);
   display: grid; gap: clamp(28px, 4vw, 44px);
-  padding: clamp(22px, 4vw, 52px) clamp(18px, 4vw, 56px);
-  background: var(--app-paper); color: var(--app-ink);
+  color: var(--app-ink);
 }
 .modelHead { display: flex; flex-direction: column; gap: 10px; }
 .page .modelHead h3 { max-width: 30ch; font-size: clamp(1.3rem, 1.1rem + .8vw, 1.75rem); letter-spacing: -.03em; text-wrap: balance; }
@@ -220,7 +225,6 @@
 .person[data-lead] .personRing { transform: scale(1.08) rotate(-8deg); }
 .person:focus-visible .personRing { stroke: #174fa4; stroke-width: 2.5; }
 /* Being weighed: a second, looser ring. */
-.personCompare { fill: none; stroke: var(--app-ink); stroke-width: 1; stroke-dasharray: 2 5; opacity: .6; }
 .personRipple { fill: none; stroke: var(--app-ink); stroke-width: 1.2; pointer-events: none; }
 
 .page .modelReadout { max-width: 64ch; min-height: 3.3em; text-align: center; font-size: .9375rem; line-height: 1.65; }
@@ -277,18 +281,11 @@
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
 /* ---------- two columns and a dashed list, as shipping uses them ---------- */
-.lookGrid { display: grid; gap: 32px; }
-.lookGrid > div { display: flex; flex-direction: column; gap: 14px; }
-.refusals { display: flex; flex-direction: column; gap: 14px; }
-.refusals li { padding-left: 20px; position: relative; font-size: .9375rem; line-height: 1.6; }
-.refusals li::before { content: ""; position: absolute; left: 0; top: .72em; width: 11px; height: 1px; background: var(--text); }
 
 /* ---------- 05 the cast ---------- */
 .cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
 .castItem { display: flex; flex-direction: column; gap: 10px; }
 .castLoop { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--app-paper); border: 1px solid var(--divider); }
-.castName { font-size: 1rem; font-weight: 500; }
-.castWhere { font-size: .8125rem; line-height: 1.55; color: var(--muted); }
 
 /* ---------- 07 the screens ---------- */
 /* A hand of cards. Nine screens fanned on the page itself, standing in a
@@ -354,17 +351,6 @@
   box-shadow: 0 46px 80px -22px rgba(34, 34, 34, 0.5);
   opacity: var(--k);
 }
-/* The name comes in over the last quarter of the lift, so it belongs to
-   the card that is out and not to the two sharing the lift on the way. */
-.handName {
-  position: absolute; left: 50%; bottom: calc(100% + 12px);
-  transform: translate(-50%, calc((1 - var(--k)) * 12px));
-  display: flex; gap: 10px; padding: 7px 12px; white-space: nowrap; pointer-events: none;
-  background: var(--text); color: var(--inverse);
-  font-size: .8125rem; font-weight: 500; line-height: 1.2;
-  opacity: calc((var(--k) - 0.72) * 5);
-}
-.handName span { font-family: var(--font-mono), ui-monospace, "SFMono-Regular", Menlo, monospace; opacity: .6; }
 .handCard:focus-visible img { outline: 2px solid #174fa4; outline-offset: 4px; }
 
 /* With the script running, the frames are its own and nothing here eases
@@ -374,7 +360,7 @@
 /* Without it, pointing at a card still pulls it out: the same lift, set
    in one step and eased by the browser. */
 .hand:not([data-live]) .handCard { transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
-.hand:not([data-live]) .handCard::before, .hand:not([data-live]) .handName { transition: opacity 320ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
+.hand:not([data-live]) .handCard::before { transition: opacity 320ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
 .hand:not([data-live]) .handCard:hover, .hand:not([data-live]) .handCard:focus { --k: 1; z-index: 30; }
 
 /* The arrival: the line is ruled from the left, and the cards come up
@@ -383,14 +369,10 @@
 .hand::after { transform-origin: 0 50%; }
 .hand[data-live="wait"]::after { transform: scaleX(0); }
 .hand[data-live="in"]::after { transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1); }
-.hand[data-live="wait"] + .handHint { opacity: 0; }
-.hand[data-live="in"] + .handHint { transition: opacity 700ms ease 1300ms; }
 
-/* Under the line, what the line is for. */
-.page .handHint { margin-top: -18px; font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
-  .hand .handCard, .hand .handCard::before, .hand .handName, .hand::after, .hand + .handHint { transition: none; }
+  .hand .handCard, .hand .handCard::before, .hand::after { transition: none; }
 }
 
 /* ---------- 08 shipping ---------- */
@@ -414,13 +396,13 @@
 
 @media (min-width: 700px) {
   .rules { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
-  .lookGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
   .cast { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .shipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
 }
 
 @media (min-width: 900px) {
   .beat { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: 48px; padding-top: 40px; }
+  .sectionHeader + .beat { padding-top: 0; }
   /* Subgrid, so head, said and changed each share a row across both
      columns and start level however long the other one runs. */
   .findings { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
@@ -458,25 +440,16 @@
   .hand::after { content: none; }
   .hand .handCard, .hand .handCard:hover, .hand .handCard:focus { position: static; flex: none; width: 54vw; transform: none; transition: none; scroll-snap-align: center; }
   .handCard::before { content: none; }
-  .hand .handName { position: static; transform: none; display: inline-flex; margin-top: 14px; opacity: 1; transition: none; }
   .hand[data-live] { touch-action: auto; }
-  .page .handHint { display: none; }
   .stage { padding: 16px; }
   .projectNav { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
   .projectNavAll { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
 }
 
 /* ---------- 04 the icon set ---------- */
-.primitives { margin-top: 18px; display: grid; gap: 18px; }
-.primitives div { display: grid; gap: 4px; }
-.primitives dt { display: flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 500; }
-.primitives dd { padding-left: 42px; font-size: .9375rem; line-height: 1.55; color: var(--muted); }
 
 /* The set, as one sheet of the app's paper. Seven to a row: thirty-five
    fills the rectangle exactly, and on a phone five to a row does too. */
-/* The sheet with the families beside it, in a column of their own: the
-   sheet gets the width it needs and no more, and the legend reads as a
-   key to it rather than a caption under it. */
 .sheetWrap { display: grid; gap: 22px; align-items: start; }
 .sheet {
   display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -517,25 +490,6 @@
 .sheet:has(.cell[data-family="controls"]:hover) .cell[data-family="controls"]:not(:hover) { opacity: .48; }
 .sheet:has(.cell[data-family="product"]:hover) .cell[data-family="product"]:not(:hover) { opacity: .48; }
 
-/* The line of families under the sheet. Pointing at a family lights it on
-   the sheet and dims the other three, so the legend is also the filter. */
-.legend { display: flex; flex-wrap: wrap; gap: 6px 28px; }
-.legendItem { display: flex; align-items: baseline; gap: 10px; cursor: default; }
-@media (min-width: 1000px) {
-  .sheetWrap { grid-template-columns: minmax(0, 1fr) 232px; gap: 44px; }
-  .legend { flex-direction: column; gap: 0; padding-top: 6px; }
-  .legendItem { flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 0 18px; border-top: 1px solid var(--divider); }
-  .legendItem:last-child { border-bottom: 1px solid var(--divider); }
-  .legendWhat { line-height: 1.5; }
-}
-.legendName { font-size: .9375rem; font-weight: 500; }
-.legendWhat { font-size: .8125rem; color: var(--muted); }
-.legendItem:hover .legendName { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-.sheetWrap:has(.legendItem:hover) .cell { opacity: .16; }
-.sheetWrap:has(.legendItem[data-family="actions"]:hover) .cell[data-family="actions"] { opacity: 1; }
-.sheetWrap:has(.legendItem[data-family="arrows"]:hover) .cell[data-family="arrows"] { opacity: 1; }
-.sheetWrap:has(.legendItem[data-family="controls"]:hover) .cell[data-family="controls"] { opacity: 1; }
-.sheetWrap:has(.legendItem[data-family="product"]:hover) .cell[data-family="product"] { opacity: 1; }
 
 /* The icons draw themselves rather than appear: the set is generated by
    stroking paths, so the page shows them being stroked, in a wave across
@@ -567,7 +521,6 @@
   .sheet { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .cell .glyph { width: 32px; height: 32px; }
   .cellName { display: none; }
-  .legend { gap: 6px 18px; }
 }
 
 /* ---------- 06 the map ----------
