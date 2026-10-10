@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { Fragment, useEffect, useRef } from "react"
 
 import { PressRing } from "../../components/PressRing"
 import { usePressCursor } from "../../components/usePressCursor"
@@ -42,7 +42,7 @@ const stacks = {
   "boa-budgeting": {
     copy: {
       en: { when: "2026 · 8 weeks", role: "UI/UX Designer", summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.", facets: ["Mobile + Web", "B2C", "Banking"] },
-      zh: { when: "2026 年 · 8 周", role: "UI/UX 设计师", summary: "我重新设计了美国银行的移动端和网页端预算功能，并做了两轮任务测试。", facets: ["移动端 + 网页", "B2C", "银行"] }
+      zh: { when: "2026 年 · 8 周", role: "UI/UX 设计师", summary: "重新设计了美国银行的移动端和网页端预算功能，并进行了两轮任务测试", facets: ["移动端 + 网页", "B2C", "银行"] }
     },
     tint: "pink",
     layers: [
@@ -58,7 +58,7 @@ const stacks = {
   vortexnet: {
     copy: {
       en: { when: "2025 · Jun – Oct", role: "UI/UX Design Intern", summary: "Task-based information hierarchy for a 30-person company’s finance dashboard, shipped during the internship.", facets: ["Web app", "B2B internal", "Fintech"] },
-      zh: { when: "2025 年 · 6 月–10 月", role: "UI/UX 设计实习生", summary: "我按日常任务重新整理了一家约 30 人公司的内部金融仪表盘，并在实习期间上线。", facets: ["网页应用", "B2B 内部工具", "金融科技"] }
+      zh: { when: "2025 年 · 6 月–10 月", role: "UI/UX 设计实习生", summary: "重新设计了一家公司的内部首页与金融仪表盘，并在实习期间上线", facets: ["网页应用", "B2B 内部工具", "金融科技"] }
     },
     tint: "blue",
     layers: [
@@ -72,7 +72,7 @@ const stacks = {
   lastmessage: {
     copy: {
       en: { when: "2026 · 4 months", role: "Product Design & Development", summary: "A playable browser-based AI detective game, designed and developed end to end across the investigation, character behavior, and interface.", facets: ["Browser game", "B2C", "AI · Narrative"] },
-      zh: { when: "2026 年 · 4 个月", role: "产品设计与开发", summary: "一款可以直接在浏览器里玩的 AI 侦探游戏。我独立完成了调查结构、角色行为、界面和开发。", facets: ["浏览器游戏", "B2C", "AI · 叙事"] }
+      zh: { when: "2026 年 · 4 个月", role: "产品设计与开发", summary: "一款可以直接在浏览器里玩的 AI 侦探游戏。我独立完成了调查结构、角色行为、界面和开发", facets: ["浏览器游戏", "B2C", "AI · 叙事"] }
     },
     tint: "pink",
     layers: [
@@ -92,7 +92,7 @@ const stacks = {
   cleared: {
     copy: {
       en: { when: "2026 · 8 weeks", role: "Product Designer", summary: "Turning email commitments into calendar suggestions people can inspect, adjust and confirm - usability tested on simulated data.", facets: ["Desktop + mobile", "B2C", "AI · Productivity"] },
-      zh: { when: "2026 年 · 8 周", role: "产品设计师", summary: "AI 从邮件里读出待办，给出一条可以核对、调整和确认的日程建议。用模拟数据做过可用性测试。", facets: ["桌面端 + 移动端", "B2C", "AI · 效率工具"] }
+      zh: { when: "2026 年 · 8 周", role: "产品设计师", summary: "AI 从邮件里读出待办，给出一条可以核对、调整和确认的日程建议。用模拟数据做过可用性测试", facets: ["桌面端 + 移动端", "B2C", "AI · 效率工具"] }
     },
     tint: "blue",
     layers: [
@@ -112,7 +112,7 @@ const stacks = {
   taroo: {
     copy: {
       en: { when: "2025", role: "Brand & Illustration Design", summary: "A tarot brand for people drawn to good design rather than fortune telling - 22 Major Arcana cards, packaging, and the visual system behind them.", facets: ["Print + Packaging", "B2C", "Brand"] },
-      zh: { when: "2025 年", role: "品牌与插画设计", summary: "一套做给设计爱好者的塔罗品牌，包括 22 张大阿卡纳、包装和一套完整的视觉系统。", facets: ["印刷 + 包装", "B2C", "品牌"] }
+      zh: { when: "2025 年", role: "品牌与插画设计", summary: "一套做给设计爱好者的塔罗品牌，包括 22 张大阿卡纳、包装和一套完整的视觉系统", facets: ["印刷 + 包装", "B2C", "品牌"] }
     },
     tint: "pink",
     /* Five arcana rather than three, fanned in two depths: High Priestess
@@ -136,7 +136,7 @@ const stacks = {
   suglar: {
     copy: {
       en: { when: "2024", role: "Visual & Game Design", summary: "Translating the color, texture, and emotion of candy into a board game where sweetness becomes strategy.", facets: ["Board game", "B2C", "Game · Visual"] },
-      zh: { when: "2024 年", role: "视觉与游戏设计", summary: "我把真的糖果做成桌游组件，让玩家靠看、摸、闻、尝来判断下一步。", facets: ["桌游", "B2C", "游戏 · 视觉"] }
+      zh: { when: "2024 年", role: "视觉与游戏设计", summary: "我把真的糖果做成桌游组件，让玩家靠看、摸、闻、尝来判断下一步", facets: ["桌游", "B2C", "游戏 · 视觉"] }
     },
     tint: "blue",
     layers: [
@@ -160,7 +160,7 @@ const stacks = {
   bubu: {
     copy: {
       en: { when: "2026", role: "Product Design", summary: "An iOS app for an eight-week weight-loss challenge. Meals become daily receipts, and seven days of records become a weekly journal shared with a buddy.", facets: ["iOS app", "B2C", "Health · Social"] },
-      zh: { when: "2026 年", role: "产品设计", summary: "一款为八周减脂挑战设计的 iOS App。拍照记下一餐，每天生成小票，每周整理成手账。", facets: ["iOS App", "B2C", "健康 · 社交"] }
+      zh: { when: "2026 年", role: "产品设计", summary: ["一款找“减肥搭子”的手账iOS App", "拍照记录，互相打卡，互相进步"], facets: ["iOS App", "B2C", "健康 · 社交"] }
     },
     tint: "pink",
     layers: [
@@ -169,8 +169,8 @@ const stacks = {
       { kind: "cut", src: "/bubu/polaroid-coffee.webp", x: 66, y: 8, w: 17, r: 0, dx: 14, dy: -16, dr: 8, ds: 1.06, depth: 1.1, z: 2 },
       { kind: "cut", src: "/bubu/phone.webp", x: 6, y: 5, w: 37.5, r: -8, dx: -14, dy: -6, dr: -12, ds: 1.02, depth: 0.8, z: 3 },
       { kind: "app", src: "/bubu/icon.webp", x: 60, y: 70, w: 21, r: 4, dx: 12, dy: 10, dr: 10, ds: 1.08, depth: 1.2, z: 5 },
-      { kind: "chip", text: { en: "Home · a race for two", zh: "首页 · 两人赛跑" }, x: 2, y: 0, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
-      { kind: "chip", text: { en: "Weekly journal · me & my buddy", zh: "周记手账 · 我与搭子" }, x: 34, y: 58, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
+      { kind: "chip", text: { en: "Home · a race for two", zh: "减肥搭子匹配系统" }, x: 2, y: 0, r: -4, dx: -10, dy: -10, dr: -7, depth: 0.5, z: 4 },
+      { kind: "chip", text: { en: "Weekly journal · me & my buddy", zh: "自动生成独立手账页面" }, x: 34, y: 58, r: 3, dx: 12, dy: 10, dr: 6, depth: 0.5, z: 4 }
     ]
   }
 }
@@ -308,7 +308,7 @@ export function FeaturedStacks({ projects, locale = "en" }) {
               <ul className={styles.facets} data-tint={stack.tint}>
                 {copy.facets.map((facet) => <li key={facet} className={styles.facet}>{facet}</li>)}
               </ul>
-              <p className={styles.description}>{copy.summary}</p>
+              <p className={styles.description}>{[].concat(copy.summary).map((line, index) => <Fragment key={line}>{index > 0 && <br />}{line}</Fragment>)}</p>
               <p className={styles.role}><span>{roleLabel}</span> — {copy.role}</p>
             </div>
           </article>

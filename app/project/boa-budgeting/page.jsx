@@ -3,6 +3,7 @@ import { ImageCarousel } from "../../../components/ImageCarousel"
 import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { ScrollLink } from "./ScrollLink"
 import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -35,12 +36,24 @@ const researchStats = [
 
 const screenNumber = (src) => src.replace(/\D+/g, "")
 
+function SectionHeader({ section }) {
+  const leads = [].concat(section.lead || [])
+  return (
+    <div className={styles.sectionHeader}>
+      {section.kicker && <p className={styles.kicker}>{section.kicker}</p>}
+      <h2>{section.heading}</h2>
+      {section.subheading && <h3 className={styles.sectionSubheading}>{section.subheading}</h3>}
+      {leads.map((lead) => <p className={styles.sectionLead} key={lead}>{lead}</p>)}
+    </div>
+  )
+}
+
 /*
  * Every line of prose on the page, in both languages. The English is
- * unchanged, lifted out of the JSX as it stood; the Chinese keeps every
- * figure and every limit intact - the small directional study, the
- * practice effects, the exploratory assistant comparison, and the note
- * that this is not affiliated with Bank of America.
+ * unchanged, lifted out of the JSX as it stood. The Chinese is the
+ * author's own text and is deliberately shorter: any field it leaves out
+ * (prototype steps, survey stats, method notes, caveats) is simply not
+ * rendered, and a `lead` may be a list of paragraphs.
  */
 const copy = {
   en: {
@@ -212,8 +225,8 @@ const copy = {
       pill: "独立案例",
       context: "产品 · UI/UX · 2026",
       titleA: "BOA：支出",
-      titleB: "与预算。",
-      lead: "先看清钱花在哪，再改分类、调预算。",
+      titleB: "与预算",
+      lead: "针对于BOA产品的用户体验优化",
       roleLabel: "角色",
       role: "UI/UX 设计师",
       timelineLabel: "周期",
@@ -221,81 +234,66 @@ const copy = {
       platformLabel: "平台",
       platform: "移动端 + 网页",
       challengeLabel: "挑战",
-      challenge: "看总额、改分类、调预算，本来是三段断开的流程。我想让它们能顺着做下去。",
+      challenge: "将已有的流程进行简化，并迭代新的产品功能",
       scopeLabel: "我负责的部分",
-      scope: "调研、流程分析、线框、移动端和网页界面，以及一个可交互原型。",
+      scope: "调研、流程分析、线框图简化、移动端和网页设计",
       outcomeLabel: "结果",
-      outcome: "6 位参与者中，能在没有提示的情况下完成预算重新分配的人从 2 位增加到 5 位；发现超支所需的中位时间从 41 秒降到 24 秒。",
-      actionPrototype: "试试原型",
-      actionFlow: "看核心流程",
+      outcome: "本次招募测试者共有6人。在没有提示的情况下完成预算重新分配的人从 2 位增加到 5 位；发现超支所需的中位时间从 41 秒降到 24 秒",
+      actionPrototype: "与prototype交互",
+      actionFlow: "了解核心设计决策",
       videoLabel: "BOA 预览：在分类之间重新分配预算"
     },
     experience: {
-      kicker: "01 / 核心体验",
-      heading: "看到超支以后，可以顺手查清原因，再调整预算。",
-      lead: "我把流程拆成三步：先发现问题，再查到具体消费，最后决定要不要调整预算。",
+      kicker: "01",
+      heading: "设计决策",
+      lead: "整个设计包含三个重要的设计决策，以及一个新功能的迭代",
       highlights: [
-        { label: "01 / 看懂", title: "先找出需要处理的分类。", body: "点开一个分类，金额、预算和当前状态会放在一起显示。", video: "spending", alt: "改版后 BOA 支出图表的录屏：按分类显示超支情况，并滑动查看更多洞察" },
-        { label: "02 / 追查", title: "再查清这笔总额是怎么来的。", body: "在「按商家」和「按月份」之间切换时，当前月份、分类和预算都会保留。", video: "budget", alt: "分类支出视图在按商家和按月份两种拆分之间切换" },
-        { label: "03 / 调整", title: "调预算不用重走一遍设置。", body: "在两个分类之间挪一笔钱，预览两边的新额度，再决定这次改动是临时的还是长期的。", video: "reallocate", alt: "在两个分类之间重新分配预算额度，两边的额度都看得见" }
+        { label: "01", title: "首页的收支趋势", body: "在首页增设卡片的收支变化，让用户可以直接看到趋势。", image: "/boa/media/home-poster.webp", alt: "改版后的 BOA 首页：总余额趋势，以及每个账户卡片上的收支变化" },
+        { label: "02", title: "花费页的超支展示", body: "在花费页清楚地展示哪个项目超支，而不仅仅是一个数字圆盘。", video: "spending", alt: "改版后 BOA 支出图表的录屏：按分类显示超支情况" },
+        { label: "03", title: "超支项目的对比", body: "对于超支项目，可以更清楚地横向对比每月的开销，不仅能按月份查看，也能按消费商家查看。", video: "budget", alt: "分类支出视图在按商家和按月份两种拆分之间切换" },
+        { label: "04", title: "新功能：预算转移", body: "预算可以在两个不同分类之间直接转移，无需修改月度预算总量。保存时，会询问这次调整是否只针对当前月份。", video: "reallocate", alt: "在两个分类之间转移预算，两边的额度都看得见" }
       ]
     },
     prototype: {
-      kicker: "02 / 可交互原型",
-      heading: "可以直接走一遍完整流程。",
-      lead: "用示例交易和预算，试试串起来的移动端流程。",
+      kicker: "02",
+      heading: "可交互原型",
+      lead: "请点击右侧的手机，试用可点击的移动端原型",
       steps: [
-        { title: "查看一个支出分类", body: "在圆环上选一个分类，对比它按商家和按月份的拆分，再打开它的交易明细。" },
-        { title: "一次修改多笔交易的分类", body: "勾选多笔交易后一起改分类，当前的月份和分类不会被清掉。" },
-        { title: "做一次只管一个月的预算调整", body: "重新分配各分类的额度，看一眼新的上限，再选这次改动只管这个月还是长期生效。这里调的是计划，不会真的转账。" }
+        { title: "尝试 Spending 和 Budgeting 页面圆盘的 Hover 交互。" },
+        { title: "尝试 Edit Budget、Save Budget，以及新功能 Relocate，在不同分类之间转移预算。" },
+        { title: "尝试右上角的 AI 助手。" },
+        { title: "尝试修改一笔 Transaction 的分类。" }
       ],
-      open: "打开大图",
-      note: "可选的助手演示的是基于示例数据的推荐问题和回答。自由提问和真实 AI 不在这个原型范围内。",
-      tryMe: "试试看",
+      tryMe: "Try me",
       frameTitle: "BOA 支出与预算的可交互原型"
     },
     research: {
-      kicker: "03 / 调研与问题定义",
-      heading: "流程断掉的三个地方。",
-      lead: "调研集中在三件事上：找到并核对支出、改分类，以及在月中调整预算。",
-      methods: [
-        { value: "32", label: "份问卷" },
-        { value: "2", label: "场用户访谈" },
-        { value: "Reddit", label: "作为佐证的公开帖子" }
+      kicker: "03",
+      heading: "用户痛点与市场调研",
+      lead: [
+        "这些问题来自我自己使用 BOA 时对操作流程的疑问。在查询中我发现 Reddit 上有很多人也对账户中的 Spending 和 Budget 功能感到困惑。",
+        "出于此目的，我做了一份问卷调查，共收集到 32 份问卷。用户反馈主要集中在三个问题："
       ],
-      methodNote: "参与者都用过美国银行，但不一定用过预算功能。样本很小，这次调研只能帮我找方向，不能代表所有用户。",
       problems: [
-        { title: "支出既不好找，也不好核对", body: "要弄清一个总额是怎么来的，用户得在汇总、分类和交易列表之间来回跳。" },
-        { title: "改分类会把流程打断", body: "要改一个分类，得一笔一笔地打开交易；而返回时，筛选和已选中的项还可能被清空。" },
-        { title: "想改一点预算，却要重走整套设置", body: "用户可能只想微调这个月的预算，却会被带回完整的设置流程，做一堆和这次修改无关的操作。" }
+        { title: "首屏信息冗杂", body: "大部分用户觉得首页找不到花费页面在哪里，用起来很不方便。" },
+        { title: "修改分类会打断流程", body: "一部分用户表示，每次修改分类都会打断当前流程，导致要重新再来一遍。" },
+        { title: "修改预算很费劲", body: "每次修改预算，都要把整个流程重新做一遍。" }
       ],
-      surveySummary: "查看问卷拆解和佐证材料",
-      statLabels: { reset: "选中项被清空", insights: "洞察不好找", correction: "改分类很费时间", inflexible: "预算不够灵活" },
-      statNote: "这四项数据来自原始问卷记录。「不清楚总额和交易之间怎么对应」只在访谈里反复出现，所以我把它保留为定性发现，没有硬配一个百分比。",
-      interviewAlt: "BOA 支出案例的访谈背景材料",
-      interviewTitle: "访谈背景",
-      interviewBody: " 访谈里反复提到三个问题：分类难改、修改步骤重复，也很难看出总额由哪些交易组成。",
-      postsAlt: "讨论支出和预算问题的公开帖子",
-      postsTitle: "作为佐证的公开帖子",
-      postsBody: " 这些帖子只用来补充背景，没有和问卷或访谈样本混在一起。",
+      after: "对此，我整理了整个使用流程，简化了支出与预算两条流程，并制作了线框图。",
       flowsSummary: "查看改版前后的流程，以及全部 15 张线框",
-      flowLabel: "任务流程对比",
-      flowTitle: "两个任务，改版前后。",
+      flowTitle: "任务流程对比",
       beforeCaption: "改版前 / 原有流程",
       afterCaption: "改版后 / 新流程",
-      openFull: "打开大图",
       openBeforeAria: (title) => "打开原有流程的大图：" + title,
       openAfterAria: (title) => "打开新流程的大图：" + title,
       openWireAria: (caption) => "打开线框大图：" + caption,
       flows: [
-        { title: "查看支出", summary: "我把藏得很深的支出入口提到前面，让筛选条件一直留在画面上，也把修改分类放回交易流程里。", current: img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png"), redesigned: img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png"), currentAlt: "现有 BOA 支出流程：入口很深、上下文丢失、改分类要钻很多层", redesignedAlt: "改版后的 BOA 支出流程：直接入口、筛选常驻、改分类更快" },
-        { title: "调整预算", summary: "改版从当前预算出发，支持单点修改或重新分配，不用重走一遍设置流程。", current: img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png"), redesigned: img("39c57feb914fc1ec121c56f373082c9159d742e3.png"), currentAlt: "现有 BOA 预算流程：一长串设置步骤", redesignedAlt: "改版后的 BOA 预算流程：可直接修改，也可在分类之间重新分配" }
+        { title: "查看支出", current: img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png"), redesigned: img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png"), currentAlt: "现有 BOA 支出流程：入口很深、上下文丢失、改分类要钻很多层", redesignedAlt: "改版后的 BOA 支出流程：直接入口、筛选常驻、改分类更快" },
+        { title: "调整预算", current: img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png"), redesigned: img("39c57feb914fc1ec121c56f373082c9159d742e3.png"), currentAlt: "现有 BOA 预算流程：一长串设置步骤", redesignedAlt: "改版后的 BOA 预算流程：可直接修改，也可在分类之间重新分配" }
       ],
       arcs: [
         {
           label: "入口",
-          title: "把支出放到用户本来就会打开的页面",
-          body: "原有流程把支出放在账户下面好几屏的位置。这组线框把当月总额提到账户列表和支票卡片上，并从交易明细留了一条回到支出的路。",
           screens: [
             { src: "/boa/low01.png", caption: "账户 · 支出就在列表里", alt: "低保真账户页，账户列表下方带一个支出汇总" },
             { src: "/boa/low02.png", caption: "支票账户 · 一个入口", alt: "低保真支票账户页，显示本月支出并有一个进入追踪的链接" },
@@ -304,8 +302,6 @@ const copy = {
         },
         {
           label: "查看支出",
-          title: "看完详情再返回，月份和分类不会丢",
-          body: "月份和分类筛选始终放在概览、分类拆解和交易列表上方。点进某个商家再返回时，筛选不会被清掉。分类改错了，也可以在列表里勾选多笔交易一起修改，不必逐条打开。",
           screens: [
             { src: "/boa/low04.png", caption: "概览 · 筛选常驻", alt: "低保真支出概览，月份和分类筛选钉在分类拆解上方" },
             { src: "/boa/low05.png", caption: "时间范围 · 从月到年", alt: "低保真时间范围面板，可选月、季、年" },
@@ -319,8 +315,6 @@ const copy = {
         },
         {
           label: "预算",
-          title: "改一个数字，不用重走设置",
-          body: "每个分类都能直接改，也可以在分类之间调剂，预算总额会一直显示。保存时再决定：只改这个月，还是以后都按这套预算执行。",
           screens: [
             { src: "/boa/low13.png", caption: "预算 · 就地修改", alt: "低保真预算页，每个分类都有加减步进器" },
             { src: "/boa/low14.png", caption: "调剂 · 从哪拿，给到哪", alt: "低保真调剂面板，在两个分类之间挪 20 美元，两边的新额度都能预览" },
@@ -331,24 +325,19 @@ const copy = {
       ]
     },
     testing: {
-      kicker: "04 / 测试与迭代",
-      heading: "预算重新分配这一项，变化最明显。",
-      lead: "两轮任务测试由同一组 6 位参与者完成。",
-      keyLabel: "关键迭代 / ",
-      changeLabel: "设计改动",
-      resultLabel: "观察到的结果",
-      nextLabel: "下一个问题",
-      iterations: [
-        { title: "预算重新分配", count: "无提示完成：6 人中 2 人 → 5 人", change: "我把来源和去向写成「从哪拿」和「给到哪」，确认前会同时预览两个分类的新额度，并保留不变的预算总额。", result: "改版后，6 位参与者中有 5 位没有求助就完成了预算重新分配；上一轮只有 2 位。", nextStep: "下一轮还要测试只改一个月和长期生效的区别，以及撤销和余额不足的情况。" },
-        { title: "支出图表", count: "中位数 41 秒 → 24 秒", result: "把选中分类、预算圆环和文字状态都做得更明确之后，6 位参与者中有 5 位没要帮助就找出了超支最多的分类。" },
-        { title: "助手探索", count: "6 人中 1 人 → 4 人", result: "在原型的助手里，6 位参与者中有 4 位解决了一个追问；对照轮里靠导航解决的是 6 位中 1 位。" }
-      ],
-      note: "这些结果只能用来判断方向。回访参与者看到的界面改动很多，熟练效应也可能影响结果；助手相关的测试更偏探索。"
+      kicker: "04",
+      heading: "设计与迭代",
+      lead: "两轮测试均由同一组 6 位成员参与并完成",
+      findings: [
+        { title: "预算重新分配功能获得巨大成功", body: "每位测试者都表示新功能对于预算调配很有帮助，直接减少了分配时的多次点击。" },
+        { title: "支出图表的调整也取得了很好的效果", body: "用户可以直接看到哪个项目超支，相比之前，完成任务所需的时间明显缩短。" },
+        { title: "AI 助手功能的使用有一些反向的反馈", body: "因为移动了助手入口至右上角，导致权重降低。" }
+      ]
     },
     web: {
-      kicker: "05 / 网页端适配",
-      heading: "桌面更宽，所以概览和细节可以同时出现。",
-      lead: "移动端一次只展开一层细节。桌面端把分类概览和按商家、按月份的拆分并排放，助手放在侧边栏里随时可开。",
+      kicker: "05",
+      heading: "网页端适配",
+      lead: "桌面端并非只是简单地将界面放大，而是将更多信息放在同一个页面中。仪表盘更加丰富，也更方便用户查询资料。",
       carouselLabel: "BOA 网页端适配界面",
       screenAlts: [
         "BOA 网页端账户首页：总余额趋势、账户列表和八月支出汇总",
@@ -357,7 +346,6 @@ const copy = {
         "BOA 网页端支出视图，助手面板打开，解释「食品杂货」为什么超预算"
       ],
       systemSummary: "查看视觉系统",
-      systemBody: "我保留了银行用户熟悉的导航、分类颜色和字体，只调整流程与层级。颜色旁边始终有数值和预算线，状态不会只靠颜色表达。",
       systemAssets: [
         { src: img("96d21119e7c4078c307a63377b7d633dbe4d78c8.png"), alt: "BOA 核心配色", label: "核心配色" },
         { src: img("f1f1b3fd3c6f921ab73524efa128d6b7f8c377e9.png"), alt: "BOA 支出分类色阶", label: "分类色阶" },
@@ -365,9 +353,12 @@ const copy = {
       ]
     },
     reflection: {
-      kicker: "反思",
-      heading: "下一步要弄清楚，究竟是哪项改动起了作用。",
-      lead: "如果继续测试，我会把「保留上下文」「修改图表」「调剂前预览」分开验证，同时补测无障碍和出错后的恢复流程。",
+      heading: "反思",
+      subheading: "继续迭代 AI 助手",
+      lead: [
+        "AI 助手可以在各类 App 中为用户提供很大的帮助。像 BOA 这类复杂的 App，用户在使用时会遇到疑问，也会不知道去哪里找内容，所以 AI 助手变得尤为重要。",
+        "如何权衡 AI 在每一页给出的回应，以及如何让 AI 融入整个使用过程，是很重要的一件事。后续，我也会围绕 AI 助手的用户体验做更多尝试。"
+      ],
       note: "独立的改版概念，与美国银行无关联。"
     }
   }
@@ -375,7 +366,7 @@ const copy = {
 
 export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
   const t = copy[locale] || copy.en
-  const [featuredIteration, ...supportingIterations] = t.testing.iterations
+  const [featuredIteration, ...supportingIterations] = t.testing.iterations || []
   const webScreens = t.web.screenAlts.map((alt, index) => ({ src: `/boa/web${index + 1}.png`, alt }))
 
   return (
@@ -419,8 +410,8 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
                 <div><dt>{t.hero.outcomeLabel}</dt><dd>{t.hero.outcome}</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
-                <a className={styles.action} href="#prototype">{t.hero.actionPrototype} <span aria-hidden="true">↓</span></a>
-                <a className={styles.textLink} href="#experience">{t.hero.actionFlow}</a>
+                <ScrollLink className={styles.action} href="#prototype">{t.hero.actionPrototype} <span aria-hidden="true">↓</span></ScrollLink>
+                <ScrollLink className={styles.textLink} href="#experience">{t.hero.actionFlow}</ScrollLink>
               </div>
             </div>
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
@@ -432,23 +423,25 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
           <ProjectQuickNav slug="boa-budgeting" track={track} locale={locale} />
 
           <section id="experience" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.experience.kicker}</p>
-              <h2>{t.experience.heading}</h2>
-              <p className={styles.sectionLead}>{t.experience.lead}</p>
-            </div>
+            <SectionHeader section={t.experience} />
             <div className={styles.highlightList}>
               {t.experience.highlights.map((item) => (
-                <article className={styles.highlightCard} key={item.video}>
+                <article className={styles.highlightCard} key={item.label}>
                   <div className={styles.highlightCopy}>
                     <p className={styles.microLabel}>{item.label}</p>
                     <h3>{item.title}</h3>
                     <p>{item.body}</p>
                   </div>
-                  <CaseVideo className={styles.highlightVideo}
-                    src={"/boa/media/" + item.video + "-loop.mp4"}
-                    poster={"/boa/media/" + item.video + "-poster.webp"}
-                    width={720} height={1408} label={item.alt} />
+                  {item.video ? (
+                    <CaseVideo className={styles.highlightVideo}
+                      src={"/boa/media/" + item.video + "-loop.mp4"}
+                      poster={"/boa/media/" + item.video + "-poster.webp"}
+                      width={720} height={1408} label={item.alt} />
+                  ) : (
+                    <div className={`${styles.highlightVideo} ${styles.highlightStill}`}>
+                      <img src={item.image} alt={item.alt} width="720" height="1408" loading="lazy" />
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
@@ -457,21 +450,21 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
           <section id="prototype" className={styles.caseSection}>
             <div className={styles.prototypeLayout}>
               <div className={styles.prototypeGuide}>
-                <div className={styles.sectionHeader}>
-                  <p className={styles.kicker}>{t.prototype.kicker}</p>
-                  <h2>{t.prototype.heading}</h2>
-                  <p className={styles.sectionLead}>{t.prototype.lead}</p>
-                </div>
-                <ol className={styles.prototypeSteps}>
-                  {t.prototype.steps.map((step, index) => (
-                    <li key={step.title}>
-                      <span aria-hidden="true">0{index + 1}</span>
-                      <div><h3>{step.title}</h3><p>{step.body}</p></div>
-                    </li>
-                  ))}
-                </ol>
-                <a className={styles.outlineAction} href={PROTOTYPE_SRC} target="_blank" rel="noreferrer">{t.prototype.open} <span aria-hidden="true">↗</span></a>
-                <p className={styles.sourceNote}>{t.prototype.note}</p>
+                <SectionHeader section={t.prototype} />
+                {t.prototype.steps && (
+                  <ol className={styles.prototypeSteps}>
+                    {t.prototype.steps.map((step, index) => (
+                      <li key={step.title}>
+                        <span aria-hidden="true">0{index + 1}</span>
+                        {step.body
+                          ? <div><h3>{step.title}</h3><p>{step.body}</p></div>
+                          : <p className={styles.prototypeStepPlain}>{step.title}</p>}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {t.prototype.open && <a className={styles.outlineAction} href={PROTOTYPE_SRC} target="_blank" rel="noreferrer">{t.prototype.open} <span aria-hidden="true">↗</span></a>}
+                {t.prototype.note && <p className={styles.sourceNote}>{t.prototype.note}</p>}
               </div>
               <div className={styles.prototypeStage}>
                 <div className={styles.tryMe} aria-hidden="true">
@@ -489,17 +482,15 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
           </section>
 
           <section id="research" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.research.kicker}</p>
-              <h2>{t.research.heading}</h2>
-              <p className={styles.sectionLead}>{t.research.lead}</p>
-            </div>
-            <div className={styles.methodGrid}>
-              {t.research.methods.map((method) => (
-                <div key={method.label}><strong>{method.value}</strong><span>{method.label}</span></div>
-              ))}
-            </div>
-            <p className={styles.sourceNote}>{t.research.methodNote}</p>
+            <SectionHeader section={t.research} />
+            {t.research.methods && (
+              <div className={styles.methodGrid}>
+                {t.research.methods.map((method) => (
+                  <div key={method.label}><strong>{method.value}</strong><span>{method.label}</span></div>
+                ))}
+              </div>
+            )}
+            {t.research.methodNote && <p className={styles.sourceNote}>{t.research.methodNote}</p>}
             <div className={styles.problemGrid}>
               {t.research.problems.map((item, index) => (
                 <article key={item.title}>
@@ -509,7 +500,8 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
                 </article>
               ))}
             </div>
-            <details className={styles.disclosure}>
+            {t.research.after && <p className={styles.sectionLead}>{t.research.after}</p>}
+            {t.research.surveySummary && <details className={styles.disclosure}>
               <summary>{t.research.surveySummary}</summary>
               <div className={styles.disclosureBody}>
                 <div className={styles.researchStats}>
@@ -533,32 +525,32 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
                   </figure>
                 </div>
               </div>
-            </details>
+            </details>}
             <details className={styles.disclosure}>
               <summary>{t.research.flowsSummary}</summary>
               <div className={styles.disclosureBody}>
                 <div id="task-flows" className={styles.flowComparisons}>
                   <div className={styles.flowIntro}>
-                    <p className={styles.microLabel}>{t.research.flowLabel}</p>
+                    {t.research.flowLabel && <p className={styles.microLabel}>{t.research.flowLabel}</p>}
                     <h3>{t.research.flowTitle}</h3>
                   </div>
               <div className={styles.flowList}>
                 {t.research.flows.map((flow) => (
                   <article className={styles.flowCase} key={flow.title}>
-                    <h4>{flow.title}</h4><p>{flow.summary}</p>
+                    <h4>{flow.title}</h4>{flow.summary && <p>{flow.summary}</p>}
                     <div className={styles.flowPair}>
                       <figure>
                         <figcaption>{t.research.beforeCaption}</figcaption>
                         <a href={flow.current} target="_blank" rel="noreferrer" aria-label={t.research.openBeforeAria(flow.title)}>
                           <img src={flow.current} alt={flow.currentAlt} loading="lazy" />
-                          <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>
+                          {t.research.openFull && <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>}
                         </a>
                       </figure>
                       <figure>
                         <figcaption>{t.research.afterCaption}</figcaption>
                         <a href={flow.redesigned} target="_blank" rel="noreferrer" aria-label={t.research.openAfterAria(flow.title)}>
                           <img src={flow.redesigned} alt={flow.redesignedAlt} loading="lazy" />
-                          <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>
+                          {t.research.openFull && <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>}
                         </a>
                       </figure>
                     </div>
@@ -568,7 +560,7 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
             </div>
                 {t.research.arcs.map((arc) => (
                   <article className={styles.lowFiArc} key={arc.label}>
-                    <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p><h3>{arc.title}</h3><p>{arc.body}</p></div>
+                    <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p>{arc.title && <h3>{arc.title}</h3>}{arc.body && <p>{arc.body}</p>}</div>
                     <div className={styles.lowFiScreens}>
                       {arc.screens.map((screen) => (
                         <figure key={screen.src}>
@@ -586,49 +578,53 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
           </section>
 
           <section id="testing" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.testing.kicker}</p>
-              <h2>{t.testing.heading}</h2>
-              <p className={styles.sectionLead}>{t.testing.lead}</p>
-            </div>
-            <div className={styles.iterationList}>
-              <article className={`${styles.iterationItem} ${styles.iterationFeatured}`}>
-                <div>
-                  <p className={styles.microLabel}>{t.testing.keyLabel}{featuredIteration.title}</p>
-                  <h3>{featuredIteration.count}</h3>
-                  <dl className={styles.iterationEvidence}>
-                    <div><dt>{t.testing.changeLabel}</dt><dd>{featuredIteration.change}</dd></div>
-                    <div><dt>{t.testing.resultLabel}</dt><dd>{featuredIteration.result}</dd></div>
-                  </dl>
-                </div>
-                <div className={styles.nextStep}><p className={styles.microLabel}>{t.testing.nextLabel}</p><p>{featuredIteration.nextStep}</p></div>
-              </article>
-              <div className={styles.supportingResults}>
-                {supportingIterations.map((item) => (
-                  <article className={styles.supportingResult} key={item.title}>
-                    <div>
-                      <p className={styles.microLabel}>{item.title}</p>
-                      <h3>{item.count}</h3>
-                      <p>{item.result}</p>
-                    </div>
+            <SectionHeader section={t.testing} />
+            {t.testing.findings ? (
+              <div className={styles.problemGrid}>
+                {t.testing.findings.map((item, index) => (
+                  <article key={item.title}>
+                    <p className={styles.microLabel}>0{index + 1}</p>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
                   </article>
                 ))}
               </div>
-            </div>
-            <p className={styles.sourceNote}>{t.testing.note}</p>
+            ) : (
+              <div className={styles.iterationList}>
+                <article className={`${styles.iterationItem} ${styles.iterationFeatured}`}>
+                  <div>
+                    <p className={styles.microLabel}>{t.testing.keyLabel}{featuredIteration.title}</p>
+                    <h3>{featuredIteration.count}</h3>
+                    <dl className={styles.iterationEvidence}>
+                      <div><dt>{t.testing.changeLabel}</dt><dd>{featuredIteration.change}</dd></div>
+                      <div><dt>{t.testing.resultLabel}</dt><dd>{featuredIteration.result}</dd></div>
+                    </dl>
+                  </div>
+                  <div className={styles.nextStep}><p className={styles.microLabel}>{t.testing.nextLabel}</p><p>{featuredIteration.nextStep}</p></div>
+                </article>
+                <div className={styles.supportingResults}>
+                  {supportingIterations.map((item) => (
+                    <article className={styles.supportingResult} key={item.title}>
+                      <div>
+                        <p className={styles.microLabel}>{item.title}</p>
+                        <h3>{item.count}</h3>
+                        <p>{item.result}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+            {t.testing.note && <p className={styles.sourceNote}>{t.testing.note}</p>}
           </section>
 
           <section id="web" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.web.kicker}</p>
-              <h2>{t.web.heading}</h2>
-              <p className={styles.sectionLead}>{t.web.lead}</p>
-            </div>
+            <SectionHeader section={t.web} />
             <ImageCarousel className={styles.webCarousel} label={t.web.carouselLabel} slides={webScreens} locale={locale} />
             <details className={styles.disclosure}>
               <summary>{t.web.systemSummary}</summary>
               <div className={styles.disclosureBody}>
-                <p>{t.web.systemBody}</p>
+                {t.web.systemBody && <p>{t.web.systemBody}</p>}
                 <div className={styles.systemGrid}>
                   {t.web.systemAssets.map((asset) => (
                     <figure key={asset.src}><figcaption>{asset.label}</figcaption><a href={asset.src} target="_blank" rel="noreferrer"><img src={asset.src} alt={asset.alt} loading="lazy" /></a></figure>
@@ -639,11 +635,7 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
           </section>
 
           <section className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.reflection.kicker}</p>
-              <h2>{t.reflection.heading}</h2>
-              <p className={styles.sectionLead}>{t.reflection.lead}</p>
-            </div>
+            <SectionHeader section={t.reflection} />
             <p className={styles.sourceNote}>{t.reflection.note}</p>
           </section>
           <ProjectNav slug="boa-budgeting" track={track} locale={locale} styles={styles} />

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { t } from "../../lib/dictionary"
 import { aboutReady, pageBase } from "../../lib/projects"
@@ -58,13 +58,13 @@ function Band({ className, text }) {
    plain strings. `subline`, the one sentence of actual prose in the
    hero, is the one exception: it reads as a real self-description
    rather than a printer's mark, so it is a `{ en, zh }` pair like any
-   other translated copy. */
+   other translated copy. A list breaks into lines. */
 const HERO_COPY = {
   uiux: {
     eyebrow: "UI/UX & Visual Designer · New York",
     subline: {
       en: "UI/UX designer with a visual designer’s eye: interfaces people can trust, and the data, brand and print work around them.",
-      zh: "我在纽约做 UI/UX，也做数据可视化、品牌和印刷。视觉细节和使用体验，我都很在意。"
+      zh: ["你好，我是杨乐乐！", "我是一位注重用户体验和视觉设计的UIUX产品设计师"]
     },
     facts: ["Parsons MFA ’26", "Previously at VortexNet", "Open to roles across the U.S."],
     band: "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
@@ -499,7 +499,7 @@ export function RisoHero({ track = "uiux", locale = "en" }) {
         </h1>
 
         <p className={`${styles.opSub} ${styles.rise}`} style={{ animationDelay: "160ms" }}>
-          {subline}
+          {[].concat(subline).map((line, index) => <Fragment key={line}>{index > 0 && <br />}{line}</Fragment>)}
         </p>
 
         <p className={`${styles.opFacts} ${styles.rise}`} style={{ animationDelay: "240ms" }}>
