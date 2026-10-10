@@ -27,13 +27,6 @@ export const metadata = {
 const img = (hash) => `/framer-assets/images/${hash}`
 const PROTOTYPE_SRC = "/boa/Spending%20Prototype%20(embeddable).html?v=20260915-1526"
 
-const researchStats = [
-  { key: "reset", pct: "63%", color: "rgba(247, 235, 140, 0.78)" },
-  { key: "insights", pct: "69%", color: "rgba(212, 180, 240, 0.72)" },
-  { key: "correction", pct: "66%", color: "rgba(210, 210, 210, 0.82)" },
-  { key: "inflexible", pct: "72%", color: "rgba(247, 205, 205, 0.78)" }
-]
-
 const screenNumber = (src) => src.replace(/\D+/g, "")
 
 function SectionHeader({ section }) {
@@ -49,11 +42,10 @@ function SectionHeader({ section }) {
 }
 
 /*
- * Every line of prose on the page, in both languages. The English is
- * unchanged, lifted out of the JSX as it stood. The Chinese is the
- * author's own text and is deliberately shorter: any field it leaves out
- * (prototype steps, survey stats, method notes, caveats) is simply not
- * rendered, and a `lead` may be a list of paragraphs.
+ * Every line of prose on the page, in both languages. Both are the
+ * author's own text: the Chinese as written, the English translated from
+ * it. A `lead` may be a list of paragraphs, and headings and one-line
+ * leads carry no closing full stop.
  */
 const copy = {
   en: {
@@ -61,8 +53,8 @@ const copy = {
       pill: "Independent case study",
       context: "Product · UI/UX · 2026",
       titleA: "BOA: Spending",
-      titleB: "& budgeting.",
-      lead: "Understand the spending. Correct the details. Adjust the plan.",
+      titleB: "& budgeting",
+      lead: "A user experience overhaul of the BOA app",
       roleLabel: "Role",
       role: "UI/UX Designer",
       timelineLabel: "Timeline",
@@ -70,81 +62,66 @@ const copy = {
       platformLabel: "Platform",
       platform: "Mobile + Web",
       challengeLabel: "The challenge",
-      challenge: "Connect spending totals, category corrections and budget adjustments in one continuous flow.",
+      challenge: "Simplify the existing flows and iterate on new product features",
       scopeLabel: "My scope",
-      scope: "Research, flow analysis, wireframes, mobile and web UI, and an interactive prototype.",
+      scope: "Research, flow analysis, wireframe simplification, mobile and web design",
       outcomeLabel: "Outcome",
-      outcome: "Budget reallocation rose from 2 of 6 to 5 of 6 unassisted; median time to spot overspending fell from 41 to 24 seconds.",
-      actionPrototype: "Try the prototype",
-      actionFlow: "See the core flow",
+      outcome: "Six testers took part. Unassisted budget reallocation rose from 2 to 5; median time to spot overspending fell from 41 to 24 seconds",
+      actionPrototype: "Interact with the prototype",
+      actionFlow: "See the key design decisions",
       videoLabel: "BOA preview: reallocate a category budget"
     },
     experience: {
-      kicker: "01 / The core experience",
-      heading: "From a spending total to a decision.",
-      lead: "Each part of the flow pairs a visible interface change with the decision it helps someone make: find the issue, trace its source, then adjust the plan.",
+      kicker: "01",
+      heading: "Design decisions",
+      lead: "Three key design decisions, plus one new feature",
       highlights: [
-        { label: "01 / Understand", title: "See which category needs attention.", body: "Select a category to see its amount, budget, and status in one place.", video: "spending", alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category and swiping through further insights" },
-        { label: "02 / Investigate", title: "Trace the total back to the spending.", body: "Switch between merchant and monthly breakdowns without losing the active month, category, or budget.", video: "budget", alt: "Category spending view switching between merchant and monthly breakdowns" },
-        { label: "03 / Adjust", title: "Reallocate the budget without restarting setup.", body: "Move an amount between categories, preview both limits, then choose whether the change is temporary or ongoing.", video: "reallocate", alt: "Reallocating budget allowances between two categories, with both limits visible" }
+        { label: "01", title: "Income and spending trends on the home screen", body: "Cards on the home screen now show how income and spending have changed, so users can see the trend at a glance.", image: "/boa/media/home-poster.webp", alt: "Redesigned BOA home screen with the total balance trend and a change line on each account card" },
+        { label: "02", title: "Overspending on the spending page", body: "The spending page shows clearly which category is over budget, rather than just a dial of numbers.", video: "spending", alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category" },
+        { label: "03", title: "Comparing overspent categories", body: "For an overspent category, monthly spending can be compared side by side, viewed by month or by merchant.", video: "budget", alt: "Category spending view switching between merchant and monthly breakdowns" },
+        { label: "04", title: "New feature: budget transfer", body: "Budget can be moved directly between two categories without changing the monthly total. On saving, you're asked whether the change applies to this month only.", video: "reallocate", alt: "Moving budget between two categories, with both limits visible" }
       ]
     },
     prototype: {
-      kicker: "02 / Interactive prototype",
-      heading: "Follow the task through.",
-      lead: "Explore the connected mobile flow using sample transactions and budgets.",
+      kicker: "02",
+      heading: "Interactive prototype",
+      lead: "Click the phone on the right to try the clickable mobile prototype",
       steps: [
-        { title: "Inspect a spending category", body: "Select a category in the dial, compare its merchant and monthly breakdowns, then open its transactions." },
-        { title: "Correct more than one transaction", body: "Select transactions and assign a category together, keeping the active month and category in context." },
-        { title: "Make a one-month budget adjustment", body: "Reallocate category allowances, review the new limits, and choose a one-month or ongoing change. This adjusts the plan; it does not transfer funds." }
+        { title: "Try the hover interaction on the dials on the Spending and Budgeting pages." },
+        { title: "Try Edit Budget, Save Budget, and the new Relocate feature to move budget between categories." },
+        { title: "Try the AI assistant in the top-right corner." },
+        { title: "Try changing the category of a transaction." }
       ],
-      open: "Open at full size",
-      note: "The optional assistant demonstrates suggested questions and responses based on sample data. Free-text questions and live AI are outside this prototype.",
       tryMe: "Try me",
       frameTitle: "BOA spending and budgeting interactive prototype"
     },
     research: {
-      kicker: "03 / Research & problem framing",
-      heading: "Three points where the flow breaks.",
-      lead: "The research focused on finding and verifying spending, correcting categories, and adapting a budget during the month.",
-      methods: [
-        { value: "32", label: "Survey responses" },
-        { value: "2", label: "User interviews" },
-        { value: "Reddit", label: "Supporting public posts" }
+      kicker: "03",
+      heading: "User pain points and market research",
+      lead: [
+        "These questions came from my own confusion with the BOA app. Looking into it, I found many people on Reddit were also confused by the Spending and Budget features in their accounts.",
+        "To dig further, I ran a survey and collected 32 responses. Feedback centred on three problems:"
       ],
-      methodNote: "Participants had used Bank of America, but not necessarily its budgeting feature. This was a small, directional study rather than a representative sample.",
       problems: [
-        { title: "Spending is difficult to find and verify", body: "Users had to move between summaries, categories, and transaction lists to understand where a total came from." },
-        { title: "Category correction breaks the flow", body: "Fixing a category required opening transactions one at a time, while filters and selections could reset on return." },
-        { title: "Budget changes force a full rebuild", body: "A small monthly adjustment could send users through setup steps that did not match the change they wanted to make." }
+        { title: "A cluttered home screen", body: "Most users couldn't find the spending page from the home screen, which made the app hard to use." },
+        { title: "Changing a category breaks the flow", body: "Some users said every category change interrupted what they were doing, so they had to start over." },
+        { title: "Editing a budget takes too much effort", body: "Every budget change meant going through the whole process again." }
       ],
-      surveySummary: "View the survey breakdown and supporting material",
-      statLabels: { reset: "Selections reset", insights: "Insights hard to find", correction: "Correction takes time", inflexible: "Budgets feel inflexible" },
-      statNote: "These four recorded survey findings are preserved from the research notes. Uncertainty about how totals connect to transactions is retained as a qualitative theme rather than shown with an unverified percentage.",
-      interviewAlt: "Interview context for the BOA spending case study",
-      interviewTitle: "Interview context",
-      interviewBody: " Categories, repeated edits and uncertainty about which transactions contributed to a total.",
-      postsAlt: "Public posts discussing spending and budgeting issues",
-      postsTitle: "Supporting public posts",
-      postsBody: " External context for the themes; separate from the recruited survey and interviews.",
+      after: "In response, I mapped the whole flow, simplified both the spending and budget flows, and built wireframes.",
       flowsSummary: "View before-and-after flows and all 15 wireframes",
-      flowLabel: "Task flow comparison",
-      flowTitle: "Two tasks, before and after.",
+      flowTitle: "Task flow comparison",
       beforeCaption: "Before / Reviewed flow",
       afterCaption: "After / Redesigned flow",
-      openFull: "Open full size",
       openBeforeAria: (title) => "Open full-size original flow: " + title,
       openAfterAria: (title) => "Open full-size redesigned flow: " + title,
       openWireAria: (caption) => "Open full-size wireframe: " + caption,
       flows: [
-        { title: "Track spending", summary: "Direct access replaces the hidden entry, filters stay visible, and category changes happen inside the transaction flow.", current: img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png"), redesigned: img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png"), currentAlt: "Current BOA spending flow with hidden entry, lost context, and deep category editing", redesignedAlt: "Redesigned BOA spending flow with direct access, persistent filters, and quicker category editing" },
-        { title: "Adjust a budget", summary: "The redesign starts from the current budget, supports focused edits or reallocation, and avoids restarting the setup process.", current: img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png"), redesigned: img("39c57feb914fc1ec121c56f373082c9159d742e3.png"), currentAlt: "Current BOA budget flow with a long setup process", redesignedAlt: "Redesigned BOA budget flow with direct edits and category reallocation" }
+        { title: "Track spending", current: img("0bc9cd759c554c1e5537ba810d083f5adf5d7f2c.png"), redesigned: img("aede7f6f2ddb4260fd295c2d97f190b4eff94b9b.png"), currentAlt: "Current BOA spending flow with hidden entry, lost context, and deep category editing", redesignedAlt: "Redesigned BOA spending flow with direct access, persistent filters, and quicker category editing" },
+        { title: "Adjust a budget", current: img("b20b93f0cad89301c7262d4330c7e81176dfb5c7.png"), redesigned: img("39c57feb914fc1ec121c56f373082c9159d742e3.png"), currentAlt: "Current BOA budget flow with a long setup process", redesignedAlt: "Redesigned BOA budget flow with direct edits and category reallocation" }
       ],
       arcs: [
         {
           label: "Entry",
-          title: "Spending starts on a screen users already open",
-          body: "The reviewed flow placed spending several screens below the account. These wireframes bring the monthly total to the accounts list and checking card, with a path from transactions back into spending.",
           screens: [
             { src: "/boa/low01.png", caption: "Accounts · spending in the list", alt: "Low-fidelity accounts screen with a spending summary sitting under the account list" },
             { src: "/boa/low02.png", caption: "Checking · one entry point", alt: "Low-fidelity checking account screen with this month's spending and a link into tracking" },
@@ -153,8 +130,6 @@ const copy = {
         },
         {
           label: "Track spending",
-          title: "Month and category survive the trip into detail",
-          body: "The two pickers stay pinned above the overview, the category breakdown, and the transaction list, so stepping into a merchant and back does not clear them. Correcting a miscategorised charge happens in the list itself — select several, move them once — instead of one transaction detail at a time.",
           screens: [
             { src: "/boa/low04.png", caption: "Overview · filters pinned", alt: "Low-fidelity spending overview with month and category filters pinned above a category breakdown" },
             { src: "/boa/low05.png", caption: "Time range · month to year", alt: "Low-fidelity time range sheet offering month, quarter, and year" },
@@ -168,8 +143,6 @@ const copy = {
         },
         {
           label: "Budget",
-          title: "Changing one number does not restart setup",
-          body: "Categories can be edited or reallocated while the total stays visible. Saving is a separate decision: apply the adjustment to this month or keep it as an ongoing plan.",
           screens: [
             { src: "/boa/low13.png", caption: "Budget · edit in place", alt: "Low-fidelity budget screen with plus and minus steppers on each category" },
             { src: "/boa/low14.png", caption: "Reallocate · take from, give to", alt: "Low-fidelity reallocation sheet moving twenty dollars between two categories with both new limits previewed" },
@@ -180,24 +153,19 @@ const copy = {
       ]
     },
     testing: {
-      kicker: "04 / Testing & iteration",
-      heading: "The clearest improvement came from budget reallocation.",
-      lead: "The same six participants completed both task rounds.",
-      keyLabel: "Key iteration / ",
-      changeLabel: "Design change",
-      resultLabel: "Observed result",
-      nextLabel: "Next question",
-      iterations: [
-        { title: "Budget reallocation", count: "2 of 6 → 5 of 6 unassisted", change: "Separated the source and destination into Take from and Give to, then previewed both new limits and the unchanged total before confirmation.", result: "Five of six participants completed budget reallocation without help in the redesigned flow, compared with two of six in the earlier task round.", nextStep: "Next, test one-month versus ongoing changes, undo, and insufficient-funds cases." },
-        { title: "Spending chart", count: "41 s → 24 s median", result: "Five of six participants identified the most overspent category without help after the selected category, budget ring, and text status were made more explicit." },
-        { title: "Assistant exploration", count: "1 of 6 → 4 of 6", result: "Four of six participants resolved a follow-up question in the prototype assistant, compared with one of six using navigation in the comparison round." }
-      ],
-      note: "Directional evidence only: returning participants saw substantially different interfaces, so practice effects and multiple design changes may have influenced the results. The assistant comparison is exploratory."
+      kicker: "04",
+      heading: "Design and iteration",
+      lead: "Both test rounds were completed by the same six participants",
+      findings: [
+        { title: "Budget reallocation was a clear success", body: "Every tester said the new feature made allocating budget easier, cutting out the repeated taps it used to take." },
+        { title: "The spending chart changes also worked well", body: "Users could see straight away which category was over budget, and finished the task noticeably faster than before." },
+        { title: "The AI assistant drew some negative feedback", body: "Moving its entry point to the top-right corner made it less prominent." }
+      ]
     },
     web: {
-      kicker: "05 / Web adaptation",
-      heading: "Use the width to keep overview and detail together.",
-      lead: "Mobile reveals details one view at a time. Desktop keeps the category overview beside merchant and monthly breakdowns, with the assistant available in a side panel.",
+      kicker: "05",
+      heading: "Web adaptation",
+      lead: "Desktop isn't just the interface scaled up: more information sits on a single page. The dashboard is richer, and it's easier for users to look things up.",
       carouselLabel: "BOA web adaptation screens",
       screenAlts: [
         "BOA web accounts home with total balance trend, account list, and August spending summary",
@@ -206,7 +174,6 @@ const copy = {
         "BOA web spending view with the assistant panel open, explaining why groceries is over budget"
       ],
       systemSummary: "View the visual system",
-      systemBody: "Familiar banking navigation, category colors and typography support the revised flows. Text values and budget lines accompany color so the status has more than one cue.",
       systemAssets: [
         { src: img("96d21119e7c4078c307a63377b7d633dbe4d78c8.png"), alt: "BOA core color palette", label: "Core palette" },
         { src: img("f1f1b3fd3c6f921ab73524efa128d6b7f8c377e9.png"), alt: "BOA spending category color ramp", label: "Category ramp" },
@@ -214,9 +181,12 @@ const copy = {
       ]
     },
     reflection: {
-      kicker: "Reflection",
-      heading: "Next, isolate what caused the improvement.",
-      lead: "A broader study should separate the effects of persistent context, the revised chart, and the reallocation preview, while testing accessibility and error recovery.",
+      heading: "Reflection",
+      subheading: "Keep iterating on the AI assistant",
+      lead: [
+        "An AI assistant can help people a great deal in any app. In a complex app like BOA, users run into questions and don't know where to find things, which makes the assistant especially important.",
+        "How to weigh what the AI says on each page, and how to weave it into the whole experience, matters a great deal. Next, I'll keep experimenting with the assistant's user experience."
+      ],
       note: "Independent redesign concept. Not affiliated with Bank of America."
     }
   },
@@ -366,7 +336,6 @@ const copy = {
 
 export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
   const t = copy[locale] || copy.en
-  const [featuredIteration, ...supportingIterations] = t.testing.iterations || []
   const webScreens = t.web.screenAlts.map((alt, index) => ({ src: `/boa/web${index + 1}.png`, alt }))
 
   return (
@@ -378,16 +347,11 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
             `.${styles.sectionHeader}`,
             `.${styles.highlightCard}`,
             `.${styles.prototypeSteps} li`,
-            `.${styles.prototypeGuide} > .${styles.outlineAction}`,
-            `.${styles.prototypeGuide} > .${styles.sourceNote}`,
             `.${styles.prototypeStage}`,
-            `.${styles.methodGrid} > div`,
             `.${styles.problemGrid} article`,
             `.${styles.disclosure}`,
             `.${styles.flowCase}`,
             `.${styles.lowFiArc}`,
-            `.${styles.iterationItem}`,
-            `.${styles.supportingResult}`,
             `.${styles.webCarousel}`,
             `.${styles.systemGrid} figure`
           ].join(", ")} />
@@ -451,20 +415,14 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
             <div className={styles.prototypeLayout}>
               <div className={styles.prototypeGuide}>
                 <SectionHeader section={t.prototype} />
-                {t.prototype.steps && (
-                  <ol className={styles.prototypeSteps}>
-                    {t.prototype.steps.map((step, index) => (
-                      <li key={step.title}>
-                        <span aria-hidden="true">0{index + 1}</span>
-                        {step.body
-                          ? <div><h3>{step.title}</h3><p>{step.body}</p></div>
-                          : <p className={styles.prototypeStepPlain}>{step.title}</p>}
-                      </li>
-                    ))}
-                  </ol>
-                )}
-                {t.prototype.open && <a className={styles.outlineAction} href={PROTOTYPE_SRC} target="_blank" rel="noreferrer">{t.prototype.open} <span aria-hidden="true">↗</span></a>}
-                {t.prototype.note && <p className={styles.sourceNote}>{t.prototype.note}</p>}
+                <ol className={styles.prototypeSteps}>
+                  {t.prototype.steps.map((step, index) => (
+                    <li key={step.title}>
+                      <span aria-hidden="true">0{index + 1}</span>
+                      <p className={styles.prototypeStepPlain}>{step.title}</p>
+                    </li>
+                  ))}
+                </ol>
               </div>
               <div className={styles.prototypeStage}>
                 <div className={styles.tryMe} aria-hidden="true">
@@ -483,14 +441,6 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
 
           <section id="research" className={styles.caseSection}>
             <SectionHeader section={t.research} />
-            {t.research.methods && (
-              <div className={styles.methodGrid}>
-                {t.research.methods.map((method) => (
-                  <div key={method.label}><strong>{method.value}</strong><span>{method.label}</span></div>
-                ))}
-              </div>
-            )}
-            {t.research.methodNote && <p className={styles.sourceNote}>{t.research.methodNote}</p>}
             <div className={styles.problemGrid}>
               {t.research.problems.map((item, index) => (
                 <article key={item.title}>
@@ -500,67 +450,39 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
                 </article>
               ))}
             </div>
-            {t.research.after && <p className={styles.sectionLead}>{t.research.after}</p>}
-            {t.research.surveySummary && <details className={styles.disclosure}>
-              <summary>{t.research.surveySummary}</summary>
-              <div className={styles.disclosureBody}>
-                <div className={styles.researchStats}>
-                  {researchStats.map((stat) => (
-                    <div key={stat.key}><strong>{stat.pct}</strong><p>{t.research.statLabels[stat.key]}</p></div>
-                  ))}
-                </div>
-                <p className={styles.sourceNote}>{t.research.statNote}</p>
-                <div className={styles.evidenceGrid}>
-                  <figure>
-                    <a href="/cleared/research1.png" target="_blank" rel="noreferrer">
-                      <img src="/cleared/research1.png" alt={t.research.interviewAlt} width="1791" height="1041" loading="lazy" />
-                    </a>
-                    <figcaption><strong>{t.research.interviewTitle}</strong>{t.research.interviewBody}</figcaption>
-                  </figure>
-                  <figure>
-                    <a href="/cleared/research2.png" target="_blank" rel="noreferrer">
-                      <img src="/cleared/research2.png" alt={t.research.postsAlt} loading="lazy" />
-                    </a>
-                    <figcaption><strong>{t.research.postsTitle}</strong>{t.research.postsBody}</figcaption>
-                  </figure>
-                </div>
-              </div>
-            </details>}
+            <p className={styles.sectionLead}>{t.research.after}</p>
             <details className={styles.disclosure}>
               <summary>{t.research.flowsSummary}</summary>
               <div className={styles.disclosureBody}>
                 <div id="task-flows" className={styles.flowComparisons}>
                   <div className={styles.flowIntro}>
-                    {t.research.flowLabel && <p className={styles.microLabel}>{t.research.flowLabel}</p>}
                     <h3>{t.research.flowTitle}</h3>
                   </div>
-              <div className={styles.flowList}>
-                {t.research.flows.map((flow) => (
-                  <article className={styles.flowCase} key={flow.title}>
-                    <h4>{flow.title}</h4>{flow.summary && <p>{flow.summary}</p>}
-                    <div className={styles.flowPair}>
-                      <figure>
-                        <figcaption>{t.research.beforeCaption}</figcaption>
-                        <a href={flow.current} target="_blank" rel="noreferrer" aria-label={t.research.openBeforeAria(flow.title)}>
-                          <img src={flow.current} alt={flow.currentAlt} loading="lazy" />
-                          {t.research.openFull && <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>}
-                        </a>
-                      </figure>
-                      <figure>
-                        <figcaption>{t.research.afterCaption}</figcaption>
-                        <a href={flow.redesigned} target="_blank" rel="noreferrer" aria-label={t.research.openAfterAria(flow.title)}>
-                          <img src={flow.redesigned} alt={flow.redesignedAlt} loading="lazy" />
-                          {t.research.openFull && <span className={styles.flowImageLink}>{t.research.openFull} <span aria-hidden="true">↗</span></span>}
-                        </a>
-                      </figure>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
+                  <div className={styles.flowList}>
+                    {t.research.flows.map((flow) => (
+                      <article className={styles.flowCase} key={flow.title}>
+                        <h4>{flow.title}</h4>
+                        <div className={styles.flowPair}>
+                          <figure>
+                            <figcaption>{t.research.beforeCaption}</figcaption>
+                            <a href={flow.current} target="_blank" rel="noreferrer" aria-label={t.research.openBeforeAria(flow.title)}>
+                              <img src={flow.current} alt={flow.currentAlt} loading="lazy" />
+                            </a>
+                          </figure>
+                          <figure>
+                            <figcaption>{t.research.afterCaption}</figcaption>
+                            <a href={flow.redesigned} target="_blank" rel="noreferrer" aria-label={t.research.openAfterAria(flow.title)}>
+                              <img src={flow.redesigned} alt={flow.redesignedAlt} loading="lazy" />
+                            </a>
+                          </figure>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
                 {t.research.arcs.map((arc) => (
                   <article className={styles.lowFiArc} key={arc.label}>
-                    <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p>{arc.title && <h3>{arc.title}</h3>}{arc.body && <p>{arc.body}</p>}</div>
+                    <div className={styles.flowIntro}><p className={styles.microLabel}>{arc.label}</p></div>
                     <div className={styles.lowFiScreens}>
                       {arc.screens.map((screen) => (
                         <figure key={screen.src}>
@@ -579,43 +501,15 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
 
           <section id="testing" className={styles.caseSection}>
             <SectionHeader section={t.testing} />
-            {t.testing.findings ? (
-              <div className={styles.problemGrid}>
-                {t.testing.findings.map((item, index) => (
-                  <article key={item.title}>
-                    <p className={styles.microLabel}>0{index + 1}</p>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.iterationList}>
-                <article className={`${styles.iterationItem} ${styles.iterationFeatured}`}>
-                  <div>
-                    <p className={styles.microLabel}>{t.testing.keyLabel}{featuredIteration.title}</p>
-                    <h3>{featuredIteration.count}</h3>
-                    <dl className={styles.iterationEvidence}>
-                      <div><dt>{t.testing.changeLabel}</dt><dd>{featuredIteration.change}</dd></div>
-                      <div><dt>{t.testing.resultLabel}</dt><dd>{featuredIteration.result}</dd></div>
-                    </dl>
-                  </div>
-                  <div className={styles.nextStep}><p className={styles.microLabel}>{t.testing.nextLabel}</p><p>{featuredIteration.nextStep}</p></div>
+            <div className={styles.problemGrid}>
+              {t.testing.findings.map((item, index) => (
+                <article key={item.title}>
+                  <p className={styles.microLabel}>0{index + 1}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
                 </article>
-                <div className={styles.supportingResults}>
-                  {supportingIterations.map((item) => (
-                    <article className={styles.supportingResult} key={item.title}>
-                      <div>
-                        <p className={styles.microLabel}>{item.title}</p>
-                        <h3>{item.count}</h3>
-                        <p>{item.result}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            )}
-            {t.testing.note && <p className={styles.sourceNote}>{t.testing.note}</p>}
+              ))}
+            </div>
           </section>
 
           <section id="web" className={styles.caseSection}>
@@ -624,7 +518,6 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
             <details className={styles.disclosure}>
               <summary>{t.web.systemSummary}</summary>
               <div className={styles.disclosureBody}>
-                {t.web.systemBody && <p>{t.web.systemBody}</p>}
                 <div className={styles.systemGrid}>
                   {t.web.systemAssets.map((asset) => (
                     <figure key={asset.src}><figcaption>{asset.label}</figcaption><a href={asset.src} target="_blank" rel="noreferrer"><img src={asset.src} alt={asset.alt} loading="lazy" /></a></figure>

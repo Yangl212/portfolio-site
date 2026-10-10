@@ -12,10 +12,10 @@ import styles from "./project-quick-nav.module.css"
    never translates; only the label shown in the bar does. */
 const projectSections = {
   "boa-budgeting": [
-    ["experience", { en: "Experience", zh: "设计决策" }],
+    ["experience", { en: "Decisions", zh: "设计决策" }],
     ["prototype", { en: "Prototype", zh: "原型" }],
     ["research", { en: "Research", zh: "调研" }],
-    ["testing", { en: "Evaluation", zh: "迭代" }],
+    ["testing", { en: "Iteration", zh: "迭代" }],
     ["web", { en: "Web", zh: "网页端" }]
   ],
   vortexnet: [
