@@ -61,8 +61,14 @@
   border-radius: 0;
   background: transparent;
 }
-/* A still exported at the loop posters' size, so it needs no framing of its own. */
-.highlightStill img { display: block; width: 100%; height: auto; }
+/* A before/after pair, each still exported at the loop posters' size. */
+.highlightCompare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: min(100%, 560px); justify-self: center; }
+.highlightCompare figure { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.highlightCompare img { display: block; width: 100%; height: auto; }
+/* A loop in a pair sits on the page like the stills beside it: no frame, no fill. */
+.highlightCompare .compareVideo { border: 0; border-radius: 0; background: transparent; }
+.highlightCompare video { background: transparent; }
+.highlightCompare figcaption { font-size: .75rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; text-align: center; color: var(--muted); }
 .highlightCard .highlightVideo video {
   background: transparent;
   filter: contrast(1.08);
@@ -160,6 +166,7 @@
   .highlightCard { grid-template-columns: minmax(0, 1fr) minmax(320px, 430px); gap: clamp(48px, 7vw, 96px); padding: 48px 0; }
   .highlightCopy { max-width: 560px; }
   .highlightCard .highlightVideo { width: min(100%, 390px); }
+  .highlightCardCompare { grid-template-columns: minmax(0, 1fr) minmax(400px, 600px); }
   .prototypeLayout { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; }
 }
 @media (max-width: 599px) {

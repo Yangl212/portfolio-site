@@ -76,8 +76,8 @@ const copy = {
       heading: "Design decisions",
       lead: "Three key design decisions, plus one new feature",
       highlights: [
-        { label: "01", title: "Income and spending trends on the home screen", body: "Cards on the home screen now show how income and spending have changed, so users can see the trend at a glance.", image: "/boa/media/home-poster.webp", alt: "Redesigned BOA home screen with the total balance trend and a change line on each account card" },
-        { label: "02", title: "Overspending on the spending page", body: "The spending page shows clearly which category is over budget, rather than just a dial of numbers.", video: "spending", alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category" },
+        { label: "01", title: "Income and spending trends on the home screen", body: "Cards on the home screen now show how income and spending have changed, so users can see the trend at a glance.", compare: [{ src: "/boa/media/home-before.webp", label: "Before", alt: "The original BOA home screen: a search bar, greeting and rewards rows, and banking details, with no sign of how balances are changing" }, { src: "/boa/media/home-poster.webp", label: "After", alt: "Redesigned BOA home screen with the total balance trend and a change line on each account card" }] },
+        { label: "02", title: "Overspending on the spending page", body: "The spending page shows clearly which category is over budget, rather than just a dial of numbers.", compare: [{ src: "/boa/media/spending-before.webp", label: "Before", alt: "The original BOA spending page: a total spending dial and a category list, with nothing on the dial showing which category is over budget" }, { video: "spending-white", label: "After", alt: "Screen recording of the redesigned BOA spending chart, showing overspending by category" }] },
         { label: "03", title: "Comparing overspent categories", body: "For an overspent category, monthly spending can be compared side by side, viewed by month or by merchant.", video: "budget", alt: "Category spending view switching between merchant and monthly breakdowns" },
         { label: "04", title: "New feature: budget transfer", body: "Budget can be moved directly between two categories without changing the monthly total. On saving, you're asked whether the change applies to this month only.", video: "reallocate", alt: "Moving budget between two categories, with both limits visible" }
       ]
@@ -218,8 +218,8 @@ const copy = {
       heading: "设计决策",
       lead: "整个设计包含三个重要的设计决策，以及一个新功能的迭代",
       highlights: [
-        { label: "01", title: "首页的收支趋势", body: "在首页增设卡片的收支变化，让用户可以直接看到趋势。", image: "/boa/media/home-poster.webp", alt: "改版后的 BOA 首页：总余额趋势，以及每个账户卡片上的收支变化" },
-        { label: "02", title: "花费页的超支展示", body: "在花费页清楚地展示哪个项目超支，而不仅仅是一个数字圆盘。", video: "spending", alt: "改版后 BOA 支出图表的录屏：按分类显示超支情况" },
+        { label: "01", title: "首页的收支趋势", body: "在首页增设卡片的收支变化，让用户可以直接看到趋势。", compare: [{ src: "/boa/media/home-before.webp", label: "改版前", alt: "原版 BOA 首页：搜索栏、问候与奖励入口、银行账户信息，看不出余额的变化" }, { src: "/boa/media/home-poster.webp", label: "改版后", alt: "改版后的 BOA 首页：总余额趋势，以及每个账户卡片上的收支变化" }] },
+        { label: "02", title: "花费页的超支展示", body: "在花费页清楚地展示哪个项目超支，而不仅仅是一个数字圆盘。", compare: [{ src: "/boa/media/spending-before.webp", label: "改版前", alt: "原版 BOA 花费页：总支出圆盘和分类列表，圆盘上看不出哪个分类超支" }, { video: "spending-white", label: "改版后", alt: "改版后 BOA 支出图表的录屏：按分类显示超支情况" }] },
         { label: "03", title: "超支项目的对比", body: "对于超支项目，可以更清楚地横向对比每月的开销，不仅能按月份查看，也能按消费商家查看。", video: "budget", alt: "分类支出视图在按商家和按月份两种拆分之间切换" },
         { label: "04", title: "新功能：预算转移", body: "预算可以在两个不同分类之间直接转移，无需修改月度预算总量。保存时，会询问这次调整是否只针对当前月份。", video: "reallocate", alt: "在两个分类之间转移预算，两边的额度都看得见" }
       ]
@@ -390,7 +390,7 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
             <SectionHeader section={t.experience} />
             <div className={styles.highlightList}>
               {t.experience.highlights.map((item) => (
-                <article className={styles.highlightCard} key={item.label}>
+                <article className={item.compare ? `${styles.highlightCard} ${styles.highlightCardCompare}` : styles.highlightCard} key={item.label}>
                   <div className={styles.highlightCopy}>
                     <p className={styles.microLabel}>{item.label}</p>
                     <h3>{item.title}</h3>
@@ -402,8 +402,20 @@ export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
                       poster={"/boa/media/" + item.video + "-poster.webp"}
                       width={720} height={1408} label={item.alt} />
                   ) : (
-                    <div className={`${styles.highlightVideo} ${styles.highlightStill}`}>
-                      <img src={item.image} alt={item.alt} width="720" height="1408" loading="lazy" />
+                    <div className={styles.highlightCompare}>
+                      {item.compare.map((shot) => (
+                        <figure key={shot.label}>
+                          {shot.video ? (
+                            <CaseVideo className={styles.compareVideo}
+                              src={"/boa/media/" + shot.video + "-loop.mp4"}
+                              poster={"/boa/media/" + shot.video + "-poster.webp"}
+                              width={720} height={1408} label={shot.alt} />
+                          ) : (
+                            <img src={shot.src} alt={shot.alt} width="720" height="1408" loading="lazy" />
+                          )}
+                          <figcaption>{shot.label}</figcaption>
+                        </figure>
+                      ))}
                     </div>
                   )}
                 </article>
