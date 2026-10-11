@@ -42,6 +42,11 @@
 .caseSection { min-width: 0; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 32px; }
 .caseSection + .caseSection { padding-top: 48px; border-top: 1px solid var(--divider); }
 .sectionHeader { display: flex; flex-direction: column; gap: 18px; max-width: 770px; }
+/* The 29ch cap is set for English; a Chinese heading of the same width is
+   roughly twice as many characters, so the longer one broke after four of
+   them. This opts a heading out and lets it run as one line. */
+.sectionHeaderWide { max-width: none; }
+.page .sectionHeaderWide h2 { max-width: none; }
 .sectionLead { max-width: 64ch; color: var(--muted); }
 .page .kicker, .page .microLabel { font-size: .75rem; font-weight: 500; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
 .microLabel { color: var(--muted); }
@@ -55,7 +60,7 @@
 .reasoning > div { padding-left: 16px; border-left: 2px solid var(--divider); }
 .reasoning dd { margin-top: 8px; font-size: .9375rem; color: var(--muted); }
 .demo { width: 100%; border-radius: 8px; box-shadow: 0 12px 32px rgba(0, 0, 0, .12); background: #171717; }
-.flowBlock { display: flex; flex-direction: column; gap: 26px; padding-block: 28px; border-block: 1px solid var(--divider); }
+.flowBlock { display: flex; flex-direction: column; gap: 26px; padding-bottom: 28px; border-bottom: 1px solid var(--divider); }
 .flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; }
 .flow li { position: relative; display: flex; flex-direction: column; gap: 12px; padding-left: 22px; border-left: 2px solid var(--divider); }
 .stepNumber { font-size: .75rem; color: var(--muted); }
@@ -118,7 +123,9 @@
 .projectNavAll:hover { color: var(--inverse); background: var(--text); }
 
 @media (min-width: 700px) {
-  .meta { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* Two to a row rather than four across: "Delivered" is a sentence, and
+     on one row it ran straight into Timeline beside it. */
+  .meta { column-gap: 40px; }
   .decisionGrid, .evidenceGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
   .ruleGrid, .systemGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }

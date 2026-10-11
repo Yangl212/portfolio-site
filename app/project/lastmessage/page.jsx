@@ -38,8 +38,7 @@ const copy = {
     hero: {
       pill: "MFA Thesis Project",
       context: "Product Design · AI Interaction · 2026",
-      lead: "A browser-based detective game where players question AI characters and piece together a case in their own order.",
-      question: "The design challenge: keep an open-ended investigation understandable when both the player's route and the conversation can change.",
+      lead: "An immersive browser-based ARG. It breaks the usual model of talking to an NPC by clicking an option: players say whatever they want, and every exchange moves them toward a different ending.",
       play: "Play the live game",
       watch: "Watch the playtest",
       coverAlt: "Last Message detective game title screen on a laptop",
@@ -47,53 +46,47 @@ const copy = {
       role: "Product Designer",
       scopeLabel: "My scope",
       scope: "UX / UI, AI behavior & web development",
-      contextLabel: "Context",
-      contextValue: "Parsons · MFA Design & Technology",
+      contextLabel: "Delivered",
+      contextValue: "Investigation structure, interface, character rules and implementation",
       timelineLabel: "Timeline",
-      timeline: "4 months",
-      deliveredLabel: "What I delivered",
-      delivered: "A playable website, from investigation structure and interface design to character rules and implementation. The main investigation is designed to be readable; the hidden ending is an optional, more demanding route."
+      timeline: "4 months"
     },
     experience: {
-      kicker: "01 / The experience",
-      heading: "Let players follow a question, wherever it leads.",
-      lead: "Players enter as a detective investigating a death. Conversations, records, and clues on external websites offer different ways into the same case.",
+      kicker: "01 / Product highlights",
+      heading: "A new kind of AI game experience.",
+      lead: "Players enter as a detective investigating a death. The game is built to be as immersive as it can be, so there is no one direction to explore in: the narrative is non-linear.",
       choiceLabel: "Design choice",
       tradeoffLabel: "Tradeoff",
       chat: {
         label: "Conversation",
-        title: "Ask in your own words.",
-        body: "Private chats let players question characters through free-form input. Each character's prompt defines a voice and the information they are allowed to share.",
-        choice: "Use a familiar chat interface so the player can focus on what to ask.",
-        tradeoff: "Open input gives players freedom, but also demands behavior for unexpected questions.",
-        link: "View conversation at full size ↗",
+        title: "An unusual amount of player freedom.",
+        body: "It breaks the option-picking of a traditional game: players type whatever they like to the NPCs, and each one answers from a perspective of its own, which is how the story comes together.",
+        choice: "A plain chat interface, close to the ones people already use, so there is nothing to learn and the attention goes to the conversation itself.",
+        tradeoff: "Open input gives players freedom, but it also means some of them ask out of curiosity about things the game has nothing to do with. So the endings account for it: enough unrelated questions trigger a bad ending outright.",
         demoLabel: "Private conversation with Mike Anderson"
       },
       clue: {
-        label: "Cross-reference",
-        title: "Follow a clue beyond the game.",
-        body: "A character's trail extends to a profile on X. Players investigate outside the case interface and bring their interpretation back into the story.",
-        choice: "Let a familiar website become another piece of evidence in the fictional investigation.",
-        tradeoff: "Leaving the interface adds immersion, but makes the return path and the next useful action less obvious.",
-        link: "View clue at full size ↗",
+        label: "Real and fictional, interleaved",
+        title: "Built from fictional pages and real ones together.",
+        body: "Some of what players turn up inside the game leads further out: the same names and events can be followed on the real internet, on Wikipedia or X.",
+        choice: "Blur the line between what is real and what is made up, so players are further inside the story.",
+        tradeoff: "Mixing the two does draw people in, but jumping between several sites leaves them unsure which parts belong to the game, and the archived pages still have problems of their own, so the run of it is not yet smooth. This part needs more work.",
         demoLabel: "The fictional character's profile on X, used as an investigation clue"
       }
     },
     flow: {
-      kicker: "02 / Investigation flow",
-      heading: "Keep the next move visible without prescribing the answer.",
-      lead: "The core loop is to question, inspect, and connect evidence. Players can revisit records and characters as new information opens another route.",
-      loopLabel: "Investigation loop · high-level structure",
+      kicker: "02 / Game flow",
+      heading: "The game is non-linear, with eight different endings.",
+      loopLabel: "Player flow",
       steps: [
-        { title: "Take the case", body: "An incident report establishes the player's role and the mystery." },
-        { title: "Question & inspect", body: "Choose between conversations, member files, calls, and diaries." },
-        { title: "Connect the evidence", body: "Cross-reference records and follow clues onto the web." },
-        { title: "Open another route", body: "Use discoveries to access more records and revisit characters." },
-        { title: "Reach an ending", body: "Different paths resolve the case differently; closer attention to connected clues can open an optional hidden route." }
+        { title: "Enter the game", body: "The player is a detective, and takes a call from a woman reporting a case." },
+        { title: "Get into the hidden site", body: "Slip into the group and talk to the NPCs to earn more access." },
+        { title: "Get a new account", body: "Obtain an account that gets you into the group, then talk to its members for what they keep quiet." },
+        { title: "Get admin rights", body: "Use what you have found to unlock more records, and open up private chats." },
+        { title: "Reach one of the endings", body: "Who the player talks to decides which ending they reach. Going off the obvious path can turn up things few people see." }
       ],
-      returnPath: "New information sends the player back to earlier conversations and records.",
-      mapTitle: "Eight endings, plus a hidden ninth.",
-      mapBody: "Opened from an ending screen in this recording, the story map shows revealed and locked branches. It offers a view of the routes through the case after an outcome has been reached.",
+      mapTitle: "Seven endings, plus one hidden.",
+      mapBody: "Once an ending is reached, the player can open the story map, find a route they have not taken, and go back to explore it.",
       mapDemoLabel: "Story map showing revealed and locked routes through the branching endings",
       cards: [
         { label: "Information architecture", title: "Give each kind of evidence a home.", body: "Chat, the member registry, and the mission board occupy separate routes. The player can return to the same record structure as the case grows." },
@@ -121,7 +114,6 @@ const copy = {
       intent: "Keep an off-topic exchange inside the story instead of returning a generic assistant response.",
       tradeoffLabel: "Tradeoff",
       tradeoff: "Revoking access makes the boundary consequential. It also risks punishing normal curiosity; the clarity of the warning needs further testing.",
-      featureLink: "View interaction at full size ↗",
       featureDemoLabel: "Lily's warnings in the chat history, disconnection, and the Revoked ending",
       rules: [
         { label: "01 / Character", title: "A consistent voice", detail: "Each character has a separate prompt for tone and conversational style. Midnight, for example, is calm and controlled, with a deliberate sense of distance." },
@@ -196,62 +188,55 @@ const copy = {
     hero: {
       pill: "MFA 毕业设计",
       context: "产品设计 · AI 交互 · 2026",
-      lead: "一款浏览器侦探游戏。玩家可以自由盘问 AI 角色，再按自己的顺序拼出案情。",
-      question: "最大的设计问题是：路线和对话都不固定，怎样才能让玩家不迷路？",
-      play: "去玩这个游戏",
-      watch: "看测试录像",
+      lead: "一款网页端的 ARG 沉浸式游戏。打破传统点击选项与 NPC 对话的模式，游戏中玩家可与 NPC 自由对话，并且每一次对话都会影响最后通向不同结局。",
+      play: "点击试玩",
+      watch: "查看测试影像",
       coverAlt: "笔记本上打开的 Last Message 侦探游戏标题画面",
       roleLabel: "我的角色",
       role: "产品设计师",
       scopeLabel: "我负责的部分",
       scope: "UX / UI、AI 行为与网页开发",
-      contextLabel: "背景",
-      contextValue: "帕森斯 · MFA 设计与技术",
+      contextLabel: "交付内容",
+      contextValue: "完成了调查结构、界面、角色规则和代码实现",
       timelineLabel: "周期",
-      timeline: "4 个月",
-      deliveredLabel: "我交付了什么",
-      delivered: "一个可以直接玩的网页游戏。我完成了调查结构、界面、角色规则和代码实现。主线尽量让人跟得上，隐藏结局则保留为一条更难的可选路线。"
+      timeline: "4 个月"
     },
     experience: {
-      kicker: "01 / 体验",
-      heading: "玩家想从哪里查，就从哪里开始",
-      lead: "玩家以侦探身份调查一桩死亡案件。对话、档案和外部网站上的线索，都是进入案情的不同入口。",
+      kicker: "01 / 产品亮点",
+      heading: "全新的 AI 游戏产品体验",
+      lead: "玩家以侦探身份调查一桩死亡案件。本产品希望给玩家带去尽可能沉浸的体验感，因此探索方向没有唯一选择，是一个非线性叙事的游戏。",
       choiceLabel: "设计选择",
       tradeoffLabel: "取舍",
       chat: {
         label: "对话",
-        title: "想问什么，就自己打字问",
-        body: "玩家可以在私聊里自由输入问题。每个角色的 prompt 都规定了说话方式和可以透露的信息。",
-        choice: "用大家都熟的聊天界面，让玩家把心思放在「该问什么」上。",
-        tradeoff: "开放输入给了玩家自由，但也要求角色对意料之外的问题有反应。",
-        link: "查看对话大图 ↗",
+        title: "超高的玩家自由度",
+        body: "打破传统游戏的选项交流，玩家可自由输入任何内容与 NPC 进行交流，从而获得不同 NPC 的独特视角，帮助玩家了解游戏剧情。",
+        choice: "使用简单且贴近用户平时使用的聊天界面，减少用户学习难度，让用户将注意力放在与 NPC 的交流上。",
+        tradeoff: "开放输入给了玩家自由，但同样也会出现玩家出于好奇心询问与游戏毫无相干问题的情况。因此在结局设计中，我引入了多次无关将直接触发 bad ending 的设计。",
         demoLabel: "与 Mike Anderson 的私聊"
       },
       clue: {
-        label: "交叉验证",
-        title: "顺着线索走出游戏",
-        body: "一个角色在 X 上留下了主页。玩家需要离开游戏界面去查，再把找到的信息带回案子里。",
-        choice: "让一个大家都熟悉的网站，成为这桩虚构调查里的另一份证据。",
-        tradeoff: "离开界面让人更入戏，但回来的路和下一步该做什么就没那么明显了。",
-        link: "查看线索大图 ↗",
+        label: "真假交错",
+        title: "虚拟网页与真实内容共同构筑",
+        body: "在游戏探索中得到的有些信息，可以在真实的互联网世界（例如维基百科、X 等）寻找到更多的线索。",
+        choice: "模糊真实与虚拟的边界，帮助玩家更有代入感。",
+        tradeoff: "真假混在一起确实更有代入感，但在多个网站之间跳转时玩家会产生疑问，不容易分清哪些属于游戏；这些网页的存档本身也还有一些问题，整段体验还不够顺。这部分还需要再打磨。",
         demoLabel: "虚构角色在 X 上的主页，被当作调查线索"
       }
     },
     flow: {
-      kicker: "02 / 调查流程",
-      heading: "告诉玩家还能往哪查，但不直接给答案",
-      lead: "核心循环是盘问、查看、把证据连起来。新信息打开另一条路时，玩家可以回头再看之前的档案和角色。",
-      loopLabel: "调查循环 · 大致结构",
+      kicker: "02 / 游戏流程",
+      heading: "本游戏采用非线性叙事，并拥有 8 个不同结局",
+      loopLabel: "玩家流程",
       steps: [
-        { title: "接下案子", body: "一份事件报告交代玩家的身份，以及这桩谜案。" },
-        { title: "盘问与查看", body: "在对话、成员档案、通话记录和日记之间选。" },
-        { title: "把证据连起来", body: "交叉比对档案，顺着线索查到网上去。" },
-        { title: "打开另一条路", body: "用查到的东西解锁更多档案，回头再找角色聊。" },
-        { title: "走到一个结局", body: "不同的路会把案子引向不同结果；把相互关联的线索看得更细，可以打开一条可选的隐藏路线。" }
+        { title: "进入游戏", body: "玩家作为警探接到一名女子的报案电话。" },
+        { title: "进入神秘网站", body: "潜入群内，与 NPC 交流获得更多的权限。" },
+        { title: "获得新账号", body: "获取新入群账号，并与群内成员进行聊天，获得更多隐秘信息。" },
+        { title: "获得管理员权限", body: "用查到的东西解锁更多档案，并开启私聊权限。" },
+        { title: "不同的结局", body: "玩家与不同 NPC 的沟通会走向不同结局。另辟蹊径可能会帮助你发现更鲜为人知的秘密。" }
       ],
-      returnPath: "新信息会把玩家送回之前的对话和档案。",
-      mapTitle: "八个结局，外加一个隐藏的第九个",
-      mapBody: "录像中的故事地图从结局画面打开，标出已经解锁和仍然锁着的分支。玩家走到一个结果后，可以从这里回看整个案子还有哪些路线。",
+      mapTitle: "七个结局 + 一个隐藏结局",
+      mapBody: "进入结局后，玩家可以打开故事进程发现新的路径，并返回重新探索。",
       mapDemoLabel: "故事地图，显示分支结局里已解锁和锁着的路线",
       cards: [
         { label: "信息架构", title: "每类证据都有自己的地方", body: "聊天、成员名册和任务板各占一条路由。案子越查越大，玩家也能回到同一套档案结构里。" },
@@ -279,7 +264,6 @@ const copy = {
       intent: "即使玩家跑题，角色也要留在故事里回应，而不是突然变成通用 AI 助手。",
       tradeoffLabel: "取舍",
       tradeoff: "收回权限让这条边界真的有分量，但也可能误伤正常的好奇心；警告说得够不够清楚，还需要再测。",
-      featureLink: "查看交互大图 ↗",
       featureDemoLabel: "聊天记录里 Lily 的警告、断连，以及 Revoked 结局",
       rules: [
         { label: "01 / 角色", title: "口吻要一致", detail: "每个角色有各自的 prompt，规定语气和说话方式。比如 Midnight 是冷静、克制的，带着刻意保持的距离感。" },
@@ -357,8 +341,8 @@ function Demo({ name, label }) {
     poster={"/lastmessage/media/" + name + "-poster.webp"} width={1600} height={1000} label={label} />
 }
 
-function SectionHeading({ label, title, children }) {
-  return <header className={styles.sectionHeader}>
+function SectionHeading({ label, title, children, wide = false }) {
+  return <header className={`${styles.sectionHeader} ${wide ? styles.sectionHeaderWide : ""}`.trim()}>
     <p className={styles.kicker}>{label}</p>
     <h2>{title}</h2>
     {children && <p className={styles.sectionLead}>{children}</p>}
@@ -387,7 +371,7 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
               <div className={styles.heroCopy}>
                 <h1 id="project-title" className={styles.reveal} style={{ animationDelay: "60ms" }}>Last Message</h1>
                 <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>{t.hero.lead}</p>
-                <p className={`${styles.heroQuestion} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>{t.hero.question}</p>
+                {t.hero.question && <p className={`${styles.heroQuestion} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>{t.hero.question}</p>}
                 <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                   <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">{t.hero.play} <span aria-hidden="true">↗</span></a>
                   <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">{t.hero.watch}</a>
@@ -401,10 +385,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
               <div><dt>{t.hero.contextLabel}</dt><dd>{t.hero.contextValue}</dd></div>
               <div><dt>{t.hero.timelineLabel}</dt><dd>{t.hero.timeline}</dd></div>
             </dl>
-            <div className={`${styles.contribution} ${styles.reveal}`} style={{ animationDelay: "300ms" }}>
-              <p className={styles.microLabel}>{t.hero.deliveredLabel}</p>
-              <p>{t.hero.delivered}</p>
-            </div>
           </section>
 
           <ProjectQuickNav slug="lastmessage" track={track} locale={locale} />
@@ -422,7 +402,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                   <div><dt>{t.experience.choiceLabel}</dt><dd>{t.experience.chat.choice}</dd></div>
                   <div><dt>{t.experience.tradeoffLabel}</dt><dd>{t.experience.chat.tradeoff}</dd></div>
                 </dl>
-                <a className={styles.textLink} href="/lastmessage/media/chat-loop.mp4" target="_blank" rel="noreferrer">{t.experience.chat.link}</a>
               </div>
               <Demo name="chat" label={t.experience.chat.demoLabel} />
             </article>
@@ -435,14 +414,13 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                   <div><dt>{t.experience.choiceLabel}</dt><dd>{t.experience.clue.choice}</dd></div>
                   <div><dt>{t.experience.tradeoffLabel}</dt><dd>{t.experience.clue.tradeoff}</dd></div>
                 </dl>
-                <a className={styles.textLink} href="/lastmessage/media/web-clue-loop.mp4" target="_blank" rel="noreferrer">{t.experience.clue.link}</a>
               </div>
               <Demo name="web-clue" label={t.experience.clue.demoLabel} />
             </article>
           </section>
 
           <section className={styles.caseSection} id="investigation-flow">
-            <SectionHeading label={t.flow.kicker} title={t.flow.heading}>
+            <SectionHeading wide label={t.flow.kicker} title={t.flow.heading}>
               {t.flow.lead}
             </SectionHeading>
             <div className={styles.flowBlock}>
@@ -453,7 +431,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                   <h3>{step.title}</h3><p>{step.body}</p>
                 </li>)}
               </ol>
-              <p className={styles.returnPath}><span aria-hidden="true">↶</span> {t.flow.returnPath}</p>
             </div>
             <div className={styles.mapIntro}>
               <h3>{t.flow.mapTitle}</h3>
@@ -496,7 +473,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                   <div><dt>{t.ai.intentLabel}</dt><dd>{t.ai.intent}</dd></div>
                   <div><dt>{t.ai.tradeoffLabel}</dt><dd>{t.ai.tradeoff}</dd></div>
                 </dl>
-                <a className={styles.textLink} href="/lastmessage/media/boundary-loop.mp4" target="_blank" rel="noreferrer">{t.ai.featureLink}</a>
               </div>
               <Demo name="boundary" label={t.ai.featureDemoLabel} />
             </article>

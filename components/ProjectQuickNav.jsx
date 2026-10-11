@@ -28,8 +28,8 @@ const projectSections = {
     ["reflection", { en: "Trade-offs", zh: "取舍" }]
   ],
   lastmessage: [
-    ["experience", { en: "Experience", zh: "体验" }],
-    ["investigation-flow", { en: "Investigation", zh: "调查流程" }],
+    ["experience", { en: "Highlights", zh: "产品亮点" }],
+    ["investigation-flow", { en: "Flow", zh: "游戏流程" }],
     ["ai-behavior", { en: "AI behavior", zh: "AI 行为" }],
     ["playtesting", { en: "Playtesting", zh: "测试" }],
     ["figma-to-build", { en: "Build", zh: "开发" }]
