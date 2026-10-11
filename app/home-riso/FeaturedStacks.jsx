@@ -71,8 +71,8 @@ const stacks = {
   },
   lastmessage: {
     copy: {
-      en: { when: "2026 · 4 months", role: "Product Design & Development", summary: "A playable browser-based AI detective game, designed and developed end to end across the investigation, character behavior, and interface.", facets: ["Browser game", "B2C", "AI · Narrative"] },
-      zh: { when: "2026 年 · 4 个月", role: "产品设计与开发", summary: "一款可以直接在浏览器里玩的 AI 侦探游戏。我独立完成了调查结构、角色行为、界面和开发", facets: ["浏览器游戏", "B2C", "AI · 叙事"] }
+      en: { when: "2026 · 4 months", role: "Product Design & Development", summary: "An ARG detective game that breaks the click-an-option dialogue model: players talk to the NPCs in their own words, and what they say shapes the story and which ending they reach.", facets: ["Browser game", "B2C", "AI · Narrative"] },
+      zh: { when: "2026 年 · 4 个月", role: "产品设计与开发", summary: "打破点击选项进行对话的游戏模式，真正实现玩家自由与 NPC 交流，从而影响故事发展与结局的 ARG 游戏", facets: ["浏览器游戏", "B2C", "AI · 叙事"] }
     },
     tint: "pink",
     layers: [
