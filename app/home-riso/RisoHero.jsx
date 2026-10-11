@@ -69,6 +69,18 @@ const HERO_COPY = {
     facts: ["Parsons MFA ’26", "Previously at VortexNet", "Open to roles across the U.S."],
     band: "UI/UX design · Data visualization · Brand & print · AI interfaces · Riso zines · New York · "
   },
+  /* Lele's own line, in her words. The greeting above it follows the UI/UX
+     block's shape; the English says the same thing. */
+  product: {
+    eyebrow: "AI Product Designer · New York",
+    subline: {
+      en: "I focus on product design: finding what people need and where it hurts, and using AI to get projects shipped.",
+      zh: ["你好，我是杨乐乐！",
+        "我致力于产品设计，了解用户需求与痛点，并借助 AI 进行多个项目落地"]
+    },
+    facts: ["Parsons MFA ’26", "Shipped Last Message end to end", "Seeking AI Product Design roles"],
+    band: "AI interfaces · Product design · Prototyping · Game design · Usability testing · New York · "
+  },
   visual: {
     eyebrow: "Visual & Brand Designer · New York",
     subline: {

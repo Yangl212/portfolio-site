@@ -99,10 +99,10 @@ const skillGroups = [
   }
 ]
 
-export default function ResumePage({ locale = "en" }) {
+export default function ResumePage({ track = "uiux", locale = "en" }) {
   return (
     <ResumeSheet
-      track="uiux"
+      track={track}
       locale={locale}
       role="UI/UX Designer"
       photo="/resume/photo.jpg"
