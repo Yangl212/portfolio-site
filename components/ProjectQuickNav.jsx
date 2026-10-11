@@ -29,10 +29,10 @@ const projectSections = {
   ],
   lastmessage: [
     ["experience", { en: "Highlights", zh: "产品亮点" }],
-    ["investigation-flow", { en: "Flow", zh: "游戏流程" }],
+    ["investigation-flow", { en: "Game flow", zh: "游戏流程" }],
     ["ai-behavior", { en: "AI behavior", zh: "AI 行为" }],
-    ["playtesting", { en: "Playtesting", zh: "测试" }],
-    ["figma-to-build", { en: "Build", zh: "开发" }]
+    ["playtesting", { en: "Testing", zh: "测试" }],
+    ["figma-to-build", { en: "Development", zh: "开发" }]
   ],
   cleared: [
     ["context", { en: "Context", zh: "背景" }],

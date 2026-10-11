@@ -25,7 +25,6 @@ export const metadata = {
 const img = (hash) => "/framer-assets/images/" + hash
 const liveUrl = "https://lastmessage.online/test-intro.html"
 const playtestUrl = "https://www.youtube.com/watch?v=UkSPX1I5Q-U"
-const comparison = img("bb00cb03b3e532c6003864bef9d21154b5215f5f.png")
 
 /*
  * Every line of prose on the page, in both languages. The English is
@@ -40,147 +39,147 @@ const copy = {
     hero: {
       pill: "MFA Thesis Project",
       context: "Product Design · AI Interaction · 2026",
-      lead: "An immersive browser-based ARG. It breaks the usual model of talking to an NPC by clicking an option: players say whatever they want, and every exchange moves them toward a different ending.",
-      play: "Play the live game",
-      watch: "Watch the playtest",
+      lead: "An immersive ARG you play in the browser. It breaks away from the usual click-an-option way of talking to NPCs: players can say whatever they want to them, and every conversation shapes which ending they reach.",
+      play: "Play the game",
+      watch: "Watch the playtest footage",
       coverAlt: "Last Message detective game title screen on a laptop",
       roleLabel: "My role",
       role: "Product Designer",
       scopeLabel: "My scope",
       scope: "UX / UI, AI behavior & web development",
       contextLabel: "Delivered",
-      contextValue: "Investigation structure, interface, character rules and implementation",
+      contextValue: "The investigation structure, interface, character rules and code",
       timelineLabel: "Timeline",
       timeline: "4 months"
     },
     experience: {
       kicker: "01 / Product highlights",
-      heading: "A new kind of AI game experience.",
-      lead: "Players enter as a detective investigating a death. The game is built to be as immersive as it can be, so there is no one direction to explore in: the narrative is non-linear.",
+      heading: "A new kind of AI game experience",
+      lead: "Players investigate a death as a detective. I wanted the game to feel as immersive as possible, so there's no single direction to explore in. The story is non-linear.",
       choiceLabel: "Design choice",
       tradeoffLabel: "Tradeoff",
       chat: {
         label: "Conversation",
-        title: "An unusual amount of player freedom.",
-        body: "It breaks the option-picking of a traditional game: players type whatever they like to the NPCs, and each one answers from a perspective of its own, which is how the story comes together.",
-        choice: "A plain chat interface, close to the ones people already use, so there is nothing to learn and the attention goes to the conversation itself.",
-        tradeoff: "Open input gives players freedom, but it also means some of them ask out of curiosity about things the game has nothing to do with. So the endings account for it: enough unrelated questions trigger a bad ending outright.",
+        title: "A lot of freedom for players",
+        body: "Instead of choosing from dialogue options like most games, players can type anything they want to the NPCs. Each NPC gives its own side of things, which helps players work out the story.",
+        choice: "A simple chat interface, close to the ones people use every day, so there's little to learn and players can focus on talking to the NPCs.",
+        tradeoff: "Open input gives players freedom, but it also means some will ask things that have nothing to do with the game, just out of curiosity. So when I designed the endings, I made it so that asking too many unrelated questions triggers a bad ending straight away.",
         demoLabel: "Private conversation with Mike Anderson"
       },
       clue: {
-        label: "Real and fictional, interleaved",
-        title: "Built from fictional pages and real ones together.",
-        body: "Some of what players turn up inside the game leads further out: the same names and events can be followed on the real internet, on Wikipedia or X.",
-        choice: "Blur the line between what is real and what is made up, so players are further inside the story.",
-        tradeoff: "Mixing the two does draw people in, but jumping between several sites leaves them unsure which parts belong to the game, and the archived pages still have problems of their own, so the run of it is not yet smooth. This part needs more work.",
+        label: "Real and fake, intertwined",
+        title: "Built from fictional pages and real content",
+        body: "Some of what players find in the game can be followed up on the real internet, on sites like Wikipedia and X, where there are more clues.",
+        choice: "Blurring the line between real and fictional, so players feel more immersed in it.",
+        tradeoff: "Mixing real and fake does make it more immersive, but jumping between several sites confuses players, and it's hard to tell which parts belong to the game. The archived pages also still have some problems, so this part isn't smooth yet and still needs work.",
         demoLabel: "The fictional character's profile on X, used as an investigation clue"
       }
     },
     flow: {
       kicker: "02 / Game flow",
-      heading: "The game is non-linear, with eight different endings.",
+      heading: "The game is non-linear, with eight different endings",
       loopLabel: "Player flow",
       steps: [
-        { title: "Enter the game", body: "The player is a detective, and takes a call from a woman reporting a case." },
-        { title: "Get into the hidden site", body: "Slip into the group and talk to the NPCs to earn more access." },
-        { title: "Get a new account", body: "Obtain an account that gets you into the group, then talk to its members for what they keep quiet." },
-        { title: "Get admin rights", body: "Use what you have found to unlock more records, and open up private chats." },
-        { title: "Reach one of the endings", body: "Who the player talks to decides which ending they reach. Going off the obvious path can turn up things few people see." }
+        { title: "Enter the game", body: "As a detective, the player gets a call from a woman reporting a case." },
+        { title: "Enter the mysterious site", body: "Slip into the group and talk to the NPCs to get more access." },
+        { title: "Get a new account", body: "Get a new account in the group, then chat with its members to dig up more hidden information." },
+        { title: "Get admin access", body: "Use what you've found to unlock more files and open up private chats." },
+        { title: "Different endings", body: "Talking to different NPCs leads to different endings. Going off the beaten path may help you find secrets fewer people know about." }
       ],
       mapDemoLabel: "Story map showing revealed and locked routes through the branching endings",
       summary: "Early explorations behind the non-linear structure",
-      disclosureLead: "Two exploratory exercises informed the direction: people could form different interpretations from the same fragments and inspect clues in their own order. These exercises informed the concept; they did not validate the final game's usability.",
+      disclosureLead: "Two small early exercises confirmed two things for me: people piece together different stories from the same fragments, and everyone looks at the clues in a different order. These exercises only shaped the concept. They didn't test whether the final game is easy to use.",
       study1Aria: "Open trace inference study image at full size",
       study1Alt: "Annotated discarded objects used to explore how people infer a story from traces",
       study1Title: "01 / Trace inference",
-      study1Body: "Participants inferred an owner from discarded objects. Their confident but differing interpretations suggested room for more than one reading of a clue.",
+      study1Body: "Participants guessed who owned a pile of thrown-away objects. They were all confident, but they came to different conclusions, which showed that one clue can be read more than one way.",
       study2Alt: "Illustrated room with ten inspectable objects and their clue records",
       study2Title: "02 / Visual detective exercise",
-      study2Body: "A room contained ten inspectable objects with short records. Participants chose their own inspection order, informing the modular record structure."
+      study2Body: "A room held ten objects to inspect, each with a short note. Participants chose the order themselves, and that fed into the modular file structure I used later."
     },
     ai: {
       kicker: "03 / AI interaction design",
-      heading: "Holding the story together while the player roams.",
-      featureLabel: "Language boundaries set for the AI NPCs",
-      featureTitle: "A warning becomes a consequence.",
-      featureBody: "When a player keeps asking an NPC about things the game has nothing to do with, the NPC says so and declines to answer. Trip that enough times and you are reported to the site’s admin, thrown out of the group chat, and the game ends in a bad ending.",
+      heading: "Giving players freedom while the NPCs keep the story moving",
+      featureLabel: "Language boundaries I set for the AI NPCs",
+      featureTitle: "Warnings turn into consequences",
+      featureBody: "If a player keeps asking an NPC questions that have nothing to do with the game, the NPC warns them and won't answer. Trigger that reply enough times and the player gets \"reported\" to the site's admin and kicked out of the group chat, and the game goes to a bad ending.",
       intentLabel: "Intent",
-      intent: "Even when the player wanders off, the character answers in the voice it was written with - and warns them while it does.",
+      intent: "Even when the player goes off topic, the NPC stays in character, while still giving hints and warnings.",
       tradeoffLabel: "Tradeoff",
-      tradeoff: "Questions near the edge can be misjudged, and a player whose curiosity takes a knock may stop digging for the more hidden endings.",
+      tradeoff: "Some borderline questions can get misjudged, and it can dampen players' curiosity, which might make them hesitant to dig for the more hidden endings.",
       featureDemoLabel: "Lily's warnings in the chat history, disconnection, and the Revoked ending",
       summary: "Character prompts and response rules",
-      rulesIntro: "Every NPC you can talk to has its own way of speaking, its own backstory and its own range of knowledge, and a question past that range gets a vague answer. Players pick up more from each member’s file and from the conversations themselves, which is how they learn about the dead woman and about the site. The NPCs also have a web of relationships of their own: ask about a name or handle they do not know, and they are puzzled too.",
+      rulesIntro: "Every NPC you can talk to has their own way of speaking, backstory and range of knowledge. Ask them about something outside of that and they'll be vague. Players get more information from each person's file and from talking to the NPCs, and that's how they learn about the dead woman and the website. The NPCs also have their own web of relationships, so if you mention a name or handle they don't know, they'll be confused too.",
       promptAria: "Open Midnight's character prompt at full size",
       promptAlt: "Midnight's system prompt with tone, conversation, and boundary instructions",
       promptTitle: "Character-level instructions",
-      promptBody: "Midnight's prompt defines tone, conversation style, boundaries, and off-topic handling.",
+      promptBody: "Midnight's prompt sets the tone, the way of speaking, the boundaries, and what to do when the conversation goes off topic.",
       rulesAria: "Open bilingual response rules at full size",
       rulesAlt: "English and Chinese rules for off-topic detection and challenges to the story",
       rulesTitle: "Input-handling rules",
-      rulesBody: "English and Chinese patterns cover member queries, off-topic messages, and attempts to challenge the fiction.",
+      rulesBody: "Two sets of patterns, in Chinese and English, covering questions about members, off-topic messages and attempts to break the fiction.",
     },
     playtest: {
       kicker: "04",
-      heading: "Playtesting & iteration",
-      lead: "The game went through two rounds of expert interviews and two rounds of user testing. Every round gave me something that changed the version after it.",
+      heading: "Testing and iteration",
+      lead: "Over the project I ran two expert interviews and two rounds of user testing. Every round gave me important feedback for the next iteration.",
       rounds: [
         {
           label: "01",
-          title: "The first user test",
-          intro: "I asked six classmates to play the first version. Most of them got as far as the point where you have to take another user's account, log in with it, and talk to the story NPC inside it.",
+          title: "First user test",
+          intro: "I invited six classmates to test the first version. In this round, most players only got as far as the point where they had to steal a new user's account, log in, and talk to the story NPC in it.",
           paragraphs: [
-            "Five of the six said the task was too hard, and four had not understood that they were the detective - they thought they were the dead woman's sister. One player got the new account with no hint at all, and that player had played a lot of games like this one.",
-            "One player also felt the interface was too ordinary and had no art direction of its own. It sits close to the chat apps people actually use, but there was little design on top of that.",
-            "Players also said the NPC replies were too flat. At that point an NPC answered only when one of the six keywords I had set was hit; anything else got nothing back, which left players unsure how the game was meant to continue."
+            "Five of the six said the task was too hard, and four didn't realize they were playing the detective. They thought they were the dead woman's sister. Only one player got the new account without any hints, and they'd played a lot of games like this.",
+            "One player also felt the interface was too plain and had no visual style of its own. It looked close to the chat apps people use every day, but it was short on visual design.",
+            "Players also said the NPC replies were too limited. At the time, NPCs only responded when you hit one of the six keywords I'd set. If you didn't mention a keyword, you got nothing back, which left players confused about how to move the game forward."
           ],
-          changesIntro: "After the first round I made these changes:",
+          changesIntro: "Based on this feedback, I made these changes after the first round:",
           changes: [
-            { label: "01", title: "A progress bar and a hint button", body: "Players can see where they are in the game as a whole, and when they get stuck they can ask for a hint themselves and keep going." },
-            { label: "02", title: "Real AI NPCs in the chatroom", body: "The NPCs answer what the player actually writes, and what the player says shapes what comes back. The six original keywords stayed: hitting one still returns its fixed reply and the information with it." }
+            { label: "01", title: "Added a progress bar and a hint button", body: "This lets players see their overall progress, and when they're stuck, they can click for a hint to get a bit of information and keep going." },
+            { label: "02", title: "Brought AI NPCs into the chatroom", body: "The NPCs now reply based on what the player types, and whatever the player says affects how they answer. I kept the original six keywords too, so hitting one still gives a fixed reply and its information." }
           ]
         },
         {
           label: "02",
           title: "Two expert interviews",
-          intro: "I asked a level designer at miHoYo and a professor at Parsons to play the whole thing through, then talked with each of them - about how the game is structured, and about where the AI should stop.",
+          intro: "I had a level designer from miHoYo and a professor from Parsons each play through the whole game, then talked with them about the game's logic and where the AI's boundaries should be.",
           blocks: [
             {
-              title: "Going through the game logic with a level designer at miHoYo",
+              title: "Talking game logic with a miHoYo level designer",
               paragraphs: [
-                "Once he had played the whole thing, we went back over how the game is put together.",
-                "At first it ran in one direction: players only chose who they thought the killer was at the very end, and that one choice decided the ending. It made for thin play. He suggested reworking the logic, and the version that exists now came out of that."
+                "After he'd played the whole thing, we went back over the game's logic.",
+                "At first the game only moved one way: players just picked who they thought the killer was at the end, and that decided the ending. That made it fairly one-dimensional to play. After we talked it through, he suggested reworking the logic, so I made the changes that became the current version."
               ]
             },
             {
-              title: "Going through the AI's boundaries with a professor at Parsons",
+              title: "Talking about the AI's boundaries with a Parsons professor",
               paragraphs: [
-                "I also went into the limits of the AI's behaviour at length with a professor at Parsons.",
-                "Watching him use the AI NPCs, I noticed he kept raising subjects with nothing to do with the story. There was no bad ending for being thrown out yet, so he could keep going indefinitely. The NPCs did not take the bait, but the story did not move either.",
-                "So I sharpened each NPC's character and the limits of what it will answer."
+                "I also talked at length with a professor at Parsons about the AI's behavioral boundaries.",
+                "Watching him use the AI NPCs, I noticed he'd often bring up topics that had nothing to do with the story. There wasn't a bad ending for getting banned yet, so he could just keep chatting. The NPCs didn't play along, but the story didn't move forward either.",
+                "So I went back and strengthened each NPC's personality and the limits on how they respond."
               ]
             }
           ]
         },
         {
           label: "03",
-          title: "The second user test",
-          intro: "I recruited eight players online, with a range of experience in games like this, and ran the test remotely. A session ended once the player reached their first ending, and an interview followed. Reaching that first ending took about 20 minutes.",
+          title: "Second user test",
+          intro: "I recruited eight players online with different amounts of experience with games like this, and ran the test remotely. Each session ended when the player reached their first ending, followed by an interview. Overall, players took about 20 minutes to reach their first ending.",
           blocks: [
             {
-              title: "Most players would rather work it out than take a hint",
+              title: "Most players chose to explore on their own instead of using hints",
               paragraphs: [
-                "Most of them never pressed the hint button, so I asked why in the interviews.",
-                "Six of the eight had seen the button. Five of those said that in a game like this they would rather find things for themselves, so they did not want the hint.",
-                "The sixth used it several times. He said that when he could not think of a next move, the hint kept him going instead of leaving him stuck.",
-                "The other two never noticed the button, so it went unused the whole way through."
+                "I noticed most players never clicked the hint button, so I asked them why in the interviews.",
+                "Six of the eight saw the hint button. Five of them said that with games like this, they'd rather find things out themselves, so they didn't want to use hints.",
+                "The other one used the hint button several times. He said that when he couldn't figure out what to do next, the hints helped him keep going instead of staying stuck.",
+                "The remaining two didn't notice the hint button, so they never used it."
               ]
             },
             {
-              title: "Some of them kept going after the session was over",
+              title: "Some players kept exploring other endings after the test",
               paragraphs: [
-                "I left the site open to them for two more days. In that time five came back to tell me they had reached other endings, and two of those had found every ending, the hidden one included.",
-                "One more worked out how to open the hidden ending, but hit a bug and never got to finish it."
+                "I left the site open to them for another two days. During that time, five players came back to tell me they'd reached other endings, and two of them found every ending, including the hidden one.",
+                "One more player figured out how to unlock the hidden ending, but couldn't finish it because of a bug."
               ]
             }
           ]
@@ -189,24 +188,31 @@ const copy = {
       summary: "The first playable chatroom",
       originAria: "Open the early chatroom prototype at full size",
       originAlt: "Early light chat interface with a general channel and member list",
-      originBody: "A plain chatroom and member list provided an early way to explore the interaction. Testing exposed the need to establish a role and a reason to investigate before asking players to start a conversation."
+      originBody: "A basic chatroom with a member list was an early way to try out the interaction. Testing showed that players needed an identity and a reason to investigate before they'd start talking."
     },
     build: {
       kicker: "05",
       heading: "From Figma to VS Code",
       lead: [
-        "I built the high-fidelity screens in Figma first, then handed the images and a written description to Codex and Claude Code to put the site together. What came out differs from the designs in places, but it holds up well overall. That is how I worked through the whole build.",
-        "For the look I went with retro electronics. Partly to carry the dread - it is a detective game. And partly because the story is set around 2012, when interfaces did not look the way they do now, so I wanted the visuals to sit in that period too."
+        "I designed the high-fidelity screens in Figma first, then used the images and written descriptions to have Codex and Claude Code help me build the site. The built version differs from the designs in a few details, but overall it's pretty faithful. I iterated on the whole site this way through most of development.",
+        "For the overall look, I went with a retro electronic style. Partly I wanted to build a creepier atmosphere, since it's a detective game. And the story is actually set around 2012, when interface design wasn't as modern as it is now, so I wanted the visuals to bring back the feel of that time."
       ],
-      compareAlt: "Figma designs on the left and the implemented member registry and mission board on the right",
-      compareCaption: "Left: Figma designs. Right: implemented screens with locked records, member status, and diary access.",
+      compareAlt: "The Figma designs and the screens that were built, side by side",
+      compareCaption: "Each design next to what was built from it: first the member file, then the mission board.",
+      shots: [
+        { src: "figma-file", alt: "The member file screen in Figma" },
+        { src: "built-file", alt: "The member file screen as built, with locked records, member status and diary access" },
+        { src: "figma-board", alt: "The mission board in Figma" },
+        { src: "built-board", alt: "The mission board as built, with the call record and its caller, location and time" }
+      ],
     },
     reflection: {
-      kicker: "What I take forward",
-      heading: "Preserve the mystery, then test whether the challenge is fair.",
-      lead: "My next evaluation would examine whether the main investigation remains understandable, whether hidden-route clues can be reasoned through, and whether navigation and record states provide enough feedback without revealing the answer.",
-      explore: "Explore Last Message",
-      watch: "Watch the playtest"
+      kicker: "06",
+      heading: "Reflection and next steps",
+      lead: [
+        "After the user research and testing, I think the difficulty is about right for now. But because of time constraints, I didn't get to develop each NPC's backstory as thoroughly as I'd like.",
+        "If I have more time in the future, I'd like to flesh out the whole story and push the experience further. I'll also keep improving the UI/UX."
+      ]
     }
   },
   zh: {
@@ -371,15 +377,22 @@ const copy = {
         "我先在 Figma 中制作高保真界面，再用图片和文字描述，让 Codex 和 Claude Code 帮我搭建网站。实现后的界面和设计稿还有一些细节上的区别，但整体还原度还不错。开发过程中，我基本都用这种方式迭代整个网页。",
         "整体视觉上，我选择了复古电子风。一方面，我想烘托比较恐怖的气氛，毕竟这是一个侦探类型的游戏。另一方面，故事的真实背景发生在 2012 年左右，当时的界面设计不像现在这么现代，所以我也希望在视觉上还原那个时期的感觉。"
       ],
-      compareAlt: "左边是 Figma 稿，右边是实现出来的成员名册和任务板",
-      compareCaption: "左：Figma 稿。右：实现出来的界面，含锁着的档案、成员状态和日记权限。",
+      compareAlt: "Figma 稿和实现出来的界面并排",
+      compareCaption: "每张设计稿挨着它实现出来的样子：先是成员档案页，再是任务板。",
+      shots: [
+        { src: "figma-file", alt: "成员档案页的 Figma 稿" },
+        { src: "built-file", alt: "实现出来的成员档案页，含锁着的档案、成员状态和日记权限" },
+        { src: "figma-board", alt: "任务板的 Figma 稿" },
+        { src: "built-board", alt: "实现出来的任务板，含来电记录与来电号码、地点和时间" }
+      ],
     },
     reflection: {
-      kicker: "接下来要做的",
-      heading: "下一轮要确认：这个谜够难，但不是没法解",
-      lead: "我会继续看主线是否容易跟、隐藏路线能否靠推理走通，以及导航和档案状态给的反馈是否足够，同时避免提前泄露答案。",
-      explore: "去玩 Last Message",
-      watch: "看测试录像"
+      kicker: "06",
+      heading: "反思与后续优化",
+      lead: [
+        "在进行了用户调研和测试后，我认为目前游戏的难度比较适中。但因为时间限制，对每个 NPC 背后故事的打磨还不够细致。",
+        "未来如果有时间，我希望进一步完善整个故事，让游戏体验更上一层楼。同时，我也会继续优化界面的 UI/UX。"
+      ]
     }
   }
 }
@@ -578,9 +591,15 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
             <SectionHeading label={t.build.kicker} title={t.build.heading}>
               {t.build.lead}
             </SectionHeading>
-            <figure className={styles.compareFigure}>
-              <img loading="lazy" src={comparison} alt={t.build.compareAlt} />
-              <figcaption><span>{t.build.compareCaption}</span></figcaption>
+            <figure className={styles.strip}>
+              <div className={styles.stripTrack}>
+                {t.build.shots.map((shot) => (
+                  <img key={shot.src} className={styles.stripShot} loading="lazy"
+                    src={`/lastmessage/build/${shot.src}.webp`} alt={shot.alt}
+                    width={3024} height={1964} />
+                ))}
+              </div>
+              <figcaption>{t.build.compareCaption}</figcaption>
             </figure>
           </section>
 
@@ -589,8 +608,8 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
               {t.reflection.lead}
             </SectionHeading>
             <div className={styles.actions}>
-              <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">{t.reflection.explore} <span aria-hidden="true">↗</span></a>
-              <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">{t.reflection.watch}</a>
+              <a className={styles.action} href={liveUrl} target="_blank" rel="noreferrer">{t.hero.play} <span aria-hidden="true">↗</span></a>
+              <a className={styles.textLink} href={playtestUrl} target="_blank" rel="noreferrer">{t.hero.watch}</a>
             </div>
           </section>
           <ProjectNav slug="lastmessage" track={track} locale={locale} styles={styles} />
