@@ -16,7 +16,7 @@ import styles from "./site-shell.module.css"
 /* One resume per track: the UI/UX track hands out the product resume, the
    visual track the visual one. Both live in /public. */
 const resumeByTrack = {
-  product: "/resume.pdf",
+  product: "/resume-product.pdf",
   uiux: "/resume.pdf",
   visual: "/resume-visual.pdf"
 }

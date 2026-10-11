@@ -99,6 +99,13 @@ const skillGroups = [
   }
 ]
 
+/* The page is shared by the product track (the root of the site) and the
+   UI/UX track at /uiux; each hands out its own PDF. */
+const RESUME_PDF = {
+  product: { en: "/resume-product.pdf", zh: "/resume-product-zh.pdf" },
+  uiux: { en: "/resume.pdf", zh: "/resume-zh.pdf" }
+}
+
 export default function ResumePage({ track = "product", locale = "en" }) {
   return (
     <ResumeSheet
@@ -109,7 +116,7 @@ export default function ResumePage({ track = "product", locale = "en" }) {
       education={education}
       experience={experience}
       skillGroups={skillGroups}
-      pdf={locale === "zh" ? "/resume-zh.pdf" : "/resume.pdf"}
+      pdf={(RESUME_PDF[track] || RESUME_PDF.product)[locale === "zh" ? "zh" : "en"]}
     />
   )
 }
