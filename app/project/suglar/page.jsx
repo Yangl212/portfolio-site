@@ -332,7 +332,7 @@ const copy = {
     },
     product: {
       kicker: "成品",
-      title: "最终装进盒子里的组件。",
+      title: "最终装进盒子里的组件",
       imageAlt: "摊开的折页说明书，旁边是四张黄色技能卡和四张粉色感官卡",
       caption: "说明书、四张技能卡、四张感官卡",
       facts: [
@@ -354,7 +354,7 @@ const copy = {
     },
     idea: {
       kicker: "想法",
-      title: "如果游戏讲的是糖，糖就应该真的参与玩法。",
+      title: "如果游戏讲的是糖，糖就应该真的参与玩法",
       items: [
         {
           label: "Suglar 是什么？",
@@ -387,24 +387,24 @@ const copy = {
     },
     decisions: {
       kicker: "关键设计决策",
-      title: "最终规则来自三次很具体的取舍。",
+      title: "最终规则来自三次很具体的取舍",
       lead: "每条规则都对应一次试玩里暴露的问题，而且会直接出现在卡牌上，不只藏在说明书里。",
       coreLabel: "01 / 核心机制",
-      coreTitle: "你看不见自己即将吃掉的那颗糖。",
+      coreTitle: "你看不见自己即将吃掉的那颗糖",
       coreP1: "每颗糖都装在一模一样的不透明盒子里。轮到你时，可以打出一张感官卡（Visual 看、Touch 摸、Taste 尝、Smell 闻）私下检查一颗糖，再决定要不要留下。你查到了什么，别人始终不知道。",
       coreP2: "这条规则把原本的三消循环变成了带猜测和诈唬的游戏。四种感官在不同阶段也有不同价值：开局时 Visual 最有用，Touch 和 Taste 一直比较稳定，Smell 则更像碰运气。",
       coreNote: "不打感官卡，就必须盲拿。跳过检查不是白捡的便宜，那就是风险本身。",
       coreAlt: "Suglar 的四张感官卡：Visual、Smell、Touch、Taste，每张都是粉底上的一个几何符号",
       coreCaption: "四张感官卡",
       winLabel: "02 / 胜负条件",
-      winTitle: "七个格子，吃太多就是输。",
+      winTitle: "七个格子，吃太多就是输",
       winP1: "每位玩家有一个七格的糖果罐。集齐三颗一样的就能清掉，得一分，外加一张奖励卡。七格填满又没有可清的组合，就因为吃太多出局。",
       winP2: "正是这个上限让盲拿变得危险。填到第二格时猜错没什么代价；填到第五格，一次就可能结束你这局。于是感官卡恰恰在最舍不得用的时候变得最值钱。",
       winAlt1: "糖果罐示意图：七个格子，三颗相同的糖被清掉，两组不匹配的留着",
       winAlt2: "三排各七颗糖，说明哪些组合能清空罐子、哪些只会把它填满",
       winCaption: "怎么清空罐子，以及它被填满的两种方式",
       abilityLabel: "03 / 玩家互动",
-      abilityTitle: "第二轮几乎没有玩家互动，所以我加了四张技能卡。",
+      abilityTitle: "第二轮几乎没有玩家互动，所以我加了四张技能卡",
       abilityP1: "Change 把你罐里的一颗糖和别人的交换，Claim 从别人手里随机抽一张卡，Clone 把你已有的一颗糖再变一颗，Forfeit 丢掉一颗。技能卡在回合最开始打，想打几张都行。",
       abilityP2: "第二轮的测试者都提到了同一个问题：游戏好玩，但大家只顾自己的糖果罐。四个技能中有三个必须对其他玩家使用，我加它们就是为了让人彼此影响。",
       abilityAlt: "黄底上的四张 Suglar 技能卡：Change、Claim、Clone、Forfeit",
@@ -412,7 +412,7 @@ const copy = {
     },
     iteration: {
       kicker: "迭代",
-      title: "两轮试玩后，规则改了两次。",
+      title: "两轮试玩后，规则改了两次",
       lead: "第一版有策略，但糖果只是装饰。第二版让糖真正进入玩法，却几乎没有玩家互动。盒子里的最终版是在这两轮之后定下来的。",
       rounds: [
         {
@@ -475,18 +475,18 @@ const copy = {
     },
     system: {
       kicker: "视觉系统",
-      title: "同一套形状贯穿所有组件。",
+      title: "同一套形状贯穿所有组件",
       lead: "卡牌、盒子、卡套和说明书都取自同样四个基本形，和同一套从糖纸上采来的颜色，所以这些组件看起来是一套，又不必彼此长得一模一样。",
-      wordmarkTitle: "字标用一层错位做出糖衣感。",
+      wordmarkTitle: "字标用一层错位做出糖衣感",
       wordmarkP1: "我在窄体展示字后面叠了一层长春花蓝的副本，并稍微错开。这样不用渐变或倒角，也能看出一层糖衣般的厚度。",
       wordmarkP2: "它下面的字体刻意保持朴素：展示用 Bebas Neue Regular，卡牌标签用 Belanosima Semibold，凡是玩家得一手抓着糖一边读的内容，都用 Montserrat 的 Semibold 和 Bold。",
       wordmarkAlt1: "平涂粉色的 Suglar 字标",
       wordmarkAlt2: "带长春花蓝和粉色错位复制的 Suglar 字标",
       wordmarkAlt3: "字体样张：Montserrat Semibold 与 Bold、Belanosima Semibold、Bebas Neue Regular",
-      paletteTitle: "五个主色负责统一，另外十三个只在局部出现。",
+      paletteTitle: "五个主色负责统一，另外十三个只在局部出现",
       paletteP1: "这些颜色是从糖纸上采的，不是在色轮里挑的：柠檬糖的黄、糖纸锡箔的蓝，还有一层像糖衣一样的淡粉打底。",
       paletteP2: "其中五个贯穿盒子、板面和每一张卡。另外十三个只在局部出现：泡泡糖粉用在感官卡上，柠檬黄用在技能卡上，剩下的都待在插画里。",
-      patternTitle: "圆、方、弧、半圆。",
+      patternTitle: "圆、方、弧、半圆",
       patternBody: "图案里每一格都是四个基本形之一，嵌在一个正方形里；每处重叠都是平涂的透明叠色，而不是另调一个新颜色。从 12mm 的卡角到整只盒子的满版，都不用重画。",
       patternAlt: "风格指南板：上方四组透明度研究，下方十二个几何元素格",
       patternCaption: "透明度研究和元素库",
@@ -495,7 +495,7 @@ const copy = {
     },
     results: {
       kicker: "结果",
-      title: "概念得分很高，但多人节奏还有问题。",
+      title: "概念得分很高，但多人节奏还有问题",
       lead: "试玩者从六个维度给成品打分，并各自写下一条评论。创新性、沉浸感和重玩性都是 5/5，多人体验和流畅度只有 3/5。",
       outOf: (score) => `5 分中的 ${score} 分`,
       ratings: [
@@ -527,7 +527,7 @@ const copy = {
     },
     reflection: {
       kicker: "反思",
-      title: "真糖让人记住了这个游戏，也让它很难量产。",
+      title: "真糖让人记住了这个游戏，也让它很难量产",
       items: [
         {
           label: "局限",
