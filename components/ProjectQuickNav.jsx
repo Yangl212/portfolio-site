@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { t } from "../lib/dictionary"
+import { glideTo } from "./ScrollLink"
 import { trackHome } from "../lib/projects"
 
 import styles from "./project-quick-nav.module.css"
@@ -19,11 +20,11 @@ const projectSections = {
     ["web", { en: "Web", zh: "网页端" }]
   ],
   vortexnet: [
-    ["result", { en: "Redesign", zh: "重新设计" }],
-    ["testing", { en: "Results", zh: "结果" }],
-    ["start", { en: "Problem", zh: "问题" }],
-    ["iteration", { en: "Decisions", zh: "决策" }],
+    ["start", { en: "Problem", zh: "痛点" }],
+    ["iteration", { en: "Decisions", zh: "设计决策" }],
     ["navigation", { en: "Navigation", zh: "导航" }],
+    ["result", { en: "Redesign", zh: "高保真" }],
+    ["testing", { en: "Results", zh: "结果" }],
     ["reflection", { en: "Trade-offs", zh: "取舍" }]
   ],
   lastmessage: [
@@ -98,6 +99,29 @@ export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
   const [floating, setFloating] = useState(false)
   const slotRef = useRef(null)
   const linksRef = useRef(null)
+  const paneRef = useRef(null)
+
+  /* The bar marks the current section with one pane that slides
+     from section to section, instead of each cell lighting up on its own.
+     It is placed over the active link and re-placed whenever the bar
+     changes width (docking, resizing). The first placement is not
+     animated, so the pane does not fly in from the left on load. */
+  useLayoutEffect(() => {
+    const nav = linksRef.current
+    const pane = paneRef.current
+    if (!nav || !pane) return undefined
+    const place = () => {
+      const item = [...nav.children].find((child) => child.dataset.section === active)
+      if (!item) return
+      pane.style.width = `${item.offsetWidth}px`
+      pane.style.transform = `translateX(${item.offsetLeft}px)`
+    }
+    place()
+    const settle = requestAnimationFrame(() => { pane.dataset.ready = "" })
+    const resizeObserver = new ResizeObserver(place)
+    resizeObserver.observe(nav)
+    return () => { cancelAnimationFrame(settle); resizeObserver.disconnect() }
+  }, [active])
 
   useEffect(() => {
     if (!sections.length) return
@@ -148,11 +172,12 @@ export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
     if (!nav) return
 
     const item = [...nav.children].find((child) => child.dataset.section === active)
-    if (!item) return
+    if (!item) return undefined
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const centerActive = () => {
-      if (!window.matchMedia("(max-width: 700px)").matches) {
+      /* Only a row that does not fit scrolls; one that fits stays put. */
+      if (nav.scrollWidth <= nav.clientWidth + 1) {
         nav.scrollTo({ left: 0, behavior: "auto" })
         return
       }
@@ -172,12 +197,8 @@ export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
     if (!target) return
 
     event.preventDefault()
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const dockTop = window.matchMedia("(max-width: 700px)").matches ? 8 : 12
-    const barHeight = slotRef.current?.firstElementChild?.getBoundingClientRect().height || 64
-    const top = target.getBoundingClientRect().top + window.scrollY - dockTop - barHeight - 18
     window.history.replaceState(null, "", `#${id}`)
-    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" })
+    glideTo(target)
     setActive(id)
   }
 
@@ -205,6 +226,13 @@ export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
               <span className={styles.linkLabel}>{label[locale] || label.en}</span>
             </a>
           ))}
+          {/* Last, so the links keep their odd/even colours. */}
+          <span
+            className={styles.pane}
+            ref={paneRef}
+            aria-hidden="true"
+            data-tone={sections.findIndex(([id]) => id === active) % 2 ? "blue" : "pink"}
+          />
         </nav>
       </div>
     </div>

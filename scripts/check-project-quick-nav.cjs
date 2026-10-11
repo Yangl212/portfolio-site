@@ -18,31 +18,33 @@ async function inspect(nav, floating) {
     return {
       floating: bar.dataset.floating,
       bar: rect(bar), slot: rect(slot), nav: rect(n), active: rect(active),
-      radii: [bar, n, ...bar.querySelectorAll('a')].map(el => getComputedStyle(el).borderRadius),
+      radius: getComputedStyle(bar).borderRadius,
+      pane: (() => { const p = n.querySelector('[data-tone]'); if (!p) return null; const r = p.getBoundingClientRect(); return { left: r.left, width: r.width, tone: p.dataset.tone } })(),
       color: getComputedStyle(active).color,
       background: getComputedStyle(active).backgroundColor,
       opacity: getComputedStyle(active).opacity,
-      shadow: getComputedStyle(bar).boxShadow,
       visible: rect(active).left >= rect(n).left - 1 && rect(active).right <= rect(n).right + 1,
-      targets: [...n.children].every(a => document.getElementById(a.dataset.section)),
+      targets: [...n.querySelectorAll('a')].every(a => document.getElementById(a.dataset.section)),
       activeCount: n.querySelectorAll('[aria-current="location"]').length,
-      viewport: innerWidth
+      /* 100vw, which the floating width is set from, and the width the page
+         is laid out in (minus any classic scrollbar), which it centres in. */
+      viewport: innerWidth,
+      layout: document.documentElement.getBoundingClientRect().width
     }
   })
   assert.equal(state.floating, String(floating))
-  assert(state.radii.every(radius => radius === '0px'), 'Every navigation edge is square')
+  assert(parseFloat(state.radius) > 0, 'The glass bar is rounded')
   const expectedWidth = floating
-    ? (state.viewport <= 700 ? state.viewport - 32 : Math.min(1280, state.viewport - 64))
+    ? (state.viewport <= 700 ? state.viewport - 28 : Math.min(1280, state.viewport - 64))
     : state.slot.width
-  const expectedLeft = floating ? (state.viewport - expectedWidth) / 2 : state.slot.left
+  const expectedLeft = floating ? (state.layout - expectedWidth) / 2 : state.slot.left
   assert(Math.abs(state.bar.width - expectedWidth) < 1, 'Navigation row spans the intended page width')
   assert(Math.abs(state.bar.left - expectedLeft) < 1, 'Navigation row stays aligned with the page')
   assert(state.bar.left >= 0 && state.bar.right <= state.viewport, 'Navigation stays in the viewport')
   assert(state.active.height >= 44, 'Selected link has a full-height hit area')
-  assert.equal(state.background, 'rgb(34, 34, 34)', 'Active section has a solid charcoal rectangle')
-  assert.equal(state.color, 'rgb(255, 255, 255)', 'Selected label is white')
+  assert(state.pane && Math.abs(state.pane.left - state.active.left) < 2 && Math.abs(state.pane.width - state.active.width) < 2, 'The glass pane sits on the current section')
+  assert.equal(state.color, 'rgb(34, 34, 34)', 'Selected label is dark')
   assert.equal(state.opacity, '1', 'Selected label is not hidden by an animation')
-  assert.equal(state.shadow, 'none', 'No detached capsule shadow')
   assert.equal(state.activeCount, 1)
   assert(state.visible, 'Current section is visible within the horizontal scroller')
   assert(state.targets, 'Every directory link points to an existing section')
@@ -54,7 +56,7 @@ async function scrollToSection(page, id) {
     window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - 86, behavior: 'instant' })
   }, id)
   await page.waitForFunction(id => document.querySelector('nav[aria-label="On this project"] [aria-current="location"]')?.dataset.section === id, id)
-  await page.waitForTimeout(450)
+  await page.waitForTimeout(700) /* long enough for the pane to finish sliding */
 }
 
 ;(async () => {
@@ -75,15 +77,16 @@ async function scrollToSection(page, id) {
       const ids = await nav.locator('a').evaluateAll(links => links.map(a => a.dataset.section))
       if (slug === 'vortexnet') await page.screenshot({ path: path.join(artifacts, 'desktop-inline.png') })
       await nav.locator('a').nth(1).click()
-      await page.waitForFunction(id => document.querySelector('nav[aria-label="On this project"] [aria-current="location"]')?.dataset.section === id && Math.abs(document.getElementById(id).getBoundingClientRect().top - 86) < 2, ids[1])
+      await page.waitForTimeout(700) /* the pane finishes its slide */
+      await page.waitForFunction(id => document.querySelector('nav[aria-label="On this project"] [aria-current="location"]')?.dataset.section === id && Math.abs(document.getElementById(id).getBoundingClientRect().top - 94) < 3, ids[1])
       await page.waitForTimeout(400)
       await inspect(nav, true)
       assert.equal(new URL(page.url()).hash, `#${ids[1]}`)
       if (slug === 'vortexnet') await page.screenshot({ path: path.join(artifacts, 'desktop-floating.png') })
       await scrollToSection(page, ids.at(-1))
       await inspect(nav, true)
-      assert.equal(await page.getByRole('link', { name: 'Back to all projects', exact: true }).getAttribute('href'), '/')
-      console.log(`PASS desktop /project/${slug}: square row, active contrast, anchors, alignment, scrolling`)
+      assert.equal(await page.getByRole('navigation', { name: 'On this project' }).locator('xpath=..').getByRole('link', { name: 'Work', exact: true }).getAttribute('href'), '/')
+      console.log(`PASS desktop /project/${slug}: glass row, sliding pane, anchors, alignment, scrolling`)
     }
 
     for (const width of [320, 390, 768]) {
@@ -97,7 +100,7 @@ async function scrollToSection(page, id) {
       await page.screenshot({ path: path.join(artifacts, `narrow-${width}.png`) })
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'No horizontal page overflow')
       await nav.locator('a').last().focus()
-      assert.equal(await nav.locator('a').last().evaluate(a => getComputedStyle(a).outlineOffset), '-4px', 'Keyboard focus remains inside the scroll container')
+      assert.equal(await nav.locator('a').last().evaluate(a => getComputedStyle(a).outlineOffset), '-3px', 'Keyboard focus remains inside the scroll container')
       console.log(`PASS ${width}px: full-width dock, visible active item, keyboard focus, no overflow`)
     }
 
@@ -136,8 +139,8 @@ async function scrollToSection(page, id) {
     await scrollToSection(page, 'navigation')
     await inspect(visualNav, true)
     assert.equal(await visualNav.evaluate(n => getComputedStyle(n.parentElement).animationName), 'none')
-    assert.equal(await page.getByRole('link', { name: 'Back to all projects', exact: true }).getAttribute('href'), '/visual')
-    await page.getByRole('link', { name: 'Back to all projects', exact: true }).click()
+    assert.equal(await page.getByRole('navigation', { name: 'On this project' }).locator('xpath=..').getByRole('link', { name: 'Work', exact: true }).getAttribute('href'), '/visual')
+    await page.getByRole('navigation', { name: 'On this project' }).locator('xpath=..').getByRole('link', { name: 'Work', exact: true }).click()
     await page.waitForURL(`${base}/visual`)
     console.log('PASS visual track: reduced motion and return navigation')
     assert.deepEqual(errors, [], 'No browser runtime errors')

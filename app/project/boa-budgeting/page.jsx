@@ -3,7 +3,7 @@ import { ImageCarousel } from "../../../components/ImageCarousel"
 import { ScaledIframe } from "../../../components/ScaledIframe"
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
-import { ScrollLink } from "./ScrollLink"
+import { ScrollLink } from "../../../components/ScrollLink"
 import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -56,7 +56,7 @@ const copy = {
       titleB: "& budgeting",
       lead: "A user experience overhaul of the BOA app",
       roleLabel: "Role",
-      role: "UI/UX Designer",
+      role: "Product Design",
       timelineLabel: "Timeline",
       timeline: "8 weeks",
       platformLabel: "Platform",
@@ -198,7 +198,7 @@ const copy = {
       titleB: "与预算",
       lead: "针对于BOA产品的用户体验优化",
       roleLabel: "角色",
-      role: "UI/UX 设计师",
+      role: "产品设计师",
       timelineLabel: "周期",
       timeline: "8 周",
       platformLabel: "平台",

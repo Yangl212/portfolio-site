@@ -6,24 +6,46 @@
   height: 64px;
 }
 
-.bar,
-.back,
-.links,
-.link {
-  border-radius: 0;
-}
-
+/* The bar is a sheet of glass: frosted white over whatever scrolls
+   beneath, a hairline that catches the light along the top edge, rounded
+   rather than ruled. The current section is a pane of tinted glass that
+   slides along inside it. */
 .bar {
+  position: relative;
   width: 100%;
   height: 64px;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: stretch;
-  border: 1px solid rgba(34, 34, 34, 0.24);
-  background: #ffffff;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(34, 34, 34, 0.05),
+    0 0 0 1px rgba(34, 34, 34, 0.07);
   isolation: isolate;
   animation: arrive 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bar {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.38));
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+}
+
+/* The sheen: light falling on the upper half of the glass. */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  pointer-events: none;
 }
 
 .bar[data-floating="true"] {
@@ -32,11 +54,14 @@
   left: 50%;
   width: min(1280px, calc(100vw - 64px));
   transform: translateX(-50%);
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(255, 255, 255, 0.75);
   box-shadow:
-    0 18px 42px rgba(34, 34, 34, 0.1),
-    -18px 12px 34px rgba(255, 72, 176, 0.11),
-    18px 12px 34px rgba(63, 176, 230, 0.11);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(34, 34, 34, 0.05),
+    0 0 0 1px rgba(34, 34, 34, 0.08),
+    0 18px 44px rgba(34, 34, 34, 0.12),
+    -18px 12px 36px rgba(255, 72, 176, 0.12),
+    18px 12px 36px rgba(63, 176, 230, 0.12);
   animation: dock 260ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
@@ -46,10 +71,12 @@
   align-items: center;
   gap: 8px;
   min-width: 112px;
+  margin: 6px 0 6px 6px;
   padding: 0 18px;
-  border-right: 1px solid #222222;
+  border-radius: 12px;
   color: #ffffff;
-  background: #222222;
+  background: rgba(34, 34, 34, 0.86);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -65,7 +92,7 @@
 .back:hover,
 .back:focus-visible {
   color: #222222;
-  background: #cfe8f5;
+  background: rgba(207, 232, 245, 0.8);
 }
 
 .back:hover .backArrow,
@@ -79,6 +106,8 @@
   min-width: 0;
   display: flex;
   align-items: stretch;
+  gap: 4px;
+  padding: 6px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scrollbar-width: none;
@@ -87,6 +116,8 @@
 .links::-webkit-scrollbar { display: none; }
 
 .link {
+  position: relative;
+  z-index: 1;
   flex: 1 0 116px;
   padding: 8px 16px 9px;
   display: inline-flex;
@@ -94,38 +125,70 @@
   align-items: flex-start;
   justify-content: center;
   gap: 4px;
+  border-radius: 12px;
   color: #555555;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.05;
   white-space: nowrap;
-  transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  transition: color 180ms ease, background-color 180ms ease;
 }
 
-.link + .link {
-  border-left: 1px solid rgba(34, 34, 34, 0.12);
-}
-
+/* Hover tints alternate pink and blue, like the pane. */
 .link:hover,
 .link:focus-visible {
   color: #222222;
-  background: #fdebf4;
-}
-
-.link[data-active="true"] {
-  color: #222222;
-  background: #f7cfe2;
-  box-shadow: inset 0 -3px 0 rgba(34, 34, 34, 0.16);
-  font-weight: 600;
+  background: rgba(253, 235, 244, 0.5);
 }
 
 .link:nth-child(even):hover,
 .link:nth-child(even):focus-visible {
-  background: #edf7fc;
+  background: rgba(207, 232, 245, 0.5);
 }
 
-.link:nth-child(even)[data-active="true"] {
-  background: #cfe8f5;
+/* The pane draws the current section, so the link itself stays clear. */
+.link[data-active="true"] {
+  color: #222222;
+  background: transparent;
+  font-weight: 600;
+}
+
+/* One pane of tinted glass that slides to the current section: it eases
+   out long, so it arrives softly rather than snapping, and its tint turns
+   from pink to blue on the way. */
+.pane {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  z-index: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  will-change: transform, width;
+}
+
+.pane[data-ready] {
+  transition:
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 560ms ease,
+    box-shadow 560ms ease;
+}
+
+.pane[data-tone="pink"] {
+  background-color: rgba(247, 207, 226, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 4px 14px rgba(255, 72, 176, 0.14);
+}
+
+.pane[data-tone="blue"] {
+  background-color: rgba(207, 232, 245, 0.75);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 4px 14px rgba(63, 176, 230, 0.16);
 }
 
 .linkIndex {
@@ -158,21 +221,28 @@
 
 @media (max-width: 700px) {
   .slot { height: 58px; }
-  .bar { width: 100%; height: 58px; }
+  .bar { width: 100%; height: 58px; border-radius: 16px; }
   .bar[data-floating="true"] {
     top: 8px;
     width: calc(100vw - 28px);
     box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(34, 34, 34, 0.05),
+      0 0 0 1px rgba(34, 34, 34, 0.08),
       0 12px 30px rgba(34, 34, 34, 0.1),
       -10px 8px 24px rgba(255, 72, 176, 0.1),
       10px 8px 24px rgba(63, 176, 230, 0.1);
   }
   .back { min-width: 48px; padding-inline: 14px; }
   .backLabel { display: none; }
+  .back,
+  .link,
+  .pane { border-radius: 10px; }
   .link { flex: none; min-width: 108px; padding: 7px 14px 8px; font-size: 0.8125rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pane[data-ready] { transition: none; }
   .bar,
   .bar[data-floating="true"],
   .link { animation: none; opacity: 1; }

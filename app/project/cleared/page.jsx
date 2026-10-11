@@ -1,5 +1,6 @@
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { ScrollLink } from "../../../components/ScrollLink"
 import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -147,7 +148,7 @@ const copy = {
       pill: "独立案例",
       context: "产品 · UI/UX · 2026",
       titleA: "Google 日历：",
-      titleB: "用 AI 整理待办并安排时间。",
+      titleB: "用 AI 整理待办并安排时间",
       lead: "AI 从邮件里读出待办，给出一条可以核对、调整和确认的日程建议。",
       challengeLabel: "挑战",
       challenge: "邮件里答应下来的事，怎么放进已经排满、还会不断变化的日程里？",
@@ -169,7 +170,7 @@ const copy = {
     },
     context: {
       kicker: "01 / 起点",
-      heading: "邮件只说什么时候交，不会替你排出什么时候做。",
+      heading: "邮件只说什么时候交，不会替你排出什么时候做",
       userLabel: "目标用户假设",
       userLead: "主要靠邮件沟通、日历又常常排满的客户工作者。",
       userBody: "我在「邮件提出请求」和「日历真正排进去」之间加了一步核对：先回看原文、估算时长，再自己选时间。",
@@ -183,17 +184,17 @@ const copy = {
     },
     experience: {
       kicker: "02 / 三个设计选择",
-      heading: "三个重点：看得到上下文、查得到依据，最后由人决定。",
+      heading: "三个重点：看得到上下文、查得到依据，最后由人决定",
       tradeoffLabel: "取舍",
       decisions: [
-        { label: "01 / 上下文", title: "先看清改动会影响什么。", body: "冲突和建议时间都会留在周视图里，用户可以和当天其他安排放在一起比较，再决定要不要调整。", tradeoff: "上下文越多，日历越拥挤，所以提示只强调受影响的那件事。", video: "desktop-replan", alt: "桌面端日历：查看会议冲突，确认把报价的工作挪到 16:00" },
-        { label: "02 / 依据", title: "把邮件放在建议旁边。", body: "我把原始邮件放在时间和时长边上，这样不用离开日历，就能核对这条建议靠不靠谱。", tradeoff: "展开完整邮件多了一步，所以最关键的那句请求先显示出来。", video: "desktop-source", alt: "桌面端日历：打开一条报价建议，查看原始邮件" },
-        { label: "03 / 控制权", title: "最后选哪个时间，还是由人决定。", body: "排期不会自动完成。用户选好时间后，日程才会加入日历，待处理数量随之更新，同时提供撤销。", tradeoff: "当前版本选中时间段后会直接确认。下一版会把预览和确认拆成两步再测试。", video: "desktop-confirm", alt: "桌面端日历：选一个替代时间，确认日程，并看到撤销按钮" }
+        { label: "01 / 上下文", title: "先看清改动会影响什么", body: "冲突和建议时间都会留在周视图里，用户可以和当天其他安排放在一起比较，再决定要不要调整。", tradeoff: "上下文越多，日历越拥挤，所以提示只强调受影响的那件事。", video: "desktop-replan", alt: "桌面端日历：查看会议冲突，确认把报价的工作挪到 16:00" },
+        { label: "02 / 依据", title: "把邮件放在建议旁边", body: "我把原始邮件放在时间和时长边上，这样不用离开日历，就能核对这条建议靠不靠谱。", tradeoff: "展开完整邮件多了一步，所以最关键的那句请求先显示出来。", video: "desktop-source", alt: "桌面端日历：打开一条报价建议，查看原始邮件" },
+        { label: "03 / 控制权", title: "最后选哪个时间，还是由人决定", body: "排期不会自动完成。用户选好时间后，日程才会加入日历，待处理数量随之更新，同时提供撤销。", tradeoff: "当前版本选中时间段后会直接确认。下一版会把预览和确认拆成两步再测试。", video: "desktop-confirm", alt: "桌面端日历：选一个替代时间，确认日程，并看到撤销按钮" }
       ]
     },
     trust: {
       kicker: "03 / AI 与信任",
-      heading: "AI 猜出来的时间，不能装成邮件里写过的。",
+      heading: "AI 猜出来的时间，不能装成邮件里写过的",
       lead: "原来的标签让推断出的截止时间看起来像邮件原文。我后来给它加上了明确的「推断」标记。",
       emailLabel: "邮件里的请求",
       emailValue: "「这周内」",
@@ -211,7 +212,7 @@ const copy = {
     },
     mobile: {
       kicker: "04 / 移动端高保真",
-      heading: "移动端一次只处理一个排期决定。",
+      heading: "移动端一次只处理一个排期决定",
       lead: "桌面端的周视图到了手机上，变成日视图加底部抽屉。当前任务和前后的日程仍然放在一起。",
       summary: "六张移动端界面",
       openFull: "看大图",
@@ -227,18 +228,18 @@ const copy = {
     },
     prototype: {
       kicker: "05 / 可交互原型",
-      heading: "在原型里亲手排一次。",
+      heading: "在原型里亲手排一次",
       summary: "再看三个桌面端交互",
       interactionLabel: "交互 / ",
       demos: [
-        { video: "desktop-duration", title: "缺时长，就问一句。", body: "选一个时长，预览这段时间，再确认加进日历。", alt: "为「起草 Q3 提纲」选择半天的时长，并把任务加进桌面端日历" },
-        { video: "desktop-preferences", title: "偏好变成规则前，先确认一次。", body: "先确认「习惯排在上午」这条偏好，再把它保存成规则。历史记录和百分比使用示例数据。", alt: "在桌面端助手设置里确认「习惯把日程排在上午」" },
-        { video: "desktop-direct", title: "直接改日历的路留着。", body: "拖动一个已有的会议，时间随之更新，撤销也会出现。", alt: "在桌面端周视图里拖动一个已有会议，看到更新后的时间" }
+        { video: "desktop-duration", title: "缺时长，就问一句", body: "选一个时长，预览这段时间，再确认加进日历。", alt: "为「起草 Q3 提纲」选择半天的时长，并把任务加进桌面端日历" },
+        { video: "desktop-preferences", title: "偏好变成规则前，先确认一次", body: "先确认「习惯排在上午」这条偏好，再把它保存成规则。历史记录和百分比使用示例数据。", alt: "在桌面端助手设置里确认「习惯把日程排在上午」" },
+        { video: "desktop-direct", title: "直接改日历的路留着", body: "拖动一个已有的会议，时间随之更新，撤销也会出现。", alt: "在桌面端周视图里拖动一个已有会议，看到更新后的时间" }
       ]
     },
     validation: {
       kicker: "06 / 评估与迭代",
-      heading: "大家会操作，但不会直接相信 AI 的理解。",
+      heading: "大家会操作，但不会直接相信 AI 的理解",
       lead: "知道怎么排期是一回事，愿不愿意相信 AI 读对了邮件是另一回事。",
       participantsLabel: "参与者",
       participants: "参与者是平时会用日历和任务管理工具的学生与上班族。他们有记录日程、安排每日任务的习惯，用过 Google 日历，也用过其他规划工具。",
@@ -296,7 +297,7 @@ export default function ClearedPage({ track = "uiux", locale = "en" }) {
                 <div><dt>{t.hero.platformLabel}</dt><dd>{t.hero.platform}</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
-                <a className={styles.action} href="#experience">{t.hero.actionExplore} <span aria-hidden="true">↓</span></a>
+                <ScrollLink className={styles.action} href="#experience">{t.hero.actionExplore} <span aria-hidden="true">↓</span></ScrollLink>
                 <a className={styles.textLink} href={prototypeUrl} target="_blank" rel="noreferrer">{t.hero.actionPrototype} <span aria-hidden="true">↗</span></a>
               </div>
             </div>

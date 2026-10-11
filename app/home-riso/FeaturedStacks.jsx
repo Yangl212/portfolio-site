@@ -41,8 +41,8 @@ const media = (name) => name.startsWith("/") ? name : `/home-riso/${name}.webp`
 const stacks = {
   "boa-budgeting": {
     copy: {
-      en: { when: "2026 · 8 weeks", role: "UI/UX Designer", summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.", facets: ["Mobile + Web", "B2C", "Banking"] },
-      zh: { when: "2026 年 · 8 周", role: "UI/UX 设计师", summary: "重新设计了美国银行的移动端和网页端预算功能，并进行了两轮任务测试", facets: ["移动端 + 网页", "B2C", "银行"] }
+      en: { when: "2026 · 8 weeks", role: "Product Design", summary: "A mobile and web budgeting redesign for Bank of America, tested across two task rounds.", facets: ["Mobile + Web", "B2C", "Banking"] },
+      zh: { when: "2026 年 · 8 周", role: "产品设计师", summary: "重新设计了美国银行的移动端和网页端预算功能，并进行了两轮任务测试", facets: ["移动端 + 网页", "B2C", "银行"] }
     },
     tint: "pink",
     layers: [

@@ -1,5 +1,6 @@
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { ScrollLink } from "../../../components/ScrollLink"
 import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -416,7 +417,7 @@ const copy = {
       kicker: "06",
       heading: "流程图",
       label: "完整版本",
-      title: "从首页出发，大部分地方两步就到。",
+      title: "从首页出发，大部分地方两步就到",
       aria: "实际版本的地图：登录和初始设置通向首页；从首页出发有记录、今日小票、手账、挑战、组队页和设置。",
       legend: "实线表示点一下跳转，虚线表示在当前界面上打开弹层；有底色的界面只会出现在双人模式。指一下任意界面，就能看到从首页怎么走过去。",
       pairedOnly: "只在双人模式出现。",
@@ -584,7 +585,7 @@ export default function BubuPage({ track = "uiux", locale = "en" }) {
               </dl>
 
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "240ms" }}>
-                <a className={styles.action} href="#how">{t.hero.action} <span aria-hidden="true">&darr;</span></a>
+                <ScrollLink className={styles.action} href="#how">{t.hero.action} <span aria-hidden="true">&darr;</span></ScrollLink>
               </div>
             </div>
 

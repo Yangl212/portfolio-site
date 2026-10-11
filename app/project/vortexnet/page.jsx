@@ -1,5 +1,6 @@
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
+import { ScrollLink } from "../../../components/ScrollLink"
 import { Reveal } from "../../../components/Reveal"
 import { SiteFooter } from "../../../components/SiteFooter"
 import { SiteHeader } from "../../../components/SiteHeader"
@@ -26,12 +27,11 @@ export const metadata = {
 const media = (name) => "/vortexnet/media/" + name + ".webp"
 
 /*
- * Every line of prose on the page, in both languages. The English is what
- * it has always been, lifted out of the JSX unchanged; the Chinese says
- * the same things in the same order - the same figures, the same hedges
- * ("approximate", "qualitative", "one employee cannot establish long-term
- * adoption"), the same scope boundaries. Layout, classes and structure
- * below are untouched; only the strings come from here.
+ * Every line of prose on the page, in both languages. The Chinese is the
+ * author's own writing and leads; the English follows it section by
+ * section, saying the same things in the same order with the same figures.
+ * Both locales therefore reach the same markup below - only the strings
+ * come from here.
  */
 const copy = {
   en: {
@@ -40,7 +40,6 @@ const copy = {
       context: "Internal tool · Company of about 30 · 2025",
       titleA: "VortexNet:",
       titleB: "Finance dashboard.",
-      lead: "Bringing daily finance information into focus through clearer hierarchy and task-based grouping.",
       roleLabel: "Role",
       role: "UI/UX Design Intern",
       timelineLabel: "Timeline",
@@ -48,133 +47,91 @@ const copy = {
       platformLabel: "Platform",
       platform: "Internal desktop tool",
       scopeLabel: "My scope",
-      scope: "Information hierarchy and consolidation for Today's overview and its task-based navigation.",
+      scope: "The landing-screen navigation, and the information hierarchy and consolidation behind it",
       implementedLabel: "Implemented",
-      implemented: "Today's overview and the adjacent sidebar navigation, tested inside the company and shipped during the internship.",
-      shownLabel: "Shown here",
-      shown: "Three stages side by side: the original tool, the build that shipped and was tested, and a later refinement made for this case study.",
+      implemented: "Both the landing screen and the sidebar navigation shipped during the internship",
       resultLabel: "Result",
-      result: "In task-based testing with 10 colleagues, locating a day's work dropped from 20–30 seconds to about 8.",
+      result: "In task-based testing with 10 colleagues, finding the day's work dropped from about 20–30 seconds to about 8",
       actionCompare: "Compare before & after",
-      actionDecisions: "Explore the decisions",
-      shotAlt: "Close-up of the landing screen: four named CNY totals, the cash movement chart with its legend, the settlement schedule, and the first queue row with its next action",
-      shotCaption: "Close-up of the landing screen · Later refinement · Test data · Full screen below"
+      actionDecisions: "Design decisions",
+      shotAlt: "Close-up of the landing screen: four CNY totals, the cash movement chart with its legend, the settlement schedule, and the first queue row with its next action"
     },
     result: {
-      kicker: "The redesign",
-      heading: "A starting point for daily decisions.",
-      lead: "The dashboard connects a cash summary, settlement progress and a prioritized work queue. Each view supports a different daily decision. Use the toggle to separate what shipped from what was refined later.",
-      scopeAria: "Delivery scope",
-      scopeCards: [
-        { label: "Implemented during the internship", title: "Overview and task-based navigation.", body: "I delivered Today's overview and the adjacent navigation that groups daily monitoring, reconciliation and reporting tasks." },
-        { label: "Outside my implemented scope", title: "Downstream workflows.", body: "The destination pages and their end-to-end workflows are not presented here as work I implemented." },
-        { label: "Refined afterward", title: "Data clarity and action detail.", body: "For this case study I later refined the metric definitions, cash chart, settlement schedule, owners and next actions, keeping the tool's test data. That version is the third toggle above, and none of it was part of what was tested." }
-      ],
-      chartDecisions: [
-        { title: "Cash movement", body: "A trend compares incoming and outgoing funds over the same period, with a shared currency and scale." },
-        { title: "Settlement progress", body: "Batch completion sits beside the pending amounts and their cutoff times, making the next deadline visible." },
-        { title: "Needs attention", body: "A short queue connects each exception to its priority, owner and next action." }
-      ],
-      outcomes: [
-        { value: "14 → 9", label: "Main navigation entries, before and after" },
-        { value: "3 groups", label: "Monitor today · Reconcile · Review over time" },
-        { value: "4 metrics", label: "Named summaries alongside context and action queues" }
-      ],
-      note: "VortexNet is a company of about 30 people, and this dashboard is where its operations and finance teams start the day. The overview and navigation were tested with 10 colleagues before they shipped; the results follow below. The internal tool itself cannot be shown, so all three screens are reconstructions drawn from recollection and filled with the tool's test data - the shipped one is the delivered scope as it went live, without the later refinements. The counts above describe the delivered structure rather than usage analytics."
+      kicker: "04",
+      heading: "High-fidelity redesign",
+      subheading: "Opening the dashboard each morning now gives a clearer view of the work and the numbers",
+      lead: "The landing screen shows the cash summary, settlement progress and a priority-ordered work queue at once. The toggle below compares the version that shipped with the one I refined afterward."
     },
     testing: {
-      kicker: "User testing",
-      heading: "Faster to the day's work, on the same tasks.",
-      lead: "Task-based sessions with 10 colleagues at the company compared the original interface with the build that shipped - the second toggle above - on the same tasks.",
-      stats: [
-        { value: "20–30 s → ~8 s", label: "Daily information lookup, approximate task summary" },
-        { value: "10+ s → ~5 s", label: "Requested item in the left-hand list, approximate task summary" },
-        { value: "Qualitative", label: "Participants appeared to grasp the overall data trend more quickly" }
-      ],
+      kicker: "05",
+      heading: "User testing",
+      subheading: "In the second round of testing, the same tasks took noticeably less time after the redesign.",
+      lead: "I invited 10 colleagues to use the new interface and dashboard, gave them a set of tasks, and asked them some questions.",
       findings: [
-        { title: "Testing everyday lookup tasks.", body: "I tested the dashboard with ten colleagues who used the internal tool. I timed lookup tasks in the original and redesigned interfaces, including finding Pending settlement and locating Trend in the left-hand navigation. Participants were asked to locate a specified data item or section. Timing started when I gave the task instruction and ended when the participant opened the correct page. I checked that they had reached the intended destination before marking the task complete." },
-        { title: "Recorded lookup times improved.", body: "The recorded summaries showed that finding the day’s information took roughly 20–30 seconds in the original interface and about eight seconds in the redesign. Finding a requested item in the left-hand list fell from more than ten seconds to around five. These are approximate task-summary figures; some existing users initially took longer to find relocated items." },
-        { title: "Trend understanding was an observation.", body: "I also observed that participants appeared to grasp the overall data trend more quickly. This was a qualitative observation, separate from the timed lookup results." }
-      ],
-      note: "The findings supported clearer labels, stronger typography and task-based grouping, with color as a supporting cue. Because these changes were introduced together, the results reflect the combined redesign rather than any single visual change."
+        { title: "Find a failed event, then open one transaction inside it", body: "Finding the failed event in the left-hand menu and then opening one transaction's details went from 20–30 seconds to about 8." },
+        { title: "Find a specified item in the left-hand list", body: "This went from about 10 seconds to about 5." },
+        { body: "During testing we found that people who had used the old dashboard for a long time were a little out of their depth with the new one, and would go looking in the old places out of habit. We also tested one new user, who was clearly faster on the new dashboard. On that basis we think the change improved how the dashboard is used." }
+      ]
     },
     start: {
-      kicker: "The problem",
-      heading: "Daily work competed with reports and administration.",
-      lead: "The existing structure grouped information by document type. A morning check required interpreting the menu and metric labels before deciding where to go.",
-      observations: [
-        { title: "A flat menu mixed different jobs.", body: "Fourteen entries put reports, operational queues and administration at the same level." },
-        { title: "Labels reflected the system.", body: "Abbreviations such as PEND_CNT required interpretation before someone could act." },
-        { title: "The overview emphasized records.", body: "A dense transaction table dominated the screen, without a dedicated list of items needing attention." }
+      kicker: "01",
+      heading: "User pain points",
+      lead: "VortexNet is in internet finance, so its internal systems carry a great deal of data to work through. The work people handle every day sat in the same layer as reports and administration, and opening the tool in the morning did not get them to what they needed.",
+      bullets: [
+        { title: "A flat menu mixed different kinds of content together", body: "Fourteen entries put reports, operational queues and administration in one layer, which left people confused and made it hard to read." },
+        { title: "Labels read as if written for the system", body: "Abbreviations like PEND_CNT are not suited to the people who have to read them." },
+        { title: "The overview emphasized records", body: "In practice a transaction table filled the entire screen, with nothing setting out what needed handling." }
       ]
     },
     iteration: {
-      kicker: "A decision changed by testing",
-      heading: "From color contrast to a clearer reading order.",
-      lead: "An early test changed my explanation of the problem and the direction of the next iteration.",
-      steps: [
-        { label: "01 · Initial hypothesis", title: "Color could make priorities clearer.", body: "The dashboard used similar colors and gave information similar visual weight. I first explored color changes to make the screen easier to scan." },
-        { label: "02 · Early test", title: "Color changes had limited impact.", body: "The improvement I observed was limited, and feedback was mixed. I reconsidered whether the screen communicated what to read first." },
-        { label: "03 · Revised decision", title: "Build the hierarchy through type and layout.", body: "I shifted to typography, text size and placement to establish clearer priorities. Color became a supporting cue within the hierarchy." }
+      kicker: "02",
+      heading: "Design decisions",
+      numbered: [
+        { title: "The first hypothesis", body: "After talking it over with my teammates, we decided to start with color: adjust it across the different kinds of content and the different levels, and let color carry the hierarchy." },
+        { title: "The early test", body: "The first round of testing involved 10 employees, and it showed that our first read was wrong. Color did not make the priority of the information clear, and because the overall text layout had not changed, people were no faster in the test." },
+        { title: "The revised decision", body: "After discussing it with my teammates and my manager, we decided to look further into the information hierarchy, build the levels through type and layout, and add some charts to draw attention." }
       ],
       summary: "Explore a metric-hierarchy study",
-      disclosureLead: "This reconstruction illustrates the shift in visual emphasis: primary figures lead, and supporting metrics follow.",
+      disclosureLead: "This reconstruction shows the shift in visual emphasis: the primary figures lead, and the supporting metrics follow.",
       beforeLabel: "Before",
       afterLabel: "After",
-      beforeAlt: "Six equally weighted, abbreviated metric cells",
-      beforeCaption: "System abbreviations, equal visual weight.",
-      afterAlt: "Collections and Outflows as primary figures with four secondary metrics",
-      afterCaption: "Plain-language labels and a primary reading order."
+      beforeAlt: "Six equally weighted metric cells with abbreviated names",
+      afterAlt: "Collections and Outflows as primary figures with four secondary metrics"
     },
     categories: {
-      kicker: "Information consolidation",
-      heading: "Organize around the work people arrive to do.",
-      lead: "I used task-based questions to regroup the information, then worked through priorities with product and data.",
+      heading: "Dividing the information hierarchy",
+      lead: [
+        "Dividing the information hierarchy needed more thought. We dropped the old scheme, which filed daily reports, monthly reports and confirmations together because they were the same kind of document.",
+        "Our aim was to make people faster, so we watched which categories they opened first to check at the start of the day, and which ones mattered less. Those observations set the new division of the hierarchy."
+      ],
       beforeLabel: "Before",
       afterLabel: "After",
       beforeAlt: "Existing information grouped by document type across Reports, Data center and Analysis",
-      beforeCaption: "Related daily information split across document categories.",
-      afterAlt: "The information organized around daily attention, period review and setup tasks",
-      afterCaption: "What needs attention? What changed over time? What needs setup?",
-      placementLabel: "Placement decision",
-      placementTitle: "Daily checks get the landing screen.",
-      placementBody: "I asked colleagues what they checked first when starting their daily work. Their feedback shaped the priority model below and the order of information on the dashboard.",
-      tradeoffLabel: "Design trade-off",
-      tradeoffBody: "Prioritizing monitoring gives periodic reports less prominence. Named reporting and admin groups keep those destinations available.",
-      tableAria: "Information priority model",
-      tableCaption: "Working priority model · Qualitative cadence, not usage analytics",
-      columns: { item: "Information", who: "Team", often: "Cadence", place: "Placement" },
-      priorities: [
-        { item: "Awaiting settlement", who: "Operations", often: "Every morning", place: "Landing screen", strong: true },
-        { item: "Failed items", who: "Operations", often: "Every morning", place: "Landing screen", strong: true },
-        { item: "Reconciliation queue", who: "Finance", often: "Daily", place: "Direct entry" },
-        { item: "Daily / monthly reports", who: "Finance", often: "Weekly", place: "Reporting group" },
-        { item: "Accounts, permissions, logs", who: "Data team", often: "Occasional", place: "Separate admin" }
-      ]
+      afterAlt: "The information reorganized into what to watch daily, what to review periodically, and what to set up"
     },
     navigation: {
       kicker: "Information architecture",
       heading: "Three task groups. A separate admin entry.",
-      lead: "The reconstructed navigation has nine main entries grouped by task. Accounts, permissions, configuration and logs sit under Admin.",
+      lead: "The reconstructed navigation has nine main entries grouped by task. Accounts, permissions, configuration and logs all sit under Admin.",
       beforeLabel: "Before",
       afterLabel: "After",
       beforeAlt: "Fourteen navigation entries in a flat list",
       beforeCaption: "Reports, operations and administration at one level.",
       afterAlt: "Nine entries grouped into Monitor today, Reconcile and Review over time, with four separate admin destinations",
-      afterCaption: "Regrouped and consolidated, with administration separated.",
+      afterCaption: "Regrouped and consolidated, with administration split out on its own.",
       summary: "Inspect the landing-screen hierarchy",
       regionAlt: "Net cash flow, Collections, Payouts and Pending settlement, with explicit CNY units and supporting context",
-      regionCaption: "Four totals with distinct meanings: net cash flow, collections, payouts and pending settlement. Currency and supporting context stay visible."
+      regionCaption: "Four totals with distinct meanings: net cash flow, collections, payouts and pending settlement. Currency and supporting context stay on screen."
     },
     reflection: {
-      kicker: "Constraints & trade-offs",
-      heading: "Designing within operational constraints.",
-      cards: [
-        { label: "Data freshness", title: "Show when the data was updated.", body: "The dashboard could not refresh continuously. After colleagues explained the update cycle, I added an “As of” timestamp so users could judge how current the figures were." },
-        { label: "Team input", title: "Let daily work set the order.", body: "I asked users what they checked first each morning, then placed their highest-priority information at the top. The hierarchy reflected their working routine." },
-        { label: "Navigation trade-off", title: "Clearer groups, unfamiliar locations.", body: "Existing users found top-level categories faster, but some initially took longer to find relocated items. One new hire, with little familiarity with the old menu, found items considerably faster in the redesign. I interpreted this as a possible adjustment cost; one employee cannot establish long-term adoption." }
-      ],
-      next: "Next, I would follow returning users over time and consider familiar terminology or temporary navigation cues to ease the transition."
+      kicker: "06",
+      heading: "Constraints & trade-offs",
+      lead: [
+        "This design works within real operating constraints. In this iteration the data could not update in real time and came with some delay, so I think adding a timestamp was the best answer available.",
+        "There are trade-offs in the navigation too. The grouping is clearer, but the locations differ from what people knew, and some of them needed longer to find things. I think that is still within a normal, manageable range.",
+        "At the same time, a finance company moves a great deal of money and carries a great many numbers, and the information on the dashboard still looks fairly cluttered.",
+        "Within a single day, the focus in the morning, at midday and in the evening is not the same. The current arrangement simplifies the morning to some degree, but it does not yet help much with afternoon work, or with tasks that come up unexpectedly."
+      ]
     }
   },
   zh: {
@@ -182,8 +139,7 @@ const copy = {
       pill: "工作经历",
       context: "内部工具 · 约 30 人的公司 · 2025",
       titleA: "VortexNet：",
-      titleB: "金融仪表盘。",
-      lead: "我重新整理了信息层级和导航，让每天要看的数据更容易找到。",
+      titleB: "金融仪表盘",
       roleLabel: "角色",
       role: "UI/UX 设计实习生",
       timelineLabel: "周期",
@@ -191,113 +147,71 @@ const copy = {
       platformLabel: "平台",
       platform: "内部桌面工具",
       scopeLabel: "我负责的部分",
-      scope: "「今日概览」、按任务分组的导航，以及信息层级和内容整合。",
+      scope: "首页导航栏以及信息层级和内容整合",
       implementedLabel: "已上线",
-      implemented: "「今日概览」和旁边的侧栏导航，在公司内部测过，实习期间上线。",
-      shownLabel: "这里展示的",
-      shown: "这里并排展示三个阶段：原版、经过测试并上线的版本，以及后来为案例展示补做的精修版。",
+      implemented: "主页与侧栏导航均已在实习期上线",
       resultLabel: "结果",
-      result: "在 10 位同事参与的任务测试中，找到当天要处理的工作从约 20–30 秒缩短到约 8 秒。",
+      result: "在 10 位同事参与的任务测试中，找到当天要处理的工作从约 20–30 秒缩短到约 8 秒",
       actionCompare: "对比改版前后",
-      actionDecisions: "看看当时的决策",
-      shotAlt: "落地页特写：四个标明人民币的总数、带图例的资金流动图、结算排期，以及队列第一行和它的下一步动作",
-      shotCaption: "落地页特写 · 后期精修版 · 测试数据 · 完整界面见下方"
+      actionDecisions: "设计决策",
+      shotAlt: "落地页特写：四个标明人民币的总数、带图例的资金流动图、结算排期，以及队列第一行和它的下一步动作"
     },
     result: {
-      kicker: "改版",
-      heading: "每天打开工具后，先从这里开始。",
-      lead: "首页同时显示资金汇总、结算进度和按优先级排列的待办队列。上方的切换可以对比上线版本与后来的精修版。",
-      scopeAria: "交付范围",
-      scopeCards: [
-        { label: "实习期间已实现", title: "概览页和任务式导航。", body: "我交付了「今日概览」，并把每日监控、对账和报表按任务重新分组。" },
-        { label: "不在我的实现范围内", title: "后续页面与完整流程。", body: "导航指向的页面及其完整流程不属于我的实现范围。" },
-        { label: "后来补做的精修", title: "数据表达和操作细节。", body: "整理这个案例时，我又调整了指标命名、资金图表、结算排期、负责人和下一步操作。数据仍是工具自带的测试数据，这个版本没有参加当时的测试。" }
-      ],
-      chartDecisions: [
-        { title: "资金流动", body: "一条趋势线对比同一时间段里的进账和出账，货币和刻度统一。" },
-        { title: "结算进度", body: "批次完成情况放在待结算金额和截止时间旁边，下一个节点不用再到别处找。" },
-        { title: "需要处理", body: "一条短队列，把每个异常和它的优先级、负责人、下一步动作连起来。" }
-      ],
-      outcomes: [
-        { value: "14 → 9", label: "主导航入口，改版前后" },
-        { value: "3 组", label: "今日监控 · 对账 · 回看趋势" },
-        { value: "4 个指标", label: "有明确名字的汇总，配上下文和待办队列" }
-      ],
-      note: "VortexNet 是一家约 30 人的公司，运营和财务团队每天都会从这个仪表盘开始工作。概览页和导航上线前，我和 10 位同事做了测试，结果见下方。由于内部工具不能公开，这三屏都是根据记忆重建、并填入工具自带测试数据的复原图。上线版本对应我当时实际交付的范围，不含后来的精修。上面的数字描述的是信息结构，不是产品使用数据。"
+      kicker: "04",
+      heading: "高保真改版",
+      subheading: "每天打开仪表盘后会有更为清晰的待办和数据",
+      lead: "首页同时显示资金汇总、结算进度和按优先级排列的待办队列。下方的切换可以对比上线版本与后期思考版。"
     },
     testing: {
-      kicker: "用户测试",
-      heading: "同样的任务，改版后找得更快。",
-      lead: "我请公司里的 10 位同事完成同一组查找任务，对比原界面和上线版本，也就是上面的第二个切换项。",
-      stats: [
-        { value: "20–30 秒 → 约 8 秒", label: "日常信息查找，任务层面的大致汇总" },
-        { value: "10 秒以上 → 约 5 秒", label: "在左侧列表里找指定项，任务层面的大致汇总" },
-        { value: "定性观察", label: "参与者似乎更快看懂了整体数据走向" }
-      ],
+      kicker: "05",
+      heading: "用户测试",
+      subheading: "第二轮用户测试中，完成同样的任务，改版后花费的时间明显缩短。",
+      lead: "我邀请了 10 位同事使用新的视觉界面和仪表盘，让他们完成一些任务，并向他们提出了一些问题。",
       findings: [
-        { title: "测试内容是日常查找。", body: "10 位参与者平时都会使用这套内部工具。他们分别在原界面和改版界面完成查找任务，包括找到「待结算」，以及从左侧导航进入「趋势」。计时从任务说明结束开始，到打开正确页面为止；我确认到达目标后，才把任务记为完成。" },
-        { title: "查找时间缩短了。", body: "在原界面找到当天的信息大约需要 20–30 秒，改版后约为 8 秒。在左侧导航里找指定项目，也从 10 秒以上缩短到约 5 秒。不过，有些老用户一开始反而花了更久，因为熟悉的位置变了。" },
-        { title: "理解趋势只是一项定性观察。", body: "我还观察到，参与者似乎能更快抓住整体数据走向。这项观察没有单独计时，不能和前面的查找结果混为一谈。" }
-      ],
-      note: "这轮结果支持我继续使用更直白的标签、明确的字体层级和按任务分组的导航，并让颜色只做辅助提示。所有改动是一起测试的，所以结果只能说明整套方案有效，不能归功于其中某一个视觉调整。"
+        { title: "找到失败事件，并定位其中一笔交易的详情", body: "从左侧目录栏找到失败事件，再查看其中一笔交易的详情，耗时从 20–30 秒降到了约 8 秒。" },
+        { title: "从左侧列表中找到指定条目", body: "耗时从约 10 秒降到了约 5 秒。" },
+        { body: "测试过程中，我们发现，长期使用旧仪表盘的用户对新界面有些生疏，会习惯性地去旧的位置寻找内容。我们也测试了一名新用户，发现他使用新仪表盘时效率明显更高。因此，我们认为这次改动优化了仪表盘的使用体验。" }
+      ]
     },
     start: {
-      kicker: "问题",
-      heading: "每天要处理的工作，和报表、后台管理全挤在一层。",
-      lead: "原导航按文档类型分组。早上打开工具后，得先弄懂菜单和指标缩写，才知道该去哪里。",
-      observations: [
-        { title: "一个扁平菜单把不同的活混在一起。", body: "14 个入口把报表、运营队列和后台管理放在同一层。" },
-        { title: "标签更像写给系统看的。", body: "像 PEND_CNT 这样的缩写，用户得先在脑子里翻译一遍，才能知道它指什么。" },
-        { title: "概览页强调的是记录。", body: "一张密密麻麻的交易表占满屏幕，没有单独列出需要处理的事项。" }
+      kicker: "01",
+      heading: "用户痛点",
+      lead: "由于VortexNet是互联网金融行业，内部系统有大量的数字与信息需要处理。员工每天要处理的工作，和报表、后台管理全挤在一层，早上打开工具后并不能及时获取信息。",
+      bullets: [
+        { title: "一个扁平菜单把不同的内容混在一起", body: "14 个入口把报表、运营队列和后台管理放在同一层，给人造成疑惑和阅读困难。" },
+        { title: "标签更像写给系统看的", body: "像 PEND_CNT 这样的缩写并不适用于员工阅读。" },
+        { title: "概览页强调的是记录", body: "实际上一张交易表占满了整个屏幕，没有单独列出需要处理的事项。" }
       ]
     },
     iteration: {
-      kicker: "被测试改掉的一个决定",
-      heading: "一开始我在调颜色，后来发现真正的问题是阅读顺序。",
-      lead: "一次早期测试让我重新判断问题，也改变了下一轮迭代的方向。",
-      steps: [
-        { label: "01 · 最初的假设", title: "我以为调颜色就能讲清优先级。", body: "原仪表盘的颜色很接近，各类信息的视觉重量也差不多。我最先尝试调整配色，希望页面更容易扫读。" },
-        { label: "02 · 早期测试", title: "改颜色的作用有限。", body: "我看到的改善不多，反馈也不一致。于是我回头想：这屏到底有没有说清楚该先看哪里。" },
-        { label: "03 · 调整后的决定", title: "用字体和版面来建立层级。", body: "我转向用字体、字号和位置来立优先级，颜色退回去当辅助提示。" }
+      kicker: "02",
+      heading: "设计决策",
+      numbered: [
+        { title: "最初的假设", body: "与组员商讨后，我们一开始决定先调整不同内容、不同层级的颜色，用颜色来区分信息层级。" },
+        { title: "早期测试", body: "第一轮用户测试找了 10 位员工参与，但我们发现，最初的判断有问题。颜色并没有把信息的优先级讲清楚，因为没有调整整体文字的布局，员工在测试中的效率也没有明显提高。" },
+        { title: "调整后的决定", body: "在和组员及上司讨论后，我们决定进一步研究信息层级，通过字体和版面来建立层级，并增设一些可视化图表来吸引用户的注意。" }
       ],
       summary: "看看指标层级的研究",
       disclosureLead: "这张复原图说明视觉重心的变化：主要数字在前，辅助指标跟在后面。",
       beforeLabel: "改版前",
       afterLabel: "改版后",
       beforeAlt: "六个视觉重量相同、名字是缩写的指标格",
-      beforeCaption: "系统缩写，视觉重量一样。",
-      afterAlt: "「收款」和「出账」作为主要数字，配四个次要指标",
-      afterCaption: "标签说人话，阅读顺序有主次。"
+      afterAlt: "「收款」和「出账」作为主要数字，配四个次要指标"
     },
     categories: {
-      kicker: "信息整合",
-      heading: "导航应该按任务分组，而不是按文档类型分组。",
-      lead: "我先用用户要完成的任务重新整理信息，再和产品、数据同事一起确认优先级。",
+      heading: "信息层级的划分",
+      lead: [
+        "信息层级的划分需要更深入地思考。我们取消了原先将日报、月报和确认信息这类同类型内容放在一起的分类方式。",
+        "我们的目的是提高用户的效率，所以我们观察了用户一天开始时会先点进哪些类别进行确认，以及哪些类别的优先级没有那么高。通过这些观察，我们确定了新的信息层级划分方式。"
+      ],
       beforeLabel: "改版前",
       afterLabel: "改版后",
       beforeAlt: "原有信息按文档类型，分散在「报表」「数据中心」「分析」里",
-      beforeCaption: "每天要一起看的信息，被拆进了不同的文档分类。",
-      afterAlt: "信息按「每天要盯的」「阶段性回看的」「要设置的」重新组织",
-      afterCaption: "有什么要处理？这段时间变了什么？有什么要设置？",
-      placementLabel: "位置上的决定",
-      placementTitle: "每天都要看的，放落地页。",
-      placementBody: "我问同事每天开始工作时最先看什么，再根据回答整理出下面这张优先级表，并确定首页的信息顺序。",
-      tradeoffLabel: "设计上的取舍",
-      tradeoffBody: "把监控放前面，周期性报表就没那么显眼了。报表和后台各自留了有名字的分组，入口还在。",
-      tableAria: "信息优先级模型",
-      tableCaption: "在用的优先级模型 · 频次是定性判断，不是使用数据",
-      columns: { item: "信息", who: "团队", often: "频次", place: "位置" },
-      priorities: [
-        { item: "待结算", who: "运营", often: "每天早上", place: "落地页", strong: true },
-        { item: "失败项", who: "运营", often: "每天早上", place: "落地页", strong: true },
-        { item: "对账队列", who: "财务", often: "每天", place: "独立入口" },
-        { item: "日报 / 月报", who: "财务", often: "每周", place: "报表分组" },
-        { item: "账号、权限、日志", who: "数据团队", often: "偶尔", place: "单独的后台" }
-      ]
+      afterAlt: "信息按「每天要盯的」「阶段性回看的」「要设置的」重新组织"
     },
     navigation: {
       kicker: "信息架构",
-      heading: "三个任务分组，后台单独一个入口。",
+      heading: "三个任务分组，后台单独一个入口",
       lead: "重建后的导航有 9 个主入口，按任务分组。账号、权限、配置和日志都收进「后台」。",
       beforeLabel: "改版前",
       afterLabel: "改版后",
@@ -310,14 +224,14 @@ const copy = {
       regionCaption: "四个含义不同的总数：净现金流、收款、出账、待结算。货币单位和辅助信息一直留在画面上。"
     },
     reflection: {
-      kicker: "限制与取舍",
-      heading: "这套设计也受真实运营条件限制。",
-      cards: [
-        { label: "数据新鲜度", title: "把更新时间写出来。", body: "仪表盘做不到持续刷新。同事讲清更新周期之后，我加了一个「截至」时间戳，让人自己判断数字有多新。" },
-        { label: "团队的意见", title: "按每天的工作顺序来排。", body: "我问用户每天早上最先看什么，再把最常用、最急的信息放到上面。这个层级来自他们真实的工作顺序。" },
-        { label: "导航上的取舍", title: "分组更清楚了，位置却变陌生了。", body: "老用户找顶层分类更快了，但有些人一开始反而要花更久，才能找到被挪走的东西。一位新同事几乎没用过旧菜单，在改版里找东西明显更快。我把这理解成可能存在的适应成本；一个人的表现说明不了长期的接受度。" }
-      ],
-      next: "如果继续做下去，我会跟踪老用户一段时间，也会考虑保留他们熟悉的叫法，或加入临时导航提示，降低改版初期的适应成本。"
+      kicker: "06",
+      heading: "限制与取舍",
+      lead: [
+        "这套设计受到真实运营条件的限制。在此次迭代中，数据还无法实时更新，会有一定的延迟，所以我认为增加时间戳是当前最好的处理办法。",
+        "导航上也有取舍。虽然分组更加清晰，但位置与过往不同，有些用户反而需要花更多时间才能找到内容。我认为这还在正常、可控的范围内。",
+        "同时，金融公司有大量的资金往来和数字，仪表盘上的信息仍然显得比较混乱。",
+        "一天中，早上、中午和晚上的工作重点也不一样。现在的排布可以在一定程度上简化大家早上的工作流程，但对于下午的工作，或者临时插入的任务，还没有提供很好的帮助。"
+      ]
     }
   }
 }
@@ -352,7 +266,7 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
                 <span>{t.hero.context}</span>
               </div>
               <h1 className={styles.reveal} style={{ animationDelay: "60ms" }}>{t.hero.titleA}<br />{t.hero.titleB}</h1>
-              <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>{t.hero.lead}</p>
+              {t.hero.lead && <p className={`${styles.heroLead} ${styles.reveal}`} style={{ animationDelay: "120ms" }}>{t.hero.lead}</p>}
               <dl className={`${styles.meta} ${styles.reveal}`} style={{ animationDelay: "180ms" }}>
                 <div><dt>{t.hero.roleLabel}</dt><dd>{t.hero.role}</dd></div>
                 <div><dt>{t.hero.timelineLabel}</dt><dd>{t.hero.timeline}</dd></div>
@@ -361,12 +275,12 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
               <dl className={`${styles.heroFacts} ${styles.reveal}`} style={{ animationDelay: "220ms" }}>
                 <div><dt>{t.hero.scopeLabel}</dt><dd>{t.hero.scope}</dd></div>
                 <div><dt>{t.hero.implementedLabel}</dt><dd>{t.hero.implemented}</dd></div>
-                <div><dt>{t.hero.shownLabel}</dt><dd>{t.hero.shown}</dd></div>
+                {t.hero.shown && <div><dt>{t.hero.shownLabel}</dt><dd>{t.hero.shown}</dd></div>}
                 <div><dt>{t.hero.resultLabel}</dt><dd>{t.hero.result}</dd></div>
               </dl>
               <div className={`${styles.actions} ${styles.reveal}`} style={{ animationDelay: "260ms" }}>
-                <a className={styles.action} href="#result">{t.hero.actionCompare} <span aria-hidden="true">↓</span></a>
-                <a className={styles.textLink} href="#iteration">{t.hero.actionDecisions}</a>
+                <ScrollLink className={styles.action} href="#result">{t.hero.actionCompare} <span aria-hidden="true">↓</span></ScrollLink>
+                <ScrollLink className={styles.textLink} href="#iteration">{t.hero.actionDecisions}</ScrollLink>
               </div>
             </div>
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "140ms" }}>
@@ -382,72 +296,42 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
 
           <ProjectQuickNav slug="vortexnet" track={track} locale={locale} />
 
-          <section id="result" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.result.kicker}</p>
-              <h2>{t.result.heading}</h2>
-              <p className={styles.sectionLead}>{t.result.lead}</p>
-            </div>
-            <ScreenComparison />
-            <div className={styles.deliveryScope} aria-label={t.result.scopeAria}>
-              {t.result.scopeCards.map((card) => (
-                <article key={card.title}>
-                  <p className={styles.microLabel}>{card.label}</p>
-                  <h3>{card.title}</h3>
-                  <p>{card.body}</p>
-                </article>
-              ))}
-            </div>
-            <div className={styles.chartDecisions}>
-              {t.result.chartDecisions.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
-            </div>
-            <div className={styles.statRow}>
-              {t.result.outcomes.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
-            </div>
-            <p className={styles.sourceNote}>{t.result.note}</p>
-          </section>
-
-          <section id="testing" className={styles.caseSection}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.testing.kicker}</p>
-              <h2>{t.testing.heading}</h2>
-              <p className={styles.sectionLead}>{t.testing.lead}</p>
-            </div>
-            <div className={styles.statRow}>
-              {t.testing.stats.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
-            </div>
-            <div className={styles.observations}>
-              {t.testing.findings.map((item, index) => <article key={item.title}>
-                <p className={styles.microLabel}>0{index + 1}</p><h3>{item.title}</h3><p>{item.body}</p>
-              </article>)}
-            </div>
-            <p className={styles.sourceNote}>{t.testing.note}</p>
-          </section>
-
-          <section id="start" className={styles.caseSection}>
+          <section id="start" className={`${styles.caseSection} ${t.start.bullets ? styles.proseSection : ""}`}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.start.kicker}</p>
               <h2>{t.start.heading}</h2>
               <p className={styles.sectionLead}>{t.start.lead}</p>
             </div>
-            <div className={styles.observations}>
+            {t.start.observations && <div className={styles.observations}>
               {t.start.observations.map((item, index) => <article key={item.title}>
                 <p className={styles.microLabel}>0{index + 1}</p><h3>{item.title}</h3><p>{item.body}</p>
               </article>)}
-            </div>
+            </div>}
+            {t.start.bullets && <ul className={styles.noteList}>
+              {t.start.bullets.map((item) => <li key={item.title}>
+                <span className={styles.noteMarker} aria-hidden="true">•</span>
+                <div><h3>{item.title}</h3><p>{item.body}</p></div>
+              </li>)}
+            </ul>}
           </section>
 
-          <section id="iteration" className={styles.caseSection}>
+          <section id="iteration" className={`${styles.caseSection} ${t.iteration.numbered ? styles.proseSection : ""}`}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.iteration.kicker}</p>
               <h2>{t.iteration.heading}</h2>
-              <p className={styles.sectionLead}>{t.iteration.lead}</p>
+              {t.iteration.lead && <p className={styles.sectionLead}>{t.iteration.lead}</p>}
             </div>
-            <ol className={styles.iterationSteps}>
+            {t.iteration.steps && <ol className={styles.iterationSteps}>
               {t.iteration.steps.map((step) => <li key={step.label}>
-                <p className={styles.microLabel}>{step.label}</p><h3>{step.title}</h3><p>{step.body}</p>
+                <p className={styles.microLabel}>{step.label}</p>{step.title && <h3>{step.title}</h3>}<p>{step.body}</p>
               </li>)}
-            </ol>
+            </ol>}
+            {t.iteration.numbered && <ol className={styles.noteList}>
+              {t.iteration.numbered.map((step, index) => <li key={step.title}>
+                <span className={styles.noteMarker} aria-hidden="true">{index + 1}.</span>
+                <div><h3>{step.title}</h3><p>{step.body}</p></div>
+              </li>)}
+            </ol>}
             <details id="surface" className={styles.disclosure}>
               <summary>{t.iteration.summary}</summary>
               <div className={styles.disclosureBody}>
@@ -462,16 +346,16 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
 
           <section id="categories" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
-              <p className={styles.kicker}>{t.categories.kicker}</p>
+              {t.categories.kicker && <p className={styles.kicker}>{t.categories.kicker}</p>}
               <h2>{t.categories.heading}</h2>
-              <p className={styles.sectionLead}>{t.categories.lead}</p>
+              {[].concat(t.categories.lead).map((lead) => <p className={styles.sectionLead} key={lead}>{lead}</p>)}
             </div>
             <div className={styles.compare}>
               <Shot name="filed-by-type" alt={t.categories.beforeAlt} width={1220} height={422} label={t.categories.beforeLabel} caption={t.categories.beforeCaption} />
               <Shot name="asked-by-task" alt={t.categories.afterAlt} width={1220} height={500} label={t.categories.afterLabel} caption={t.categories.afterCaption} />
             </div>
 
-            <div id="priorities" className={styles.priorityBlock}>
+            {t.categories.priorities && <div id="priorities" className={styles.priorityBlock}>
               <div className={styles.decision}>
                 <div className={styles.decisionCopy}>
                   <p className={styles.microLabel}>{t.categories.placementLabel}</p>
@@ -492,7 +376,7 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
                   </tr>)}</tbody>
                 </table>
               </div>
-            </div>
+            </div>}
           </section>
 
           <section id="navigation" className={styles.caseSection}>
@@ -514,17 +398,62 @@ export default function VortexNetPage({ track = "uiux", locale = "en" }) {
             </details>
           </section>
 
+          <section id="result" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.result.kicker}</p>
+              <h2>{t.result.heading}</h2>
+              {t.result.subheading && <h3 className={styles.sectionSubheading}>{t.result.subheading}</h3>}
+              <p className={styles.sectionLead}>{t.result.lead}</p>
+            </div>
+            <ScreenComparison locale={locale} />
+            {t.result.scopeCards && <div className={styles.deliveryScope} aria-label={t.result.scopeAria}>
+              {t.result.scopeCards.map((card) => (
+                <article key={card.title}>
+                  <p className={styles.microLabel}>{card.label}</p>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              ))}
+            </div>}
+            {t.result.chartDecisions && <div className={styles.chartDecisions}>
+              {t.result.chartDecisions.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
+            </div>}
+            {t.result.outcomes && <div className={styles.statRow}>
+              {t.result.outcomes.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
+            </div>}
+            {t.result.note && <p className={styles.sourceNote}>{t.result.note}</p>}
+          </section>
+
+          <section id="testing" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.testing.kicker}</p>
+              <h2>{t.testing.heading}</h2>
+              {t.testing.subheading && <h3 className={styles.sectionSubheading}>{t.testing.subheading}</h3>}
+              <p className={styles.sectionLead}>{t.testing.lead}</p>
+            </div>
+            {t.testing.stats && <div className={styles.statRow}>
+              {t.testing.stats.map((item) => <article key={item.value}><strong>{item.value}</strong><span>{item.label}</span></article>)}
+            </div>}
+            {t.testing.findings && <div className={styles.observations}>
+              {t.testing.findings.map((item, index) => <article key={index}>
+                <p className={styles.microLabel}>0{index + 1}</p>{item.title && <h3>{item.title}</h3>}<p>{item.body}</p>
+              </article>)}
+            </div>}
+            {t.testing.note && <p className={styles.sourceNote}>{t.testing.note}</p>}
+          </section>
+
           <section id="reflection" className={styles.caseSection}>
             <div className={styles.sectionHeader}>
               <p className={styles.kicker}>{t.reflection.kicker}</p>
               <h2>{t.reflection.heading}</h2>
+              {[].concat(t.reflection.lead || []).map((lead) => <p className={styles.sectionLead} key={lead}>{lead}</p>)}
             </div>
-            <div className={styles.reflectionGrid}>
+            {t.reflection.cards && <div className={styles.reflectionGrid}>
               {t.reflection.cards.map((card) => (
                 <article key={card.title}><p className={styles.microLabel}>{card.label}</p><h3>{card.title}</h3><p>{card.body}</p></article>
               ))}
-            </div>
-            <p className={styles.sectionLead}>{t.reflection.next}</p>
+            </div>}
+            {t.reflection.next && <p className={styles.sectionLead}>{t.reflection.next}</p>}
           </section>
           <ProjectNav slug="vortexnet" track={track} locale={locale} styles={styles} />
         </div>
