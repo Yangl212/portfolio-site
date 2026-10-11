@@ -308,6 +308,9 @@
   margin-top: clamp(44px, 5.6vw, 72px); max-width: 46ch;
   font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--muted); text-wrap: balance;
 }
+/* 46ch is an English measure: the same width in Chinese holds about half as
+   many characters, which left a line breaking for its last character alone. */
+:global(:root[lang="zh"]) .opSub { max-width: 38em; }
 
 .opFacts {
   margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px;
