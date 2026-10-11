@@ -16,6 +16,9 @@
   background: #efeeee;
 }
 
+/* The loop plays itself, so this covers the frame only to offer a pause and
+   to be the control a keyboard reaches. It keeps the arrow: a pointer over
+   a playing clip reads as a link to somewhere, which it is not. */
 .control {
   position: absolute;
   inset: 0;
@@ -25,7 +28,7 @@
   border: 0;
   border-radius: inherit;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
 }
 
 .openLink {
