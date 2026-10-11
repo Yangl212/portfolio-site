@@ -1,3 +1,5 @@
+import { Fragment } from "react"
+
 import { ProjectNav } from "../../../components/ProjectNav"
 import { ProjectQuickNav } from "../../../components/ProjectQuickNav"
 import { Reveal } from "../../../components/Reveal"
@@ -85,49 +87,30 @@ const copy = {
         { title: "Get admin rights", body: "Use what you have found to unlock more records, and open up private chats." },
         { title: "Reach one of the endings", body: "Who the player talks to decides which ending they reach. Going off the obvious path can turn up things few people see." }
       ],
-      mapTitle: "Seven endings, plus one hidden.",
-      mapBody: "Once an ending is reached, the player can open the story map, find a route they have not taken, and go back to explore it.",
       mapDemoLabel: "Story map showing revealed and locked routes through the branching endings",
-      cards: [
-        { label: "Information architecture", title: "Give each kind of evidence a home.", body: "Chat, the member registry, and the mission board occupy separate routes. The player can return to the same record structure as the case grows." },
-        { label: "State feedback", title: "Show what has changed.", body: "Locked records, available files, member status, and counters distinguish what is known from what still needs investigation." }
-      ],
       summary: "Early explorations behind the non-linear structure",
       disclosureLead: "Two exploratory exercises informed the direction: people could form different interpretations from the same fragments and inspect clues in their own order. These exercises informed the concept; they did not validate the final game's usability.",
       study1Aria: "Open trace inference study image at full size",
       study1Alt: "Annotated discarded objects used to explore how people infer a story from traces",
       study1Title: "01 / Trace inference",
       study1Body: "Participants inferred an owner from discarded objects. Their confident but differing interpretations suggested room for more than one reading of a clue.",
-      study2Aria: "Open visual detective exercise at full size",
       study2Alt: "Illustrated room with ten inspectable objects and their clue records",
       study2Title: "02 / Visual detective exercise",
       study2Body: "A room contained ten inspectable objects with short records. Participants chose their own inspection order, informing the modular record structure."
     },
     ai: {
       kicker: "03 / AI interaction design",
-      heading: "Design what happens when the player goes off script.",
-      lead: "Free-form conversation needs limits. I defined character personalities, knowledge boundaries, and responses to off-topic input, then connected those behaviors to the investigation.",
-      featureLabel: "A boundary in the working build",
+      heading: "Holding the story together while the player roams.",
+      featureLabel: "Language boundaries set for the AI NPCs",
       featureTitle: "A warning becomes a consequence.",
-      featureBody: "The chat history records repeated weather questions and Lily's warnings. The recording then shows the disconnected chat and the “Revoked” ending.",
+      featureBody: "When a player keeps asking an NPC about things the game has nothing to do with, the NPC says so and declines to answer. Trip that enough times and you are reported to the site’s admin, thrown out of the group chat, and the game ends in a bad ending.",
       intentLabel: "Intent",
-      intent: "Keep an off-topic exchange inside the story instead of returning a generic assistant response.",
+      intent: "Even when the player wanders off, the character answers in the voice it was written with - and warns them while it does.",
       tradeoffLabel: "Tradeoff",
-      tradeoff: "Revoking access makes the boundary consequential. It also risks punishing normal curiosity; the clarity of the warning needs further testing.",
+      tradeoff: "Questions near the edge can be misjudged, and a player whose curiosity takes a knock may stop digging for the more hidden endings.",
       featureDemoLabel: "Lily's warnings in the chat history, disconnection, and the Revoked ending",
-      rules: [
-        { label: "01 / Character", title: "A consistent voice", detail: "Each character has a separate prompt for tone and conversational style. Midnight, for example, is calm and controlled, with a deliberate sense of distance." },
-        { label: "02 / Knowledge", title: "A limit on what can be revealed", detail: "Rules distinguish acknowledging another member from revealing their private file. These instructions guide responses; they do not guarantee that the model will never reveal too much." },
-        { label: "03 / Off-script input", title: "A response when players test the rules", detail: "Off-topic questions, challenges to the administrator, and questions about the AI have defined response rules. Repeated probing can become a story consequence, as the recording shows." }
-      ],
       summary: "Character prompts and response rules",
-      exampleLabel: "Illustrative exchange · not a playtest transcript",
-      playerLabel: "Player",
-      playerLine: "“Who is No. 1?”",
-      ruleLabel: "Rule",
-      ruleLine: "May confirm a member exists; may not reveal their private file.",
-      characterLabel: "Character",
-      characterLine: "“There are others here. What they carry is not mine to hand over.”",
+      rulesIntro: "Every NPC you can talk to has its own way of speaking, its own backstory and its own range of knowledge, and a question past that range gets a vague answer. Players pick up more from each member’s file and from the conversations themselves, which is how they learn about the dead woman and about the site. The NPCs also have a web of relationships of their own: ask about a name or handle they do not know, and they are puzzled too.",
       promptAria: "Open Midnight's character prompt at full size",
       promptAlt: "Midnight's system prompt with tone, conversation, and boundary instructions",
       promptTitle: "Character-level instructions",
@@ -136,22 +119,72 @@ const copy = {
       rulesAlt: "English and Chinese rules for off-topic detection and challenges to the story",
       rulesTitle: "Input-handling rules",
       rulesBody: "English and Chinese patterns cover member queries, off-topic messages, and attempts to challenge the fiction.",
-      note: "Built with Claude Code and the ChatGPT API. My design work covered the characters, response boundaries, interface states, and the relationship between conversation and progression."
     },
     playtest: {
-      kicker: "04 / Playtesting & iteration",
-      heading: "A readable main investigation, with an optional hidden route.",
-      lead: "The hidden ending asks players to pay closer attention to clues and connections across the story. Discovering this layer is part of the challenge; universal completion was never the goal.",
-      stats: [
-        { value: "8", label: "players in the working-build test" },
-        { value: "~35 min", label: "reported time to identify the main suspect" },
-        { value: "2 of 8", label: "players reached the secret ending" }
-      ],
-      note: "Two of the eight players reached the hidden ending. I treat this as an observation of discovery in this group. It provides a starting point for examining how players explore the optional layer, but does not establish the ideal level of difficulty or determine the game's overall usability.",
-      iterations: [
-        { label: "01 / Entry", title: "Give the player a role before the first chat.", problem: "The text-heavy opening left testers unclear about who they were and why they were investigating.", changeLabel: "Changed", change: "Shortened the introduction and reframed the first screen as a visual police incident report.", outcomeLabel: "Later observation", outcome: "Most players in the eight-person working-build test followed the main storyline and identified the main suspect. This was not an isolated before-and-after test of the introduction." },
-        { label: "02 / Conversation", title: "Design for questions outside the script.", problem: "Players challenged the fiction; keyword-based replies repeated themselves and made characters feel artificial.", changeLabel: "Changed", change: "Moved to character-specific prompts with personality, knowledge limits, and rules for off-topic input.", outcomeLabel: "Implemented behavior", outcome: "The current build demonstrates warnings and a revoked-access ending. More varied prompts are still needed to assess how consistently the boundaries hold." },
-        { label: "03 / Discovery", title: "Evaluate the optional route on its own terms.", problem: "Two of the eight players reached the hidden ending. This is an observation of discovery in this group, not proof that the difficulty is right or wrong.", changeLabel: "Next evaluation", change: "I would examine where players stop, what they believe remains to be discovered, and whether the interface gives them enough feedback to choose a next step.", outcomeLabel: "Design intent", outcome: "Clear navigation and record states should support the investigation while preserving the effort required to solve the mystery." }
+      kicker: "04",
+      heading: "Playtesting & iteration",
+      lead: "The game went through two rounds of expert interviews and two rounds of user testing. Every round gave me something that changed the version after it.",
+      rounds: [
+        {
+          label: "01",
+          title: "The first user test",
+          intro: "I asked six classmates to play the first version. Most of them got as far as the point where you have to take another user's account, log in with it, and talk to the story NPC inside it.",
+          paragraphs: [
+            "Five of the six said the task was too hard, and four had not understood that they were the detective - they thought they were the dead woman's sister. One player got the new account with no hint at all, and that player had played a lot of games like this one.",
+            "One player also felt the interface was too ordinary and had no art direction of its own. It sits close to the chat apps people actually use, but there was little design on top of that.",
+            "Players also said the NPC replies were too flat. At that point an NPC answered only when one of the six keywords I had set was hit; anything else got nothing back, which left players unsure how the game was meant to continue."
+          ],
+          changesIntro: "After the first round I made these changes:",
+          changes: [
+            { label: "01", title: "A progress bar and a hint button", body: "Players can see where they are in the game as a whole, and when they get stuck they can ask for a hint themselves and keep going." },
+            { label: "02", title: "Real AI NPCs in the chatroom", body: "The NPCs answer what the player actually writes, and what the player says shapes what comes back. The six original keywords stayed: hitting one still returns its fixed reply and the information with it." }
+          ]
+        },
+        {
+          label: "02",
+          title: "Two expert interviews",
+          intro: "I asked a level designer at miHoYo and a professor at Parsons to play the whole thing through, then talked with each of them - about how the game is structured, and about where the AI should stop.",
+          blocks: [
+            {
+              title: "Going through the game logic with a level designer at miHoYo",
+              paragraphs: [
+                "Once he had played the whole thing, we went back over how the game is put together.",
+                "At first it ran in one direction: players only chose who they thought the killer was at the very end, and that one choice decided the ending. It made for thin play. He suggested reworking the logic, and the version that exists now came out of that."
+              ]
+            },
+            {
+              title: "Going through the AI's boundaries with a professor at Parsons",
+              paragraphs: [
+                "I also went into the limits of the AI's behaviour at length with a professor at Parsons.",
+                "Watching him use the AI NPCs, I noticed he kept raising subjects with nothing to do with the story. There was no bad ending for being thrown out yet, so he could keep going indefinitely. The NPCs did not take the bait, but the story did not move either.",
+                "So I sharpened each NPC's character and the limits of what it will answer."
+              ]
+            }
+          ]
+        },
+        {
+          label: "03",
+          title: "The second user test",
+          intro: "I recruited eight players online, with a range of experience in games like this, and ran the test remotely. A session ended once the player reached their first ending, and an interview followed. Reaching that first ending took about 20 minutes.",
+          blocks: [
+            {
+              title: "Most players would rather work it out than take a hint",
+              paragraphs: [
+                "Most of them never pressed the hint button, so I asked why in the interviews.",
+                "Six of the eight had seen the button. Five of those said that in a game like this they would rather find things for themselves, so they did not want the hint.",
+                "The sixth used it several times. He said that when he could not think of a next move, the hint kept him going instead of leaving him stuck.",
+                "The other two never noticed the button, so it went unused the whole way through."
+              ]
+            },
+            {
+              title: "Some of them kept going after the session was over",
+              paragraphs: [
+                "I left the site open to them for two more days. In that time five came back to tell me they had reached other endings, and two of those had found every ending, the hidden one included.",
+                "One more worked out how to open the hidden ending, but hit a bug and never got to finish it."
+              ]
+            }
+          ]
+        }
       ],
       summary: "The first playable chatroom",
       originAria: "Open the early chatroom prototype at full size",
@@ -159,22 +192,14 @@ const copy = {
       originBody: "A plain chatroom and member list provided an early way to explore the interaction. Testing exposed the need to establish a role and a reason to investigate before asking players to start a conversation."
     },
     build: {
-      kicker: "05 / From Figma to a working website",
-      heading: "Building it exposed the states a static screen could miss.",
-      lead: "The high-fidelity designs established the visual language. Working with real content made navigation, locked records, and changing member states part of the design work.",
+      kicker: "05",
+      heading: "From Figma to VS Code",
+      lead: [
+        "I built the high-fidelity screens in Figma first, then handed the images and a written description to Codex and Claude Code to put the site together. What came out differs from the designs in places, but it holds up well overall. That is how I worked through the whole build.",
+        "For the look I went with retro electronics. Partly to carry the dread - it is a detective game. And partly because the story is set around 2012, when interfaces did not look the way they do now, so I wanted the visuals to sit in that period too."
+      ],
       compareAlt: "Figma designs on the left and the implemented member registry and mission board on the right",
       compareCaption: "Left: Figma designs. Right: implemented screens with locked records, member status, and diary access.",
-      cards: [
-        { label: "Navigation", title: "Separate destinations as content grows.", body: "Chat, the registry, and the mission board moved into their own routes when a single stacked view became too dense." },
-        { label: "Interaction states", title: "Design before and after access.", body: "Locked and unlocked records, plus alive and deceased member states, needed recognizable treatments beyond the default screen." },
-        { label: "Language", title: "Support English and Chinese input.", body: "Character rules were maintained in both languages. Supporting the same intent requires more than translating the interface labels." }
-      ],
-      systemLabel: "Visual system / a readable digital archive",
-      system: [
-        { title: "Type", body: "Pixel display type establishes the fiction; monospace body text gives records a consistent rhythm." },
-        { title: "Contrast", body: "Dark surfaces and light text frame the evidence, with red accents for status and alerts." },
-        { title: "Record patterns", body: "Repeated headers, folders, status tags, and counters help players recognize new information." }
-      ]
     },
     reflection: {
       kicker: "What I take forward",
@@ -235,49 +260,30 @@ const copy = {
         { title: "获得管理员权限", body: "用查到的东西解锁更多档案，并开启私聊权限。" },
         { title: "不同的结局", body: "玩家与不同 NPC 的沟通会走向不同结局。另辟蹊径可能会帮助你发现更鲜为人知的秘密。" }
       ],
-      mapTitle: "七个结局 + 一个隐藏结局",
-      mapBody: "进入结局后，玩家可以打开故事进程发现新的路径，并返回重新探索。",
       mapDemoLabel: "故事地图，显示分支结局里已解锁和锁着的路线",
-      cards: [
-        { label: "信息架构", title: "每类证据都有自己的地方", body: "聊天、成员名册和任务板各占一条路由。案子越查越大，玩家也能回到同一套档案结构里。" },
-        { label: "状态反馈", title: "把变化显示出来", body: "锁着的档案、可看的文件、成员状态和计数器，把「已经知道的」和「还要查的」区分开。" }
-      ],
       summary: "非线性结构背后的早期探索",
       disclosureLead: "前期两个小练习让我确认了两件事：同一组碎片，不同的人会拼出不同故事；查线索的顺序也因人而异。这些练习只影响了概念方向，没有验证最终游戏是否好用。",
       study1Aria: "查看痕迹推理研究的大图",
       study1Alt: "带标注的废弃物品，用来探索人如何从痕迹里推出故事",
       study1Title: "01 / 痕迹推理",
       study1Body: "参与者从一堆废弃物品推测主人是谁。他们讲得都很笃定，但结论各不相同，说明同一条线索容得下不止一种读法。",
-      study2Aria: "查看视觉侦探练习的大图",
       study2Alt: "一间画出来的房间，里面有十件可查看的物品和它们的线索记录",
       study2Title: "02 / 视觉侦探练习",
       study2Body: "房间里有十件可以查看的物品，各配一小段记录。参与者自己决定查看顺序，这一点影响了后来模块化的档案结构。"
     },
     ai: {
       kicker: "03 / AI 交互设计",
-      heading: "玩家问了剧本外的问题，角色也得接得住",
-      lead: "自由对话不能没有边界。我为每个角色写下性格、知识范围和跑题时的回应方式，再把这些反应放回故事里。",
-      featureLabel: "现有版本里的一条边界",
+      heading: "给予玩家自由度的同时，如何把控 NPC 推进故事进程",
+      featureLabel: "我为 AI NPC 设定了语言边界",
       featureTitle: "警告会变成后果",
-      featureBody: "聊天记录里留着反复追问天气的对话，还有 Lily 的几次警告。录像接着显示连接被断开，以及「Revoked」结局。",
+      featureBody: "当玩家不断向 NPC 提问与游戏无关的问题时，NPC 会进行提示并拒绝回答；多次触发此回复将被「报告」给网站的管理员，从而被踢出群聊，游戏进入 bad ending。",
       intentLabel: "意图",
-      intent: "即使玩家跑题，角色也要留在故事里回应，而不是突然变成通用 AI 助手。",
+      intent: "即使玩家跑题，角色也会根据自己的角色性格进行回复，但同时会给予提示和警告。",
       tradeoffLabel: "取舍",
-      tradeoff: "收回权限让这条边界真的有分量，但也可能误伤正常的好奇心；警告说得够不够清楚，还需要再测。",
+      tradeoff: "有些边界模糊的问题可能会被误判，玩家的好奇心也可能遭到打击，从而让他们不敢去挖掘更隐秘的结局。",
       featureDemoLabel: "聊天记录里 Lily 的警告、断连，以及 Revoked 结局",
-      rules: [
-        { label: "01 / 角色", title: "口吻要一致", detail: "每个角色有各自的 prompt，规定语气和说话方式。比如 Midnight 是冷静、克制的，带着刻意保持的距离感。" },
-        { label: "02 / 知识", title: "能说到哪为止", detail: "规则把「承认另一个成员存在」和「把他的私人档案说出去」分得很清。这些指令是引导回答的，不能保证模型永远不会说多。" },
-        { label: "03 / 剧本外输入", title: "玩家试探规则时，角色怎么回应", detail: "跑题、质疑管理员、追问 AI 本身，各有不同的回应规则。反复试探还会触发故事里的后果，录像里展示的就是其中一种。" }
-      ],
       summary: "角色 prompt 和回应规则",
-      exampleLabel: "示意用的对话 · 不是测试实录",
-      playerLabel: "玩家",
-      playerLine: "「1 号是谁？」",
-      ruleLabel: "规则",
-      ruleLine: "可以确认这个成员存在；不能把他的私人档案说出去。",
-      characterLabel: "角色",
-      characterLine: "「这里还有别人。他们身上的东西，不该由我交出去。」",
+      rulesIntro: "每个可以互动的 NPC 都有自己的一套说话习惯，个人设定和知识范围。超越了他们理解范畴以外的问题将含糊其辞。玩家可以在每个人的档案以及和互动 NPC 的对话中获得更多的信息，从而了解死者和这个网站的情况。NPC 之间存在自己的关系网，如果询问到陌生的名字或代号，他们也会感到疑惑。",
       promptAria: "查看 Midnight 角色 prompt 的大图",
       promptAlt: "Midnight 的系统 prompt，含语气、对话方式和边界指令",
       promptTitle: "角色层面的指令",
@@ -286,22 +292,72 @@ const copy = {
       rulesAlt: "中英文的规则，用于识别跑题和对故事本身的质疑",
       rulesTitle: "输入处理规则",
       rulesBody: "中英两套模式，覆盖询问成员、跑题消息，以及想拆穿这个虚构设定的尝试。",
-      note: "用 Claude Code 和 ChatGPT API 搭的。我的设计工作包括角色、回应边界、界面状态，以及对话和进度之间的关系。"
     },
     playtest: {
-      kicker: "04 / 测试与迭代",
-      heading: "主线要跟得上，隐藏路线可以难一点",
-      lead: "隐藏结局要求玩家更仔细地看线索，以及线索之间的联系。能不能发现这一层本身就是难度的一部分；让所有人都通关从来不是目标。",
-      stats: [
-        { value: "8", label: "参与可玩版本测试的玩家" },
-        { value: "约 35 分钟", label: "玩家自述锁定主要嫌疑人的时间" },
-        { value: "8 人中 2 人", label: "走到了隐藏结局" }
-      ],
-      note: "8 位玩家中有 2 位走到了隐藏结局。这个结果只能说明这组玩家是怎样探索可选路线的，不能证明难度恰好合适，也不能用来判断整个游戏是否好用。",
-      iterations: [
-        { label: "01 / 开场", title: "先让玩家知道自己是谁，再让他开口", problem: "开场文字太多，测试者搞不清自己的身份，也不知道为什么要查这个案子。", changeLabel: "改动", change: "缩短开场说明，把第一屏改成一份视觉化的警方事件报告。", outcomeLabel: "后来的观察", outcome: "在 8 人的可玩版本测试里，多数玩家能跟上主线，也认出了主要嫌疑人。但这不是一次只针对开场的前后对照测试。" },
-        { label: "02 / 对话", title: "为剧本之外的问题做设计", problem: "玩家会质疑这个虚构设定；基于关键词的回复来回重复，角色显得很假。", changeLabel: "改动", change: "改成每个角色一套 prompt，写清性格、知识边界，以及跑题输入的处理规则。", outcomeLabel: "已实现的行为", outcome: "现在的版本能演示警告和「收回权限」的结局。边界到底稳不稳，还需要更多样的提问来评估。" },
-        { label: "03 / 发现", title: "单独评估这条隐藏路线", problem: "8 位玩家中只有 2 位走到隐藏结局。这个数字不能证明难度合适或不合适。", changeLabel: "下一步评估", change: "下一轮会记录玩家卡在哪里、以为自己还漏了什么，以及界面反馈是否足够支持下一步判断。", outcomeLabel: "设计意图", outcome: "导航和档案状态应该帮玩家继续调查，但不能把谜题本身的难度拿掉。" }
+      kicker: "04",
+      heading: "测试与迭代",
+      lead: "本游戏前后共进行了两次专家访谈和两次用户测试。每一轮用户都为游戏的迭代提供了很重要的反馈。",
+      rounds: [
+        {
+          label: "01",
+          title: "第一次用户测试",
+          intro: "我邀请了 6 名同学测试初版游戏。这一轮，大多数玩家只进行到需要盗取新用户账号并登录，再与该账号中的故事 NPC 互动的阶段。",
+          paragraphs: [
+            "6 位玩家中，有 5 位反馈任务太难，4 位没有理解自己是警探的身份，而是认为自己是死者的姐姐。只有 1 位玩家在没有任何提示的情况下获得了新用户的账号，这位玩家有很多同类型游戏的经验。",
+            "另外，有 1 位玩家认为当前界面过于普通，没有自己的美术风格。虽然很贴近实际生活中的聊天软件，但缺少一些美术上的设计。",
+            "玩家还反馈，NPC 的回复太过单一。当时只有触发我设置的 6 个关键词，NPC 才会回复。如果没有聊到关键词，就得不到回应，这让玩家很疑惑，不知道游戏应该如何继续。"
+          ],
+          changesIntro: "根据这些反馈，我在第一轮测试后进行了以下调整：",
+          changes: [
+            { label: "01", title: "增设游戏进度条和提示按钮", body: "让玩家可以看到整体游戏进程，并在卡住时自行点击提示，获取一些信息，继续推进游戏。" },
+            { label: "02", title: "在聊天室中正式引入 AI NPC", body: "NPC 会根据玩家的输入进行回复，玩家的回答和回应都会影响 NPC 的回答。同时，保留原先设置的 6 个关键词，触发后仍会给出固定的回复和信息。" }
+          ]
+        },
+        {
+          label: "02",
+          title: "两位专家访谈",
+          intro: "我分别请了一位米哈游的关卡设计师和一位 Parsons 的教授完整体验了一遍，再和他们聊游戏逻辑和 AI 的行为边界。",
+          blocks: [
+            {
+              title: "与米哈游关卡设计师讨论游戏逻辑",
+              paragraphs: [
+                "整体游戏体验后，我们重新确认了游戏的逻辑。",
+                "一开始，游戏是单向推进的，玩家只在最后选择自己心中的凶手，从而达成不同结局。但这个玩法比较单一。在讨论后，他建议重新调整游戏逻辑，于是我做了修改，形成了现在的版本。"
+              ]
+            },
+            {
+              title: "与 Parsons 教授讨论 AI 的行为边界",
+              paragraphs: [
+                "我也和 Parsons 的一位教授深入讨论了 AI 的行为边界。",
+                "在观察教授使用 AI NPC 时，我发现他经常会聊一些与故事完全不相干的话题。当时还没有设置直接被封禁的坏结局，导致他可以一直聊下去。虽然 NPC 没有接他的话茬，但故事也没有继续推进。",
+                "因此，我再次强化了不同 NPC 的性格和回应边界。"
+              ]
+            }
+          ]
+        },
+        {
+          label: "03",
+          title: "第二次用户测试",
+          intro: "我从网络上招募了 8 位对这类游戏有不同经验的玩家，进行线上测试。测试在玩家达成第一个结局后结束，再进行访谈。整体来说，玩家达到第一个结局大约需要 20 分钟。",
+          blocks: [
+            {
+              title: "大部分玩家选择自己探索，而不使用提示",
+              paragraphs: [
+                "我发现大部分玩家并不会点击提示按钮，于是在访谈中询问了原因。",
+                "8 位玩家中，有 6 位看到了提示按钮。其中 5 位表示，玩这类游戏时，更希望通过自己的发现找到更多信息，所以不愿意使用提示。",
+                "另外 1 位玩家多次使用了提示按钮。他表示，在想不出下一步时，提示能帮助他继续推进，而不是一直卡住。",
+                "还有 2 位玩家没有注意到提示按钮，因此全程没有使用。"
+              ]
+            },
+            {
+              title: "测试结束后，部分玩家继续探索其他结局",
+              paragraphs: [
+                "我将网站继续开放给他们两天。在这两天中，有 5 位玩家回来告诉我，他们打出了其他结局。其中 2 位发现了所有结局，包括隐藏结局。",
+                "还有 1 位玩家发现了隐藏结局的开启方式，但由于系统 Bug，没有完成最后的结局。"
+              ]
+            }
+          ]
+        }
       ],
       summary: "第一个能玩的聊天室",
       originAria: "查看早期聊天室原型的大图",
@@ -309,22 +365,14 @@ const copy = {
       originBody: "一个朴素的聊天室加成员列表，是早期试交互的办法。测试暴露出的问题是：得先给玩家一个身份和一个查下去的理由，再让他开口聊。"
     },
     build: {
-      kicker: "05 / 从 Figma 到能跑的网站",
-      heading: "从 Figma 做成网站后，才发现静态稿漏了多少状态",
-      lead: "高保真稿只定下了视觉语言。放入真实内容后，导航、锁定档案和不断变化的成员状态，才真正变成需要解决的问题。",
+      kicker: "05",
+      heading: "从 Figma 迭代至 VS Code",
+      lead: [
+        "我先在 Figma 中制作高保真界面，再用图片和文字描述，让 Codex 和 Claude Code 帮我搭建网站。实现后的界面和设计稿还有一些细节上的区别，但整体还原度还不错。开发过程中，我基本都用这种方式迭代整个网页。",
+        "整体视觉上，我选择了复古电子风。一方面，我想烘托比较恐怖的气氛，毕竟这是一个侦探类型的游戏。另一方面，故事的真实背景发生在 2012 年左右，当时的界面设计不像现在这么现代，所以我也希望在视觉上还原那个时期的感觉。"
+      ],
       compareAlt: "左边是 Figma 稿，右边是实现出来的成员名册和任务板",
       compareCaption: "左：Figma 稿。右：实现出来的界面，含锁着的档案、成员状态和日记权限。",
-      cards: [
-        { label: "导航", title: "内容变多，就把目的地拆开", body: "当单页堆叠太密时，聊天、名册和任务板各自挪进了自己的路由。" },
-        { label: "交互状态", title: "拿到权限前后都要设计", body: "锁着和解锁的档案，还有成员在世与死亡的状态，都需要在默认画面之外有能一眼认出的处理。" },
-        { label: "语言", title: "中英文输入都要支持", body: "角色规则是中英两套一起维护的。要让两种语言表达同一个意图，光把界面文字翻过去是不够的。" }
-      ],
-      systemLabel: "视觉系统 / 一份读得下去的数字档案",
-      system: [
-        { title: "字体", body: "像素风标题字立住虚构感；正文用等宽字，让档案有统一的节奏。" },
-        { title: "对比", body: "深色底配浅色字把证据框出来，状态和警报用红色点出。" },
-        { title: "档案模式", body: "重复出现的表头、文件夹、状态标签和计数器，帮玩家认出哪些是新信息。" }
-      ]
     },
     reflection: {
       kicker: "接下来要做的",
@@ -345,7 +393,7 @@ function SectionHeading({ label, title, children, wide = false }) {
   return <header className={`${styles.sectionHeader} ${wide ? styles.sectionHeaderWide : ""}`.trim()}>
     <p className={styles.kicker}>{label}</p>
     <h2>{title}</h2>
-    {children && <p className={styles.sectionLead}>{children}</p>}
+    {children && [].concat(children).map((line, index) => <p className={styles.sectionLead} key={index}>{line}</p>)}
   </header>
 }
 
@@ -432,16 +480,7 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                 </li>)}
               </ol>
             </div>
-            <div className={styles.mapIntro}>
-              <h3>{t.flow.mapTitle}</h3>
-              <p>{t.flow.mapBody}</p>
-            </div>
             <Demo name="routes" label={t.flow.mapDemoLabel} />
-            <div className={styles.decisionGrid}>
-              {t.flow.cards.map((card) => (
-                <article key={card.title}><p className={styles.microLabel}>{card.label}</p><h3>{card.title}</h3><p>{card.body}</p></article>
-              ))}
-            </div>
             <details className={styles.disclosure}>
               <summary>{t.flow.summary}</summary>
               <div className={styles.disclosureBody}>
@@ -452,7 +491,7 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                     <figcaption><strong>{t.flow.study1Title}</strong>{t.flow.study1Body}</figcaption>
                   </figure>
                   <figure className={styles.study}>
-                    <a href={img("e170301fd8cc341588840a663f2c940611f1d986.png")} target="_blank" rel="noreferrer" aria-label={t.flow.study2Aria}><img loading="lazy" src={img("e170301fd8cc341588840a663f2c940611f1d986.png")} alt={t.flow.study2Alt} /></a>
+                    <img loading="lazy" src={img("e170301fd8cc341588840a663f2c940611f1d986.png")} alt={t.flow.study2Alt} />
                     <figcaption><strong>{t.flow.study2Title}</strong>{t.flow.study2Body}</figcaption>
                   </figure>
                 </div>
@@ -461,10 +500,8 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
           </section>
 
           <section className={styles.caseSection} id="ai-behavior">
-            <SectionHeading label={t.ai.kicker} title={t.ai.heading}>
-              {t.ai.lead}
-            </SectionHeading>
-            <article className={styles.feature}>
+            <SectionHeading wide label={t.ai.kicker} title={t.ai.heading} />
+            <article className={`${styles.feature} ${styles.featureFlush}`}>
               <div className={styles.featureCopy}>
                 <p className={styles.microLabel}>{t.ai.featureLabel}</p>
                 <h3>{t.ai.featureTitle}</h3>
@@ -476,20 +513,10 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
               </div>
               <Demo name="boundary" label={t.ai.featureDemoLabel} />
             </article>
-            <div className={styles.ruleGrid}>
-              {t.ai.rules.map(rule => <article key={rule.label}><p className={styles.microLabel}>{rule.label}</p><h3>{rule.title}</h3><p>{rule.detail}</p></article>)}
-            </div>
             <details className={styles.disclosure}>
               <summary>{t.ai.summary}</summary>
               <div className={styles.disclosureBody}>
-                <div className={styles.ruleExample}>
-                  <p className={styles.microLabel}>{t.ai.exampleLabel}</p>
-                  <dl>
-                    <div><dt>{t.ai.playerLabel}</dt><dd>{t.ai.playerLine}</dd></div>
-                    <div><dt>{t.ai.ruleLabel}</dt><dd>{t.ai.ruleLine}</dd></div>
-                    <div><dt>{t.ai.characterLabel}</dt><dd>{t.ai.characterLine}</dd></div>
-                  </dl>
-                </div>
+                <p className={styles.sectionLead}>{t.ai.rulesIntro}</p>
                 <div className={styles.evidenceGrid}>
                   <figure>
                     <a href={img("5247c345f474e10806399fab7a3a5708be0aa486.png")} target="_blank" rel="noreferrer" aria-label={t.ai.promptAria}><img loading="lazy" src={img("5247c345f474e10806399fab7a3a5708be0aa486.png")} alt={t.ai.promptAlt} /></a>
@@ -500,7 +527,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
                     <figcaption><strong>{t.ai.rulesTitle}</strong>{t.ai.rulesBody}</figcaption>
                   </figure>
                 </div>
-                <p className={styles.sourceNote}>{t.ai.note}</p>
               </div>
             </details>
           </section>
@@ -509,21 +535,36 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
             <SectionHeading label={t.playtest.kicker} title={t.playtest.heading}>
               {t.playtest.lead}
             </SectionHeading>
-            <div className={styles.statRow}>
-              {t.playtest.stats.map((stat) => (
-                <article key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></article>
-              ))}
-            </div>
-            <p className={styles.sourceNote}>{t.playtest.note}</p>
-            <div className={styles.iterationList}>
-              {t.playtest.iterations.map(item => <article className={styles.iterationItem} key={item.label}>
-                <div><p className={styles.microLabel}>{item.label}</p><h3>{item.title}</h3><p>{item.problem}</p></div>
-                <dl className={styles.reasoning}>
-                  <div><dt>{item.changeLabel}</dt><dd>{item.change}</dd></div>
-                  <div><dt>{item.outcomeLabel}</dt><dd>{item.outcome}</dd></div>
-                </dl>
-              </article>)}
-            </div>
+            {t.playtest.rounds.map((round) => (
+              <Fragment key={round.title}>
+                <div className={styles.roundBand}>
+                  <div className={styles.roundBandInner}>
+                    <h3>{round.title}</h3>
+                    {round.intro && <p>{round.intro}</p>}
+                  </div>
+                </div>
+                <div className={styles.col}>
+                  <section className={styles.hangBlock}>
+                    {(round.paragraphs || []).map((text) => <p key={text}>{text}</p>)}
+                    {(round.blocks || []).map((block) => (
+                      <div className={styles.hangChange} key={block.title}>
+                        <h4>{block.title}</h4>
+                        {block.paragraphs.map((text) => <p key={text}>{text}</p>)}
+                      </div>
+                    ))}
+                  </section>
+                  {round.changes && <section className={styles.hangBlock}>
+                    <p className={styles.hangIntro}>{round.changesIntro}</p>
+                    {round.changes.map((change) => (
+                      <div className={styles.hangChange} key={change.title}>
+                        <h4><span className={styles.hangNum}>{change.label}</span>{change.title}</h4>
+                        <p>{change.body}</p>
+                      </div>
+                    ))}
+                  </section>}
+                </div>
+              </Fragment>
+            ))}
             <details className={styles.disclosure}>
               <summary>{t.playtest.summary}</summary>
               <div className={[styles.disclosureBody, styles.origin].join(" ")}>
@@ -541,17 +582,6 @@ export default function LastMessagePage({ track = "uiux", locale = "en" }) {
               <img loading="lazy" src={comparison} alt={t.build.compareAlt} />
               <figcaption><span>{t.build.compareCaption}</span></figcaption>
             </figure>
-            <div className={styles.ruleGrid}>
-              {t.build.cards.map((card) => (
-                <article key={card.title}><p className={styles.microLabel}>{card.label}</p><h3>{card.title}</h3><p>{card.body}</p></article>
-              ))}
-            </div>
-            <div className={styles.visualSystem}>
-              <p className={styles.microLabel}>{t.build.systemLabel}</p>
-              <div className={styles.systemGrid}>
-                {t.build.system.map((item) => <div key={item.title}><h3>{item.title}</h3><p>{item.body}</p></div>)}
-              </div>
-            </div>
           </section>
 
           <section className={[styles.caseSection, styles.reflection].join(" ")}>
