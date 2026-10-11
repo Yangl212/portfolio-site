@@ -200,7 +200,7 @@ const zhChapters = [
   }
 ]
 
-export default function AboutPage({ track = "uiux", locale = "en" }) {
+export default function AboutPage({ track = "product", locale = "en" }) {
   const isZh = locale === "zh"
 
   return (

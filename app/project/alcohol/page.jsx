@@ -261,7 +261,7 @@ const copy = {
   }
 }
 
-export default function AlcoholProjectPage({ track = "uiux", locale = "en" }) {
+export default function AlcoholProjectPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

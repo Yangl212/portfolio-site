@@ -134,7 +134,7 @@ const newRegistration = () => ({
   bx: jitter(5, 3), by: jitter(4, 2)
 })
 
-export function RisoHero({ track = "uiux", locale = "en" }) {
+export function RisoHero({ track = "product", locale = "en" }) {
   const base = pageBase(track, locale)
   /* The print itself - the pulled name and everything on the sheet
      around it - stays English on every locale: it is a fixed printed
@@ -142,7 +142,7 @@ export function RisoHero({ track = "uiux", locale = "en" }) {
      than something that would ever be reprinted in another language.
      `locale` still decides where its links lead (base above), just not
      what they say. */
-  const copy = HERO_COPY[track] || HERO_COPY.uiux
+  const copy = HERO_COPY[track] || HERO_COPY.product
   const subline = copy.subline[locale] || copy.subline.en
   /* The three actions below the print are read as buttons, not as part
      of the printed sheet, so - unlike the rest of the hero - they follow

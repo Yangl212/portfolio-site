@@ -19,5 +19,5 @@ export const metadata = {
 }
 
 export default function ZhInterestPage() {
-  return <InterestPage track="uiux" locale="zh" />
+  return <InterestPage track="product" locale="zh" />
 }

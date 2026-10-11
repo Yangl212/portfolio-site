@@ -410,7 +410,7 @@ function SectionHeading({ label, title, children, wide = false }) {
   </header>
 }
 
-export default function LastMessagePage({ track = "uiux", locale = "en" }) {
+export default function LastMessagePage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

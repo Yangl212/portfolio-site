@@ -587,7 +587,7 @@ function Media({ media, className = "" }) {
   )
 }
 
-export default function BackstagePage({ track = "uiux", locale = "en" }) {
+export default function BackstagePage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

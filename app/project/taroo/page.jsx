@@ -292,7 +292,7 @@ const copy = {
   }
 }
 
-export default function TarooPage({ track = "uiux", locale = "en" }) {
+export default function TarooPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

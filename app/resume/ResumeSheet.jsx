@@ -77,7 +77,7 @@ function ExperienceEntry({ entry, index }) {
  * of tool marks rather than sentences.
  * The site's own header and footer bracket it.
  */
-export function ResumeSheet({ track = "uiux", locale = "en", role, photo, education, experience, skillGroups, pdf }) {
+export function ResumeSheet({ track = "product", locale = "en", role, photo, education, experience, skillGroups, pdf }) {
   const base = pageBase(track, locale)
   const knowMore = aboutReady(track)
   const copy = t(locale)

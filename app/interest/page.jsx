@@ -51,7 +51,7 @@ const travelPhotos = [
   }
 ]
 
-export default function InterestPage({ track = "uiux", locale = "en" }) {
+export default function InterestPage({ track = "product", locale = "en" }) {
   const base = pageBase(track, locale)
 
   return (

@@ -16,6 +16,7 @@ import styles from "./site-shell.module.css"
 /* One resume per track: the UI/UX track hands out the product resume, the
    visual track the visual one. Both live in /public. */
 const resumeByTrack = {
+  product: "/resume.pdf",
   uiux: "/resume.pdf",
   visual: "/resume-visual.pdf"
 }
@@ -26,7 +27,7 @@ export function resumeUrlFor(track) {
   return resumeByTrack[track] || resumeByTrack.uiux
 }
 
-export function SiteHeader({ active = "/", track = "uiux", locale = "en" }) {
+export function SiteHeader({ active = "/", track = "product", locale = "en" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const copy = t(locale)

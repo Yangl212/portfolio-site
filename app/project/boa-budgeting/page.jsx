@@ -334,7 +334,7 @@ const copy = {
   }
 }
 
-export default function UxCaseStudyPage({ track = "uiux", locale = "en" }) {
+export default function UxCaseStudyPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
   const webScreens = t.web.screenAlts.map((alt, index) => ({ src: `/boa/web${index + 1}.png`, alt }))
 

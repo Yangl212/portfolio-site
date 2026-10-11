@@ -246,7 +246,7 @@ function Shot({ name, alt, width, height, label, caption, priority = false }) {
   )
 }
 
-export default function VortexNetPage({ track = "uiux", locale = "en" }) {
+export default function VortexNetPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

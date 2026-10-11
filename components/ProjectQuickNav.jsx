@@ -93,7 +93,7 @@ const projectSections = {
   ]
 }
 
-export function ProjectQuickNav({ slug, track = "uiux", locale = "en" }) {
+export function ProjectQuickNav({ slug, track = "product", locale = "en" }) {
   const sections = projectSections[slug] || []
   const [active, setActive] = useState(sections[0]?.[0] || "")
   const [floating, setFloating] = useState(false)

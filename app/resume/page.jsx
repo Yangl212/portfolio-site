@@ -99,7 +99,7 @@ const skillGroups = [
   }
 ]
 
-export default function ResumePage({ track = "uiux", locale = "en" }) {
+export default function ResumePage({ track = "product", locale = "en" }) {
   return (
     <ResumeSheet
       track={track}

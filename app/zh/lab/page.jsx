@@ -19,5 +19,5 @@ export const metadata = {
 }
 
 export default function ZhLabPage() {
-  return <LabPage track="uiux" locale="zh" />
+  return <LabPage track="product" locale="zh" />
 }

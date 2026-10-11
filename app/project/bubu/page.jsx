@@ -544,7 +544,7 @@ function Glyph({ icon, size }) {
   )
 }
 
-export default function BubuPage({ track = "uiux", locale = "en" }) {
+export default function BubuPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
   const [start, week, race] = t.how.beats
 

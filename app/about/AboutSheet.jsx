@@ -160,7 +160,7 @@ function Picture({ side, src, alt, ratio, lift, book, width, tilt, edge, stack, 
  * `chapters[].pictures[].book`, where used, is `{ src, alt }` rather than
  * a fixed file: each track keeps its own book.
  */
-export function AboutSheet({ track = "uiux", locale = "en", title = "About me", statement, chapters }) {
+export function AboutSheet({ track = "product", locale = "en", title = "About me", statement, chapters }) {
   const base = pageBase(track, locale)
   /* The Chinese sheet is written in the hand declared in the stylesheet;
      the English one is left exactly as it was, down to the class string. */

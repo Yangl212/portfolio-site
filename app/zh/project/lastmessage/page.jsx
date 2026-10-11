@@ -16,5 +16,5 @@ export const metadata = {
 }
 
 export default function ZhProjectPage() {
-  return <Page track="uiux" locale="zh" />
+  return <Page track="product" locale="zh" />
 }

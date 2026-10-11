@@ -3,6 +3,13 @@ const nextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
+      /* The product track was at /product before it became the root.
+         Temporary rather than permanent, so a browser does not remember it
+         if the arrangement changes again. */
+      { source: "/product", destination: "/", permanent: false },
+      { source: "/product/:path*", destination: "/:path*", permanent: false },
+      { source: "/zh/product", destination: "/zh", permanent: false },
+      { source: "/zh/product/:path*", destination: "/zh/:path*", permanent: false },
       {
         source: "/project",
         destination: "/",

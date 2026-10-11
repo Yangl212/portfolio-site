@@ -34,7 +34,7 @@ export const metadata = {
    name once it has finished printing. */
 const hand = Caveat({ subsets: ["latin"], weight: ["600"], variable: "--font-hand", display: "swap" })
 
-export default function HomeRisoPage({ track = "uiux", locale = "en" }) {
+export default function HomeRisoPage({ track = "product", locale = "en" }) {
   const featured = featuredProjects(track, locale)
   const more = moreProjects(track, locale)
 

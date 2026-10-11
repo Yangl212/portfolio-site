@@ -262,7 +262,7 @@ function DesktopDemo({ name, label, priority = false, className }) {
     width={1468} height={918} label={label} priority={priority} />
 }
 
-export default function ClearedPage({ track = "uiux", locale = "en" }) {
+export default function ClearedPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

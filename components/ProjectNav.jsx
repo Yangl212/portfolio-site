@@ -18,7 +18,7 @@ import { projectNeighbors, trackHome } from "../lib/projects"
  * module - the class names are hashed per file, so there is no shared name to
  * reach for here.
  */
-export function ProjectNav({ slug, track = "uiux", locale = "en", styles }) {
+export function ProjectNav({ slug, track = "product", locale = "en", styles }) {
   const { prev, next } = projectNeighbors(slug, track, locale)
   const copy = t(locale).projectNav
 

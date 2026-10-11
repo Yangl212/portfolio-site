@@ -565,7 +565,7 @@ const roundTones = [
   ["worked", "worked"]
 ]
 
-export default function SuglarPage({ track = "uiux", locale = "en" }) {
+export default function SuglarPage({ track = "product", locale = "en" }) {
   const t = copy[locale] || copy.en
 
   return (

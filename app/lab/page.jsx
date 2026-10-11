@@ -18,7 +18,7 @@ export const metadata = {
   })
 }
 
-export default function LabPage({ track = "uiux", locale = "en" }) {
+export default function LabPage({ track = "product", locale = "en" }) {
   const base = pageBase(track, locale)
 
   return (
