@@ -4,15 +4,16 @@
 import HomeRisoPage from "../home-riso/page"
 import { shareCard } from "../../lib/share"
 
-const DESCRIPTION =
-  "我做 AI 产品设计。作品包括一款已上线的 AI 推理游戏、一个八周习惯打卡 App，以及一个让人在确认前能先核对的日历助手。"
+/* The share card: the name and the role, then the line the hero leads with. */
+const CARD = "杨乐乐 · AI 产品设计"
+const DESCRIPTION = "我致力于产品设计，了解用户需求与痛点，并借助 AI 进行多个项目落地"
 
 export const metadata = {
   title: { absolute: "Lele Yang — AI 产品设计师" },
   description: DESCRIPTION,
   alternates: { canonical: "/zh" },
   ...shareCard({
-    title: "Lele Yang — AI 产品设计师",
+    title: CARD,
     description: DESCRIPTION,
     image: "/og/home-zh.jpg",
     alt: "杨乐乐，AI 产品设计师"
