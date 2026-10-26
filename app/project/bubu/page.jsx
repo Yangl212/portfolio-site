@@ -83,6 +83,13 @@ const hand = [
 ]
 const handScreen = (file, locale) => screen(`${locale === "zh" ? "zh" : "en"}/${file}`)
 
+/* The promo posters, made twice, off the English build and the Chinese
+   one, and the reader gets the set in their own language. Files are
+   /public/bubu/promo/<locale>/<n>.webp, exported by
+   scripts/bubu-promo-build.cjs; what each poster is called is in
+   `copy.promo.names`, one per file. */
+const promoPoster = (index, locale) => `/bubu/promo/${locale === "zh" ? "zh" : "en"}/${index + 1}.webp`
+
 /* Five loops, one pen. What each one is called is in `copy.cast.clips`.
    All five are black line work on an alpha channel, so the paper behind
    them is the tile's own background and every one of them sits on exactly
@@ -265,8 +272,13 @@ const copy = {
       heading: "High-fidelity",
       names: ["Sign in", "Plan length", "Solo or paired", "Ready", "Home", "Weekly journal", "Today's receipt", "Matched", "Challenge progress"]
     },
-    shipping: {
+    promo: {
       kicker: "08",
+      heading: "Promotional images",
+      names: ["Buddy Up", "Dear Diary", "Snap & Log It", "Level Up", "Yay, Nailed It"]
+    },
+    shipping: {
+      kicker: "09",
       heading: "Shipping",
       lead: "Development has wrapped up for now; next come TestFlight, the App Store page and review",
       doneLabel: "Done",
@@ -453,8 +465,13 @@ const copy = {
       heading: "高保真",
       names: ["登录", "挑战时长", "单人还是双人", "准备好了", "首页", "手账本", "今日小票", "组队成功", "挑战进度"]
     },
-    shipping: {
+    promo: {
       kicker: "08",
+      heading: "宣传图",
+      names: ["与搭子一起刷脂", "写手帐收藏旅程", "用拍照写下日常", "凭徽章追逐向前", "恭喜完成使命"]
+    },
+    shipping: {
+      kicker: "09",
       heading: "上架",
       lead: "当前开发告一段落，下一步是 TestFlight、准备 App Store 页面并送审",
       doneLabel: "已完成",
@@ -737,6 +754,20 @@ export default function BubuPage({ track = "product", locale = "en" }) {
             <Hand
               cards={hand.map((file, index) => ({ src: handScreen(file, locale), name: t.screens.names[index] }))}
             />
+          </section>
+
+          <section id="promo" className={styles.caseSection}>
+            <div className={styles.sectionHeader}>
+              <p className={styles.kicker}>{t.promo.kicker}</p>
+              <h2>{t.promo.heading}</h2>
+            </div>
+            <ul className={styles.promo}>
+              {t.promo.names.map((name, index) => (
+                <li className={styles.promoItem} key={name}>
+                  <img src={promoPoster(index, locale)} alt={name} width="603" height="1311" loading="lazy" />
+                </li>
+              ))}
+            </ul>
           </section>
 
           <section id="shipping" className={styles.caseSection}>

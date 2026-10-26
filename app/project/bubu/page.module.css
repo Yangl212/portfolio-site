@@ -375,7 +375,20 @@
   .hand .handCard, .hand .handCard::before, .hand::after { transition: none; }
 }
 
-/* ---------- 08 shipping ---------- */
+/* ---------- 08 promo ---------- */
+
+/* One row of five posters, in the reader's language. The posters are full
+   bleed artwork, so each sits upright at its own aspect with only a
+   rounded corner and a hairline against the white. On a phone the row is
+   a strip to drag rather than five slivers. */
+.promo { display: flex; gap: 14px; overflow: auto hidden; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding-bottom: 12px; scrollbar-width: thin; }
+.promoItem { flex: none; width: 46vw; scroll-snap-align: start; }
+.promoItem img {
+  display: block; width: 100%; height: auto; aspect-ratio: 603 / 1311;
+  border-radius: 12px; box-shadow: 0 0 0 1px var(--divider);
+}
+
+/* ---------- 09 shipping ---------- */
 .shipGrid { display: grid; gap: 32px; }
 .shipGrid > div { display: flex; flex-direction: column; gap: 16px; }
 .shipList { display: flex; flex-direction: column; gap: 12px; }
@@ -398,6 +411,8 @@
   .rules { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
   .cast { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .shipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+  .promo { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); overflow: visible; padding-bottom: 0; }
+  .promoItem { width: auto; }
 }
 
 @media (min-width: 900px) {

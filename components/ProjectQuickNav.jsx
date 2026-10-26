@@ -81,6 +81,7 @@ const projectSections = {
     ["cast", { en: "Animation", zh: "动画" }],
     ["userflow", { en: "User flow", zh: "流程图" }],
     ["screens", { en: "Hi-fi", zh: "高保真" }],
+    ["promo", { en: "Promo", zh: "宣传图" }],
     ["shipping", { en: "Shipping", zh: "上架" }]
   ],
   suglar: [
