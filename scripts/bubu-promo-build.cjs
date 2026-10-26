@@ -34,6 +34,27 @@ sharp.cache(false);
     }
   }
   console.log(`promo ${count}, ${Math.round(total / 1024)} KB`);
+
+  // The hero: the App Store listing on a phone, once per language, with
+  // its shadow on an alpha channel so it sits on the page's own white.
+  // 1027 x 2000 at the source; the hero column is at most 380 CSS px wide.
+  for (const locale of Object.keys(locales)) {
+    const info = await sharp(path.resolve(`pic/bubu-promo/hero-${locale}.webp`))
+      .resize(780, null, { kernel: 'lanczos3' })
+      .webp({ quality: 86, alphaQuality: 90, effort: 5 })
+      .toFile(path.resolve(`public/bubu/promo/hero-${locale}.webp`));
+    console.log(`promo/hero-${locale}.webp ${info.width}x${info.height} ${Math.round(info.size / 1024)} KB`);
+  }
+
+  // The app icon beside the App Store line. The source is the icon on a
+  // drop shadow; only the 260 px square is kept, and the page rounds it.
+  const icon = await sharp(path.resolve('pic/bubu-promo/app-icon.png'))
+    .extract({ left: 30, top: 18, width: 260, height: 260 })
+    .resize(180, 180, { kernel: 'lanczos3' })
+    .flatten({ background: '#EDEDED' })
+    .webp({ quality: 90, effort: 5 })
+    .toFile(path.resolve('public/bubu/promo/app-icon.webp'));
+  console.log(`promo/app-icon.webp ${icon.width}x${icon.height} ${Math.round(icon.size / 1024)} KB`);
 })().catch(error => {
   console.error(error);
   process.exit(1);

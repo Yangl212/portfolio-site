@@ -120,7 +120,7 @@ const copy = {
       statusLabel: "Status",
       status: "Built, heading into TestFlight",
       action: "See the design features",
-      heroAlt: "The BUBU home screen on an iPhone: day 21, the meals logged today beside an empty frame for a buddy who has not joined yet, and both runners on the track"
+      heroAlt: "BUBU Daily's App Store page on an iPhone: the app icon, a Get button, Health & Fitness, and the first two promo screenshots"
     },
     why: {
       kicker: "01",
@@ -316,7 +316,7 @@ const copy = {
       statusLabel: "状态",
       status: "开发完成，准备进入TestFlight",
       action: "查看设计功能",
-      heroAlt: "iPhone 上的 BUBU 首页：第 21 天，今天记下的餐，旁边是留给还没加入的搭子的空框，以及跑道上的两个人"
+      heroAlt: "iPhone 上 BUBU Daily 的 App Store 页面：App 图标、获取按钮、健康健美类别，以及前两张宣传图"
     },
     why: {
       kicker: "01",
@@ -587,7 +587,7 @@ export default function BubuPage({ track = "product", locale = "en" }) {
               {/* The app icon at its real corner radius, next to the line
                   that says where the build actually is. */}
               <div className={`${styles.storeRow} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-                <img className={styles.storeIcon} src={screen("app-icon")} alt="BUBU" width="500" height="500" />
+                <img className={styles.storeIcon} src="/bubu/promo/app-icon.webp" alt="BUBU" width="180" height="180" />
                 <div>
                   <p className={styles.microLabel}>{t.hero.storeLabel}</p>
                   <p className={styles.storeLine}>{t.hero.store}</p>
@@ -607,7 +607,9 @@ export default function BubuPage({ track = "product", locale = "en" }) {
             </div>
 
             <div className={`${styles.heroVisual} ${styles.reveal}`} style={{ animationDelay: "160ms" }}>
-              <img src="/bubu/phone.webp" alt={t.hero.heroAlt} width="424" height="896" fetchPriority="high" />
+              {/* The App Store listing as it will look, in the reader's
+                  language; scripts/bubu-promo-build.cjs exports it. */}
+              <img src={`/bubu/promo/hero-${locale === "zh" ? "zh" : "en"}.webp`} alt={t.hero.heroAlt} width="780" height="1519" fetchPriority="high" />
             </div>
           </header>
 
